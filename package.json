@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
-    "start": "next start",
+    "start": "node .next/standalone/server.js",
+    "preview": "echo Building and running production standalone... && npm run build && node .next/standalone/server.js",
     "lint": "next lint"
   },
   "dependencies": {
