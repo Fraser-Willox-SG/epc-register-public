@@ -1,7 +1,7 @@
-// next.config.ts
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
+  output: 'standalone',
   transpilePackages: ['@scottish-government/designsystem-react'],
 };
 

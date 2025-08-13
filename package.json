@@ -1,5 +1,5 @@
 {
-  "name": "epc-register-public-facing",
+  "name": "epc-register-public",
   "version": "0.1.0",
   "private": true,
   "scripts": {
