@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import SiteHeader from "@scottish-government/designsystem-react/src/components/SiteHeader/SiteHeader";
-import "@scottish-government/design-system/dist/css/design-system.css";
+import SiteHeader from "@scottish-government/designsystem-react/dist/components/SiteHeader/SiteHeader";
+// import "@scottish-government/design-system/dist/css/design-system.css";
 
 import "./globals.css";
 

@@ -1,8 +1,10 @@
 "use client";
 
-import Button from "@scottish-government/designsystem-react/src/components/Button/Button";
-import RadioGroup from "@scottish-government/designsystem-react/src/components/RadioButton/RadioButton";
-import Question from "@scottish-government/designsystem-react/src/components/Question/Question";
+import Button from "@scottish-government/designsystem-react/dist/components/Button/Button";
+// import Button from "@scottish-government/designsystem-react/dist/components/Button/Button";
+// import Button from "@scottish-government/designsystem-react/src/components/Button/Button";
+import RadioGroup from "@scottish-government/designsystem-react/dist/components/RadioButton/RadioButton";
+import Question from "@scottish-government/designsystem-react/dist/components/Question/Question";
 
 export default function EPCPage() {
   return (
@@ -31,11 +33,13 @@ export default function EPCPage() {
               hintText: "A house or flat",
               id: "domestic-property-radio",
               label: "Domestic property",
+              name: "item name 1",
             },
             {
               hintText: "A commercial, industrial or public building",
               id: "non-domestic-property-radio",
               label: "Non-domestic property",
+              name: "item name 2",
             },
           ]}
           name="paymentType"

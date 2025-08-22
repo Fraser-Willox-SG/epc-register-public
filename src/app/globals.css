@@ -1,3 +1,5 @@
+@import "@scottish-government/design-system/dist/css/design-system.css";
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
