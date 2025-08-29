@@ -1,13 +1,100 @@
-'use client';
+"use client";
 
-// import Button from '@scottish-government/designsystem-react/src/components/Button';
+import { useState, ChangeEvent, FormEvent } from "react";
+import Button from "@scottish-government/designsystem-react/dist/components/Button/Button";
+import RadioGroup from "@scottish-government/designsystem-react/dist/components/RadioButton/RadioButton";
+import Question from "@scottish-government/designsystem-react/dist/components/Question/Question";
+import TextInput from "@scottish-government/designsystem-react/dist/components/TextInput/TextInput";
 
-
+type SearchMode = "postcode" | "rrn";
 
 export default function ActionPlanPage() {
+  const [mode, setMode] = useState<SearchMode>("postcode");
+  const [postcode, setPostcode] = useState("");
+  const [rrn, setRRN] = useState("");
+
+  const onRadioChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const id = e.target.id;
+    if (id === "domestic-property-radio") setMode("postcode");
+    if (id === "non-domestic-property-radio") setMode("rrn");
+  };
+
+  const onSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    const value = (mode === "postcode" ? postcode : rrn).trim();
+    if (!value) return;
+
+    // TODO: replace with routing / API call
+    // Example:
+    // router.push(`/action-plan?${mode}=${encodeURIComponent(value)}`);
+  };
+
   return (
-    <div>
-      <h1>Action Plan</h1>
+    <div className="ds_wrapper">
+      <div className="ds_page-header">
+        <h1>Action Plan</h1>
+      </div>
+      <h2 className="ds_h3">Energy Usage for Larger Commercial Buildings</h2>
+      <p>
+        For larger commercial buildings (1000m²+), this shows energy improvement
+        plans as required under Section 63 legislation. Search by postcode or
+        RRN.
+      </p>
+
+      <form onSubmit={onSubmit} noValidate>
+        <Question legend="Find the property" tagName="fieldset">
+          <RadioGroup
+            name="search-mode"
+            onChange={onRadioChange}
+            items={[
+              {
+                id: "domestic-property-radio",
+                label: "Postcode",
+                hintText: "Example: EH1 1XX",
+                name: "search-mode",
+                checked: mode === "postcode",
+              },
+              {
+                id: "non-domestic-property-radio",
+                label: "Report Reference Number (RRN)",
+                hintText: "Example: 1234-5678-9012-3456",
+                name: "search-mode",
+                checked: mode === "rrn",
+              },
+            ]}
+          />
+        </Question>
+
+        {mode === "postcode" ? (
+          <TextInput
+            key="postcode"
+            id="postcode-input"
+            label="Postcode"
+            hintText="Enter a full postcode"
+            width="fixed-20"
+            value={postcode}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setPostcode(e.target.value)
+            }
+            autoComplete="postal-code"
+          />
+        ) : (
+          <TextInput
+            key="rrn"
+            id="rrn-input"
+            label="Report Reference Number (RRN)"
+            hintText="Enter the 16-character RRN"
+            width="fixed-20"
+            value={rrn}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setRRN(e.target.value)
+            }
+            inputMode="numeric"
+          />
+        )}
+
+        <Button type="submit">Continue</Button>
+      </form>
     </div>
   );
 }
