@@ -13,7 +13,7 @@ export default function EPCPage() {
         <h1>Energy Performance Certificate</h1>
       </div>
       {/* <div className="ds_leader"> */}
-      <p>Property type</p>
+      <h2 className="ds_h3">Property type</h2>
       {/* </div> */}
       <p>
         A domestic property like a house or flat, or a non-domestic property for

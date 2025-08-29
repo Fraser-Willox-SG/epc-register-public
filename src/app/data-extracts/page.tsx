@@ -4,33 +4,66 @@ export default function DataExtractsPage() {
   return (
     <div className="ds_wrapper">
       <div className="ds_page-header">
-        <h1>Data Extracts</h1>
+        <h1>Publicly available data extracts</h1>
       </div>
-      {/* <div className="ds_leader"> */}
-      <p>There are two data extracts available:</p>
+
       <p>
+        Data Extracts are published on{" "}
         <a
-          href="https://statistics.gov.scot/data/domestic-energy-performance-certificates"
+          href="https://statistics.gov.scot/home"
           target="_blank"
+          rel="noopener noreferrer"
         >
-          Domestic EPC data
-        </a>
-      </p>
-      <p>
-        <a
-          href="https://statistics.gov.scot/data/non-domestic-energy-performance-certificates"
-          target="_blank"
-        >
-          Non-Domestic EPC data
+          statistics.gov.scot
         </a>
         .
       </p>
-      {/* </div> */}
+
       <p>
-        Both datasets are updated quarterly and include all valid EPC records
-        from the start of 2013 to the most recent year quarter. A publication
-        note is included in each dataset describing the data elements present.
+        These extracts provide open data about domestic and non-domestic EPCs.
+        They are updated quarterly. A publication note is included with each
+        dataset, describing the data items and methodology.
       </p>
+
+      <h2 className="ds_h3">Available datasets</h2>
+      <ul className="ds_list ds_list--bulleted">
+        <li>
+          <a
+            href="https://statistics.gov.scot/data/domestic-energy-performance-certificates"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Domestic EPCs (valid)
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://statistics.gov.scot/data/non-domestic-energy-performance-certificates"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Non-domestic EPCs (valid)
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://statistics.gov.scot/data/domestic-energy-performance-certificates--extended-historic-dataset"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Domestic EPCs (historic / extended)
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://statistics.gov.scot/data/non-domestic-energy-performance-certificates--extended-historic-dataset"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Non-domestic EPCs (historic / extended)
+          </a>
+        </li>
+      </ul>
     </div>
   );
 }

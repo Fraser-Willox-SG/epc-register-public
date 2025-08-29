@@ -14,7 +14,7 @@ export default function FindAnAdvisorPage() {
         <h1>Find An Advisor Page</h1>
       </div>
       {/* <div className="ds_leader"> */}
-      <p>Search for an assessor or advisor</p>
+      <h2 className="ds_h3">Search for an assessor or advisor</h2>
       {/* </div> */}
       <p>
         Enter the postcode and the distance to view a list of assessors and
