@@ -2,8 +2,9 @@
 
 import { useState, ChangeEvent, FormEvent } from "react";
 import Button from "@scottish-government/designsystem-react/dist/components/Button/Button";
-import RadioGroup from "@scottish-government/designsystem-react/dist/components/RadioButton/RadioButton";
 import Question from "@scottish-government/designsystem-react/dist/components/Question/Question";
+import RadioGroup from "@scottish-government/designsystem-react/dist/components/RadioButton/RadioGroup";
+import RadioButton from "@scottish-government/designsystem-react/dist/components/RadioButton/RadioButton";
 import TextInput from "@scottish-government/designsystem-react/dist/components/TextInput/TextInput";
 
 type SearchMode = "postcode" | "rrn";
@@ -13,10 +14,12 @@ export default function ActionPlanPage() {
   const [postcode, setPostcode] = useState("");
   const [rrn, setRRN] = useState("");
 
+  const groupName = "search-mode";
+
   const onRadioChange = (e: ChangeEvent<HTMLInputElement>) => {
     const id = e.target.id;
-    if (id === "domestic-property-radio") setMode("postcode");
-    if (id === "non-domestic-property-radio") setMode("rrn");
+    if (id === "search-by-postcode") setMode("postcode");
+    if (id === "search-by-rrn") setMode("rrn");
   };
 
   const onSubmit = (e: FormEvent) => {
@@ -34,6 +37,7 @@ export default function ActionPlanPage() {
       <div className="ds_page-header">
         <h1>Action Plan</h1>
       </div>
+
       <h2 className="ds_h3">Energy Usage for Larger Commercial Buildings</h2>
       <p>
         For larger commercial buildings (1000m²+), this shows energy improvement
@@ -43,26 +47,22 @@ export default function ActionPlanPage() {
 
       <form onSubmit={onSubmit} noValidate>
         <Question legend="Find the property" tagName="fieldset">
-          <RadioGroup
-            name="search-mode"
-            onChange={onRadioChange}
-            items={[
-              {
-                id: "domestic-property-radio",
-                label: "Postcode",
-                hintText: "Example: EH1 1XX",
-                name: "search-mode",
-                checked: mode === "postcode",
-              },
-              {
-                id: "non-domestic-property-radio",
-                label: "Report Reference Number (RRN)",
-                hintText: "Example: 1234-5678-9012-3456",
-                name: "search-mode",
-                checked: mode === "rrn",
-              },
-            ]}
-          />
+          <RadioGroup name={groupName} onChange={onRadioChange}>
+            <RadioButton
+              id="search-by-postcode"
+              name={groupName}
+              label="Postcode"
+              hintText="Example: EH1 1XX"
+              checked={mode === "postcode"}
+            />
+            <RadioButton
+              id="search-by-rrn"
+              name={groupName}
+              label="Report Reference Number (RRN)"
+              hintText="Example: 1234-5678-9012-3456"
+              checked={mode === "rrn"}
+            />
+          </RadioGroup>
         </Question>
 
         {mode === "postcode" ? (
