@@ -1,9 +1,8 @@
-﻿/* eslint-disable @typescript-eslint/triple-slash-reference */
+/* eslint-disable @typescript-eslint/triple-slash-reference */
 /* AUTO-GENERATED: Do not edit by hand. */
 
-/// <reference path="../../node_modules/@scottish-government/designsystem-react/@types/global.d.ts" />
-/// <reference path="../../node_modules/@scottish-government/designsystem-react/@types/sgds.d.ts" />
 /// <reference path="../../node_modules/@scottish-government/designsystem-react/@types/common/AbstractNotificationBanner.d.ts" />
+/// <reference path="../../node_modules/@scottish-government/designsystem-react/@types/common/ActionLink.d.ts" />
 /// <reference path="../../node_modules/@scottish-government/designsystem-react/@types/common/ConditionalWrapper.d.ts" />
 /// <reference path="../../node_modules/@scottish-government/designsystem-react/@types/common/FileIcon.d.ts" />
 /// <reference path="../../node_modules/@scottish-government/designsystem-react/@types/common/HintText.d.ts" />
@@ -35,6 +34,7 @@
 /// <reference path="../../node_modules/@scottish-government/designsystem-react/@types/components/Select.d.ts" />
 /// <reference path="../../node_modules/@scottish-government/designsystem-react/@types/components/SequentialNavigation.d.ts" />
 /// <reference path="../../node_modules/@scottish-government/designsystem-react/@types/components/SideNavigation.d.ts" />
+/// <reference path="../../node_modules/@scottish-government/designsystem-react/@types/components/SiteFooter.d.ts" />
 /// <reference path="../../node_modules/@scottish-government/designsystem-react/@types/components/SiteHeader.d.ts" />
 /// <reference path="../../node_modules/@scottish-government/designsystem-react/@types/components/SiteNavigation.d.ts" />
 /// <reference path="../../node_modules/@scottish-government/designsystem-react/@types/components/SiteSearch.d.ts" />
@@ -48,4 +48,5 @@
 /// <reference path="../../node_modules/@scottish-government/designsystem-react/@types/components/Textarea.d.ts" />
 /// <reference path="../../node_modules/@scottish-government/designsystem-react/@types/components/TextInput.d.ts" />
 /// <reference path="../../node_modules/@scottish-government/designsystem-react/@types/components/WarningText.d.ts" />
-
+/// <reference path="../../node_modules/@scottish-government/designsystem-react/@types/global.d.ts" />
+/// <reference path="../../node_modules/@scottish-government/designsystem-react/@types/sgds.d.ts" />

@@ -2,8 +2,9 @@
 
 import { useState, ChangeEvent, FormEvent } from "react";
 import Button from "@scottish-government/designsystem-react/dist/components/Button/Button";
-import RadioGroup from "@scottish-government/designsystem-react/dist/components/RadioButton/RadioButton";
 import Question from "@scottish-government/designsystem-react/dist/components/Question/Question";
+import RadioGroup from "@scottish-government/designsystem-react/dist/components/RadioButton/RadioGroup";
+import RadioButton from "@scottish-government/designsystem-react/dist/components/RadioButton/RadioButton";
 import TextInput from "@scottish-government/designsystem-react/dist/components/TextInput/TextInput";
 
 type SearchMode = "postcode" | "rrn";
@@ -24,7 +25,7 @@ export default function AdvisoryReportPage() {
     const value = (mode === "postcode" ? postcode : rrn).trim();
     if (!value) return;
 
-    // TODO: Replace with your routing / API call
+    // TODO: Replace with routing / API call
     // Example:
     // router.push(`/search?${mode}=${encodeURIComponent(value)}`);
   };
@@ -42,26 +43,22 @@ export default function AdvisoryReportPage() {
 
       <form onSubmit={onSubmit} noValidate>
         <Question legend="Find the property" tagName="fieldset">
-          <RadioGroup
-            name="search-mode"
-            onChange={onRadioChange}
-            items={[
-              {
-                id: "search-by-postcode",
-                label: "Postcode",
-                hintText: "Example: EH1 1XX",
-                name: "search-mode",
-                checked: mode === "postcode",
-              },
-              {
-                id: "search-by-rrn",
-                label: "Report Reference Number (RRN)",
-                hintText: "Example: 1234-5678-9012-3456",
-                name: "search-mode",
-                checked: mode === "rrn",
-              },
-            ]}
-          />
+          <RadioGroup name="search-mode" onChange={onRadioChange}>
+            <RadioButton
+              id="search-by-postcode"
+              name="search-mode"
+              label="Postcode"
+              hintText="Example: EH1 1XX"
+              checked={mode === "postcode"}
+            />
+            <RadioButton
+              id="search-by-rrn"
+              name="search-mode"
+              label="Report Reference Number (RRN)"
+              hintText="Example: 1234-5678-9012-3456"
+              checked={mode === "rrn"}
+            />
+          </RadioGroup>
         </Question>
 
         {mode === "postcode" ? (
@@ -76,8 +73,6 @@ export default function AdvisoryReportPage() {
               setPostcode(e.target.value)
             }
             autoComplete="postal-code"
-            // Optionally add a pattern or client-side validation specific to UK postcodes
-            // pattern="^[A-Z]{1,2}\d[A-Z\d]?\s*\d[A-Z]{2}$"
           />
         ) : (
           <TextInput
@@ -91,8 +86,6 @@ export default function AdvisoryReportPage() {
               setRRN(e.target.value)
             }
             inputMode="numeric"
-            // Optionally constrain to digits/hyphens if needed
-            // pattern="^[0-9\-]{16,19}$"
           />
         )}
 

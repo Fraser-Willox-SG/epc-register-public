@@ -11,7 +11,7 @@
     "postinstall": "node scripts/gen-sgds-ambient.cjs"
   },
   "dependencies": {
-    "@scottish-government/designsystem-react": "^0.7.1",
+    "@scottish-government/designsystem-react": "^0.8.0",
     "next": "15.3.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
