@@ -47,11 +47,13 @@ export default function DomesticSearchPage() {
       router.push(`/domestic/results?postcode=${encodeURIComponent(pc)}`);
     } else {
       if (!isValidRRN(rrn)) {
-        setError("Enter a valid 16-digit Report Reference Number (RRN).");
+        setError(
+          "Enter a valid Report Reference Number (RRN). Example: 1234-5678-9012-3456-7890."
+        );
         return;
       }
-      const id = normalizeRRN(rrn);
-      router.push(`/domestic/certificate/${id}`);
+      const id = normalizeRRN(rrn); // normalises and formats groups
+      router.push(`/domestic/certificate/${encodeURIComponent(id)}`);
     }
   };
 
@@ -83,7 +85,7 @@ export default function DomesticSearchPage() {
               id="search-by-rrn"
               name={groupName}
               label="Report Reference Number (RRN)"
-              hintText="Example: 1234-5678-9012-3456"
+              hintText="Example: 1234-5678-9012-3456-7890"
               checked={mode === "rrn"}
             />
           </RadioGroup>
@@ -107,7 +109,7 @@ export default function DomesticSearchPage() {
             key="rrn"
             id="rrn-input"
             label="Report Reference Number (RRN)"
-            hintText="Enter the 16-digit RRN"
+            hintText="Enter the RRN (20 digits, with or without hyphens)"
             width="fixed-20"
             value={rrn}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
