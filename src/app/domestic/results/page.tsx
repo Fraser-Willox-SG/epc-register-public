@@ -1,0 +1,109 @@
+import Link from "next/link";
+import { headers } from "next/headers";
+import EpcResultsTable, {
+  AssessmentRow,
+} from "@/app/components/EpcResultsTable";
+
+type SearchParams = { postcode?: string; page?: string };
+
+async function absoluteUrl(path: string) {
+  const h = await headers();
+  const proto = h.get("x-forwarded-proto") ?? "http";
+  const host = h.get("x-forwarded-host") ?? h.get("host");
+  return `${proto}://${host}${path}`;
+}
+
+export default async function DomesticResultsPage({
+  searchParams,
+}: {
+  searchParams: Promise<SearchParams>;
+}) {
+  const { postcode: rawPostcode, page: rawPage } = await searchParams;
+  const postcode = (rawPostcode ?? "").trim();
+
+  if (!postcode) {
+    return (
+      <div className="ds_wrapper">
+        <div className="ds_page-header">
+          <h1>Energy Performance Certificate</h1>
+        </div>
+
+        <h2 className="ds_h3">Postcode addresses</h2>
+        <p className="ds_error-message">Postcode is required.</p>
+
+        <p className="ds_mt-4">
+          <Link href="/domestic" className="ds_link">
+            Back to search
+          </Link>
+        </p>
+      </div>
+    );
+  }
+
+  const apiUrl = await absoluteUrl(
+    `/api/ukg/search?postcode=${encodeURIComponent(postcode)}`
+  );
+
+  let rows: AssessmentRow[] = [];
+  let error: string | null = null;
+
+  try {
+    const res = await fetch(apiUrl, { cache: "no-store" });
+    const text = await res.text();
+    if (!res.ok) {
+      error = `There was a problem retrieving results for ${postcode.toUpperCase()}.`;
+    } else {
+      const json = JSON.parse(text) as {
+        data?: { assessments?: AssessmentRow[] };
+      };
+      rows = json.data?.assessments ?? [];
+    }
+  } catch {
+    error = `There was a problem contacting the service for ${postcode.toUpperCase()}.`;
+  }
+
+  const page = Math.max(parseInt(rawPage ?? "1", 10) || 1, 1);
+
+  return (
+    <div className="ds_wrapper">
+      <div className="ds_page-header">
+        <h1>Energy Performance Certificate</h1>
+      </div>
+
+      <h2 className="ds_h3">Postcode addresses</h2>
+
+      {error ? (
+        <>
+          <p className="ds_error-message">{error}</p>
+          <p className="ds_mt-4">
+            <Link href="/domestic" className="ds_link">
+              Back to search
+            </Link>
+          </p>
+        </>
+      ) : rows.length === 0 ? (
+        <>
+          <div className="ds_inset-text">
+            <p>No results found for {postcode.toUpperCase()}.</p>
+          </div>
+          <p className="ds_mt-4">
+            <Link href="/domestic" className="ds_link">
+              Back to search
+            </Link>
+          </p>
+        </>
+      ) : (
+        <EpcResultsTable
+          postcode={postcode}
+          rows={rows}
+          page={page}
+          pageSize={7}
+          resultsPath="/domestic/results"
+          certificateHref={(rrn) =>
+            `/domestic/certificate/${encodeURIComponent(rrn)}`
+          }
+        />
+      )}
+    </div>
+  );
+}
