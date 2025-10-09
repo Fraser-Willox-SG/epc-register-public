@@ -1,66 +1,23 @@
 import { headers } from "next/headers";
 import Link from "next/link";
-import type { ReactNode } from "react";
 
 import ContentsNav from "@scottish-government/designsystem-react/dist/components/ContentsNav/ContentsNav";
 
-import HeaderCard from "@/app/components/certificate/HeaderCard";
-import EpcScale from "@/app/components/certificate/EpcScale";
-import PropertySummaryTable from "@/app/components/certificate/PropertySummaryTable";
-import ImprovementsList from "@/app/components/certificate/ImprovementsList";
+import EpcCertificate from "@/app/components/certificate/new-epc/EpcCertificate";
+import BrIntro from "@/app/components/certificate/new-epc/BrIntro";
+import BrEstimatedEnergyCosts from "@/app/components/certificate/new-epc/BrEstimatedEnergyCosts";
+import BrHeatingSystemEmissions from "@/app/components/certificate/new-epc/BrHeatingSystemEmissions";
+import BrHeatRetentionSummary from "@/app/components/certificate/new-epc/BrHeatRetentionSummary";
+import BrHeatRetentionImprovements from "@/app/components/certificate/new-epc/BrHeatRetentionImprovements";
+import BrHeatingSystemInformation from "@/app/components/certificate/new-epc/BrHeatingSystemInformation";
+import BrPotentialImprovements from "@/app/components/certificate/new-epc/BrPotentialImprovements";
+import BrInformationAboutTopRecommendations from "@/app/components/certificate/new-epc/BrInformationAboutTopRecommendations";
+import BrAboutThisDocument from "@/app/components/certificate/new-epc/BrAboutThisDocument";
+
 import PrintButton from "@/app/components/PrintButton";
-import StickySidebar from "@/app/components/StickySidebar";
 
-// ---- Types for the API response (trimmed to what we use right now)
-type Summary = {
-  data: {
-    typeOfAssessment: string;
-    assessmentId: string;
-    dateOfAssessment?: string;
-    dateOfRegistration?: string;
-    dateOfExpiry?: string;
-
-    addressLine1: string;
-    addressLine2?: string;
-    addressLine3?: string;
-    addressLine4?: string;
-    town?: string;
-    postcode: string;
-
-    dwellingType?: string;
-    totalFloorArea?: string;
-    currentEnergyEfficiencyRating?: number;
-    currentEnergyEfficiencyBand?: string;
-    potentialEnergyEfficiencyRating?: number;
-    potentialEnergyEfficiencyBand?: string;
-
-    propertySummary?: Array<{
-      name: string;
-      description: string | null;
-      energyEfficiencyRating: number | null;
-      environmentalEfficiencyRating?: number | null;
-    }>;
-
-    recommendedImprovements?: Array<{
-      sequence: number;
-      improvementType?: string;
-      improvementTitle?: string;
-      improvementDescription?: string | null;
-      indicativeCost?: string | null;
-      typicalSaving?: string | null;
-      energyPerformanceRatingImprovement?: number | null;
-      energyPerformanceBandImprovement?: string | null;
-    }>;
-
-    assessor?: {
-      firstName?: string;
-      lastName?: string;
-      schemeAssessorId?: string;
-      registeredBy?: { name?: string };
-      contactDetails?: { email?: string; telephoneNumber?: string };
-    };
-  };
-};
+import type { EpcDomSummary } from "@/types/epc-dom";
+type Summary = { data: EpcDomSummary };
 
 // ---- helpers
 async function absoluteUrl(path: string) {
@@ -68,23 +25,6 @@ async function absoluteUrl(path: string) {
   const proto = h.get("x-forwarded-proto") ?? "http";
   const host = h.get("x-forwarded-host") ?? h.get("host");
   return `${proto}://${host}${path}`;
-}
-
-function Section({
-  id,
-  title,
-  children,
-}: {
-  id: string;
-  title: string;
-  children: ReactNode;
-}) {
-  return (
-    <section id={id} className="ds_section ds_mb-8">
-      <h2 className="ds_h3 ds_mb-2">{title}</h2>
-      <div className="ds_card ds_p-4">{children}</div>
-    </section>
-  );
 }
 
 // ---- page
@@ -148,118 +88,80 @@ export default async function DomesticCertificatePage({
       ) : data ? (
         <div className="ds_layout ds_layout--search-results-with-sidebar">
           {/* Sidebar (SDS grid area) */}
-          <StickySidebar offset={0 /* header height + spacing */}>
+          <aside
+            className="ds_layout__sidebar"
+            aria-label="Document navigation"
+          >
             <ContentsNav
               title="Document navigation"
               ariaLabel="Document navigation"
             >
-              <ContentsNav.Item href="#overview" current>
-                Energy Performance Certificate
+              <ContentsNav.Item href="#overview">
+                <strong>EPC:</strong>Energy Performance Certificate
               </ContentsNav.Item>
-              <ContentsNav.Item href="#ratings">
-                Heat-retention rating
+              <ContentsNav.Item href="#br-intro">
+                <strong>Building Report:</strong> Introduction
               </ContentsNav.Item>
-              <ContentsNav.Item href="#property-summary">
-                Property report: Summary
+              <ContentsNav.Item href="#br-estimated-energy-costs">
+                <strong>Building Report:</strong> Estimated Energy Costs
               </ContentsNav.Item>
-              <ContentsNav.Item href="#improvements">
-                Property report: Potential improvements
+              <ContentsNav.Item href="#br-heat-retention-summary">
+                <strong>Building Report:</strong> Heat Retention Summary
               </ContentsNav.Item>
-              <ContentsNav.Item href="#assessor">
-                About this document
+              {/* <ContentsNav.Item href="#br-heating-system-emissions">
+                <strong>Building Report:</strong> Heating System Emissions
+              </ContentsNav.Item> */}
+
+              <ContentsNav.Item href="#br-heating-system-information">
+                <strong>Building Report:</strong> Heating System Information
+              </ContentsNav.Item>
+              <ContentsNav.Item href="#br-potential-improvements">
+                <strong>Building Report:</strong> Potential Improvements
+              </ContentsNav.Item>
+              <ContentsNav.Item href="#br-about-this-document">
+                <strong>Building Report:</strong> About this document
               </ContentsNav.Item>
             </ContentsNav>
-          </StickySidebar>
+          </aside>
 
           {/* Main content (SDS grid area) */}
-          <main className="ds_layout__content">
-            <Section id="overview" title="Certificate overview">
-              <HeaderCard
+          <main
+            className="ds_layout__content"
+            style={{ border: "1px solid grey" }}
+          >
+            <div id="overview">
+              <EpcCertificate
                 address={[data.addressLine1, data.town, data.postcode]
                   .filter(Boolean)
                   .join(", ")}
+                addressLine1={data.addressLine1}
+                addressLine2={data.addressLine2}
+                addressLine3={data.addressLine3}
+                addressLine4={data.addressLine4}
+                town={data.town}
+                postcode={data.postcode}
                 dwellingType={data.dwellingType}
                 totalFloorArea={data.totalFloorArea}
                 dateOfAssessment={data.dateOfAssessment}
                 rrn={data.assessmentId}
+                dateOfExpiry={data.dateOfExpiry}
                 current={data.currentEnergyEfficiencyRating}
                 currentBand={data.currentEnergyEfficiencyBand}
                 potential={data.potentialEnergyEfficiencyRating}
                 potentialBand={data.potentialEnergyEfficiencyBand}
               />
-            </Section>
+            </div>
 
-            <Section id="ratings" title="Heat-retention rating (EPC)">
-              <p className="ds_hint-text">
-                This measures how well the property is insulated to keep warmth
-                in.
-              </p>
-              <EpcScale
-                current={data.currentEnergyEfficiencyRating ?? null}
-                potential={data.potentialEnergyEfficiencyRating ?? null}
-              />
-            </Section>
+            <BrIntro />
+            <BrEstimatedEnergyCosts></BrEstimatedEnergyCosts>
+            <BrHeatRetentionSummary></BrHeatRetentionSummary>
+            <BrHeatRetentionImprovements></BrHeatRetentionImprovements>
+            {/* <BrHeatingSystemEmissions></BrHeatingSystemEmissions> */}
 
-            <Section
-              id="property-summary"
-              title="Property report: Summary of this home"
-            >
-              <PropertySummaryTable items={data.propertySummary ?? []} />
-            </Section>
-
-            <Section
-              id="improvements"
-              title="Property report: Potential improvements"
-            >
-              <ImprovementsList items={data.recommendedImprovements ?? []} />
-            </Section>
-
-            <Section id="assessor" title="About this document">
-              <dl className="ds_key-details">
-                <div className="ds_key-details__item">
-                  <dt>Assessor</dt>
-                  <dd>
-                    {[data.assessor?.firstName, data.assessor?.lastName]
-                      .filter(Boolean)
-                      .join(" ") || "—"}
-                  </dd>
-                </div>
-                <div className="ds_key-details__item">
-                  <dt>Accreditation scheme</dt>
-                  <dd>{data.assessor?.registeredBy?.name ?? "—"}</dd>
-                </div>
-                <div className="ds_key-details__item">
-                  <dt>Scheme ID</dt>
-                  <dd>{data.assessor?.schemeAssessorId ?? "—"}</dd>
-                </div>
-                <div className="ds_key-details__item">
-                  <dt>Contact</dt>
-                  <dd>
-                    {data.assessor?.contactDetails?.email ||
-                    data.assessor?.contactDetails?.telephoneNumber ? (
-                      <>
-                        {data.assessor?.contactDetails?.email ?? ""}
-                        {data.assessor?.contactDetails?.email &&
-                        data.assessor?.contactDetails?.telephoneNumber
-                          ? " | "
-                          : ""}
-                        {data.assessor?.contactDetails?.telephoneNumber ?? ""}
-                      </>
-                    ) : (
-                      "—"
-                    )}
-                  </dd>
-                </div>
-                <div className="ds_key-details__item">
-                  <dt>Registration date</dt>
-                  <dd>{data.dateOfRegistration ?? "—"}</dd>
-                </div>
-                <div className="ds_key-details__item">
-                  <dt>Expiry date</dt>
-                  <dd>{data.dateOfExpiry ?? "—"}</dd>
-                </div>
-              </dl>
-            </Section>
+            <BrHeatingSystemInformation></BrHeatingSystemInformation>
+            <BrPotentialImprovements></BrPotentialImprovements>
+            {/* <BrInformationAboutTopRecommendations></BrInformationAboutTopRecommendations> */}
+            <BrAboutThisDocument></BrAboutThisDocument>
           </main>
         </div>
       ) : null}
