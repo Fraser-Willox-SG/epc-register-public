@@ -1,49 +1,7 @@
 import React from "react";
 import { formatGBP } from "@/app/utils/epc";
 
-type Props = {
-  address: string;
-  addressLine1: string | undefined;
-  addressLine2: string | undefined;
-  addressLine3: string | undefined;
-  addressLine4: string | undefined;
-  town: string | undefined;
-  postcode: string | undefined;
-  dwellingType?: string | null;
-  totalFloorArea?: string | null;
-  typicalSaving?: string | null;
-  dateOfAssessment?: string | null;
-  dateOfRegistration?: string | null;
-  dateOfExpiry?: string | undefined;
-  typeOfAssessment?: string | null;
-  primaryEnergyUse?: string | null;
-  assessor?: Assessor | null;
-  rrn: string;
-  current?: number | null;
-  currentBand?: string | null;
-  potential?: number | null;
-  potentialBand?: string | null;
-};
-
-export default function BrEstimatedEnergyCosts({
-  addressLine1,
-  addressLine2,
-  addressLine3,
-  addressLine4,
-  town,
-  postcode,
-  typicalSaving,
-  dwellingType,
-  totalFloorArea,
-  dateOfAssessment,
-  dateOfRegistration,
-  dateOfExpiry,
-  typeOfAssessment,
-  currentBand,
-  primaryEnergyUse,
-  rrn,
-  assessor,
-}: Props) {
+export default function BrEstimatedEnergyCosts() {
   return (
     <div
       id="br-estimated-energy-costs"
@@ -109,7 +67,7 @@ export default function BrEstimatedEnergyCosts({
           Potential future savings
         </p>
         <p>
-          Typical savings per year up to: {653 ? <strong>653</strong> : "—"}
+          Typical savings per year up to: <strong>653</strong>
         </p>
       </div>
     </div>

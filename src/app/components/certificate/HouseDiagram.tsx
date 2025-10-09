@@ -2,31 +2,7 @@ import React from "react";
 import HouseDiagramSVG from "@/app/components/certificate/HouseDiagramSVG.svg";
 import Image from "next/image";
 
-type Props = {
-  address: string;
-  addressLine1: string | undefined;
-  addressLine2: string | undefined;
-  addressLine3: string | undefined;
-  addressLine4: string | undefined;
-  town: string | undefined;
-  postcode: string | undefined;
-  dwellingType?: string | null;
-  totalFloorArea?: string | null;
-  typicalSaving?: string | null;
-  dateOfAssessment?: string | null;
-  dateOfRegistration?: string | null;
-  dateOfExpiry?: string | undefined;
-  typeOfAssessment?: string | null;
-  primaryEnergyUse?: string | null;
-  assessor?: Assessor | null;
-  rrn: string;
-  current?: number | null;
-  currentBand?: string | null;
-  potential?: number | null;
-  potentialBand?: string | null;
-};
-
-export default function HouseDiagram({}: Props) {
+export default function HouseDiagram() {
   return (
     <div>
       <div>
