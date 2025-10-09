@@ -1,13 +1,6 @@
 import React from "react";
 
-type Props = {
-  typicalSaving?: string | null;
-};
-
-export default function EpcPotentialSavings({ typicalSaving }: Props) {
-  const savingText =
-    typicalSaving && typicalSaving.trim() !== "" ? `${typicalSaving}%` : "—";
-
+export default function EpcPotentialSavings() {
   return (
     <div>
       <div style={{ background: "#2267B2", color: "white", padding: "16px" }}>

@@ -1,48 +1,6 @@
 import React from "react";
 
-type Props = {
-  address: string;
-  addressLine1: string | undefined;
-  addressLine2: string | undefined;
-  addressLine3: string | undefined;
-  addressLine4: string | undefined;
-  town: string | undefined;
-  postcode: string | undefined;
-  dwellingType?: string | null;
-  totalFloorArea?: string | null;
-  typicalSaving?: string | null;
-  dateOfAssessment?: string | null;
-  dateOfRegistration?: string | null;
-  dateOfExpiry?: string | undefined;
-  typeOfAssessment?: string | null;
-  primaryEnergyUse?: string | null;
-  assessor?: Assessor | null;
-  rrn: string;
-  current?: number | null;
-  currentBand?: string | null;
-  potential?: number | null;
-  potentialBand?: string | null;
-};
-
-export default function BrAboutThisDocument({
-  addressLine1,
-  addressLine2,
-  addressLine3,
-  addressLine4,
-  town,
-  postcode,
-  typicalSaving,
-  dwellingType,
-  totalFloorArea,
-  dateOfAssessment,
-  dateOfRegistration,
-  dateOfExpiry,
-  typeOfAssessment,
-  currentBand,
-  primaryEnergyUse,
-  rrn,
-  assessor,
-}: Props) {
+export default function BrAboutThisDocument() {
   return (
     <div id="br-about-this-document" style={{ padding: "16px" }}>
       <h2>About this document</h2>

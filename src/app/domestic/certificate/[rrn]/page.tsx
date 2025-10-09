@@ -6,12 +6,10 @@ import ContentsNav from "@scottish-government/designsystem-react/dist/components
 import EpcCertificate from "@/app/components/certificate/new-epc/EpcCertificate";
 import BrIntro from "@/app/components/certificate/new-epc/BrIntro";
 import BrEstimatedEnergyCosts from "@/app/components/certificate/new-epc/BrEstimatedEnergyCosts";
-import BrHeatingSystemEmissions from "@/app/components/certificate/new-epc/BrHeatingSystemEmissions";
 import BrHeatRetentionSummary from "@/app/components/certificate/new-epc/BrHeatRetentionSummary";
 import BrHeatRetentionImprovements from "@/app/components/certificate/new-epc/BrHeatRetentionImprovements";
 import BrHeatingSystemInformation from "@/app/components/certificate/new-epc/BrHeatingSystemInformation";
 import BrPotentialImprovements from "@/app/components/certificate/new-epc/BrPotentialImprovements";
-import BrInformationAboutTopRecommendations from "@/app/components/certificate/new-epc/BrInformationAboutTopRecommendations";
 import BrAboutThisDocument from "@/app/components/certificate/new-epc/BrAboutThisDocument";
 
 import PrintButton from "@/app/components/PrintButton";
@@ -31,9 +29,9 @@ async function absoluteUrl(path: string) {
 export default async function DomesticCertificatePage({
   params,
 }: {
-  params: { rrn: string }; // <-- correct type (no Promise)
+  params: Promise<{ rrn: string }>;
 }) {
-  const { rrn } = params;
+  const { rrn } = await params;
 
   const apiUrl = await absoluteUrl(
     `/api/ukg/assessments/${encodeURIComponent(rrn)}/summary`

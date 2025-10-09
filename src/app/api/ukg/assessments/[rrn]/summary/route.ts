@@ -42,9 +42,9 @@ async function getAccessToken(): Promise<string> {
 
 export async function GET(
   _req: NextRequest,
-  { params }: { params: { rrn: string } }
+  ctx: { params: Promise<{ rrn: string }> } // ← note Promise here
 ) {
-  const rrn = params.rrn;
+  const { rrn } = await ctx.params;
 
   try {
     console.log("[UKG][summary] fetching", { rrn, base: UKG_BASE });

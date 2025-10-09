@@ -1,58 +1,8 @@
 import React from "react";
 import HouseDiagram from "@/app/components/certificate/HouseDiagram";
 import { formatGBP } from "@/app/utils/epc";
-import type { Band } from "@/types/epc-dom";
-import {
-  BANDS,
-  COLORS,
-  LANE_COLORS as LANE,
-  isBand,
-  bandColor,
-} from "@/app/utils/epc";
 
-type Props = {
-  address: string;
-  addressLine1: string | undefined;
-  addressLine2: string | undefined;
-  addressLine3: string | undefined;
-  addressLine4: string | undefined;
-  town: string | undefined;
-  postcode: string | undefined;
-  dwellingType?: string | null;
-  totalFloorArea?: string | null;
-  typicalSaving?: string | null;
-  dateOfAssessment?: string | null;
-  dateOfRegistration?: string | null;
-  dateOfExpiry?: string | undefined;
-  typeOfAssessment?: string | null;
-  primaryEnergyUse?: string | null;
-  assessor?: Assessor | null;
-  rrn: string;
-  current?: number | null;
-  currentBand?: string | null;
-  potential?: number | null;
-  potentialBand?: string | null;
-};
-
-export default function BrHeatRetentionImprovements({
-  addressLine1,
-  addressLine2,
-  addressLine3,
-  addressLine4,
-  town,
-  postcode,
-  typicalSaving,
-  dwellingType,
-  totalFloorArea,
-  dateOfAssessment,
-  dateOfRegistration,
-  dateOfExpiry,
-  typeOfAssessment,
-  currentBand,
-  primaryEnergyUse,
-  rrn,
-  assessor,
-}: Props) {
+export default function BrHeatRetentionImprovements() {
   return (
     <div id="br-energy-loss" style={{ background: "#DAEEF7", padding: "16px" }}>
       <h3>Potential Heat Retention Improvements</h3>

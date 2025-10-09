@@ -52,7 +52,6 @@ export default function EpcCertificate({
   addressLine4,
   town,
   postcode,
-  typicalSaving,
   currentBand,
   potentialBand,
   rrn,
@@ -75,7 +74,7 @@ export default function EpcCertificate({
         currentBand={currentBand}
         potentialBand={potentialBand}
       />
-      <EpcPotentialSavings typicalSaving={typicalSaving} />
+      <EpcPotentialSavings />
     </div>
   );
 }
