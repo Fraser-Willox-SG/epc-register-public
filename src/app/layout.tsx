@@ -5,6 +5,7 @@ import AppHeader from "./components/AppHeader";
 // import "@scottish-government/design-system/dist/css/design-system.css";
 
 import "./globals.css";
+import "./epc-old.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
