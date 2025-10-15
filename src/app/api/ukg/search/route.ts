@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
 import { getAccessToken, invalidateToken } from "@/server/ukgAuth";
 
-const RAW_BASE = process.env.UKG_BASE;
-
 function normalizeBase(raw?: string) {
   if (!raw) return null;
   let b = raw.trim();
@@ -25,13 +23,16 @@ function safeJson(text: string) {
 }
 
 export async function GET(req: Request) {
-  const UKG_BASE = normalizeBase(RAW_BASE);
-  if (!UKG_BASE) {
+  const raw = process.env.UKG_BASE; // read at request time
+  if (!raw || raw.trim() === "") {
+    console.error("[UKG] missing UKG_BASE at runtime");
     return NextResponse.json(
       { error: "server_misconfigured", message: "UKG_BASE env var missing" },
       { status: 500 }
     );
   }
+
+  const UKG_BASE = normalizeBase(raw); // now it’s safe to normalize
 
   const incoming = new URL(req.url);
   const postcode = incoming.searchParams.get("postcode")?.trim();
