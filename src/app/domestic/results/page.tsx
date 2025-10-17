@@ -1,17 +1,10 @@
 import Link from "next/link";
-import { headers } from "next/headers";
 import EpcResultsTable, {
   AssessmentRow,
 } from "@/app/components/EpcResultsTable";
+import { selfUrl } from "@/app/utils/self-url";
 
 type SearchParams = { postcode?: string; page?: string };
-
-async function absoluteUrl(path: string) {
-  const h = await headers();
-  const proto = h.get("x-forwarded-proto") ?? "http";
-  const host = h.get("x-forwarded-host") ?? h.get("host");
-  return `${proto}://${host}${path}`;
-}
 
 export default async function DomesticResultsPage({
   searchParams,
@@ -40,12 +33,12 @@ export default async function DomesticResultsPage({
     );
   }
 
-  const apiUrl = await absoluteUrl(
-    `/api/ukg/search?postcode=${encodeURIComponent(postcode)}`
-  );
-
   let rows: AssessmentRow[] = [];
   let error: string | null = null;
+
+  const apiUrl = selfUrl(
+    `/api/ukg/search?postcode=${encodeURIComponent(postcode)}`
+  );
 
   try {
     const res = await fetch(apiUrl, { cache: "no-store" });

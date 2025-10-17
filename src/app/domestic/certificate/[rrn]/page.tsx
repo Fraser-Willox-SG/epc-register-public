@@ -1,5 +1,6 @@
-import { headers } from "next/headers";
 import Link from "next/link";
+
+import { selfUrl } from "@/app/utils/self-url";
 
 import ContentsNav from "@scottish-government/designsystem-react/dist/components/ContentsNav/ContentsNav";
 
@@ -17,14 +18,6 @@ import PrintButton from "@/app/components/PrintButton";
 import type { EpcDomSummary } from "@/types/epc-dom";
 type Summary = { data: EpcDomSummary };
 
-// ---- helpers
-async function absoluteUrl(path: string) {
-  const h = await headers();
-  const proto = h.get("x-forwarded-proto") ?? "http";
-  const host = h.get("x-forwarded-host") ?? h.get("host");
-  return `${proto}://${host}${path}`;
-}
-
 // ---- page
 export default async function DomesticCertificatePage({
   params,
@@ -33,7 +26,7 @@ export default async function DomesticCertificatePage({
 }) {
   const { rrn } = await params;
 
-  const apiUrl = await absoluteUrl(
+  const apiUrl = selfUrl(
     `/api/ukg/assessments/${encodeURIComponent(rrn)}/summary`
   );
 
@@ -43,19 +36,47 @@ export default async function DomesticCertificatePage({
 
   try {
     const res = await fetch(apiUrl, { cache: "no-store" });
-    const text = await res.text();
+
+    const bodyText = await res.text(); // read once
     if (!res.ok) {
       error = `We couldn’t retrieve the certificate for ${rrn}.`;
       if (process.env.NODE_ENV !== "production") {
-        detail = `Status ${res.status} — ${text.slice(0, 300)}`;
+        detail = `Status ${res.status} — ${bodyText.slice(0, 300)}`;
       }
+      // log on server for EC2 debugging
+      console.error("[SSR] certificate fetch failed", {
+        url: apiUrl,
+        status: res.status,
+        snippet: bodyText.slice(0, 300),
+      });
     } else {
-      const json = JSON.parse(text) as Summary;
-      data = json.data ?? null;
-      if (!data) error = "Certificate not found.";
+      // parse safely
+      try {
+        const json = JSON.parse(bodyText) as Summary;
+        data = json.data ?? null;
+        if (!data) {
+          error = "Certificate not found.";
+        }
+      } catch (parseErr) {
+        error = "Bad JSON from API route.";
+        if (process.env.NODE_ENV !== "production") {
+          detail = (parseErr as Error).message;
+        }
+        console.error("[SSR] JSON parse error", {
+          url: apiUrl,
+          body: bodyText.slice(0, 300),
+        });
+      }
     }
-  } catch {
+  } catch (e) {
     error = "There was a problem contacting the service.";
+    if (process.env.NODE_ENV !== "production") {
+      detail = (e as Error).message;
+    }
+    console.error("[SSR] postcode fetch failed", {
+      url: apiUrl,
+      err: (e as Error).message,
+    });
   }
 
   return (
