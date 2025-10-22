@@ -51,6 +51,58 @@ body {
   }
 }
 
+/* Potential Improvments Badge*/
+.text-badge {
+  display: grid;
+  grid-template-columns: 1fr max-content;
+  align-items: center;
+  column-gap: 16px;
+}
+
+@media (max-width: 520px) {
+  .text-badge {
+    grid-template-columns: 1fr;
+    row-gap: 8px;
+  }
+}
+
+@media (max-width: 700px) {
+  .heatloss-stack {
+    grid-template-columns: 1fr !important;
+    row-gap: 8px;
+  }
+  .heatloss-stack > div {
+    justify-content: center !important;
+  }
+}
+
+.epc-badge,
+.num-bullet {
+  --badge-size: 26px;
+  width: var(--badge-size);
+  height: var(--badge-size);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  line-height: 1;
+  font-size: calc(var(--badge-size) * 0.6);
+  flex: 0 0 auto;
+}
+
+.epc-badge {
+  border: 2px solid #374151;
+}
+.num-bullet {
+  background: #212121;
+  color: #fff;
+}
+
+.ds_table tbody > tr > td {
+  vertical-align: middle;
+}
+
 /* * {
   box-sizing: border-box;
   padding: 0;

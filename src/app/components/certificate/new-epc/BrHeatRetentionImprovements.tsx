@@ -1,60 +1,69 @@
 import React from "react";
 import HouseDiagram from "@/app/components/certificate/HouseDiagram";
+import HouseDiagramSVG from "@/app/components/certificate/HouseDiagramSVG.svg";
+import Image from "next/image";
 import { formatGBP } from "@/app/utils/epc";
+import PotentialImprovementsTable from "./PotentialImprovementsTable";
 
 export default function BrHeatRetentionImprovements() {
   return (
     <div id="br-energy-loss" style={{ background: "#DAEEF7", padding: "16px" }}>
       <h3>Potential Heat Retention Improvements</h3>
       <p>
-        This drawing illustrates the distribution of energy loss in your
-        property.
+        The measures below aim to improve the heat retention and reduce the
+        emissions of this property.
       </p>
       <p>
-        It highlights the key areas where energy escapes, including the roof,
-        walls, windows, and floor. Understanding these figures can help you
-        identify the most effective ways to improve energy efficiency and reduce
-        heating costs.
+        The "Potential improvement" are suggested first steps, starting with
+        low-cost options that provide good value, followed by higher-cost
+        improvements with long-term benefits.
       </p>
-      <HouseDiagram />
+      <p>
+        Performance ratings are cumulative, assuming the measures are
+        implemented in the order listed.
+      </p>
+      <div style={{ display: "grid", placeItems: "center" }}>
+        <Image
+          src={HouseDiagramSVG}
+          alt="Heat retention house diagram"
+          width={420}
+          height={408}
+          style={{
+            maxWidth: 420,
+            width: "min(70vw, 100%)",
+            height: "auto",
+            marginBottom: "30px",
+          }}
+          priority
+        />
+      </div>
 
-      <table className="ds_table" style={{ marginTop: "1rem" }}>
-        <caption className="ds_visually-hidden">-</caption>
-        <thead>
-          <tr>
-            <th scope="col">Potential Improvement</th>
-            <th scope="col">Estimated instalation cost</th>
-            <th scope="col">Estimated annual energy saving cost</th>
-            <th scope="col">Potential heat-retention rating</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td scope="row">Loft insulation</td>
-            <td>
-              {formatGBP(500)} - {formatGBP(1500)}
-            </td>
-            <td>5000 kWh</td>
-            <td>D</td>
-          </tr>
-          <tr>
-            <td scope="row">Cavity insulation</td>
-            <td>
-              {formatGBP(1500)} - {formatGBP(2500)}
-            </td>
-            <td>5000 kWh</td>
-            <td>C</td>
-          </tr>
-          <tr>
-            <td scope="row">Suspended floor insulation</td>
-            <td>
-              {formatGBP(2000)} - {formatGBP(3000)}
-            </td>
-            <td>500 kWh</td>
-            <td>C</td>
-          </tr>
-        </tbody>
-      </table>
+      <PotentialImprovementsTable
+        formatGBP={formatGBP}
+        rows={[
+          {
+            improvement: "Loft insulation",
+            costFrom: 500,
+            costTo: 1500,
+            savingKwh: 5000,
+            potentialBand: "D",
+          },
+          {
+            improvement: "Cavity insulation",
+            costFrom: 1500,
+            costTo: 2500,
+            savingKwh: 5000,
+            potentialBand: "C",
+          },
+          {
+            improvement: "Suspended floor insulation",
+            costFrom: 2000,
+            costTo: 3000,
+            savingKwh: 500,
+            potentialBand: "C",
+          },
+        ]}
+      />
 
       <section aria-labelledby="pi-title">
         <h3 id="pi-title" className="ds_h3">

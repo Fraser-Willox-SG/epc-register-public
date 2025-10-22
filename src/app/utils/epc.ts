@@ -40,6 +40,9 @@ const NA_GREY = "#DDDDDD";
 export const bandColor = (band?: Band | null) =>
   band ? COLORS[band] : NA_GREY;
 
+export const bandTextColor = (b: Band) =>
+  b === "C" || b === "D" || b === "E" ? "#374151" : "#ffffff";
+
 /** Coerce raw API band (often lower/extra whitespace) to a strict Band */
 export function toBand(v?: string | null): Band | undefined {
   if (!v) return undefined;

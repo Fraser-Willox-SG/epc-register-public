@@ -1,8 +1,10 @@
-// EpcEnergyCostRating.tsx
 import React from "react";
+import Link from "next/link";
 import EPCBandChart from "@/app/components/certificate/new-epc/EPCBandChart";
 
 import { toBand } from "@/app/utils/epc";
+
+const ScottishAverageHeatRetentionRating = "E";
 
 type Props = {
   /** Raw band values coming from your data source, e.g. "E", "A", etc. */
@@ -33,7 +35,11 @@ export default function EpcEnergyCostRating({
 
         <div>
           {/* Responsive chart; EPCBandChart should accept Band | null/undefined */}
-          <EPCBandChart current={current} potential={potential} />
+          <EPCBandChart
+            current={current}
+            potential={potential}
+            markerPlacement="right"
+          />
         </div>
       </section>
 
@@ -42,23 +48,38 @@ export default function EpcEnergyCostRating({
         heat-retention rating.
       </section>
 
-      <div className="row-2col" style={{ gap: 2 }}>
+      <div style={{ gap: 2 }}>
         <div style={{ background: "#ECECEC", padding: 16 }}>
           <h3>
-            <strong>Heating system</strong>
+            <strong>Heating system rating</strong>
           </h3>
-          <p>This shows your heating system and how efficient it is.</p>
+          <p>
+            This rating shows the combined direct emissions and efficiency of
+            the heating system currently installed.
+          </p>
+          <p>
+            Your heating system is {current}. The potential rating is based on
+            installing all measures highlighted in{" "}
+            <Link href="#">Heating system alternatives</Link> section.
+          </p>
           <div>
             <EPCBandChart current={current} potential={potential} />
           </div>
         </div>
 
-        <div style={{ background: "#ECECEC", padding: 16 }}>
+        <div style={{ padding: 16 }}>
           <h3>
             <strong>Heat-retention rating</strong>
           </h3>
           <p>
-            This measures how well your property is insulated to keep warmth in.
+            This rating shows how well your property is insulated to keep warmth
+            in.
+          </p>
+          <p>
+            Your Rating of {current} is lower than the Scottish Average of{" "}
+            {ScottishAverageHeatRetentionRating}. The potential rating is based
+            on installing all measures highlighted in Potential heat retention
+            improvements section.
           </p>
           <div>
             <EPCBandChart current={current} potential={potential} />
