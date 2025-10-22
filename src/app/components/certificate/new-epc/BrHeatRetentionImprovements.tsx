@@ -1,5 +1,4 @@
 import React from "react";
-import HouseDiagram from "@/app/components/certificate/HouseDiagram";
 import HouseDiagramSVG from "@/app/components/certificate/HouseDiagramSVG.svg";
 import Image from "next/image";
 import { formatGBP } from "@/app/utils/epc";
@@ -14,9 +13,9 @@ export default function BrHeatRetentionImprovements() {
         emissions of this property.
       </p>
       <p>
-        The "Potential improvement" are suggested first steps, starting with
-        low-cost options that provide good value, followed by higher-cost
-        improvements with long-term benefits.
+        The &quot;Potential improvement&quot; are suggested first steps,
+        starting with low-cost options that provide good value, followed by
+        higher-cost improvements with long-term benefits.
       </p>
       <p>
         Performance ratings are cumulative, assuming the measures are
