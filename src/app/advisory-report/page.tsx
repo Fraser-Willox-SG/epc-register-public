@@ -48,7 +48,7 @@ export default function AdvisoryReportPage() {
               id="search-by-postcode"
               name="search-mode"
               label="Postcode"
-              hintText="Example: EH1 1XX"
+              hintText="Example: DA8 1FD"
               checked={mode === "postcode"}
             />
             <RadioButton

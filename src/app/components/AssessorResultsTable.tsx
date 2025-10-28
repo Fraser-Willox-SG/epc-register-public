@@ -118,9 +118,19 @@ export default function AssessorResultsTable({
 
   return (
     <>
-      <p className="ds_hint-text">
-        Showing <strong>{start + 1}</strong>–<strong>{end}</strong> of{" "}
-        <strong>{total}</strong>.
+      <p>
+        View results for postcode: <strong>{postcode.toUpperCase()}</strong>
+        {total > 0 && (
+          <>
+            {" "}
+            —{" "}
+            <span className="ds_hint-text">
+              Showing <strong>{start + 1}</strong>–<strong>{end}</strong> of{" "}
+              <strong>{total}</strong>
+            </span>
+          </>
+        )}
+        .
       </p>
 
       <table className="ds_table">

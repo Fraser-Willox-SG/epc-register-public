@@ -37,7 +37,7 @@ export default function FindAdvisorPage() {
 
     const pc = normalizePostcode(postcode);
     if (!isValidUKPostcode(pc)) {
-      setError("Enter a valid UK postcode, for example EH1 1XX.");
+      setError("Enter a valid UK postcode, for example DA8 1FD.");
       return;
     }
 
@@ -100,7 +100,7 @@ export default function FindAdvisorPage() {
         <TextInput
           id="postcode"
           label="Postcode"
-          hintText="For example, EH1 1XX"
+          hintText="For example, DA8 1FD"
           width="fixed-20"
           autoComplete="postal-code"
           value={postcode}
