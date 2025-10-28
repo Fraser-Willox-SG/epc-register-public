@@ -52,7 +52,7 @@ export default function ActionPlanPage() {
               id="search-by-postcode"
               name={groupName}
               label="Postcode"
-              hintText="Example: EH1 1XX"
+              hintText="Example: DA8 1FD"
               checked={mode === "postcode"}
             />
             <RadioButton

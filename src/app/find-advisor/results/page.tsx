@@ -147,10 +147,11 @@ export default async function FindAdvisorResultsPage({
   return (
     <div className="ds_wrapper">
       <div className="ds_page-header">
-        <h1>Assessors and advisors near {postcode}</h1>
+        <h1>Find an assessor or advisor </h1>
       </div>
 
       <h2 className="ds_h3">
+        Results include:{" "}
         {types
           .map((t) =>
             t === "epc"
