@@ -1,61 +1,95 @@
 "use client";
 
 import { useState, ChangeEvent, FormEvent } from "react";
+import { useRouter } from "next/navigation";
+
 import Button from "@scottish-government/designsystem-react/dist/components/Button/Button";
 import Question from "@scottish-government/designsystem-react/dist/components/Question/Question";
 import RadioGroup from "@scottish-government/designsystem-react/dist/components/RadioButton/RadioGroup";
 import RadioButton from "@scottish-government/designsystem-react/dist/components/RadioButton/RadioButton";
 import TextInput from "@scottish-government/designsystem-react/dist/components/TextInput/TextInput";
 
-type SearchMode = "postcode" | "rrn";
+import {
+  isValidUKPostcode,
+  normalizePostcode,
+  isValidRRN,
+  normalizeRRN,
+} from "@/lib/validators";
+
+type Mode = "postcode" | "rrn";
 
 export default function AdvisoryReportPage() {
-  const [mode, setMode] = useState<SearchMode>("postcode");
+  const [mode, setMode] = useState<Mode>("postcode");
   const [postcode, setPostcode] = useState("");
   const [rrn, setRRN] = useState("");
+  const [error, setError] = useState<string | null>(null);
+
+  const router = useRouter();
+  const groupName = "advisory-report-search-mode";
 
   const onRadioChange = (e: ChangeEvent<HTMLInputElement>) => {
     const id = e.target.id;
+    setError(null);
     if (id === "search-by-postcode") setMode("postcode");
     if (id === "search-by-rrn") setMode("rrn");
   };
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
-    const value = (mode === "postcode" ? postcode : rrn).trim();
-    if (!value) return;
+    setError(null);
 
-    // TODO: Replace with routing / API call
-    // Example:
-    // router.push(`/search?${mode}=${encodeURIComponent(value)}`);
+    if (mode === "postcode") {
+      const pc = normalizePostcode(postcode);
+      if (!isValidUKPostcode(pc)) {
+        setError("Enter a valid UK postcode, for example AL10 0BQ.");
+        return;
+      }
+      router.push(
+        `/advisory-report/results?postcode=${encodeURIComponent(pc)}`
+      );
+    } else {
+      if (!isValidRRN(rrn)) {
+        setError(
+          "Enter a valid Report Reference Number (RRN). Example: 1234-5678-9012-3456-7890."
+        );
+        return;
+      }
+      const id = normalizeRRN(rrn);
+      router.push(`/advisory-report/certificate/${encodeURIComponent(id)}`);
+    }
   };
 
   return (
     <div className="ds_wrapper">
       <div className="ds_page-header">
-        <h1>Display energy certificate / Advisory report</h1>
+        <h1>Display Energy Certificate / Advisory Report</h1>
       </div>
-      <h2 className="ds_h3">Energy Usage for Public Buildings</h2>
+
+      <h2 className="ds_h3">
+        Energy Usage and efficiency advice for Public Buildings
+      </h2>
       <p>
-        View the energy usage and efficiency advice for public buildings. Search
-        by postcode or RRN to get a DEC or its associated AR.
+        {" "}
+        Search by postcode or RRN to get a Display Energy Certificate or its
+        associated Advisory Report.
       </p>
 
       <form onSubmit={onSubmit} noValidate>
         <Question legend="Find the property" tagName="fieldset">
-          <RadioGroup name="search-mode" onChange={onRadioChange}>
+          <p className="ds_question__hint">Search by</p>
+          <RadioGroup name={groupName} onChange={onRadioChange}>
             <RadioButton
               id="search-by-postcode"
-              name="search-mode"
+              name={groupName}
               label="Postcode"
-              hintText="Example: DA8 1FD"
+              hintText="Example: AL10 0BQ"
               checked={mode === "postcode"}
             />
             <RadioButton
               id="search-by-rrn"
-              name="search-mode"
+              name={groupName}
               label="Report Reference Number (RRN)"
-              hintText="Example: 1234-5678-9012-3456"
+              hintText="Example: 0000-0000-0000-0749-2857"
               checked={mode === "rrn"}
             />
           </RadioGroup>
@@ -79,7 +113,7 @@ export default function AdvisoryReportPage() {
             key="rrn"
             id="rrn-input"
             label="Report Reference Number (RRN)"
-            hintText="Enter the 16-character RRN"
+            hintText="Enter the RRN (20 digits, with or without hyphens)"
             width="fixed-20"
             value={rrn}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -89,7 +123,11 @@ export default function AdvisoryReportPage() {
           />
         )}
 
-        <Button type="submit">Continue</Button>
+        {error && <p className="ds_error-message ds_mt-2">{error}</p>}
+
+        <Button type="submit" className="ds_mt-4">
+          Continue
+        </Button>
       </form>
     </div>
   );
