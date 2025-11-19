@@ -1,5 +1,3 @@
-// /types/epc-dom.ts
-
 export interface EpcDomSummary {
   typeOfAssessment: "SAP" | "RdSAP" | string;
   assessmentId: string;

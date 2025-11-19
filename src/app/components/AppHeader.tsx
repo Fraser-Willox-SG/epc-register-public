@@ -20,7 +20,7 @@ type DSNavigationItem = {
 const NAV_ITEMS: NavItem[] = [
   { href: "/", label: "Energy performance certificate" },
   {
-    href: "/advisory-report",
+    href: "/display-energy-certificate-and-advisory-report",
     label: "Display energy certificate / Advisory report",
   },
   { href: "/action-plan", label: "Action plan" },
@@ -84,11 +84,6 @@ export default function AppHeader() {
           ))}
         </SiteNavigation>
       </SiteHeader.Navigation>
-
-      {/* Optional:
-      <SiteHeader.Search>...</SiteHeader.Search>
-      <SiteHeader.Phase>...</SiteHeader.Phase>
-      */}
     </SiteHeader>
   );
 }

@@ -37,8 +37,7 @@ export default function EPCPage() {
       <h2 className="ds_h3">Property type</h2>
       <p>
         A domestic property like a house or flat, or a non-domestic property for
-        example commercial, industrial or public building. Enter the report
-        reference number (RRN) or the postcode to view the document.
+        example commercial, industrial or public building.
       </p>
 
       <form onSubmit={onSubmit} noValidate>
