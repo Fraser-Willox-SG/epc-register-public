@@ -25,7 +25,8 @@ export default function AdvisoryReportPage() {
   const [error, setError] = useState<string | null>(null);
 
   const router = useRouter();
-  const groupName = "advisory-report-search-mode";
+  const groupName =
+    "display-energy-certificate-and-advisory-report-search-mode";
 
   const onRadioChange = (e: ChangeEvent<HTMLInputElement>) => {
     const id = e.target.id;
@@ -45,7 +46,9 @@ export default function AdvisoryReportPage() {
         return;
       }
       router.push(
-        `/advisory-report/results?postcode=${encodeURIComponent(pc)}`
+        `/display-energy-certificate-and-advisory-report/results?postcode=${encodeURIComponent(
+          pc
+        )}`
       );
     } else {
       if (!isValidRRN(rrn)) {
@@ -55,7 +58,11 @@ export default function AdvisoryReportPage() {
         return;
       }
       const id = normalizeRRN(rrn);
-      router.push(`/advisory-report/certificate/${encodeURIComponent(id)}`);
+      router.push(
+        `/display-energy-certificate-and-advisory-report/certificate/${encodeURIComponent(
+          id
+        )}`
+      );
     }
   };
 

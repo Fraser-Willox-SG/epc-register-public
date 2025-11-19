@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { AssessmentRow } from "@/app/components/EpcResultsTable";
 import { selfUrl } from "@/app/utils/self-url";
-import DecarResultsTable from "@/app/components/DecarResultsTable";
+import DecarResultsTable, {
+  AssessmentRow,
+} from "@/app/components/DecarResultsTable";
 
 type SearchParams = { postcode?: string; page?: string };
 
@@ -72,7 +73,10 @@ export default async function AdvisoryReportsResultsPage({
         <>
           <p className="ds_error-message">{error}</p>
           <p className="ds_mt-4">
-            <Link href="/advisory-report" className="ds_link">
+            <Link
+              href="/display-energy-certificate-and-advisory-report"
+              className="ds_link"
+            >
               Back to search
             </Link>
           </p>
@@ -83,7 +87,10 @@ export default async function AdvisoryReportsResultsPage({
             <p>No results found for {postcode.toUpperCase()}.</p>
           </div>
           <p className="ds_mt-4">
-            <Link href="/advisory-report" className="ds_link">
+            <Link
+              href="/display-energy-certificate-and-advisory-report"
+              className="ds_link"
+            >
               Back to search
             </Link>
           </p>
@@ -94,9 +101,11 @@ export default async function AdvisoryReportsResultsPage({
           rows={rows}
           page={page}
           pageSize={7}
-          resultsPath="/advisory-report/results"
+          resultsPath="/display-energy-certificate-and-advisory-report/results"
           certificateHref={(rrn) =>
-            `/advisory-report/certificate/${encodeURIComponent(rrn)}`
+            `/display-energy-certificate-and-advisory-report/certificate/${encodeURIComponent(
+              rrn
+            )}`
           }
         />
       )}

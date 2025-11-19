@@ -87,7 +87,7 @@ export default function DecCertificate() {
         energy actually used in the building. It is compared to a benchmark that
         represents performance indicative of all buildings of this type. There
         is more advice on how to interpret this information on the Scottish
-        Government's website http://www.gov.scot/section63
+        Government&apos;s website http://www.gov.scot/section63
       </p>
       <div
         className="flex-between"

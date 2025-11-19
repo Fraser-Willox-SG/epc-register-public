@@ -106,8 +106,19 @@ function groupByProperty(rows: AssessmentRow[]): Grouped[] {
     if (r.typeOfAssessment === "DEC") g.dec = pickNewest(g.dec, r);
     if (r.typeOfAssessment === "DEC-RR") g.ar = pickNewest(g.ar, r);
 
-    // Track newest overall date for the row
-    g.createdDate = bestDate(pickNewest({ ...g.dec }, r));
+    // Track newest overall date for the row (group-level)
+    const prev = g.createdDate;
+    const current = bestDate(r);
+
+    if (!prev) {
+      g.createdDate = current;
+    } else if (current) {
+      const tp = Date.parse(prev);
+      const tc = Date.parse(current);
+      if (Number.isNaN(tp) || (!Number.isNaN(tc) && tc >= tp)) {
+        g.createdDate = current;
+      }
+    }
 
     if (!g.uprn && uprn) g.uprn = uprn;
 
@@ -276,6 +287,7 @@ export default function DecarResultsTable({
             <th scope="col">Created Date</th>
             <th scope="col">View DEC</th>
             <th scope="col">View AR</th>
+            <th scope="col">Combined</th>
           </tr>
         </thead>
         <tbody>
@@ -283,6 +295,13 @@ export default function DecarResultsTable({
             const created = asDateStr(g.createdDate ?? undefined);
             const decRrn = g.dec?.assessmentId;
             const arRrn = g.ar?.assessmentId;
+
+            const combinedHref =
+              decRrn && arRrn
+                ? `/display-energy-certificate-and-advisory-report/combined/${encodeURIComponent(
+                    decRrn
+                  )}/${encodeURIComponent(arRrn)}`
+                : null;
 
             return (
               <tr key={g.key}>
@@ -316,6 +335,15 @@ export default function DecarResultsTable({
                   {arRrn ? (
                     <Link href={certificateHref(arRrn)} className="ds_link">
                       View AR
+                    </Link>
+                  ) : (
+                    <span className="ds_hint-text">—</span>
+                  )}
+                </td>
+                <td>
+                  {combinedHref ? (
+                    <Link href={combinedHref} className="ds_link">
+                      View combined
                     </Link>
                   ) : (
                     <span className="ds_hint-text">—</span>

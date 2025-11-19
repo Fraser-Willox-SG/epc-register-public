@@ -6,7 +6,7 @@ import ContentsNav from "@scottish-government/designsystem-react/dist/components
 import PrintButton from "@/app/components/PrintButton";
 
 import type { DecarSummary } from "@/types/decar";
-import { isDec, isDecRr } from "@/types/decar";
+import { isDecRr } from "@/types/decar";
 
 import DecCertificate from "@/app/components/certificate/decar/DecCertificate";
 import ArCertificate from "@/app/components/certificate/decar/ArCertificate";
@@ -104,7 +104,10 @@ export default async function DecarCertificatePage({
           <p className="ds_error-message">{error}</p>
           {detail && <pre className="ds_inset-text">{detail}</pre>}
           <p className="ds_mt-4">
-            <Link href="/advisory-report" className="ds_link">
+            <Link
+              href="/display-energy-certificate-and-advisory-report"
+              className="ds_link"
+            >
               Back to search
             </Link>
           </p>
@@ -122,22 +125,22 @@ export default async function DecarCertificatePage({
                 ariaLabel="Display Energy Certificate navigation"
               >
                 <ContentsNav.Item href="#dec-overview">
-                  Display Energy Certificate
+                  <strong>DEC:</strong> Display Energy Certificate
                 </ContentsNav.Item>
                 <ContentsNav.Item href="#dec-operational-rating">
-                  Energy Performance Operational Rating
+                  <strong>DEC:</strong> Energy Performance Operational Rating
                 </ContentsNav.Item>
                 <ContentsNav.Item href="#dec-co2-emissions">
-                  Total CO2 Emissions
+                  <strong>DEC:</strong> Total CO2 Emissions
                 </ContentsNav.Item>
                 <ContentsNav.Item href="#dec-previous-ratings">
-                  Previous Operational Ratings
+                  <strong>DEC:</strong> Previous Operational Ratings
                 </ContentsNav.Item>
                 <ContentsNav.Item href="#dec-technical-information">
-                  Technical Information
+                  <strong>DEC:</strong> Technical Information
                 </ContentsNav.Item>
                 <ContentsNav.Item href="#dec-administrative-information">
-                  Administrative Information
+                  <strong>DEC:</strong> Administrative Information
                 </ContentsNav.Item>
               </ContentsNav>
             )}
@@ -148,19 +151,19 @@ export default async function DecarCertificatePage({
                 ariaLabel="Advisory Report navigation"
               >
                 <ContentsNav.Item href="#ar-overview">
-                  Advisory Report
+                  <strong>AR:</strong> Advisory Report
                 </ContentsNav.Item>
                 <ContentsNav.Item href="#ar-background">
-                  Background
+                  <strong>AR:</strong> Background
                 </ContentsNav.Item>
                 <ContentsNav.Item href="#ar-recommendations">
-                  Recommendations
+                  <strong>AR:</strong> Recommendations
                 </ContentsNav.Item>
                 <ContentsNav.Item href="#ar-next-steps">
-                  Next steps
+                  <strong>AR:</strong> Next steps
                 </ContentsNav.Item>
                 <ContentsNav.Item href="#ar-glossary">
-                  Glossary
+                  <strong>AR:</strong> Glossary
                 </ContentsNav.Item>
               </ContentsNav>
             )}

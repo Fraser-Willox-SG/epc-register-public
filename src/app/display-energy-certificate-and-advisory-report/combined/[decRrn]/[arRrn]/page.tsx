@@ -37,7 +37,7 @@ async function fetchDecarSummary(rrn: string) {
   try {
     const json = JSON.parse(bodyText) as SummaryResponse;
     return { data: json.data ?? null, error: null as string | null };
-  } catch (err) {
+  } catch {
     console.error("[SSR] Combined DEC/AR JSON parse error", {
       rrn,
       url: apiUrl,
@@ -108,7 +108,10 @@ export default async function CombinedDecarCertificatePage({
             </div>
           )}
           <p className="ds_mt-4">
-            <Link href="/advisory-report" className="ds_link">
+            <Link
+              href="/display-energy-certificate-and-advisory-report"
+              className="ds_link"
+            >
               Back to search
             </Link>
           </p>
@@ -127,22 +130,22 @@ export default async function CombinedDecarCertificatePage({
               {hasDec && (
                 <>
                   <ContentsNav.Item href="#dec-overview">
-                    Display Energy Certificate
+                    <strong>DEC:</strong> Display Energy Certificate
                   </ContentsNav.Item>
                   <ContentsNav.Item href="#dec-operational-rating">
-                    Energy Performance Operational Rating
+                    <strong>DEC:</strong> Energy Performance Operational Rating
                   </ContentsNav.Item>
                   <ContentsNav.Item href="#dec-co2-emissions">
-                    Total CO2 Emissions
+                    <strong>DEC:</strong> Total CO2 Emissions
                   </ContentsNav.Item>
                   <ContentsNav.Item href="#dec-previous-ratings">
-                    Previous Operational Ratings
+                    <strong>DEC:</strong> Previous Operational Ratings
                   </ContentsNav.Item>
                   <ContentsNav.Item href="#dec-technical-information">
-                    Technical Information
+                    <strong>DEC:</strong> Technical Information
                   </ContentsNav.Item>
                   <ContentsNav.Item href="#dec-administrative-information">
-                    Administrative Information
+                    <strong>DEC:</strong> Administrative Information
                   </ContentsNav.Item>
                 </>
               )}
@@ -150,19 +153,19 @@ export default async function CombinedDecarCertificatePage({
               {hasAr && (
                 <>
                   <ContentsNav.Item href="#ar-overview">
-                    Advisory Report
+                    <strong>AR:</strong> Advisory Report
                   </ContentsNav.Item>
                   <ContentsNav.Item href="#ar-background">
-                    Background
+                    <strong>AR:</strong> Background
                   </ContentsNav.Item>
                   <ContentsNav.Item href="#ar-recommendations">
-                    Recommendations
+                    <strong>AR:</strong> Recommendations
                   </ContentsNav.Item>
                   <ContentsNav.Item href="#ar-next-steps">
-                    Next steps
+                    <strong>AR:</strong> Next steps
                   </ContentsNav.Item>
                   <ContentsNav.Item href="#ar-glossary">
-                    Glossary
+                    <strong>AR:</strong> Glossary
                   </ContentsNav.Item>
                 </>
               )}
