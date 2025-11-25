@@ -1,87 +1,71 @@
 import React from "react";
+import CertificateHeader from "../CertificateHeader";
 
-export default function DecCertificate() {
+import type { DecarSummary } from "@/types/decar";
+import DecOperationalRating from "./DecOperationalRating";
+import DecCO2Emissions from "./DecC02Emissions";
+import DecPreviousOperationalRatings from "./DecPreviousOperationalRatings";
+import DecTechnicalInformation from "./DecTechnicalInformation";
+import DecAdministrativeInformation from "./DecAdministrativeInformation";
+
+type Props = {
+  data: DecarSummary;
+};
+
+export default function DecCertificate({ data }: Props) {
+  const { assessmentId: rrn, dateOfExpiry, address, currentAssessment } = data;
+  const rating = data.currentAssessment?.energyEfficiencyRating;
+  const current = data.currentAssessment;
+  const year1 = data.year1Assessment;
+  const year2 = data.year2Assessment;
+
+  const periods = [
+    current && {
+      label: current.date, // e.g. "07-2022"
+      rating: current.energyEfficiencyRating,
+    },
+    year1 && {
+      label: year1.date,
+      rating: year1.energyEfficiencyRating,
+    },
+    year2 && {
+      label: year2.date,
+      rating: year2.energyEfficiencyRating,
+    },
+  ].filter(Boolean) as { label: string; rating: number }[];
+
+  const {
+    addressLine1,
+    addressLine2,
+    addressLine3,
+    addressLine4,
+    town,
+    postcode,
+  } = address;
+
+  const currentBand = currentAssessment?.energyEfficiencyBand?.toUpperCase();
+
   return (
     <div>
-      <div
-        className="flex-between"
+      <CertificateHeader
+        addressLine1={addressLine1}
+        addressLine2={addressLine2}
+        addressLine3={addressLine3}
+        addressLine4={addressLine4}
+        postcode={postcode}
+        town={town}
+        rrn={rrn}
+        dateOfExpiry={dateOfExpiry}
+        currentBand={currentBand}
+        isEpc={false}
+      />
+
+      {/* <hr></hr> */}
+      <p
         style={{
-          background: "black",
-          color: "white",
           padding: "16px",
-          marginBottom: "2px",
         }}
       >
-        <div>
-          <h2>Display Energy Certificate</h2>
-          <span
-            style={{ fontSize: "1rem", fontWeight: "bold", lineHeight: "1rem" }}
-          >
-            How efficiently is this building being used
-          </span>
-        </div>
-
-        <div>
-          <span
-            style={{ fontSize: "2rem", fontWeight: "bold", lineHeight: "2rem" }}
-          >
-            Scotland
-          </span>
-        </div>
-      </div>
-      <div
-        className="flex-between"
-        style={{
-          //   background: "",
-          //   color: "white",
-          padding: "16px",
-          marginBottom: "2px",
-        }}
-      >
-        <div>
-          <p style={{ marginBottom: "0" }}>addressLine1</p>
-          <p style={{ marginBottom: "0" }}>addressLine2</p>
-          <p style={{ marginBottom: "0" }}>addressLine3</p>
-          <p style={{ marginBottom: "0" }}>addressLine4</p>
-          <p style={{ marginBottom: "0" }}>town</p>
-          <p style={{ marginBottom: "0" }}>postcode</p>
-        </div>
-
-        <div
-          style={{
-            // border: "2px solid white",
-            // color: "white",
-            padding: "16px",
-            textAlign: "center",
-          }}
-        >
-          <p style={{ marginBottom: "0px" }}>Reference Number</p>
-          <span
-            style={{ fontSize: "2rem", fontWeight: "bold", lineHeight: "2rem" }}
-          >
-            {/* {String(currentBand).toUpperCase()} */}01234 5678 9012 3456
-          </span>
-        </div>
-      </div>
-      <div
-        className="row-2col"
-        style={{ textAlign: "center", color: "white", gap: "2px" }}
-      >
-        <div style={{ background: "black", padding: "16px" }}>
-          <p>
-            <strong>Valid until</strong>
-          </p>
-          {/* {dateOfExpiry ? formatIsoDateLong(dateOfExpiry) : "—"} 7th November 2025 */}
-        </div>
-        <div style={{ background: "black", padding: "16px" }}>
-          <p>
-            <strong>Certificate number</strong>
-          </p>
-          {/* {rrn} 0123 4567 8910 1234 */}
-        </div>
-      </div>
-      <hr></hr>
-      <p>
         This certificate indicates how much energy is being used to operate this
         building. The operational rating is based on meter readings of all the
         energy actually used in the building. It is compared to a benchmark that
@@ -89,7 +73,86 @@ export default function DecCertificate() {
         is more advice on how to interpret this information on the Scottish
         Government&apos;s website http://www.gov.scot/section63
       </p>
+
       <div
+        style={{
+          padding: "16px",
+          background: "#DAEEF7",
+        }}
+      >
+        <h3 id="dec-operational-rating">
+          Energy Performance Operational Rating
+        </h3>
+        <p>
+          This tells you how efficiently energy has been used in the building.
+          The numbers do not represent actual units of energy consumed; they
+          represent comparative energy efficiency. 100 would be typical for this
+          kind of building.
+        </p>
+        {typeof rating === "number" && (
+          <DecOperationalRating rating={rating} typicalValue={100} />
+        )}
+      </div>
+
+      {current && (
+        <div
+          style={{
+            padding: "16px",
+          }}
+        >
+          <h3 id="dec-co2-emissions">Total CO2 Emissions</h3>
+          <p>
+            Thsi tells you how much carbon dioxide teh building emits. it shows
+            tonnes per year of CO2
+          </p>
+          <DecCO2Emissions
+            electricityCo2={current.electricityCo2}
+            heatingCo2={current.heatingCo2}
+            renewablesCo2={current.renewablesCo2}
+            periodLabel={current.date}
+            maxValue={1200}
+          />
+        </div>
+      )}
+
+      <div
+        style={{
+          padding: "16px",
+          background: "#ECECEC",
+        }}
+      >
+        <h3 id="dec-previous-ratings">Previous Operational Ratings</h3>
+        <p>
+          Thsi tells you how efficvient energy has been used in this building
+          over the last three accounting periods.
+        </p>
+        <DecPreviousOperationalRatings periods={periods} />
+      </div>
+      <div
+        style={{
+          padding: "16px",
+          background: "#DAEEF7",
+        }}
+      >
+        <DecTechnicalInformation
+          technical={data.technicalInformation ?? null}
+          floorArea={data.technicalInformation?.floorArea}
+          assetRating={data.technicalInformation?.assetRating}
+        />
+      </div>
+      <div
+        style={{
+          padding: "16px",
+        }}
+      >
+        <DecAdministrativeInformation
+          administrative={data.administrativeInformation}
+          assessor={data.assessor}
+          addressId={data.addressId}
+        />
+      </div>
+
+      {/* <div
         className="flex-between"
         style={{
           padding: "16px",
@@ -134,7 +197,7 @@ export default function DecCertificate() {
             <p> Total CO2 Emissions</p>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

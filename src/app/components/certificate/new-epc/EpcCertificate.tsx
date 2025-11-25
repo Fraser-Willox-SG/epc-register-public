@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "@/app/components/certificate/new-epc/components/EpcHeader";
+import Header from "@/app/components/certificate/CertificateHeader";
 import EpcEnergyCostRating from "@/app/components/certificate/new-epc/components/EpcEnergyCostRating";
 import EpcPotentialSavings from "@/app/components/certificate/new-epc/components/EpcPotentialSavings";
 

@@ -11,9 +11,10 @@ type Props = {
   dateOfExpiry?: string | undefined;
   rrn: string;
   currentBand?: string | null;
+  isEpc?: boolean;
 };
 
-export default function EpcHeader({
+export default function CertificateHeader({
   addressLine1,
   addressLine2,
   addressLine3,
@@ -23,6 +24,7 @@ export default function EpcHeader({
   dateOfExpiry,
   currentBand,
   rrn,
+  isEpc = true,
 }: Props) {
   return (
     <div>
@@ -52,7 +54,9 @@ export default function EpcHeader({
             textAlign: "center",
           }}
         >
-          <p style={{ marginBottom: "0px" }}>Energy Rating</p>
+          <p style={{ marginBottom: "0px" }}>
+            {isEpc ? "Energy Rating" : "Operational Rating"}
+          </p>
           <span
             style={{ fontSize: "6rem", fontWeight: "bold", lineHeight: "6rem" }}
           >
@@ -66,7 +70,11 @@ export default function EpcHeader({
       >
         <div style={{ background: "#0065BD", padding: "16px" }}>
           <p>
-            <strong>Valid until</strong>
+            <strong>
+              {dateOfExpiry && new Date(dateOfExpiry) < new Date()
+                ? "This certificate expired on"
+                : "Valid until"}
+            </strong>
           </p>
           {dateOfExpiry ? formatIsoDateLong(dateOfExpiry) : "—"}
         </div>
