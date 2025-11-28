@@ -145,6 +145,8 @@ const DecPreviousOperationalRatings: React.FC<Props> = ({
                 width={barWidth}
                 height={barHeight}
                 fill={fill}
+                stroke="#000"
+                strokeWidth={1}
               />
 
               {/* Value text */}

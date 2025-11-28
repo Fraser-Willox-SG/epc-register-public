@@ -50,6 +50,7 @@ export default function DecOperationalRating({
   maxWidth = "100%",
 }: Props) {
   const band = getBandForRating(rating);
+  const bandColour = COLORS[band.band];
   const activeIndex = DEC_BANDS.indexOf(band);
 
   const baseW = 420;
@@ -58,8 +59,8 @@ export default function DecOperationalRating({
   const padX = 0;
   const barX = padX;
   const barW = 220;
-  const bandH = 32;
-  const bandGap = 6;
+  const bandH = 28;
+  const bandGap = 8;
   const topY = 30;
 
   const pointerX = barX + barW + 40;
@@ -104,13 +105,13 @@ export default function DecOperationalRating({
             <g key={b.band}>
               {/* band bar */}
               <rect
-                x={barX}
+                x={barX + 2}
                 y={y}
                 width={width}
                 height={bandH}
                 fill={COLORS[b.band]}
-                stroke={isActive ? "#000" : "none"}
-                strokeWidth={isActive ? 3 : 0}
+                stroke={isActive ? "#000" : COLORS[b.band]}
+                strokeWidth={3}
               />
               {/* band letter */}
               <text
@@ -141,7 +142,7 @@ export default function DecOperationalRating({
             points={`${pointerX},${activeY} ${pointerX - 20},${activeY - 14} ${
               pointerX - 20
             },${activeY + 14}`}
-            fill="#ffd700"
+            fill={bandColour}
             stroke="#000"
             strokeWidth={2}
             transform={`rotate(180 ${pointerX} ${activeY})`}
@@ -154,7 +155,7 @@ export default function DecOperationalRating({
             paintOrder="stroke"
             fontSize="32"
             fontWeight={700}
-            fill="#ffd700"
+            fill={bandColour}
           >
             {rating}
           </text>
@@ -164,14 +165,14 @@ export default function DecOperationalRating({
         <g aria-hidden="true">
           <line
             x1={barX}
-            y1={typicalY + 1}
+            y1={typicalY}
             x2={valueX - 10}
-            y2={typicalY + 1}
-            stroke="#005ea5"
+            y2={typicalY}
+            stroke="#000000"
             strokeWidth={1}
             strokeDasharray="4,2"
           />
-          <text x={valueX} y={typicalY + 3} fontSize="10" fill="#005ea5">
+          <text x={valueX} y={typicalY + 3} fontSize="10" fill="#000">
             {typicalValue} would be typical
           </text>
         </g>

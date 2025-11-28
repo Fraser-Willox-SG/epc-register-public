@@ -8,24 +8,43 @@ type Props = {
   /** x-axis label, e.g. "07-2022" */
   periodLabel: string;
   /**
-   * Max value for y-axis. Defaults to 1200 to roughly
-   * match the DEC PDF style. You can override if needed.
+   * Optional fixed max for y-axis. If omitted, the axis
+   * will be dynamically chosen based on the data.
    */
   maxValue?: number;
   /** Optional width limit to fit your layout */
   maxWidth?: string | number;
 };
 
+// Choose an axis max from a set of "nice" values so that
+// the bar usually reaches ~70–90% of the height.
+function getAxisMax(total: number, override?: number): number {
+  if (override !== undefined) return override;
+  if (total <= 0) return 1;
+
+  // Candidate tops, roughly matching DEC examples
+  const candidates = [
+    15, 20, 50, 60, 100, 150, 200, 250, 300, 400, 500, 600, 800, 1000, 1200,
+  ];
+
+  // Give ourselves a tiny bit of headroom
+  const padded = total * 1.05;
+
+  const found = candidates.find((c) => padded <= c);
+  return found ?? padded;
+}
+
 export const DecCO2Emissions: React.FC<Props> = ({
   electricityCo2,
   heatingCo2,
   renewablesCo2,
   periodLabel,
-  maxValue = 1200,
+  maxValue,
   maxWidth = "100%",
 }) => {
   const total = electricityCo2 + heatingCo2 + renewablesCo2;
-  const effectiveMax = Math.max(maxValue, total || 0.0001); // avoid divide by zero
+
+  const axisMax = getAxisMax(total, maxValue);
 
   // SVG layout
   const viewW = 220;
@@ -39,7 +58,7 @@ export const DecCO2Emissions: React.FC<Props> = ({
   const barWidth = 60;
   const barX = axisLeft + 15;
 
-  const scale = (value: number) => (value / effectiveMax) * axisHeight;
+  const scale = (value: number) => (value / axisMax) * axisHeight;
 
   // Heights for each segment
   const hElec = scale(electricityCo2);
@@ -62,7 +81,8 @@ export const DecCO2Emissions: React.FC<Props> = ({
         )} renewables).`
       : `Total CO2 emissions chart for ${periodLabel}: no data`;
 
-  const tickStep = maxValue / 6;
+  // Dynamic ticks from 0..axisMax (7 ticks, like before)
+  const tickStep = axisMax / 6;
   const ticks = Array.from({ length: 7 }, (_, i) => Math.round(i * tickStep));
 
   return (
@@ -130,6 +150,8 @@ export const DecCO2Emissions: React.FC<Props> = ({
               width={barWidth}
               height={hElec}
               fill="#7EC8F5"
+              stroke="#000"
+              strokeWidth={1}
             />
             {/* Heating (middle, darker blue) */}
             <rect
@@ -138,6 +160,8 @@ export const DecCO2Emissions: React.FC<Props> = ({
               width={barWidth}
               height={hHeat}
               fill="#0072C6"
+              stroke="#000"
+              strokeWidth={1}
             />
             {/* Renewables (top, grey) */}
             <rect
@@ -146,6 +170,8 @@ export const DecCO2Emissions: React.FC<Props> = ({
               width={barWidth}
               height={hRen}
               fill="#A0A0A0"
+              stroke="#000"
+              strokeWidth={1}
             />
           </>
         )}

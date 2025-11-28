@@ -108,13 +108,12 @@ export default function DecCertificate({ data }: Props) {
               heatingCo2={current.heatingCo2}
               renewablesCo2={current.renewablesCo2}
               periodLabel={current.date}
-              maxValue={1200}
             />
           </div>
         </div>
       )}
 
-      <div className="cert-section bg-grey">
+      <div className="cert-section bg-blue">
         <h3 id="dec-previous-ratings">Previous Operational Ratings</h3>
         <p>
           This tells you how efficiently energy has been used in this building
@@ -122,12 +121,12 @@ export default function DecCertificate({ data }: Props) {
         </p>
         <DecPreviousOperationalRatings periods={periods} />
       </div>
-      <div className="cert-section bg-blue">
+      <div className="cert-section bg-white">
         <DecTechnicalInformation
           technical={data.technicalInformation ?? null}
         />
       </div>
-      <div className="cert-section">
+      <div className="cert-section bg-blue">
         <DecAdministrativeInformation
           administrative={data.administrativeInformation}
           assessor={data.assessor}
