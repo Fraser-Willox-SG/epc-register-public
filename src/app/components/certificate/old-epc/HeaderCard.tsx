@@ -48,21 +48,17 @@ export default function HeaderCard({
   return (
     <div>
       <div
-        style={{ backgroundColor: "#007D9A", color: "white", padding: "16px" }}
+        className="cert-section"
+        style={{ backgroundColor: "#007D9A", color: "white" }}
       >
-        <h2 style={{ marginBottom: "0px" }}>
-          Energy Performance Certificate (EPC)
-        </h2>
-        <div
-          className="
-flex-between"
-        >
+        <h2 className="mb-0">Energy Performance Certificate (EPC)</h2>
+        <div className="flex-between">
           <span>Dwellings</span>
           <span>Scotland</span>
         </div>
       </div>
 
-      <div style={{ padding: "16px" }}>
+      <div className="cert-section">
         <p>
           <strong>{address}</strong>
         </p>
@@ -122,43 +118,6 @@ flex-between"
           </li>
         </ul>
       </div>
-
-      {/* <div className="flex-between">
-        <div>
-          <div
-            style={{ background: "#BE1E2D", color: "white", padding: "16px" }}
-          >
-            <span>Estimated energy costs for your home for 3 years*:</span>
-          </div>
-          <div
-            style={{ background: "#479523", color: "white", padding: "16px" }}
-          >
-            <span>Over 3 years you could save*:</span>
-          </div>
-        </div>
-
-        <div>
-          <div
-            style={{
-              background: "#BE1E2D",
-              color: "white",
-              padding: "16px",
-              height: "100%",
-            }}
-          >
-            £4,224
-          </div>
-          <div
-            style={{ background: "#479523", color: "white", padding: "16px" }}
-          >
-            £1,524
-          </div>
-        </div>
-
-        <div style={{ background: "#3BA6B8", color: "white", padding: "16px" }}>
-          See your recommendations report for more information
-        </div>
-      </div> */}
 
       <div className="epc-old">
         <div className="container" role="group" aria-label="Estimated costs">

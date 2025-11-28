@@ -175,7 +175,7 @@ export default async function DecarCertificatePage({
           >
             {mode === "dec" && (
               <section id="dec-overview">
-                <DecCertificate />
+                <DecCertificate data={data} />
               </section>
             )}
 

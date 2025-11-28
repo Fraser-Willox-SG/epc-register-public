@@ -3,10 +3,7 @@ import { formatGBP } from "@/app/utils/epc";
 
 export default function BrEstimatedEnergyCosts() {
   return (
-    <div
-      id="br-estimated-energy-costs"
-      style={{ background: "#DAEEF7", padding: "16px" }}
-    >
+    <div id="br-estimated-energy-costs" className="cert-section bg-blue">
       <div>
         <h3>Estimated energy costs for this home</h3>
         <p>
@@ -65,7 +62,7 @@ export default function BrEstimatedEnergyCosts() {
       </table>
 
       <div style={{ marginTop: "1rem" }}>
-        <p style={{ marginBottom: 0 }}>
+        <p className="mb-0">
           <strong>Potential future savings</strong>
         </p>
         <p>

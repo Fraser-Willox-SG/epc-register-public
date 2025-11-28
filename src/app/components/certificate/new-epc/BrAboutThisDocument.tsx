@@ -2,7 +2,7 @@ import React from "react";
 
 export default function BrAboutThisDocument() {
   return (
-    <div id="br-about-this-document" style={{ padding: "16px" }}>
+    <div id="br-about-this-document" className="cert-section">
       <h2>About this document</h2>
       ----
       <div>

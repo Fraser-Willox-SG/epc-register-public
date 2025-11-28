@@ -11,9 +11,10 @@ type Props = {
   dateOfExpiry?: string | undefined;
   rrn: string;
   currentBand?: string | null;
+  isEpc?: boolean;
 };
 
-export default function EpcHeader({
+export default function CertificateHeader({
   addressLine1,
   addressLine2,
   addressLine3,
@@ -23,36 +24,37 @@ export default function EpcHeader({
   dateOfExpiry,
   currentBand,
   rrn,
+  isEpc = true,
 }: Props) {
   return (
     <div>
       <div
-        className="flex-between"
+        className="flex-between cert-section bg-dark-blue"
         style={{
-          background: "#0065BD",
           color: "white",
-          padding: "16px",
           marginBottom: "2px",
         }}
       >
         <div>
-          <p style={{ marginBottom: "0" }}>{addressLine1}</p>
-          <p style={{ marginBottom: "0" }}>{addressLine2}</p>
-          <p style={{ marginBottom: "0" }}>{addressLine3}</p>
-          <p style={{ marginBottom: "0" }}>{addressLine4}</p>
-          <p style={{ marginBottom: "0" }}>{town}</p>
-          <p style={{ marginBottom: "0" }}>{postcode}</p>
+          <p className="mb-0">{addressLine1}</p>
+          <p className="mb-0">{addressLine2}</p>
+          <p className="mb-0">{addressLine3}</p>
+          <p className="mb-0">{addressLine4}</p>
+          <p className="mb-0">{town}</p>
+          <p className="mb-0">{postcode}</p>
         </div>
 
         <div
+          className="cert-section"
           style={{
             border: "2px solid white",
             color: "white",
-            padding: "16px",
             textAlign: "center",
           }}
         >
-          <p style={{ marginBottom: "0px" }}>Energy Rating</p>
+          <p className="mb-0">
+            {isEpc ? "Energy Rating" : "Operational Rating"}
+          </p>
           <span
             style={{ fontSize: "6rem", fontWeight: "bold", lineHeight: "6rem" }}
           >
@@ -64,13 +66,17 @@ export default function EpcHeader({
         className="row-2col"
         style={{ textAlign: "center", color: "white", gap: "2px" }}
       >
-        <div style={{ background: "#0065BD", padding: "16px" }}>
+        <div className="cert-section bg-dark-blue">
           <p>
-            <strong>Valid until</strong>
+            <strong>
+              {dateOfExpiry && new Date(dateOfExpiry) < new Date()
+                ? "This certificate expired on"
+                : "Valid until"}
+            </strong>
           </p>
           {dateOfExpiry ? formatIsoDateLong(dateOfExpiry) : "—"}
         </div>
-        <div style={{ background: "#0065BD", padding: "16px" }}>
+        <div className="cert-section bg-dark-blue">
           <p>
             <strong>Certificate number</strong>
           </p>

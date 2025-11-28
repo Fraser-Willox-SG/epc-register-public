@@ -6,7 +6,7 @@ import ElementBandList from "./ElementBandList";
 
 export default function BrHeatRetentionSummary() {
   return (
-    <div id="br-heat-retention-summary" style={{ padding: "16px" }}>
+    <div id="br-heat-retention-summary" className="cert-section">
       <h3>Heat Retention summary of this home</h3>
       <p>
         This drawing illustrates the distribution of heat lost in your property.
@@ -74,7 +74,7 @@ export default function BrHeatRetentionSummary() {
         />
         <BandLegend />
       </div>
-      <p className="ds_hint-text" style={{ marginBottom: 0 }}>
+      <p className="ds_hint-text mb-0">
         * Assumed means that the insulation could not be inspoected and a
         determination has been made based on age and type on construction.
       </p>
