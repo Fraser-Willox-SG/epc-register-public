@@ -7,7 +7,7 @@ import PrintButton from "@/app/components/PrintButton";
 import type { DecarSummary } from "@/types/decar";
 import { isDec, isDecRr } from "@/types/decar";
 
-import DecCertificate from "@/app/components/certificate/decar/DecCertificate";
+// import DecCertificate from "@/app/components/certificate/decar/DecCertificate";
 import ArCertificate from "@/app/components/certificate/decar/ArCertificate";
 
 type SummaryResponse = { data: DecarSummary };
@@ -177,11 +177,11 @@ export default async function CombinedDecarCertificatePage({
             className="ds_layout__content"
             style={{ border: "1px solid grey" }}
           >
-            {hasDec && (
+            {/* {hasDec && (
               <section id="dec-overview">
-                <DecCertificate />
+                <DecCertificate data={data}/>
               </section>
-            )}
+            )} */}
 
             {hasAr && (
               <section id="ar-overview">
