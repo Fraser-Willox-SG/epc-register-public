@@ -29,7 +29,10 @@ const CircleBadge: React.FC<{ value: string; size?: number }> = ({
 export default function EpcPotentialSavings() {
   return (
     <div>
-      <div style={{ background: "#2267B2", color: "white", padding: 16 }}>
+      <div
+        className="cert-section"
+        style={{ background: "#2267B2", color: "white" }}
+      >
         <h3>
           <strong>Potential improvements and savings</strong>
         </h3>

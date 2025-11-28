@@ -5,7 +5,7 @@ import HeatingSystemsAlternativesTable from "./HeatingSystemsAlternativesTable";
 
 export default function BrHeatingSystemInformation() {
   return (
-    <div id="br-heating-system-information" style={{ padding: "16px" }}>
+    <div id="br-heating-system-information" className="cert-section">
       <h3>Heating System Information</h3>
       <section aria-labelledby="heat-sys-title" className="br-heat-sys">
         <p>

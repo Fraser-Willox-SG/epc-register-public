@@ -1,4 +1,5 @@
 import React from "react";
+import { formatDecLongDate } from "@/app/utils/date";
 
 type Props = {
   electricityCo2: number; // tonnes per year
@@ -21,7 +22,7 @@ export const DecCO2Emissions: React.FC<Props> = ({
   renewablesCo2,
   periodLabel,
   maxValue = 1200,
-  maxWidth = "100%", // 220,
+  maxWidth = "100%",
 }) => {
   const total = electricityCo2 + heatingCo2 + renewablesCo2;
   const effectiveMax = Math.max(maxValue, total || 0.0001); // avoid divide by zero
@@ -36,7 +37,7 @@ export const DecCO2Emissions: React.FC<Props> = ({
   const axisHeight = axisBottom - axisTop;
 
   const barWidth = 60;
-  const barX = axisLeft + 40;
+  const barX = axisLeft + 15;
 
   const scale = (value: number) => (value / effectiveMax) * axisHeight;
 
@@ -61,8 +62,7 @@ export const DecCO2Emissions: React.FC<Props> = ({
         )} renewables).`
       : `Total CO2 emissions chart for ${periodLabel}: no data`;
 
-  // Choose a few ticks – simple fixed set
-  const tickStep = effectiveMax / 6;
+  const tickStep = maxValue / 6;
   const ticks = Array.from({ length: 7 }, (_, i) => Math.round(i * tickStep));
 
   return (
@@ -110,14 +110,14 @@ export const DecCO2Emissions: React.FC<Props> = ({
           );
         })}
 
-        {/* X-axis / label */}
+        {/* X-axis label */}
         <text
           x={barX + barWidth / 2}
           y={axisBottom + 14}
           fontSize="9"
           textAnchor="middle"
         >
-          {periodLabel}
+          {formatDecLongDate(periodLabel)}
         </text>
 
         {/* Stacked bar */}
@@ -154,14 +154,14 @@ export const DecCO2Emissions: React.FC<Props> = ({
         <g aria-hidden="true">
           <rect
             x={barX + barWidth + 20}
-            y={axisTop + 10}
+            y={axisTop + 4}
             width={12}
             height={12}
             fill="#A0A0A0"
           />
           <text
             x={barX + barWidth + 36}
-            y={axisTop + 20}
+            y={axisTop + 14}
             fontSize="9"
             alignmentBaseline="middle"
           >
@@ -170,14 +170,14 @@ export const DecCO2Emissions: React.FC<Props> = ({
 
           <rect
             x={barX + barWidth + 20}
-            y={axisTop + 26}
+            y={axisTop + 22}
             width={12}
             height={12}
             fill="#0072C6"
           />
           <text
             x={barX + barWidth + 36}
-            y={axisTop + 36}
+            y={axisTop + 32}
             fontSize="9"
             alignmentBaseline="middle"
           >
@@ -186,14 +186,14 @@ export const DecCO2Emissions: React.FC<Props> = ({
 
           <rect
             x={barX + barWidth + 20}
-            y={axisTop + 42}
+            y={axisTop + 40}
             width={12}
             height={12}
             fill="#7EC8F5"
           />
           <text
             x={barX + barWidth + 36}
-            y={axisTop + 52}
+            y={axisTop + 50}
             fontSize="9"
             alignmentBaseline="middle"
           >

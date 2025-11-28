@@ -2,10 +2,7 @@ import React from "react";
 
 export default function BrPotentialImprovements() {
   return (
-    <div
-      id="br-potential-improvements"
-      style={{ background: "#DAEEF7", padding: "16px" }}
-    >
+    <div id="br-potential-improvements" className="cert-section bg-blue">
       <h3>Other energy efficiency improvements</h3>
       <p className="text-sm text-muted-foreground mb-4">
         The measures below can also improve the overall energy efficiency of

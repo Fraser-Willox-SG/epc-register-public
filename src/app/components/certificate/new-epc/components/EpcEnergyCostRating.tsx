@@ -21,13 +21,11 @@ export default function EpcEnergyCostRating({
 
   return (
     <div>
-      <div style={{ padding: 16 }}>
-        <h2 style={{ marginBottom: 0 }}>
-          Energy Performance Certificate (EPC)
-        </h2>
+      <div className="cert-section">
+        <h2 className="mb-0">Energy Performance Certificate (EPC)</h2>
       </div>
 
-      <section style={{ background: "#DAEEF7", padding: 16 }}>
+      <section className="cert-section bg-blue">
         <h3>Energy Cost Rating</h3>
         <p>
           This rating shows the energy efficiency and energy costs of this home.
@@ -43,13 +41,16 @@ export default function EpcEnergyCostRating({
         </div>
       </section>
 
-      <section style={{ background: "#2267B2", color: "white", padding: 16 }}>
+      <section
+        className="cert-section"
+        style={{ background: "#2267B2", color: "white" }}
+      >
         Your energy cost rating is calculated from your heating system and your
         heat-retention rating.
       </section>
 
       <div style={{ gap: 2 }}>
-        <div style={{ background: "#ECECEC", padding: 16 }}>
+        <div className="cert-section bg-grey">
           <h3>
             <strong>Heating system rating</strong>
           </h3>
@@ -67,7 +68,7 @@ export default function EpcEnergyCostRating({
           </div>
         </div>
 
-        <div style={{ padding: 16 }}>
+        <div className="cert-section">
           <h3>
             <strong>Heat-retention rating</strong>
           </h3>

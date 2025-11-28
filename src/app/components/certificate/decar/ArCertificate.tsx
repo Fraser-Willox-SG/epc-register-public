@@ -4,12 +4,10 @@ export default function ArCertificate() {
   return (
     <div>
       <div
-        className="flex-between"
+        className="cert-section flex-between"
         style={{
           background: "black",
           color: "white",
-          padding: "16px",
-          marginBottom: "2px",
         }}
       >
         <div>
@@ -25,25 +23,19 @@ export default function ArCertificate() {
         </div>
       </div>
       <p>Report Reference Number: 01234-5678-9012-3456</p>
-      <div
-        className="flex-between"
-        style={{
-          padding: "16px",
-          marginBottom: "2px",
-        }}
-      >
+      <div className="cert-section flex-between">
         <div>
           <p>Building Occupier</p>
           <p>DWP</p>
         </div>
 
         <div
+          className="cert-section"
           style={{
-            padding: "16px",
             textAlign: "center",
           }}
         >
-          <p style={{ marginBottom: "0px" }}>Address</p>
+          <p className="mb-0">Address</p>
 
           <p>NORTH HOUSE HILL PARK</p>
           <p>STATION ROAD</p>

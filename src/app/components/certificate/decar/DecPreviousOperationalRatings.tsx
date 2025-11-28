@@ -1,4 +1,6 @@
 import React from "react";
+import { formatDecLongDate } from "@/app/utils/date";
+import { Band, COLORS } from "@/app/utils/epc";
 
 type Period = {
   /** Label shown on the Y axis, e.g. "07-2022" */
@@ -6,6 +8,31 @@ type Period = {
   /** Operational rating value */
   rating: number;
 };
+
+type DecBand = {
+  band: Band;
+  min: number;
+  max: number | null;
+};
+
+const DEC_BANDS: DecBand[] = [
+  { band: "A", min: 0, max: 25 },
+  { band: "B", min: 26, max: 50 },
+  { band: "C", min: 51, max: 75 },
+  { band: "D", min: 76, max: 100 },
+  { band: "E", min: 101, max: 125 },
+  { band: "F", min: 126, max: 150 },
+  { band: "G", min: 151, max: null },
+];
+
+function getBandForRating(rating: number): Band {
+  const match =
+    DEC_BANDS.find((b) =>
+      b.max == null ? rating >= b.min : rating >= b.min && rating <= b.max
+    ) ?? DEC_BANDS[DEC_BANDS.length - 1];
+
+  return match.band;
+}
 
 type Props = {
   periods: Period[]; // typically current, year1, year2
@@ -16,7 +43,7 @@ type Props = {
 const DecPreviousOperationalRatings: React.FC<Props> = ({
   periods,
   maxValue = 200,
-  maxWidth = "100%", //260,
+  maxWidth = "100%",
 }) => {
   if (!periods.length) return null;
 
@@ -26,17 +53,19 @@ const DecPreviousOperationalRatings: React.FC<Props> = ({
   const bottomPad = 30;
   const h = topPad + periods.length * rowHeight + bottomPad;
 
-  const axisLeft = 40;
+  const axisLeft = 73;
   const axisBottom = h - bottomPad;
   const axisRight = w - 10;
 
-  const barX = axisLeft + 10;
+  const barX = axisLeft;
   const barMaxW = axisRight - barX;
+
+  const labelGap = 14; // gap between date text and bar
 
   const clamp = (v: number) => Math.min(Math.max(v, 0), maxValue);
   const scale = (value: number) => (clamp(value) / maxValue) * barMaxW;
 
-  const ticks = [0, 50, 100, 150, 200];
+  const ticks = Array.from({ length: 5 }, (_, i) => (maxValue / 4) * i);
 
   const ariaLabel = `Previous operational ratings: ${periods
     .map((p) => `${p.label} ${p.rating}`)
@@ -93,18 +122,20 @@ const DecPreviousOperationalRatings: React.FC<Props> = ({
           const yCenter = topPad + index * rowHeight + rowHeight / 2;
           const barHeight = 24;
           const barWidth = scale(p.rating);
+          const band = getBandForRating(p.rating);
+          const fill = COLORS[band];
 
           return (
-            <g key={p.label}>
+            <g key={`${p.label}-${p.rating}`}>
               {/* Y label */}
               <text
-                x={axisLeft - 4}
+                x={axisLeft - labelGap}
                 y={yCenter + 3}
                 fontSize="9"
                 textAnchor="end"
                 fill="#000"
               >
-                {p.label}
+                {formatDecLongDate(p.label)}
               </text>
 
               {/* Bar */}
@@ -113,16 +144,19 @@ const DecPreviousOperationalRatings: React.FC<Props> = ({
                 y={yCenter - barHeight / 2}
                 width={barWidth}
                 height={barHeight}
-                fill="#ffd700"
+                fill={fill}
               />
 
               {/* Value text */}
               <text
                 x={barX + 6}
-                y={yCenter + 4}
+                y={yCenter + 4.5}
                 fontSize="14"
                 fontWeight={700}
-                fill="#000"
+                fill="#fff"
+                stroke="#000"
+                strokeWidth={2}
+                paintOrder="stroke"
               >
                 {p.rating}
               </text>

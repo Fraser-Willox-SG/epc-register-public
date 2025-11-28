@@ -3,77 +3,75 @@ import type { DecarTechnicalInformation } from "@/types/decar";
 
 type Props = {
   technical?: DecarTechnicalInformation | null;
-  floorArea?: string | number | null;
-  assetRating?: string | number | null;
 };
 
-const formatValue = (value?: string | number | null) =>
-  value === null || value === undefined || value === "" ? "—" : String(value);
+const formatValue = (value?: string | number | null) => {
+  const v = (value ?? "").toString().trim();
+  return v === "" ? "Not available" : v;
+};
 
-const DecTechnicalInformation: React.FC<Props> = ({
-  technical,
-  floorArea,
-  assetRating,
-}) => {
+const DecTechnicalInformation: React.FC<Props> = ({ technical }) => {
   return (
     <section id="dec-technical-information">
-      <div style={{}}>
+      <div>
         <h3>Technical Information</h3>
       </div>
 
-      <p style={{ fontSize: "0.9rem" }}>
+      <p>
         This tells you technical information about how energy is used in this
         building. Consumption data based on actual meter readings.
       </p>
-      <div className="row-2col">
-        <p>
-          <strong>Main heating fuel: </strong>
-        </p>
-        <p>{formatValue(technical?.mainHeatingFuel)}</p>
-      </div>
+      <dl className="summary-list">
+        <div className="row-2col border-b-grey">
+          <dt>
+            <strong>Main heating fuel:</strong>
+          </dt>
+          <dd>{formatValue(technical?.mainHeatingFuel)}</dd>
+        </div>
 
-      <div className="row-2col">
-        <p>
-          <strong>Building Environment: </strong>
-        </p>
-        <p>{formatValue(technical?.buildingEnvironment)}</p>
-      </div>
+        <div className="row-2col border-b-grey">
+          <dt>
+            <strong>Building Environment:</strong>
+          </dt>
+          <dd>{formatValue(technical?.buildingEnvironment)}</dd>
+        </div>
 
-      <div className="row-2col">
-        <p>
-          <strong>Total useful floor area (m²): </strong>
-        </p>
-        <p>{formatValue(floorArea ?? technical?.floorArea)}</p>
-      </div>
+        <div className="row-2col border-b-grey">
+          <dt>
+            <strong>Total useful floor area (m²):</strong>
+          </dt>
+          <dd>{formatValue(technical?.floorArea)}</dd>
+        </div>
 
-      <div className="row-2col">
-        <p style={{ marginBottom: "0.75rem" }}>
-          <strong>Asset Rating: </strong>
-        </p>
-        <p>{formatValue(assetRating ?? technical?.assetRating)}</p>
-      </div>
+        <div className="row-2col border-b-grey">
+          <dt>
+            <strong>Asset Rating:</strong>
+          </dt>
+          <dd>{formatValue(technical?.assetRating)}</dd>
+        </div>
+      </dl>
 
       <table className="ds_table">
         <thead>
           <tr>
-            <th scope="col"></th>
+            <th scope="col">Energy use type</th>
             <th scope="col">Heating</th>
             <th scope="col">Electricity</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <th scope="row">Annual Energy Use (kWh/m²/year)</th>
+            <td>Annual Energy Use (kWh/m²/year)</td>
             <td>{formatValue(technical?.annualEnergyUseFuelThermal)}</td>
             <td>{formatValue(technical?.annualEnergyUseElectrical)}</td>
           </tr>
           <tr>
-            <th scope="row">Typical Energy Use (kWh/m²/year)</th>
+            <td>Typical Energy Use (kWh/m²/year)</td>
             <td>{formatValue(technical?.typicalThermalUse)}</td>
             <td>{formatValue(technical?.typicalElectricalUse)}</td>
           </tr>
           <tr>
-            <th scope="row">Energy from renewables</th>
+            <td>Energy from renewables</td>
             <td>{formatValue(technical?.renewablesFuelThermal)}</td>
             <td>{formatValue(technical?.renewablesElectrical)}</td>
           </tr>

@@ -2,7 +2,7 @@ import React from "react";
 
 export default function BrIntro() {
   return (
-    <div id="br-intro" style={{ padding: "16px" }}>
+    <div id="br-intro" className="cert-section">
       <h3>Introduction</h3>
       <p>
         An EPC assessment is a survey that collects basic information about the

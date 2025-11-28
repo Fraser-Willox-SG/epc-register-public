@@ -19,20 +19,28 @@ export default function DecCertificate({ data }: Props) {
   const year1 = data.year1Assessment;
   const year2 = data.year2Assessment;
 
-  const periods = [
-    current && {
-      label: current.date, // e.g. "07-2022"
+  const periods: { label: string; rating: number }[] = [];
+
+  if (current?.date && current.energyEfficiencyRating != null) {
+    periods.push({
+      label: current.date,
       rating: current.energyEfficiencyRating,
-    },
-    year1 && {
+    });
+  }
+
+  if (year1?.date && year1.energyEfficiencyRating != null) {
+    periods.push({
       label: year1.date,
       rating: year1.energyEfficiencyRating,
-    },
-    year2 && {
+    });
+  }
+
+  if (year2?.date && year2.energyEfficiencyRating != null) {
+    periods.push({
       label: year2.date,
       rating: year2.energyEfficiencyRating,
-    },
-  ].filter(Boolean) as { label: string; rating: number }[];
+    });
+  }
 
   const {
     addressLine1,
@@ -60,26 +68,19 @@ export default function DecCertificate({ data }: Props) {
         isEpc={false}
       />
 
-      {/* <hr></hr> */}
-      <p
-        style={{
-          padding: "16px",
-        }}
-      >
-        This certificate indicates how much energy is being used to operate this
-        building. The operational rating is based on meter readings of all the
-        energy actually used in the building. It is compared to a benchmark that
-        represents performance indicative of all buildings of this type. There
-        is more advice on how to interpret this information on the Scottish
-        Government&apos;s website http://www.gov.scot/section63
-      </p>
+      <div className="cert-section">
+        <p>
+          This certificate indicates how much energy is being used to operate
+          this building. The operational rating is based on meter readings of
+          all the energy actually used in the building. It is compared to a
+          benchmark that represents performance indicative of all buildings of
+          this type. There is more advice on how to interpret this information
+          on the Scottish Government&apos;s website
+          http://www.gov.scot/section63
+        </p>
+      </div>
 
-      <div
-        style={{
-          padding: "16px",
-          background: "#DAEEF7",
-        }}
-      >
+      <div className="cert-section bg-blue">
         <h3 id="dec-operational-rating">
           Energy Performance Operational Rating
         </h3>
@@ -95,109 +96,46 @@ export default function DecCertificate({ data }: Props) {
       </div>
 
       {current && (
-        <div
-          style={{
-            padding: "16px",
-          }}
-        >
+        <div className="cert-section">
           <h3 id="dec-co2-emissions">Total CO2 Emissions</h3>
           <p>
-            Thsi tells you how much carbon dioxide teh building emits. it shows
+            This tells you how much carbon dioxide the building emits. it shows
             tonnes per year of CO2
           </p>
-          <DecCO2Emissions
-            electricityCo2={current.electricityCo2}
-            heatingCo2={current.heatingCo2}
-            renewablesCo2={current.renewablesCo2}
-            periodLabel={current.date}
-            maxValue={1200}
-          />
+          <div className="dec-co2-container">
+            <DecCO2Emissions
+              electricityCo2={current.electricityCo2}
+              heatingCo2={current.heatingCo2}
+              renewablesCo2={current.renewablesCo2}
+              periodLabel={current.date}
+              maxValue={1200}
+            />
+          </div>
         </div>
       )}
 
-      <div
-        style={{
-          padding: "16px",
-          background: "#ECECEC",
-        }}
-      >
+      <div className="cert-section bg-grey">
         <h3 id="dec-previous-ratings">Previous Operational Ratings</h3>
         <p>
-          Thsi tells you how efficvient energy has been used in this building
+          This tells you how efficiently energy has been used in this building
           over the last three accounting periods.
         </p>
         <DecPreviousOperationalRatings periods={periods} />
       </div>
-      <div
-        style={{
-          padding: "16px",
-          background: "#DAEEF7",
-        }}
-      >
+      <div className="cert-section bg-blue">
         <DecTechnicalInformation
           technical={data.technicalInformation ?? null}
-          floorArea={data.technicalInformation?.floorArea}
-          assetRating={data.technicalInformation?.assetRating}
         />
       </div>
-      <div
-        style={{
-          padding: "16px",
-        }}
-      >
+      <div className="cert-section">
         <DecAdministrativeInformation
           administrative={data.administrativeInformation}
           assessor={data.assessor}
           addressId={data.addressId}
+          nominateDate={data.dateOfAssessment}
+          validUntil={data.dateOfExpiry}
         />
       </div>
-
-      {/* <div
-        className="flex-between"
-        style={{
-          padding: "16px",
-          marginBottom: "2px",
-        }}
-      >
-        <div>
-          <div
-            style={{
-              background: "black",
-              color: "white",
-              padding: "16px",
-              marginBottom: "2px",
-            }}
-          >
-            <p> Energy Performance operational rating</p>
-          </div>
-          <div>Graph here A-G</div>
-          <div>A - 0-25</div>
-          <div>B - 0-25</div>
-          <div>C - 0-25</div>
-          <div>D - 0-25</div>
-          <div>E - 0-25</div>
-          <div>F - 0-25</div>
-          <div>G - 0-25</div>
-        </div>
-
-        <div
-          style={{
-            padding: "16px",
-            textAlign: "center",
-          }}
-        >
-          <div
-            style={{
-              background: "black",
-              color: "white",
-              padding: "16px",
-              marginBottom: "2px",
-            }}
-          >
-            <p> Total CO2 Emissions</p>
-          </div>
-        </div>
-      </div> */}
     </div>
   );
 }

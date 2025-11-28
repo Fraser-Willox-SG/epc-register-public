@@ -6,7 +6,7 @@ import PotentialImprovementsTable from "./PotentialImprovementsTable";
 
 export default function BrHeatRetentionImprovements() {
   return (
-    <div id="br-energy-loss" style={{ background: "#DAEEF7", padding: "16px" }}>
+    <div id="br-energy-loss" className="cert-section bg-blue">
       <h3>Potential Heat Retention Improvements</h3>
       <p>
         The measures below aim to improve the heat retention and reduce the

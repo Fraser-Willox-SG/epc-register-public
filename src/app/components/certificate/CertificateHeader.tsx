@@ -29,32 +29,30 @@ export default function CertificateHeader({
   return (
     <div>
       <div
-        className="flex-between"
+        className="flex-between cert-section bg-dark-blue"
         style={{
-          background: "#0065BD",
           color: "white",
-          padding: "16px",
           marginBottom: "2px",
         }}
       >
         <div>
-          <p style={{ marginBottom: "0" }}>{addressLine1}</p>
-          <p style={{ marginBottom: "0" }}>{addressLine2}</p>
-          <p style={{ marginBottom: "0" }}>{addressLine3}</p>
-          <p style={{ marginBottom: "0" }}>{addressLine4}</p>
-          <p style={{ marginBottom: "0" }}>{town}</p>
-          <p style={{ marginBottom: "0" }}>{postcode}</p>
+          <p className="mb-0">{addressLine1}</p>
+          <p className="mb-0">{addressLine2}</p>
+          <p className="mb-0">{addressLine3}</p>
+          <p className="mb-0">{addressLine4}</p>
+          <p className="mb-0">{town}</p>
+          <p className="mb-0">{postcode}</p>
         </div>
 
         <div
+          className="cert-section"
           style={{
             border: "2px solid white",
             color: "white",
-            padding: "16px",
             textAlign: "center",
           }}
         >
-          <p style={{ marginBottom: "0px" }}>
+          <p className="mb-0">
             {isEpc ? "Energy Rating" : "Operational Rating"}
           </p>
           <span
@@ -68,7 +66,7 @@ export default function CertificateHeader({
         className="row-2col"
         style={{ textAlign: "center", color: "white", gap: "2px" }}
       >
-        <div style={{ background: "#0065BD", padding: "16px" }}>
+        <div className="cert-section bg-dark-blue">
           <p>
             <strong>
               {dateOfExpiry && new Date(dateOfExpiry) < new Date()
@@ -78,7 +76,7 @@ export default function CertificateHeader({
           </p>
           {dateOfExpiry ? formatIsoDateLong(dateOfExpiry) : "—"}
         </div>
-        <div style={{ background: "#0065BD", padding: "16px" }}>
+        <div className="cert-section bg-dark-blue">
           <p>
             <strong>Certificate number</strong>
           </p>

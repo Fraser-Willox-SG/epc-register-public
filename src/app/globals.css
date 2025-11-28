@@ -51,7 +51,19 @@ body {
   }
 }
 
-/* Potential Improvments Badge*/
+/* Summary List */
+.summary-list .row-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center; /* fixes vertical misalignment */
+  column-gap: 1rem;
+}
+.summary-list dt,
+.summary-list dd {
+  margin: 0.5rem 0; /* removes default browser spacing */
+}
+
+/* Potential Improvments Badge */
 .text-badge {
   display: grid;
   grid-template-columns: 1fr max-content;
@@ -73,6 +85,53 @@ body {
   }
   .heatloss-stack > div {
     justify-content: center !important;
+  }
+}
+
+/* Typography */
+.text-small {
+  font-size: 0.9rem;
+}
+
+/* Certificate section blocks */
+.cert-section {
+  padding: 16px;
+}
+
+.bg-blue {
+  background: #daeef7;
+}
+
+.bg-dark-blue {
+  background: #0065bd;
+}
+
+.bg-grey {
+  background: #ececec;
+}
+
+.bg-white {
+  background: #ffffff;
+}
+
+.mb-0 {
+  margin-bottom: 0px;
+}
+
+.border-b-grey {
+  border-bottom: 1px solid #d8d7d7;
+}
+
+/* Mobile / tablet default: 100% width, centred */
+.dec-co2-container {
+  width: 100%;
+  margin: 0 auto; /* horizontally centre */
+}
+
+/* Desktop: 50% width, still centred */
+@media (min-width: 1024px) {
+  .dec-co2-container {
+    width: 50%;
   }
 }
 
