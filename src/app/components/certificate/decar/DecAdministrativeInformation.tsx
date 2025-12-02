@@ -24,7 +24,7 @@ const DecAdministrativeInformation: React.FC<Props> = ({
   validUntil,
 }) => {
   return (
-    <section id="dec-administrative-information">
+    <section>
       <h3>Administrative Information</h3>
 
       <p>
