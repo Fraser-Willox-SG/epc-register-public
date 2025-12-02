@@ -12,7 +12,7 @@ const formatValue = (value?: string | number | null) => {
 
 const DecTechnicalInformation: React.FC<Props> = ({ technical }) => {
   return (
-    <section id="dec-technical-information">
+    <section>
       <div>
         <h3>Technical Information</h3>
       </div>

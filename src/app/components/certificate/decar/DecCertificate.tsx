@@ -66,6 +66,7 @@ export default function DecCertificate({ data }: Props) {
         dateOfExpiry={dateOfExpiry}
         currentBand={currentBand}
         isEpc={false}
+        printTitle="Display Energy Certificate"
       />
 
       <div className="cert-section">
@@ -95,38 +96,42 @@ export default function DecCertificate({ data }: Props) {
         )}
       </div>
 
-      {current && (
-        <div className="cert-section">
-          <h3 id="dec-co2-emissions">Total CO2 Emissions</h3>
-          <p>
-            This tells you how much carbon dioxide the building emits. it shows
-            tonnes per year of CO2
-          </p>
-          <div className="dec-co2-container">
-            <DecCO2Emissions
-              electricityCo2={current.electricityCo2}
-              heatingCo2={current.heatingCo2}
-              renewablesCo2={current.renewablesCo2}
-              periodLabel={current.date}
-            />
+      <div className="print-only-row-2col">
+        {current && (
+          <div id="dec-co2-emissions" className="cert-section">
+            <h3>Total CO2 Emissions</h3>
+            <p>
+              This tells you how much carbon dioxide the building emits. it
+              shows tonnes per year of CO2
+            </p>
+            <div className="dec-co2-container">
+              <DecCO2Emissions
+                electricityCo2={current.electricityCo2}
+                heatingCo2={current.heatingCo2}
+                renewablesCo2={current.renewablesCo2}
+                periodLabel={current.date}
+              />
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      <div className="cert-section bg-blue">
-        <h3 id="dec-previous-ratings">Previous Operational Ratings</h3>
-        <p>
-          This tells you how efficiently energy has been used in this building
-          over the last three accounting periods.
-        </p>
-        <DecPreviousOperationalRatings periods={periods} />
+        <div id="dec-previous-ratings" className="cert-section bg-blue">
+          <h3>Previous Operational Ratings</h3>
+          <p>
+            This tells you how efficiently energy has been used in this building
+            over the last three accounting periods.
+          </p>
+          <DecPreviousOperationalRatings periods={periods} />
+        </div>
       </div>
-      <div className="cert-section bg-white">
+
+      <div id="dec-technical-information" className="cert-section bg-white">
         <DecTechnicalInformation
           technical={data.technicalInformation ?? null}
         />
       </div>
-      <div className="cert-section bg-blue">
+
+      <div id="dec-administrative-information" className="cert-section bg-blue">
         <DecAdministrativeInformation
           administrative={data.administrativeInformation}
           assessor={data.assessor}

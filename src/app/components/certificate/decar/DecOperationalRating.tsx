@@ -75,7 +75,7 @@ export default function DecOperationalRating({
   const ariaLabel = `Operational rating ${rating}, band ${band.band}`;
 
   return (
-    <div style={{ width: "100%", maxWidth }}>
+    <div className="dec-operational-rating" style={{ width: "100%", maxWidth }}>
       <svg
         viewBox={`0 0 ${baseW} ${baseH}`}
         width="100%"

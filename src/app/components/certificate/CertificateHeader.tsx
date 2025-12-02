@@ -12,6 +12,7 @@ type Props = {
   rrn: string;
   currentBand?: string | null;
   isEpc?: boolean;
+  printTitle?: string | undefined;
 };
 
 export default function CertificateHeader({
@@ -25,43 +26,63 @@ export default function CertificateHeader({
   currentBand,
   rrn,
   isEpc = true,
+  printTitle,
 }: Props) {
   return (
     <div>
-      <div
-        className="flex-between cert-section bg-dark-blue"
-        style={{
-          color: "white",
-          marginBottom: "2px",
-        }}
-      >
-        <div>
-          <p className="mb-0">{addressLine1}</p>
-          <p className="mb-0">{addressLine2}</p>
-          <p className="mb-0">{addressLine3}</p>
-          <p className="mb-0">{addressLine4}</p>
-          <p className="mb-0">{town}</p>
-          <p className="mb-0">{postcode}</p>
+      <div className=" bg-dark-blue">
+        <div className="print-only">
+          <div
+            className="cert-section flex-between "
+            style={{
+              marginBottom: "2px",
+            }}
+          >
+            <h2 className="mb-0">{printTitle}</h2>
+            <img
+              src="/logo.svg"
+              alt="Scottish Government logo"
+              width={80}
+              height={50}
+              style={{ display: "block" }}
+            />
+          </div>
         </div>
 
-        <div
-          className="cert-section"
-          style={{
-            border: "2px solid white",
-            color: "white",
-            textAlign: "center",
-          }}
-        >
-          <p className="mb-0">
-            {isEpc ? "Energy Rating" : "Operational Rating"}
-          </p>
-          <span
-            style={{ fontSize: "6rem", fontWeight: "bold", lineHeight: "6rem" }}
+        <div className="flex-between cert-section">
+          <div>
+            <p className="mb-0">{addressLine1}</p>
+            <p className="mb-0">{addressLine2}</p>
+            <p className="mb-0">{addressLine3}</p>
+            <p className="mb-0">{addressLine4}</p>
+            <p className="mb-0">{town}</p>
+            <p className="mb-0">{postcode}</p>
+          </div>
+
+          <div
+            className="cert-section"
+            style={{
+              border: "2px solid white",
+              color: "white",
+              textAlign: "center",
+            }}
           >
-            {String(currentBand).toUpperCase()}
-          </span>
+            <p className="mb-0">
+              {isEpc ? "Energy Rating" : "Operational Rating"}
+            </p>
+            <span
+              style={{
+                fontSize: "6rem",
+                fontWeight: "bold",
+                lineHeight: "6rem",
+              }}
+            >
+              {String(currentBand).toUpperCase()}
+            </span>
+          </div>
         </div>
       </div>
+
       <div
         className="row-2col"
         style={{ textAlign: "center", color: "white", gap: "2px" }}
