@@ -19,7 +19,7 @@ function RecommendationsTable({
   if (nonEmpty.length === 0) return null;
 
   return (
-    <section>
+    <section className="ar-recommendations-table print-no-break">
       <h3 className="mb-0">{title}</h3>
       <p className="text-small">{caption}</p>
 
@@ -58,7 +58,10 @@ export default function ArRecommendations({ data }: Props) {
     otherRecommendations.length > 0;
 
   return (
-    <section className="cert-section bg-white" id="ar-recommendations">
+    <section
+      className="cert-section bg-white print-no-break"
+      id="ar-recommendations"
+    >
       <h2 className="mb-0">Recommendations</h2>
 
       <p className="text-small">

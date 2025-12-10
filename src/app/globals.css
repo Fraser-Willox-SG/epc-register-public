@@ -219,6 +219,11 @@ body {
     display: none !important;
   }
 
+  .print-no-break {
+    break-inside: avoid;
+    page-break-inside: avoid; /* older browsers */
+  }
+
   header,
   nav[aria-label="Main"],
   .site-footer {
@@ -293,5 +298,25 @@ body {
     background: white;
     color: black;
     border-bottom: none;
+  }
+
+  /*     ////////////////////////////     */
+  /* Print: Advisory Report Styles */
+  /*     ////////////////////////////     */
+
+  #ar-introduction {
+    height: 386px;
+  }
+
+  #ar-next-steps {
+    height: 1123px;
+  }
+
+  .ar-recommendations-table {
+    padding-top: 16px;
+  }
+
+  #ar-glossary {
+    border: 1px solid white; /* Temp solution for print end border*/
   }
 }

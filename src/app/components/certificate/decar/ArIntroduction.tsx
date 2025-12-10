@@ -71,13 +71,6 @@ export default function ArIntroduction({ data }: Props) {
           {surveyDate} prior to producing this Advisory Report.
         </p>
       )}
-
-      {/* General explanatory sentence – safe to keep */}
-      <p className="text-small">
-        The report provides recommendations to help improve the energy
-        performance of the building. It should be read alongside the associated
-        Display Energy Certificate where one exists.
-      </p>
     </section>
   );
 }

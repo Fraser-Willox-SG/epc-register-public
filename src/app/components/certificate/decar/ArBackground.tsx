@@ -21,7 +21,7 @@ export default function ArBackground({ data }: Props) {
   ].filter((f) => f && (f.description ?? "").trim().length > 0);
 
   return (
-    <section className="cert-section bg-blue" id="ar-background">
+    <section className="cert-section bg-blue print-no-break" id="ar-background">
       <h2 className="mb-0">Background</h2>
 
       <p className="text-small">

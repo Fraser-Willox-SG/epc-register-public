@@ -2,7 +2,7 @@ import React from "react";
 
 export default function ArNextSteps() {
   return (
-    <section className="cert-section bg-blue" id="ar-next-steps">
+    <section className="cert-section bg-blue print-no-break" id="ar-next-steps">
       <h2 className="mb-0">Next steps</h2>
 
       {/* a) Your Advisory Report */}

@@ -2,7 +2,7 @@ import React from "react";
 
 export default function ArGlossary() {
   return (
-    <section className="cert-section bg-white" id="ar-glossary">
+    <section className="cert-section bg-white print-no-break" id="ar-glossary">
       <h2 className="mb-0">Glossary</h2>
 
       {/* a) Payback */}
