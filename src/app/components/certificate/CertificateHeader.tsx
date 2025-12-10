@@ -34,7 +34,7 @@ export default function CertificateHeader({
       : "—";
 
   return (
-    <div>
+    <div className="print-no-break print-page-break">
       <div className=" bg-dark-blue">
         <div className="print-only">
           <div

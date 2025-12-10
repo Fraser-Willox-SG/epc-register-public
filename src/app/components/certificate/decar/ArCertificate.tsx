@@ -35,8 +35,6 @@ export default function ArCertificate({ data }: Props) {
     ? energyBandFromRelatedCertificate.toUpperCase()
     : null;
 
-  console.log("AR data=", data);
-
   return (
     <div>
       <CertificateHeader

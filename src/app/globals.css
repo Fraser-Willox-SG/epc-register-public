@@ -224,6 +224,11 @@ body {
     page-break-inside: avoid; /* older browsers */
   }
 
+  .print-page-break {
+    break-before: page; /* modern browsers */
+    page-break-before: always; /* fallback */
+  }
+
   header,
   nav[aria-label="Main"],
   .site-footer {
@@ -305,7 +310,7 @@ body {
   /*     ////////////////////////////     */
 
   #ar-introduction {
-    height: 386px;
+    height: 385px;
   }
 
   #ar-next-steps {
