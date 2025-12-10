@@ -1,16 +1,7 @@
-export type DecarKind = "DEC" | "DEC-RR";
+// --- shared sub-types -----------------------------------
 
-export interface DecarOperationalSnapshot {
-  date: string; // e.g. "2019-02-23"
-  energyEfficiencyRating: number; // e.g. 92
-  energyEfficiencyBand: string; // e.g. "d"
-  heatingCo2: number; // tonnes per year
-  electricityCo2: number; // tonnes per year
-  renewablesCo2: number; // tonnes per year
-}
-
-export interface DecarAddress {
-  addressId: string; // e.g. "RRN-..." or "UPRN-..."
+export interface Address {
+  addressId: string;
   addressLine1: string;
   addressLine2: string;
   addressLine3: string;
@@ -19,88 +10,152 @@ export interface DecarAddress {
   postcode: string;
 }
 
-export interface DecarAssessor {
-  schemeAssessorId: string; // e.g. "EES/015151"
+export interface CompanyDetails {
   name: string;
-  companyDetails?: {
-    name?: string;
-    address?: string;
-  };
-  contactDetails?: {
-    email?: string;
-    telephone?: string;
-  };
-  registeredBy?: {
-    name?: string;
-    schemeId?: number;
-  };
+  address: string;
 }
 
-export interface DecarTechnicalInformation {
-  mainHeatingFuel?: string | null;
-  buildingEnvironment?: string | null;
-  floorArea?: string | null;
-  occupier?: string | null;
-  assetRating?: number | string | null;
-  annualEnergyUseFuelThermal?: string | null;
-  annualEnergyUseElectrical?: string | null;
-  typicalThermalUse?: string | null;
-  typicalElectricalUse?: string | null;
-  renewablesFuelThermal?: string | null;
-  renewablesElectrical?: string | null;
+export interface ContactDetails {
+  email: string | null;
+  telephone: string | null;
 }
 
-export interface DecarAdministrativeInformation {
-  issueDate?: string | null; // ISO date
-  calculationTool?: string | null;
-  relatedPartyDisclosure?: string | null;
-  relatedRrn?: string | null;
+export interface RegisteredBy {
+  name: string;
+  schemeId: number;
 }
 
-export interface DecarRelatedAssessment {
+export interface Assessor {
+  schemeAssessorId: string;
+  name: string;
+  companyDetails: CompanyDetails;
+  contactDetails: ContactDetails;
+  registeredBy: RegisteredBy;
+}
+
+export interface RelatedAssessment {
   assessmentId: string;
-  assessmentStatus: "ENTERED" | "EXPIRED" | string;
-  assessmentType: DecarKind | string;
-  assessmentExpiryDate: string; // ISO date
+  assessmentStatus: string;
+  assessmentType: string;
+  assessmentExpiryDate: string;
   optOut: boolean;
 }
 
-export interface DecarSummary {
+// --- DEC specific ---------------------------------------
+
+export interface DecAssessmentHistory {
+  date: string | null;
+  energyEfficiencyRating: number | null;
+  energyEfficiencyBand: string | null;
+  heatingCo2: number | null;
+  electricityCo2: number | null;
+  renewablesCo2: number | null;
+}
+
+export interface DecTechnicalInformation {
+  mainHeatingFuel: string | null;
+  buildingEnvironment: string | null;
+  floorArea: string | null;
+  occupier: string | null;
+  assetRating: string | null;
+  annualEnergyUseFuelThermal: string | null;
+  annualEnergyUseElectrical: string | null;
+  typicalThermalUse: string | null;
+  typicalElectricalUse: string | null;
+  renewablesFuelThermal: string | null;
+  renewablesElectrical: string | null;
+}
+
+export interface DecAdministrativeInformation {
+  issueDate: string | null;
+  calculationTool: string | null;
+  relatedPartyDisclosure: string | null;
+  relatedRrn: string | null;
+}
+
+export interface DecSummary {
+  typeOfAssessment: "DEC";
   assessmentId: string;
-  dateOfAssessment: string; // ISO date
-  dateOfExpiry: string; // ISO date
-  dateOfRegistration: string; // ISO date
-
-  address: DecarAddress;
-
-  typeOfAssessment: DecarKind | string; // "DEC" or "DEC-RR" (but keep open for safety)
-  schemaVersion: number; // e.g. 7.1
-  reportType?: string | null; // e.g. "1"
-
-  currentAssessment?: DecarOperationalSnapshot | null;
-  year1Assessment?: DecarOperationalSnapshot | null;
-  year2Assessment?: DecarOperationalSnapshot | null;
-
-  technicalInformation?: DecarTechnicalInformation | null;
-  assessor?: DecarAssessor | null;
-  administrativeInformation?: DecarAdministrativeInformation | null;
-
-  addressId?: string;
+  dateOfAssessment: string;
+  dateOfExpiry: string;
+  dateOfRegistration: string;
+  address: Address;
+  schemaVersion: number;
+  reportType: string; // "1"
+  currentAssessment: DecAssessmentHistory;
+  year1Assessment: DecAssessmentHistory | null;
+  year2Assessment: DecAssessmentHistory | null;
+  technicalInformation: DecTechnicalInformation;
+  assessor: Assessor;
+  administrativeInformation: DecAdministrativeInformation;
+  addressId: string;
   optOut: boolean;
-
-  supersededBy?: string | null;
-
-  relatedAssessments?: DecarRelatedAssessment[] | null;
+  supersededBy: string | null;
+  relatedAssessments: RelatedAssessment[];
 }
 
-export function isDec(
-  summary: DecarSummary
-): summary is DecarSummary & { typeOfAssessment: "DEC" } {
-  return summary.typeOfAssessment === "DEC";
+// --- AR / DEC-RR specific ------------------------------
+
+export interface Recommendation {
+  code: string;
+  text: string;
+  cO2Impact: string; // "HIGH" | "MEDIUM" | "LOW" | "N/A" etc.
 }
 
-export function isDecRr(
-  summary: DecarSummary
-): summary is DecarSummary & { typeOfAssessment: "DEC-RR" } {
+export interface ArTechnicalInformation {
+  buildingEnvironment: string | null;
+  floorArea: string | null;
+  occupier: string | null;
+  propertyType: string | null;
+  renewableSources: string | null;
+  discountedEnergy: string | null;
+  dateOfIssue: string | null;
+  calculationTool: string | null;
+  inspectionType: string | null;
+}
+
+export interface SiteService {
+  description: string;
+  quantity: string;
+}
+
+export interface ArSummary {
+  typeOfAssessment: "DEC-RR";
+  assessmentId: string;
+  reportType: string; // "2"
+  dateOfAssessment: string;
+  dateOfRegistration: string;
+  dateOfExpiry: string;
+  address: Address;
+  assessor: Assessor;
+
+  shortPaybackRecommendations: Recommendation[];
+  mediumPaybackRecommendations: Recommendation[];
+  longPaybackRecommendations: Recommendation[];
+  otherRecommendations: Recommendation[];
+
+  technicalInformation: ArTechnicalInformation;
+  siteServiceOne: SiteService;
+  siteServiceTwo: SiteService;
+  siteServiceThree: SiteService;
+
+  relatedRrn: string | null;
+  addressId: string;
+  optOut: boolean;
+  supersededBy: string | null;
+  relatedAssessments: RelatedAssessment[];
+
+  // pulled from the associated DEC
+  energyBandFromRelatedCertificate: string | null;
+}
+
+// Optional: union type if you ever need “either DEC or AR”
+export type DecarSummary = DecSummary | ArSummary;
+
+export function isDecRr(summary: DecarSummary): summary is ArSummary {
   return summary.typeOfAssessment === "DEC-RR";
+}
+
+export function isDec(summary: DecarSummary): summary is DecSummary {
+  return summary.typeOfAssessment === "DEC";
 }

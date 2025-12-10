@@ -1,8 +1,8 @@
 import React from "react";
-import type { DecarTechnicalInformation } from "@/types/decar";
+import type { DecTechnicalInformation } from "@/types/decar";
 
 type Props = {
-  technical?: DecarTechnicalInformation | null;
+  technical?: DecTechnicalInformation | null;
 };
 
 const formatValue = (value?: string | number | null) => {

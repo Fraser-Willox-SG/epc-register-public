@@ -1,7 +1,7 @@
 import React from "react";
 import CertificateHeader from "../CertificateHeader";
 
-import type { DecarSummary } from "@/types/decar";
+import type { DecSummary } from "@/types/decar";
 import DecOperationalRating from "./DecOperationalRating";
 import DecCO2Emissions from "./DecC02Emissions";
 import DecPreviousOperationalRatings from "./DecPreviousOperationalRatings";
@@ -9,7 +9,7 @@ import DecTechnicalInformation from "./DecTechnicalInformation";
 import DecAdministrativeInformation from "./DecAdministrativeInformation";
 
 type Props = {
-  data: DecarSummary;
+  data: DecSummary;
 };
 
 export default function DecCertificate({ data }: Props) {
@@ -50,6 +50,12 @@ export default function DecCertificate({ data }: Props) {
     town,
     postcode,
   } = address;
+
+  const hasCo2Data =
+    current &&
+    current.electricityCo2 != null &&
+    current.heatingCo2 != null &&
+    current.renewablesCo2 != null;
 
   const currentBand = currentAssessment?.energyEfficiencyBand?.toUpperCase();
 
@@ -99,19 +105,25 @@ export default function DecCertificate({ data }: Props) {
       <div className="print-only-row-2col">
         {current && (
           <div id="dec-co2-emissions" className="cert-section">
-            <h3>Total CO2 Emissions</h3>
+            <h3>Total CO₂ Emissions</h3>
             <p>
               This tells you how much carbon dioxide the building emits. it
-              shows tonnes per year of CO2
+              shows tonnes per year of CO₂
             </p>
-            <div className="dec-co2-container">
-              <DecCO2Emissions
-                electricityCo2={current.electricityCo2}
-                heatingCo2={current.heatingCo2}
-                renewablesCo2={current.renewablesCo2}
-                periodLabel={current.date}
-              />
-            </div>
+            {hasCo2Data ? (
+              <div className="dec-co2-container">
+                <DecCO2Emissions
+                  electricityCo2={current.electricityCo2!}
+                  heatingCo2={current.heatingCo2!}
+                  renewablesCo2={current.renewablesCo2!}
+                  periodLabel={current.date!}
+                />
+              </div>
+            ) : (
+              <p className="text-small text-grey">
+                CO₂ emissions data is not available for this assessment.
+              </p>
+            )}
           </div>
         )}
 

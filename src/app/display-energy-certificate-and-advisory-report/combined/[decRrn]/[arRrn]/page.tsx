@@ -7,7 +7,7 @@ import PrintButton from "@/app/components/PrintButton";
 import type { DecarSummary } from "@/types/decar";
 import { isDec, isDecRr } from "@/types/decar";
 
-// import DecCertificate from "@/app/components/certificate/decar/DecCertificate";
+import DecCertificate from "@/app/components/certificate/decar/DecCertificate";
 import ArCertificate from "@/app/components/certificate/decar/ArCertificate";
 
 type SummaryResponse = { data: DecarSummary };
@@ -60,8 +60,11 @@ export default async function CombinedDecarCertificatePage({
   const [{ data: dec, error: decError }, { data: ar, error: arError }] =
     await Promise.all([fetchDecarSummary(decRrn), fetchDecarSummary(arRrn)]);
 
-  const hasDec = !!(dec && isDec(dec));
-  const hasAr = !!(ar && isDecRr(ar));
+  const decSummary = dec && isDec(dec) ? dec : null;
+  const arSummary = ar && isDecRr(ar) ? ar : null;
+
+  const hasDec = !!decSummary;
+  const hasAr = !!arSummary;
 
   // Choose a sensible header address – prefer DEC, then AR.
   const addressSource = hasDec ? dec! : hasAr ? ar! : null;
@@ -177,15 +180,15 @@ export default async function CombinedDecarCertificatePage({
             className="ds_layout__content"
             style={{ border: "1px solid grey" }}
           >
-            {/* {hasDec && (
+            {decSummary && (
               <section id="dec-overview">
-                <DecCertificate data={data}/>
+                <DecCertificate data={decSummary} />
               </section>
-            )} */}
+            )}
 
-            {hasAr && (
+            {arSummary && (
               <section id="ar-overview">
-                <ArCertificate />
+                <ArCertificate data={arSummary} />
               </section>
             )}
 

@@ -173,15 +173,15 @@ export default async function DecarCertificatePage({
             className="ds_layout__content"
             style={{ border: "1px solid grey" }}
           >
-            {mode === "dec" && (
+            {data && !isDecRr(data) && (
               <section id="dec-overview">
                 <DecCertificate data={data} />
               </section>
             )}
 
-            {mode === "ar" && (
+            {data && isDecRr(data) && (
               <section id="ar-overview">
-                <ArCertificate />
+                <ArCertificate data={data} />
               </section>
             )}
           </main>
