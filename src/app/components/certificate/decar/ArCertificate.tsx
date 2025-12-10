@@ -1,55 +1,62 @@
 import React from "react";
+import CertificateHeader from "../CertificateHeader";
+import ArBackground from "./ArBackground";
+import ArIntroduction from "./ArIntroduction";
+import ArRecommendations from "./ArRecommendations";
+import ArNextSteps from "./ArNextSteps";
+import ArGlossary from "./ArGlossary";
 
-export default function ArCertificate() {
+import type { ArSummary } from "@/types/decar";
+import ArAdministrativeInformation from "./ArAdministrativeInformation";
+
+type Props = {
+  data: ArSummary;
+};
+
+export default function ArCertificate({ data }: Props) {
+  const {
+    assessmentId: rrn,
+    dateOfExpiry,
+    address,
+    energyBandFromRelatedCertificate,
+  } = data;
+
+  const {
+    addressLine1,
+    addressLine2,
+    addressLine3,
+    addressLine4,
+    town,
+    postcode,
+  } = address;
+
+  // Band comes from the related DEC certificate
+  const currentBand = energyBandFromRelatedCertificate
+    ? energyBandFromRelatedCertificate.toUpperCase()
+    : null;
+
   return (
     <div>
-      <div
-        className="cert-section flex-between"
-        style={{
-          background: "black",
-          color: "white",
-        }}
-      >
-        <div>
-          <h2>Advisory Report</h2>
-        </div>
+      <CertificateHeader
+        addressLine1={addressLine1}
+        addressLine2={addressLine2}
+        addressLine3={addressLine3}
+        addressLine4={addressLine4}
+        postcode={postcode}
+        town={town}
+        rrn={rrn}
+        dateOfExpiry={dateOfExpiry}
+        currentBand={currentBand}
+        isEpc={false}
+        printTitle="Advisory Report"
+      />
 
-        <div>
-          <span
-            style={{ fontSize: "2rem", fontWeight: "bold", lineHeight: "2rem" }}
-          >
-            Scotland
-          </span>
-        </div>
-      </div>
-      <p>Report Reference Number: 01234-5678-9012-3456</p>
-      <div className="cert-section flex-between">
-        <div>
-          <p>Building Occupier</p>
-          <p>DWP</p>
-        </div>
-
-        <div
-          className="cert-section"
-          style={{
-            textAlign: "center",
-          }}
-        >
-          <p className="mb-0">Address</p>
-
-          <p>NORTH HOUSE HILL PARK</p>
-          <p>STATION ROAD</p>
-          <p>INVERESK</p>
-          <p>Edinburgh</p>
-          <p>EH21 7DD</p>
-        </div>
-      </div>
-      <hr />
-      <p>Building Type(s): General Office</p>
-      <hr />
-
-      <p>Administrive Information Table</p>
-      <p>Section 63 Assessor Details</p>
+      <ArAdministrativeInformation data={data} />
+      <ArBackground data={data} />
+      <ArIntroduction data={data} />
+      <ArRecommendations data={data} />
+      <ArNextSteps />
+      <ArGlossary />
     </div>
   );
 }

@@ -52,8 +52,6 @@ export default async function AdvisoryReportsResultsPage({
         data?: { assessments?: AssessmentRow[] };
       };
       rows = json.data?.assessments ?? [];
-
-      console.log("rows=", rows);
     }
   } catch {
     error = `There was a problem contacting the service for ${postcode.toUpperCase()}.`;

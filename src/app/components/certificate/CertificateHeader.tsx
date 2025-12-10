@@ -28,8 +28,13 @@ export default function CertificateHeader({
   isEpc = true,
   printTitle,
 }: Props) {
+  const bandLabel =
+    currentBand && currentBand.trim().length > 0
+      ? currentBand.trim().toUpperCase()
+      : "—";
+
   return (
-    <div>
+    <div className="print-no-break print-page-break">
       <div className=" bg-dark-blue">
         <div className="print-only">
           <div
@@ -77,7 +82,7 @@ export default function CertificateHeader({
                 lineHeight: "6rem",
               }}
             >
-              {String(currentBand).toUpperCase()}
+              {bandLabel}
             </span>
           </div>
         </div>

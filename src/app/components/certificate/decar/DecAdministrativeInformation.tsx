@@ -1,14 +1,11 @@
 import React from "react";
-import type {
-  DecarAdministrativeInformation,
-  DecarAssessor,
-} from "@/types/decar";
+import type { DecAdministrativeInformation, Assessor } from "@/types/decar";
 
 import { formatDecDate } from "@/app/utils/date";
 
 type Props = {
-  administrative?: DecarAdministrativeInformation | null;
-  assessor?: DecarAssessor | null;
+  administrative?: DecAdministrativeInformation | null;
+  assessor?: Assessor | null;
   addressId?: string | null;
   nominateDate?: string | null;
   validUntil?: string | null;
