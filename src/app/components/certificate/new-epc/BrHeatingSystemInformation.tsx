@@ -36,12 +36,8 @@ export default function BrHeatingSystemInformation() {
           </tbody>
         </table>
 
-        <BandLegend />
+        <BandLegend className="epc-band-legend-print-2col" />
 
-        {/* Alternatives table */}
-        <h4 className="ds_h4" style={{ marginTop: 20 }}>
-          Heating system alternatives
-        </h4>
         <HeatingSystemsAlternativesTable
           rows={[
             {

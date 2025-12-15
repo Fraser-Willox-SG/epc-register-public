@@ -81,7 +81,7 @@ export default async function DomesticCertificatePage({
 
   return (
     <div className="ds_wrapper">
-      <div className="ds_page-header">
+      <div className="ds_page-header no-print">
         <h1>Energy Performance Certificate</h1>
         <div className="sgds-header-row">
           <p className="ds_lede ds_!_margin-0">
@@ -108,7 +108,7 @@ export default async function DomesticCertificatePage({
         <div className="ds_layout ds_layout--search-results-with-sidebar">
           {/* Sidebar (SDS grid area) */}
           <aside
-            className="ds_layout__sidebar"
+            className="ds_layout__sidebar no-print"
             aria-label="Document navigation"
           >
             <ContentsNav
@@ -116,7 +116,7 @@ export default async function DomesticCertificatePage({
               ariaLabel="Document navigation"
             >
               <ContentsNav.Item href="#overview">
-                <strong>EPC:</strong>Energy Performance Certificate
+                <strong>EPC:</strong> Energy Performance Certificate
               </ContentsNav.Item>
               <ContentsNav.Item href="#br-intro">
                 <strong>Building Report:</strong> Introduction

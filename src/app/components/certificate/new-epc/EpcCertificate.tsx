@@ -69,6 +69,7 @@ export default function EpcCertificate({
         rrn={rrn}
         dateOfExpiry={dateOfExpiry}
         currentBand={currentBand}
+        printTitle="Energy Performance Certificate"
       />
       <EpcEnergyCostRating
         currentBand={currentBand}

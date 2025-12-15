@@ -42,6 +42,7 @@ export default function EpcEnergyCostRating({
       </section>
 
       <section
+        id="epc-energy-cost-rating-is-calculated"
         className="cert-section"
         style={{ background: "#2267B2", color: "white" }}
       >
@@ -49,8 +50,8 @@ export default function EpcEnergyCostRating({
         heat-retention rating.
       </section>
 
-      <div style={{ gap: 2 }}>
-        <div className="cert-section bg-grey">
+      <div style={{ gap: 2 }} className="print-no-break">
+        <div id="epc-heat-system-rating" className="cert-section bg-grey">
           <h3>
             <strong>Heating system rating</strong>
           </h3>
@@ -68,7 +69,7 @@ export default function EpcEnergyCostRating({
           </div>
         </div>
 
-        <div className="cert-section">
+        <div id="epc-heat-retention-rating" className="cert-section">
           <h3>
             <strong>Heat-retention rating</strong>
           </h3>

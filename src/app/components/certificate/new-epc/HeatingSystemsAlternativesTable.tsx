@@ -19,34 +19,37 @@ export default function HeatingSystemsAlternativesTable({
   className?: string;
 }) {
   return (
-    <table
-      className={`ds_table ${className ?? ""}`}
-      style={{ width: "100%", marginTop: "1rem" }}
-    >
-      <thead>
-        <tr>
-          <th scope="col">Alternative heating system</th>
-          <th scope="col">Heat system rating</th>
-          <th scope="col">Estimated Emissions</th>
-          <th scope="col">Estimated Installation Costs</th>
-          <th scope="col">Estimated running Costs</th>
-        </tr>
-      </thead>
-      <tbody>
-        {rows.map((r) => (
-          <tr key={r.system}>
-            <th scope="row" style={{ fontWeight: 600 }}>
-              {r.system}
-            </th>
-            <td style={{ textAlign: "center" }}>
-              <BandBadge band={r.band} title={`Band ${r.band}`} />
-            </td>
-            <td>{r.emissions}</td>
-            <td>{formatGBP(r.installCost)}</td>
-            <td>{formatGBP(r.runningCost)}</td>
+    <div id="epc-heating-system-alternatives">
+      <h4 className="ds_h4">Heating system alternatives</h4>
+      <table
+        className={`ds_table ${className ?? ""}`}
+        style={{ width: "100%", marginTop: "1rem" }}
+      >
+        <thead>
+          <tr>
+            <th scope="col">Alternative heating system</th>
+            <th scope="col">Heat system rating</th>
+            <th scope="col">Estimated Emissions</th>
+            <th scope="col">Estimated Installation Costs</th>
+            <th scope="col">Estimated running Costs</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {rows.map((r) => (
+            <tr key={r.system}>
+              <th scope="row" style={{ fontWeight: 600 }}>
+                {r.system}
+              </th>
+              <td style={{ textAlign: "center" }}>
+                <BandBadge band={r.band} title={`Band ${r.band}`} />
+              </td>
+              <td>{r.emissions}</td>
+              <td>{formatGBP(r.installCost)}</td>
+              <td>{formatGBP(r.runningCost)}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
