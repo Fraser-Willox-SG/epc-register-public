@@ -280,6 +280,53 @@ body {
     border-left: 1px solid #ccc;
   }
 
+  .print-to-inline-span {
+    display: inline;
+    margin: 0;
+  }
+
+  /*     ////////////////////////////     */
+  /* Print: Energy Performance Certificate Styles */
+  /*     ////////////////////////////     */
+
+  #epc-energy-cost-rating-is-calculated {
+    height: 178px;
+    display: flex;
+    align-items: center;
+  }
+
+  #epc-heat-system-rating svg,
+  #epc-heat-retention-rating svg {
+    max-height: 377px;
+  }
+
+  #br-estimated-energy-costs {
+    height: 605px;
+  }
+
+  .epc-band-legend-print-2col ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(4, auto); /* 8 items -> 4 rows per column */
+    grid-auto-flow: column; /* fill down, then next column */
+    column-gap: 24px;
+    row-gap: 0px;
+  }
+
+  .epc-band-legend-print-2col li {
+    margin: 0;
+  }
+
+  #br-potential-improvements {
+    height: 776px;
+  }
+
+  #epc-other-property-certificates,
+  #br-potential-improvements-list,
+  #epc-heating-system-alternatives {
+    padding-top: 16px;
+  }
+
   /*     ////////////////////////////     */
   /* Print: DEC Energy Certificate Styles */
   /*     ////////////////////////////     */
