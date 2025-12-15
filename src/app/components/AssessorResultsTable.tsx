@@ -4,8 +4,8 @@ import { deriveAssessorTypes, Assessor } from "@/types/find-assessor";
 
 type Props = {
   postcode: string;
+  types: string;
   rows: Assessor[];
-  /** 1-based page */
   page: number;
   pageSize?: number;
 };
@@ -25,6 +25,7 @@ function pageHref(
 
 export default function AssessorResultsTable({
   postcode,
+  types,
   rows,
   page,
   pageSize = 10,
@@ -35,12 +36,6 @@ export default function AssessorResultsTable({
   const start = (safePage - 1) * pageSize;
   const end = Math.min(start + pageSize, total);
   const pageRows = rows.slice(start, end);
-
-  // read current types from URL for pager links
-  const typesParam =
-    typeof window !== "undefined"
-      ? new URLSearchParams(window.location.search).get("types") ?? ""
-      : "";
 
   const renderPager = () =>
     totalPages > 1 && (
@@ -57,7 +52,7 @@ export default function AssessorResultsTable({
                 href={pageHref(
                   "/find-advisor/results",
                   postcode,
-                  typesParam,
+                  types,
                   safePage - 1
                 )}
               >
@@ -81,12 +76,7 @@ export default function AssessorResultsTable({
               ) : (
                 <Link
                   className="ds_pagination__link"
-                  href={pageHref(
-                    "/find-advisor/results",
-                    postcode,
-                    typesParam,
-                    p
-                  )}
+                  href={pageHref("/find-advisor/results", postcode, types, p)}
                 >
                   {p}
                 </Link>
@@ -100,7 +90,7 @@ export default function AssessorResultsTable({
                 href={pageHref(
                   "/find-advisor/results",
                   postcode,
-                  typesParam,
+                  types,
                   safePage + 1
                 )}
               >
