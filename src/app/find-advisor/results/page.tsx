@@ -186,6 +186,7 @@ export default async function FindAdvisorResultsPage({
       ) : (
         <AssessorResultsTable
           postcode={postcode}
+          types={rawTypes ?? ""}
           rows={rows}
           page={page}
           pageSize={10}
