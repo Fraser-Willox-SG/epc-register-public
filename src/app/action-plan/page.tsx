@@ -1,11 +1,20 @@
 "use client";
 
 import { useState, ChangeEvent, FormEvent } from "react";
+import { useRouter } from "next/navigation";
+
 import Button from "@scottish-government/designsystem-react/dist/components/Button/Button";
 import Question from "@scottish-government/designsystem-react/dist/components/Question/Question";
 import RadioGroup from "@scottish-government/designsystem-react/dist/components/RadioButton/RadioGroup";
 import RadioButton from "@scottish-government/designsystem-react/dist/components/RadioButton/RadioButton";
 import TextInput from "@scottish-government/designsystem-react/dist/components/TextInput/TextInput";
+
+import {
+  isValidUKPostcode,
+  normalizePostcode,
+  isValidRRN,
+  normalizeRRN,
+} from "@/lib/validators";
 
 type SearchMode = "postcode" | "rrn";
 
@@ -13,23 +22,39 @@ export default function ActionPlanPage() {
   const [mode, setMode] = useState<SearchMode>("postcode");
   const [postcode, setPostcode] = useState("");
   const [rrn, setRRN] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
+  const router = useRouter();
   const groupName = "search-mode";
 
   const onRadioChange = (e: ChangeEvent<HTMLInputElement>) => {
     const id = e.target.id;
+    setError(null);
     if (id === "search-by-postcode") setMode("postcode");
     if (id === "search-by-rrn") setMode("rrn");
   };
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
-    const value = (mode === "postcode" ? postcode : rrn).trim();
-    if (!value) return;
+    setError(null);
 
-    // TODO: replace with routing / API call
-    // Example:
-    // router.push(`/action-plan?${mode}=${encodeURIComponent(value)}`);
+    if (mode === "postcode") {
+      const pc = normalizePostcode(postcode);
+      if (!isValidUKPostcode(pc)) {
+        setError("Enter a valid UK postcode, for example G2 1DU.");
+        return;
+      }
+      router.push(`/action-plan/results?postcode=${encodeURIComponent(pc)}`);
+    } else {
+      if (!isValidRRN(rrn)) {
+        setError(
+          "Enter a valid Report Reference Number (RRN). Example: 1234-5678-9012-3456-7890."
+        );
+        return;
+      }
+      const id = normalizeRRN(rrn); // normalises and formats groups
+      router.push(`/action-plan/certificate/${encodeURIComponent(id)}`);
+    }
   };
 
   return (
@@ -52,7 +77,7 @@ export default function ActionPlanPage() {
               id="search-by-postcode"
               name={groupName}
               label="Postcode"
-              hintText="Example: DA8 1FD"
+              hintText="Example: G2 1DU"
               checked={mode === "postcode"}
             />
             <RadioButton
@@ -93,7 +118,11 @@ export default function ActionPlanPage() {
           />
         )}
 
-        <Button type="submit">Continue</Button>
+        {error && <p className="ds_error-message ds_mt-2">{error}</p>}
+
+        <Button type="submit" className="ds_mt-4">
+          Continue
+        </Button>
       </form>
     </div>
   );

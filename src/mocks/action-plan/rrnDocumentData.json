@@ -1,0 +1,135 @@
+{
+  "2140-9251-5120-0000-5491": {
+    "header": {
+      "title": "Section 63 Action Plan",
+      "country": "Scotland"
+    },
+
+    "keyDates": {
+      "dateOfSaleOrLease": "2022-09-15",
+      "dateOfAssessment": "2022-09-15",
+      "dateOfPlan": "2022-10-11"
+    },
+
+    "identifiers": {
+      "actionPlanRrn": "2140-9251-5120-0000-5491",
+      "epcRrn": "2510-5032-4102-0591-4002",
+      "uprn": "1001405452"
+    },
+
+    "address": {
+      "addressLine1": "CITY CHAMBERS",
+      "addressLine2": "80 GEORGE SQUARE",
+      "town": "GLASGOW",
+      "postcode": "G2 1DU"
+    },
+
+    "parties": {
+      "ownerInvolved": true,
+      "tenantOrDelegatedPersonInvolved": false,
+      "assessorId": "EES/012266",
+      "delegatedProtocolSetUp": false
+    },
+
+    "improvementType": {
+      "buildingImprovements": false,
+      "operationalRating": true
+    },
+
+    "prescriptiveMeasures": [
+      { "description": "Central time heating control", "valid": false },
+      { "description": "Lighting controls", "valid": true },
+      { "description": "Draught-stripping windows and doors", "valid": true },
+      { "description": "Hot water storage insulation", "valid": false },
+      { "description": "Lamp replacement", "valid": false },
+      { "description": "Boiler replacement", "valid": false },
+      { "description": "Roof insulation", "valid": false }
+    ],
+
+    "targets": {
+      "co2KgPerM2PerYear": 1.32,
+      "energyKwhPerM2PerYear": 2.97
+    },
+
+    "acceptPrescriptiveImprovements": true,
+
+    "operationalRatingSystem": {
+      "displayEnergyCertificateLodged": true,
+      "note": "Refer to Display Energy Certificate to view operational rating and CO2 emissions over previous 3 years."
+    },
+
+    "completion": {
+      "plannedDate": "2026-04-14",
+      "actualDate": null
+    },
+
+    "footerNote": "This page is the Action Plan which must be lodged in the national electronic register and must be updated when the improvements have been completed."
+  },
+
+  "2140-9251-5120-0000-5492": {
+    "header": {
+      "title": "Section 63 Action Plan",
+      "country": "Scotland"
+    },
+
+    "keyDates": {
+      "dateOfSaleOrLease": "2023-03-01",
+      "dateOfAssessment": "2023-03-01",
+      "dateOfPlan": "2023-03-18"
+    },
+
+    "identifiers": {
+      "actionPlanRrn": "2140-9251-5120-0000-5492",
+      "epcRrn": "2510-5032-4102-0591-4002",
+      "uprn": "1001405452"
+    },
+
+    "address": {
+      "addressLine1": "CITY CHAMBERS",
+      "addressLine2": "80 GEORGE SQUARE",
+      "town": "GLASGOW",
+      "postcode": "G2 1DU"
+    },
+
+    "parties": {
+      "ownerInvolved": true,
+      "tenantOrDelegatedPersonInvolved": true,
+      "assessorId": "EES/019874",
+      "delegatedProtocolSetUp": true
+    },
+
+    "improvementType": {
+      "buildingImprovements": true,
+      "operationalRating": false
+    },
+
+    "prescriptiveMeasures": [
+      { "description": "Central time heating control", "valid": true },
+      { "description": "Lighting controls", "valid": true },
+      { "description": "Draught-stripping windows and doors", "valid": false },
+      { "description": "Hot water storage insulation", "valid": true },
+      { "description": "Lamp replacement", "valid": true },
+      { "description": "Boiler replacement", "valid": false },
+      { "description": "Roof insulation", "valid": false }
+    ],
+
+    "targets": {
+      "co2KgPerM2PerYear": 1.85,
+      "energyKwhPerM2PerYear": 3.42
+    },
+
+    "acceptPrescriptiveImprovements": false,
+
+    "operationalRatingSystem": {
+      "displayEnergyCertificateLodged": false,
+      "note": "Operational rating will be provided once improvements have been completed."
+    },
+
+    "completion": {
+      "plannedDate": "2027-09-30",
+      "actualDate": null
+    },
+
+    "footerNote": "This Action Plan replaces a previous plan and reflects updated improvement measures for the building."
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "G2 1DU": {
+    "assessments": [
+      {
+        "actionPlanRrn": "2140-9251-5120-0000-5491",
+        "status": "ENTERED",
+        "uprn": "1001405452",
+        "epcRrn": "2510-5032-4102-0591-4002",
+        "assessmentDate": "2022-09-15",
+        "address": {
+          "addressLine1": "CITY CHAMBERS",
+          "addressLine2": "80 GEORGE SQUARE",
+          "town": "GLASGOW",
+          "postcode": "G2 1DU"
+        }
+      },
+      {
+        "actionPlanRrn": "2140-9251-5120-0000-5492",
+        "status": "ENTERED",
+        "uprn": "1001405452",
+        "epcRrn": "2510-5032-4102-0591-4002",
+        "assessmentDate": "2022-09-15",
+        "address": {
+          "addressLine1": "CITY CHAMBERS",
+          "addressLine2": "80 GEORGE SQUARE",
+          "town": "GLASGOW",
+          "postcode": "G2 1DU"
+        }
+      }
+    ]
+  }
+}
