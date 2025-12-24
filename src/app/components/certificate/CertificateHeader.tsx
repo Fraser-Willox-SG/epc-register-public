@@ -36,7 +36,7 @@ export default function CertificateHeader({
   return (
     <div className="print-no-break print-page-break">
       <div className=" bg-dark-blue">
-        <div className="print-only">
+        {/* <div className="print-only">
           <div
             className="cert-section flex-between "
             style={{
@@ -52,10 +52,11 @@ export default function CertificateHeader({
               style={{ display: "block" }}
             />
           </div>
-        </div>
+        </div> */}
 
         <div className="flex-between cert-section">
           <div>
+            <h2>{printTitle}</h2>
             <p className="mb-0">{addressLine1}</p>
             <p className="mb-0">{addressLine2}</p>
             <p className="mb-0">{addressLine3}</p>

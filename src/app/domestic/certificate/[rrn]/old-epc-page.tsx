@@ -4,10 +4,10 @@ import type { ReactNode } from "react";
 
 import ContentsNav from "@scottish-government/designsystem-react/dist/components/ContentsNav/ContentsNav";
 
-import HeaderCard from "@/app/components/certificate/old-epc/HeaderCard";
-import EpcScale from "@/app/components/certificate/old-epc/EpcScale";
-import PropertySummary from "@/app/components/certificate/old-epc/PropertySummary";
-import ImprovementsList from "@/app/components/certificate/old-epc/ImprovementsList";
+import HeaderCard from "@/app/components/certificate/epc-legacy/HeaderCard";
+import EpcScale from "@/app/components/certificate/epc-legacy/EpcScale";
+import PropertySummary from "@/app/components/certificate/epc-legacy/PropertySummary";
+import ImprovementsList from "@/app/components/certificate/epc-legacy/ImprovementsList";
 import PrintButton from "@/app/components/PrintButton";
 
 // ---- Types for the API response (trimmed to what we use right now)

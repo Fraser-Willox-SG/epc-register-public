@@ -1,5 +1,5 @@
 import * as React from "react";
-import BandBadge from "@/app/components/certificate/new-epc/BandBadge";
+import BandBadge from "@/app/components/certificate/epc-hem/BandBadge";
 import { type Band } from "@/app/utils/epc";
 import { formatGBP } from "@/app/utils/epc";
 

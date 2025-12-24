@@ -1,5 +1,5 @@
 // /utils/epc.ts
-import { RecommendedImprovement } from "@/types/epc-dom";
+import { RecommendedImprovement } from "@/types/epc-dom-hem";
 
 /** EPC A–G band (display-normalised elsewhere) */
 export type Band = "A" | "B" | "C" | "D" | "E" | "F" | "G";

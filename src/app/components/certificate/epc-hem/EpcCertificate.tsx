@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "@/app/components/certificate/CertificateHeader";
-import EpcEnergyCostRating from "@/app/components/certificate/new-epc/components/EpcEnergyCostRating";
-import EpcPotentialSavings from "@/app/components/certificate/new-epc/components/EpcPotentialSavings";
+import EpcEnergyCostRating from "@/app/components/certificate/epc-hem/components/EpcEnergyCostRating";
+import EpcPotentialSavings from "@/app/components/certificate/epc-hem/components/EpcPotentialSavings";
 
 type RegisteredBy = {
   name: string;
