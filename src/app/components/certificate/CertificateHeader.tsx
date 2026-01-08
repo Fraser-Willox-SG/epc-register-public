@@ -91,7 +91,7 @@ export default function CertificateHeader({
 
       <div
         className="row-2col"
-        style={{ textAlign: "center", color: "white", gap: "2px" }}
+        style={{ textAlign: "center", color: "white", gap: "1px" }}
       >
         <div className="cert-section bg-dark-blue">
           <p>

@@ -1,4 +1,4 @@
-import type { EpcDomSummary } from "@/types/epc-dom-hem";
+import type { EpcDomRdSapSummary } from "@/types/epc-dom-rdsap";
 import Header from "@/app/components/certificate/CertificateHeader";
 import CertificateOverview from "./certificate/CertificateOverview";
 import PerformanceFeaturesAndContext from "./certificate/PerformanceFeaturesAndContext";
@@ -7,7 +7,11 @@ import MeasuresAdviceAndHeatDemand from "./certificate/MeasuresAdviceAndHeatDema
 import AboutThisDocument from "./certificate/AboutThisDocument";
 import AdviceAndSupport from "./certificate/AdviceAndSupport";
 
-export default function RdSapEpcDocument({ data }: { data: EpcDomSummary }) {
+export default function RdSapEpcDocument({
+  data,
+}: {
+  data: EpcDomRdSapSummary;
+}) {
   const {
     addressLine1,
     addressLine2,
@@ -37,11 +41,11 @@ export default function RdSapEpcDocument({ data }: { data: EpcDomSummary }) {
         />
       </div>
 
-      <CertificateOverview />
+      <CertificateOverview data={data} />
       <PerformanceFeaturesAndContext />
       <CostsAndRecommendationsTable />
-      <MeasuresAdviceAndHeatDemand />
-      <AboutThisDocument />
+      <MeasuresAdviceAndHeatDemand data={data} />
+      <AboutThisDocument data={data} />
       <AdviceAndSupport />
     </>
   );

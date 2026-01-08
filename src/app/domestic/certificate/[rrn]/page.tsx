@@ -4,19 +4,21 @@ import { selfUrl } from "@/app/utils/self-url";
 import ContentsNav from "@scottish-government/designsystem-react/dist/components/ContentsNav/ContentsNav";
 import PrintButton from "@/app/components/PrintButton";
 
-import type { EpcDomSummary } from "@/types/epc-dom-hem";
+import type { EpcDomRdSapSummary } from "@/types/epc-dom-rdsap";
 
+// RdSap Imports
 import RdSapEpcDocument from "@/app/components/certificate/epc-rdsap/RdSapEpcDocument";
-import HemEpcDocument from "@/app/components/certificate/epc-hem/HemEpcDocument";
 import ContentsNavDomRdSap from "@/app/components/certificate/epc-rdsap/ContentsNavDomRdSap";
-import ContentsNavDomHem from "@/app/components/certificate/epc-hem/ContentsNavDomHem";
-import ContentsNavDomLegacy from "@/app/components/certificate/epc-legacy/ContentsNavDomLegacy";
-import LegacyEpcDocument from "@/app/components/certificate/epc-legacy/LegacyEpcDocument";
-// Future:
-// import HemEpcDocument from "@/app/components/certificate/epc-hem/HemEpcDocument";
-// import LegacyEpcDocument from "@/app/components/certificate/epc-legacy/LegacyEpcDocument";
 
-type Summary = { data: EpcDomSummary };
+// Hem Imports
+import HemEpcDocument from "@/app/components/certificate/epc-hem/HemEpcDocument";
+import ContentsNavDomHem from "@/app/components/certificate/epc-hem/ContentsNavDomHem";
+
+// Legacy Imports
+// import LegacyEpcDocument from "@/app/components/certificate/epc-legacy/LegacyEpcDocument";
+// import ContentsNavDomLegacy from "@/app/components/certificate/epc-legacy/ContentsNavDomLegacy";
+
+type Summary = { data: EpcDomRdSapSummary };
 
 // ---- page
 export default async function DomesticCertificatePage({
@@ -115,8 +117,12 @@ export default async function DomesticCertificatePage({
           </aside>
 
           {/* Main content */}
-          <main className="ds_layout__content">
-            <RdSapEpcDocument data={data} />
+          <main
+            className="ds_layout__content"
+            style={{ border: "1px solid grey" }}
+          >
+            {/* RdSAP only for now – HEM and legacy documents will be added later when required */}
+            <RdSapEpcDocument data={data as EpcDomRdSapSummary} />
             {/* <HemEpcDocument data={data} /> */}
             {/* <LegacyEpcDocument data={data} /> */}
           </main>
