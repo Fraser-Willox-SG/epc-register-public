@@ -88,17 +88,17 @@ export default function MeasuresAdviceAndHeatDemand({
             <tr>
               <td>Space heating (kWh per year)</td>
               <td>12,483</td>
-              <td>N/A</td>
-              <td>N/A</td>
-              <td>N/A</td>
+              <td aria-label="Not applicable">—</td>
+              <td aria-label="Not applicable">—</td>
+              <td aria-label="Not applicable">—</td>
             </tr>
 
             <tr>
               <td>Water heating (kWh per year)</td>
               <td>5,316</td>
-              <td>N/A</td>
-              <td>N/A</td>
-              <td>N/A</td>
+              <td aria-label="Not applicable">—</td>
+              <td aria-label="Not applicable">—</td>
+              <td aria-label="Not applicable">—</td>
             </tr>
           </tbody>
         </table>

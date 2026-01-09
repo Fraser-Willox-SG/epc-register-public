@@ -129,6 +129,11 @@ body {
   border-bottom: 1px solid #b3b3b3;
 }
 
+.content-center {
+  display: flex;
+  justify-content: center;
+}
+
 .performance-recommendation-section::before {
   content: "";
   display: block;

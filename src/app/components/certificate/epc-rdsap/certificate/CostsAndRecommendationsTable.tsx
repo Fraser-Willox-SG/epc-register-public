@@ -100,10 +100,14 @@ export default function CostsAndRecommendationsTable() {
               <td>£800 – £1,200</td>
               <td>£148</td>
               <td>
-                <RatingBadge variant="energy" band="D" score={58} />
+                <span className="content-center">
+                  <RatingBadge variant="energy" band="D" score={58} />
+                </span>
               </td>
               <td>
-                <RatingBadge variant="environment" band="E" score={53} />
+                <span className="content-center">
+                  <RatingBadge variant="environment" band="E" score={53} />
+                </span>
               </td>
             </tr>
 
@@ -112,10 +116,14 @@ export default function CostsAndRecommendationsTable() {
               <td>£2,200 – £3,000</td>
               <td>£305</td>
               <td>
-                <RatingBadge variant="energy" band="D" score={68} />
+                <span className="content-center">
+                  <RatingBadge variant="energy" band="D" score={68} />
+                </span>
               </td>
               <td>
-                <RatingBadge variant="environment" band="D" score={65} />
+                <span className="content-center">
+                  <RatingBadge variant="environment" band="D" score={65} />
+                </span>
               </td>
             </tr>
 
@@ -124,10 +132,14 @@ export default function CostsAndRecommendationsTable() {
               <td>£4,000 – £6,000</td>
               <td>£55</td>
               <td>
-                <RatingBadge variant="energy" band="C" score={70} />
+                <span className="content-center">
+                  <RatingBadge variant="energy" band="C" score={70} />
+                </span>
               </td>
               <td>
-                <RatingBadge variant="environment" band="D" score={68} />
+                <span className="content-center">
+                  <RatingBadge variant="environment" band="D" score={68} />
+                </span>
               </td>
             </tr>
 
@@ -136,10 +148,14 @@ export default function CostsAndRecommendationsTable() {
               <td>£9,000 – £14,000</td>
               <td>£223</td>
               <td>
-                <RatingBadge variant="energy" band="C" score={79} />
+                <span className="content-center">
+                  <RatingBadge variant="energy" band="C" score={79} />
+                </span>
               </td>
               <td>
-                <RatingBadge variant="environment" band="C" score={76} />
+                <span className="content-center">
+                  <RatingBadge variant="environment" band="C" score={76} />
+                </span>
               </td>
             </tr>
           </tbody>
