@@ -1,5 +1,5 @@
 // /utils/epc.ts
-import { RecommendedImprovement } from "@/types/epc-dom";
+import { RecommendedImprovement } from "@/types/epc-dom-hem";
 
 /** EPC A–G band (display-normalised elsewhere) */
 export type Band = "A" | "B" | "C" | "D" | "E" | "F" | "G";
@@ -23,6 +23,16 @@ export const COLORS: Record<Band, string> = {
   G: "#d03434",
 };
 
+export const COLORS_CO2: Record<Band, string> = {
+  A: "#CDE2F5",
+  B: "#97C0EE",
+  C: "#73A1FF",
+  D: "#4E84C4",
+  E: "#A8A8A8",
+  F: "#868686",
+  G: "#686868",
+};
+
 export const LANE: Record<Band, string> = {
   A: "#e9f4ec",
   B: "#ecf7ef",
@@ -33,6 +43,16 @@ export const LANE: Record<Band, string> = {
   G: "#fde2e0",
 };
 
+export const LANE_CO2: Record<Band, string> = {
+  A: "#EDF4FB",
+  B: "#E6F0FA",
+  C: "#E3ECF9",
+  D: "#E1E8F3",
+  E: "#F2F2F2",
+  F: "#ECECEC",
+  G: "#E6E6E6",
+};
+
 export const isBand = (v: unknown): v is Band =>
   typeof v === "string" && BANDS.includes(v.toUpperCase() as Band);
 
@@ -41,7 +61,12 @@ export const bandColor = (band?: Band | null) =>
   band ? COLORS[band] : NA_GREY;
 
 export const bandTextColor = (b: Band) =>
-  b === "C" || b === "D" || b === "E" ? "#374151" : "#ffffff";
+  b === "C" || b === "D" || b === "E" ? "#1a1a1a" : "#ffffff";
+
+export const bandTextColor_CO2 = (b: Band) =>
+  b === "A" || b === "B" || b === "C" || b === "E" || b === "F"
+    ? "#1a1a1a"
+    : "#ffffff";
 
 /** Coerce raw API band (often lower/extra whitespace) to a strict Band */
 export function toBand(v?: string | null): Band | undefined {

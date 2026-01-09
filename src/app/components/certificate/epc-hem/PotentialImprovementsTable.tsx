@@ -1,6 +1,6 @@
 import * as React from "react";
-import BandBadge from "@/app/components/certificate/new-epc/BandBadge";
-import NumberBullet from "@/app/components/certificate/new-epc/NumberBullet";
+import BandBadge from "@/app/components/certificate/epc-hem/BandBadge";
+import NumberBullet from "@/app/components/certificate/epc-hem/NumberBullet";
 import { type Band } from "@/app/utils/epc";
 
 type Row = {
