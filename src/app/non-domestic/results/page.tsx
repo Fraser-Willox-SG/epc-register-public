@@ -39,7 +39,7 @@ export default async function DomesticResultsPage({
   const apiUrl = selfUrl(
     `/api/ukg/search?postcode=${encodeURIComponent(
       postcode
-    )}&assessmentTypes=RdSAP,SAP`
+    )}&assessmentTypes=CEPC,CEPC-RR`
   );
 
   try {
@@ -71,7 +71,7 @@ export default async function DomesticResultsPage({
         <>
           <p className="ds_error-message">{error}</p>
           <p className="ds_mt-4">
-            <Link href="/domestic" className="ds_link">
+            <Link href="/non-domestic" className="ds_link">
               Back to search
             </Link>
           </p>
@@ -82,7 +82,7 @@ export default async function DomesticResultsPage({
             <p>No results found for {postcode.toUpperCase()}.</p>
           </div>
           <p className="ds_mt-4">
-            <Link href="/domestic" className="ds_link">
+            <Link href="/non-domestic" className="ds_link">
               Back to search
             </Link>
           </p>
@@ -93,9 +93,9 @@ export default async function DomesticResultsPage({
           rows={rows}
           page={page}
           pageSize={7}
-          resultsPath="/domestic/results"
+          resultsPath="/non-domestic/results"
           certificateHref={(rrn) =>
-            `/domestic/certificate/${encodeURIComponent(rrn)}`
+            `/non-domestic/certificate/${encodeURIComponent(rrn)}`
           }
         />
       )}

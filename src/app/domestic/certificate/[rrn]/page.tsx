@@ -1,7 +1,6 @@
 import Link from "next/link";
 
 import { selfUrl } from "@/app/utils/self-url";
-import ContentsNav from "@scottish-government/designsystem-react/dist/components/ContentsNav/ContentsNav";
 import PrintButton from "@/app/components/PrintButton";
 
 import type { EpcDomRdSapSummary } from "@/types/epc-dom-rdsap";
