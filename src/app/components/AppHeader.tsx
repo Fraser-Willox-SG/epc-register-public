@@ -34,7 +34,11 @@ export default function AppHeader() {
   const computed: NavItemWithCurrent[] = NAV_ITEMS.map((i) => ({
     ...i,
     current:
-      pathname === i.href || (i.href !== "/" && pathname.startsWith(i.href)),
+      i.href === "/"
+        ? pathname === "/" ||
+          pathname.startsWith("/domestic") ||
+          pathname.startsWith("/non-domestic")
+        : pathname === i.href || pathname.startsWith(`${i.href}/`),
   }));
 
   const navigationItemsForType: DSNavigationItem[] = computed.map(
