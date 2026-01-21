@@ -28,7 +28,7 @@ export default async function DomesticCertificatePage({
   const { rrn } = await params;
 
   const apiUrl = selfUrl(
-    `/api/ukg/assessments/${encodeURIComponent(rrn)}/summary`
+    `/api/ukg/assessments/${encodeURIComponent(rrn)}/summary`,
   );
 
   let data: Summary["data"] | null = null;

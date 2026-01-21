@@ -36,13 +36,10 @@ export default function EPCBandChart({
   const baseH = 450;
 
   const pad = 20;
-  // const labelW = 24;
   const barStartX = 0;
-  //  const barStartX = pad + labelW + 8;
   const barEndX = baseW - pad;
   const barW = barEndX - barStartX;
   const bandH = 36;
-  // const bandH = 24;
   const bandGap = 8;
   const topY = 80;
 
@@ -125,20 +122,10 @@ export default function EPCBandChart({
           hasCurrent ? `: current ${current}` : ""
         }${hasPotential ? `, potential ${potential}` : ""}`}
       >
-        <text
-          // x={pad}
-          y={topY - 28}
-          fontSize="14"
-          fill="#374151"
-        >
+        <text y={topY - 28} fontSize="14" fill="#374151">
           Lower running costs
         </text>
-        <text
-          // x={pad}
-          y={topY + 8 * (bandH + bandGap)}
-          fontSize="14"
-          fill="#374151"
-        >
+        <text y={topY + 8 * (bandH + bandGap)} fontSize="14" fill="#374151">
           Higher running costs
         </text>
 
@@ -164,7 +151,6 @@ export default function EPCBandChart({
               ></rect>
               <text
                 x={barStartX + pad}
-                // x={pad + 4}
                 y={y + bandH - 8}
                 fontSize="28"
                 fontWeight={700}

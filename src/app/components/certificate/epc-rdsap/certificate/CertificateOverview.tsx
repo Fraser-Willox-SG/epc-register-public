@@ -1,6 +1,6 @@
 import type { EpcDomRdSapSummary } from "@/types/epc-dom-rdsap";
 import { formatIsoDateLong } from "@/app/utils/date";
-import RdSapBandChart from "./RdSapBandChart";
+import RdSapBandChart from "../../EpcBandChart";
 
 export default function CertificateOverview({
   data,

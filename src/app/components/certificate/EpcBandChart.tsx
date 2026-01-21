@@ -135,20 +135,10 @@ export default function EPCBandChart({
           hasCurrent ? `: current ${current}` : ""
         }${hasPotential ? `, potential ${potential}` : ""}`}
       >
-        <text
-          // x={pad}
-          y={topY - 28}
-          fontSize="14"
-          fill="#374151"
-        >
+        <text y={topY - 28} fontSize="14" fill="#374151">
           {topLabel ?? ""}
         </text>
-        <text
-          // x={pad}
-          y={topY + 8 * (bandH + bandGap)}
-          fontSize="14"
-          fill="#374151"
-        >
+        <text y={topY + 8 * (bandH + bandGap)} fontSize="14" fill="#374151">
           {bottomLabel ?? ""}
         </text>
 

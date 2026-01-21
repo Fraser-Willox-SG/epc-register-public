@@ -3,23 +3,23 @@ import ContentsNav from "@scottish-government/designsystem-react/dist/components
 export default function ContentsNavDomRdSap() {
   return (
     <ContentsNav title="Document navigation" ariaLabel="Document navigation">
-      <ContentsNav.Item href="#certificate-overview">
+      <ContentsNav.Item href="#overview">
         <strong>EPC:</strong> Energy Performance Certificate
       </ContentsNav.Item>
 
-      <ContentsNav.Item href="#background">
+      <ContentsNav.Item href="#report-background">
         <strong>Report:</strong> Background
       </ContentsNav.Item>
 
-      <ContentsNav.Item href="#recommendations">
+      <ContentsNav.Item href="#report-recommendations">
         <strong>Report:</strong> Recommendations
       </ContentsNav.Item>
 
-      <ContentsNav.Item href="#payback-period">
+      <ContentsNav.Item href="#report-payback">
         <strong>Report:</strong> Payback Period
       </ContentsNav.Item>
 
-      <ContentsNav.Item href="#about-this-document">
+      <ContentsNav.Item href="#report-about">
         <strong>Report:</strong> About this document
       </ContentsNav.Item>
     </ContentsNav>

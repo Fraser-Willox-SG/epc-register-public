@@ -13,7 +13,7 @@ import ContentsNavDomRdSap from "@/app/components/certificate/epc-rdsap/Contents
 import HemEpcDocument from "@/app/components/certificate/epc-hem/HemEpcDocument";
 import ContentsNavDomHem from "@/app/components/certificate/epc-hem/ContentsNavDomHem";
 import ContentsNavNonDomRdSap from "@/app/components/certificate/epc-cepc/ContentsNavNonDomRdSap";
-import CommercialEpcDocument from "@/app/components/certificate/epc-cepc/CommercialEpcDocument";
+import CepcEpcDocument from "@/app/components/certificate/epc-cepc/CepcEpcDocument";
 import { EpcNonDomCepcDocument } from "@/types/epc-non-dom-cepc";
 
 // Legacy Imports
@@ -126,7 +126,7 @@ export default async function NonDomesticCertificatePage({
           >
             {/* RdSAP only for now – HEM and legacy documents will be added later when required */}
             {/* <RdSapEpcDocument data={data as EpcDomRdSapSummary} /> */}
-            <CommercialEpcDocument data={data as EpcNonDomCepcDocument} />
+            <CepcEpcDocument data={data as EpcNonDomCepcDocument} />
             {/* <HemEpcDocument data={data} /> */}
             {/* <LegacyEpcDocument data={data} /> */}
           </main>
