@@ -1,6 +1,6 @@
 import * as React from "react";
 import { type Band } from "@/app/utils/epc";
-import BandBadge from "./BandBadge";
+import BandBadge from "../BandBadge";
 
 const DEFAULT_ROWS: Array<{ band: Band; label: string }> = [
   { band: "A", label: "Very good (most efficient)" },

@@ -1,7 +1,12 @@
 import Header from "@/app/components/certificate/CertificateHeader";
 import type { EpcNonDomCepcDocument } from "@/types/epc-non-dom-cepc";
+import CepcCertificateSummary from "./certificate/CepcCertificateSummary";
+import CepcRecommendationsIntroduction from "./recommendations/CepcRecommendationsIntroduction";
+import CepcRecommendationsTables from "./recommendations/CepcRecommendationsTables";
+import CepcPaybackAndSavingsExplained from "./recommendations/CepcPaybackAndSavingsExplained";
+import CepcAboutThisReport from "./recommendations/CepcAboutThisReport";
 
-export default function RdSapEpcDocument({
+export default function CepcEpcDocument({
   data,
 }: {
   data: EpcNonDomCepcDocument;
@@ -22,6 +27,8 @@ export default function RdSapEpcDocument({
       ? data.currentEnergyEfficiencyBand
       : data.energyBandFromRelatedCertificate;
 
+  const hasRecommendations = data.typeOfAssessment === "CEPC-RR";
+
   return (
     <>
       <div id="overview">
@@ -38,6 +45,19 @@ export default function RdSapEpcDocument({
           printTitle="Energy Performance Certificate"
         />
       </div>
+
+      {/* Non Domestic - Commercial EPC */}
+      <CepcCertificateSummary data={data} />
+
+      {/* Non Domestic - Recommendations Report */}
+      {hasRecommendations && (
+        <>
+          <CepcRecommendationsIntroduction />
+          <CepcRecommendationsTables data={data} />
+          <CepcPaybackAndSavingsExplained />
+          <CepcAboutThisReport data={data} />
+        </>
+      )}
     </>
   );
 }

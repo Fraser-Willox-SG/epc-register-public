@@ -1,6 +1,6 @@
 import * as React from "react";
 import { type Band } from "@/app/utils/epc";
-import BandBadge from "./BandBadge";
+import BandBadge from "../BandBadge";
 
 type Item = {
   /** 1-based position shown in the black circle */

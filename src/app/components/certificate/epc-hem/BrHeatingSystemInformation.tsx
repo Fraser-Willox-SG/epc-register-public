@@ -1,5 +1,5 @@
 import React from "react";
-import BandBadge from "./BandBadge";
+import BandBadge from "../BandBadge";
 import BandLegend from "./BandLegend";
 import HeatingSystemsAlternativesTable from "./HeatingSystemsAlternativesTable";
 

@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import EPCBandChart from "@/app/components/certificate/epc-hem/EPCBandChart";
+import EPCBandChart from "@/app/components/certificate/epc-hem/HemBandChart";
 
 import { toBand } from "@/app/utils/epc";
 

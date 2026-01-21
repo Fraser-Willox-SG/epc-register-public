@@ -3,7 +3,7 @@ import ContentsNav from "@scottish-government/designsystem-react/dist/components
 export default function ContentsNavDomRdSap() {
   return (
     <ContentsNav title="Document navigation" ariaLabel="Document navigation">
-      <ContentsNav.Item href="#certificate-overview">
+      <ContentsNav.Item href="#overview">
         <strong>EPC:</strong> Energy Performance Certificate
       </ContentsNav.Item>
 
