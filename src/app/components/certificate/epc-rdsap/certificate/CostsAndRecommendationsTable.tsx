@@ -1,6 +1,111 @@
+import type { SgDomesticEpcCertificateSummary } from "@/types/sg-epc-dom-rdsap";
+import { bandFromScore } from "@/app/utils/epc-bands";
+import improvements from "@/app/content/rdsap/improvements.json";
 import RatingBadge from "./components/RatingBadge";
+import MissingData from "@/app/components/MissingData";
 
-export default function CostsAndRecommendationsTable() {
+type ImprovementInfo = {
+  heading: string;
+  summary?: string;
+  description?: string;
+};
+
+type ImprovementsJson = {
+  countryCode: string;
+  averageSapRating: number;
+  averageEiRating: number;
+  improvements: Record<string, ImprovementInfo>;
+};
+
+const improvementsJson = improvements as ImprovementsJson;
+const improvementLookup = improvementsJson.improvements;
+
+function toNumber(value: unknown): number | null {
+  if (typeof value === "number" && Number.isFinite(value)) return value;
+  if (typeof value === "string") {
+    const trimmed = value.trim();
+    if (!trimmed) return null;
+    const n = Number(trimmed);
+    return Number.isFinite(n) ? n : null;
+  }
+  return null;
+}
+
+function formatPounds(amount: number): string {
+  return `£${amount.toLocaleString("en-GB")}`;
+}
+
+function formatPounds2dp(amount: number): string {
+  return `£${amount.toLocaleString("en-GB", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })}`;
+}
+
+function over3Years(costPerYear: number): number {
+  return Math.round(costPerYear * 3);
+}
+
+function getImprovementLabel(
+  imp: SgDomesticEpcCertificateSummary["recommendedImprovements"][number],
+): string {
+  // 1) API title (if present)
+  const title =
+    typeof imp.improvementTitle === "string" ? imp.improvementTitle.trim() : "";
+  if (title) return title;
+
+  // 2) lookup by improvementCode
+  const code =
+    typeof imp.improvementCode === "string" ? imp.improvementCode.trim() : "";
+  const fromLookup = code ? improvementLookup[code]?.heading : undefined;
+  if (fromLookup) return fromLookup;
+
+  // 3) API description (if present)
+  const desc =
+    typeof imp.improvementDescription === "string"
+      ? imp.improvementDescription.trim()
+      : "";
+  if (desc) return desc;
+
+  return "Recommended improvement";
+}
+
+export default function CostsAndRecommendationsTable({
+  data,
+}: {
+  data: SgDomesticEpcCertificateSummary;
+}) {
+  // Costs appear to be yearly strings in the sample; certificate wants "over 3 years"
+  const heatingCurrent = toNumber(data.heatingCostCurrent);
+  const heatingPotential = toNumber(data.heatingCostPotential);
+
+  const hotWaterCurrent = toNumber(data.hotWaterCostCurrent);
+  const hotWaterPotential = toNumber(data.hotWaterCostPotential);
+
+  const lightingCurrent = toNumber(data.lightingCostCurrent);
+  const lightingPotential = toNumber(data.lightingCostPotential);
+
+  const totalsCurrent =
+    heatingCurrent != null && hotWaterCurrent != null && lightingCurrent != null
+      ? over3Years(heatingCurrent + hotWaterCurrent + lightingCurrent)
+      : null;
+
+  const totalsPotential =
+    heatingPotential != null &&
+    hotWaterPotential != null &&
+    lightingPotential != null
+      ? over3Years(heatingPotential + hotWaterPotential + lightingPotential)
+      : null;
+
+  const savingOver3Years =
+    totalsCurrent != null && totalsPotential != null
+      ? totalsCurrent - totalsPotential
+      : null;
+
+  const improvementsRows = data.recommendedImprovements
+    .slice()
+    .sort((a, b) => a.sequence - b.sequence);
+
   return (
     <section
       id="costs-and-recommendations"
@@ -22,20 +127,56 @@ export default function CostsAndRecommendationsTable() {
           <tbody>
             <tr>
               <td>Heating</td>
-              <td>£2,892 over 3 years</td>
-              <td>£1,914 over 3 years</td>
+              <td>
+                {heatingCurrent != null ? (
+                  `${formatPounds(over3Years(heatingCurrent))} over 3 years`
+                ) : (
+                  <MissingData />
+                )}
+              </td>
+              <td>
+                {heatingPotential != null ? (
+                  `${formatPounds(over3Years(heatingPotential))} over 3 years`
+                ) : (
+                  <MissingData />
+                )}
+              </td>
             </tr>
 
             <tr>
               <td>Hot water</td>
-              <td>£1,155 over 3 years</td>
-              <td>£609 over 3 years</td>
+              <td>
+                {hotWaterCurrent != null ? (
+                  `${formatPounds(over3Years(hotWaterCurrent))} over 3 years`
+                ) : (
+                  <MissingData />
+                )}
+              </td>
+              <td>
+                {hotWaterPotential != null ? (
+                  `${formatPounds(over3Years(hotWaterPotential))} over 3 years`
+                ) : (
+                  <MissingData />
+                )}
+              </td>
             </tr>
 
             <tr>
               <td>Lighting</td>
-              <td>£177 over 3 years</td>
-              <td>£177 over 3 years</td>
+              <td>
+                {lightingCurrent != null ? (
+                  `${formatPounds(over3Years(lightingCurrent))} over 3 years`
+                ) : (
+                  <MissingData />
+                )}
+              </td>
+              <td>
+                {lightingPotential != null ? (
+                  `${formatPounds(over3Years(lightingPotential))} over 3 years`
+                ) : (
+                  <MissingData />
+                )}
+              </td>
             </tr>
 
             <tr>
@@ -43,17 +184,35 @@ export default function CostsAndRecommendationsTable() {
                 <strong>Totals</strong>
               </td>
               <td>
-                <strong>£4,224</strong>
+                <strong>
+                  {totalsCurrent != null ? (
+                    formatPounds(totalsCurrent)
+                  ) : (
+                    <MissingData />
+                  )}
+                </strong>
               </td>
               <td>
-                <strong>£2,700</strong>
+                <strong>
+                  {totalsPotential != null ? (
+                    formatPounds(totalsPotential)
+                  ) : (
+                    <MissingData />
+                  )}
+                </strong>
               </td>
             </tr>
           </tbody>
         </table>
 
         <p>
-          <strong>You could save £1,524 over 3 years.</strong>
+          <strong>
+            {savingOver3Years != null ? (
+              `You could save ${formatPounds(savingOver3Years)} over 3 years.`
+            ) : (
+              <MissingData />
+            )}
+          </strong>
         </p>
 
         <p>
@@ -95,84 +254,91 @@ export default function CostsAndRecommendationsTable() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Floor insulation</td>
-              <td>£800 – £1,200</td>
-              <td>£148</td>
-              <td>
-                <span className="content-center">
-                  <RatingBadge variant="energy" band="D" score={58} />
-                </span>
-              </td>
-              <td>
-                <span className="content-center">
-                  <RatingBadge variant="environment" band="E" score={53} />
-                </span>
-              </td>
-            </tr>
+            {improvementsRows.length === 0 ? (
+              <tr>
+                <td colSpan={5}>—</td>
+              </tr>
+            ) : (
+              improvementsRows.map((imp) => {
+                const label = getImprovementLabel(imp);
 
-            <tr>
-              <td>Replace boiler with new condensing boiler</td>
-              <td>£2,200 – £3,000</td>
-              <td>£305</td>
-              <td>
-                <span className="content-center">
-                  <RatingBadge variant="energy" band="D" score={68} />
-                </span>
-              </td>
-              <td>
-                <span className="content-center">
-                  <RatingBadge variant="environment" band="D" score={65} />
-                </span>
-              </td>
-            </tr>
+                const indicativeCost =
+                  typeof imp.indicativeCost === "string" &&
+                  imp.indicativeCost.trim()
+                    ? imp.indicativeCost.trim()
+                    : null;
 
-            <tr>
-              <td>Solar water heating</td>
-              <td>£4,000 – £6,000</td>
-              <td>£55</td>
-              <td>
-                <span className="content-center">
-                  <RatingBadge variant="energy" band="C" score={70} />
-                </span>
-              </td>
-              <td>
-                <span className="content-center">
-                  <RatingBadge variant="environment" band="D" score={68} />
-                </span>
-              </td>
-            </tr>
+                const typicalSaving = toNumber(imp.typicalSaving);
 
-            <tr>
-              <td>Solar photovoltaic panels, 2.5&nbsp;kWp</td>
-              <td>£9,000 – £14,000</td>
-              <td>£223</td>
-              <td>
-                <span className="content-center">
-                  <RatingBadge variant="energy" band="C" score={79} />
-                </span>
-              </td>
-              <td>
-                <span className="content-center">
-                  <RatingBadge variant="environment" band="C" score={76} />
-                </span>
-              </td>
-            </tr>
+                const energyScore = toNumber(
+                  imp.energyPerformanceRatingImprovement,
+                );
+                const envScore = toNumber(
+                  imp.environmentalImpactRatingImprovement,
+                );
+
+                const energyBand =
+                  typeof imp.energyPerformanceBandImprovement === "string" &&
+                  imp.energyPerformanceBandImprovement.trim()
+                    ? imp.energyPerformanceBandImprovement.trim().toUpperCase()
+                    : null;
+
+                const envBand =
+                  envScore != null ? bandFromScore(envScore) : null;
+
+                return (
+                  <tr
+                    key={`${imp.sequence}-${imp.improvementCode ?? "no-code"}`}
+                  >
+                    <td>
+                      {imp.sequence}. {label}
+                    </td>
+
+                    <td>{indicativeCost ?? <MissingData />}</td>
+
+                    <td>
+                      {typicalSaving != null ? (
+                        formatPounds2dp(typicalSaving)
+                      ) : (
+                        <MissingData />
+                      )}
+                    </td>
+
+                    <td>
+                      <span className="content-center">
+                        {energyBand && energyScore != null ? (
+                          <RatingBadge
+                            variant="energy"
+                            band={energyBand}
+                            score={energyScore}
+                          />
+                        ) : (
+                          <MissingData />
+                        )}
+                      </span>
+                    </td>
+
+                    <td>
+                      <span className="content-center">
+                        {envBand && envScore != null ? (
+                          <RatingBadge
+                            variant="environment"
+                            band={envBand}
+                            score={envScore}
+                          />
+                        ) : (
+                          <MissingData />
+                        )}
+                      </span>
+                    </td>
+                  </tr>
+                );
+              })
+            )}
           </tbody>
         </table>
       </div>
-      <div className="cert-section">
-        <h3>Alternative measures</h3>
-        <p>
-          There are alternative improvement measures which you could also
-          consider for your home. It would be advisable to seek further advice
-          and illustration of the benefits and costs of such measures.
-        </p>
-        <ul>
-          <li>Air or ground source heat pump</li>
-          <li>Micro CHP</li>
-        </ul>
-      </div>
+
       <div className="cert-section bg-grey">
         <h3>Choosing the right improvement package</h3>
         <p>

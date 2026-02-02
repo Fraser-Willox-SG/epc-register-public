@@ -22,10 +22,6 @@ export default function ContentsNavDomRdSap() {
       <ContentsNav.Item href="#about-this-document">
         <strong>Report:</strong> About this document
       </ContentsNav.Item>
-
-      <ContentsNav.Item href="#advice-and-support">
-        <strong>Report:</strong> Advice and support
-      </ContentsNav.Item>
     </ContentsNav>
   );
 }

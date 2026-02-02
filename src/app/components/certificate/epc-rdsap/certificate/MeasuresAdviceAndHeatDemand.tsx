@@ -1,11 +1,78 @@
-import { EpcDomRdSapSummary } from "@/types/epc-dom-rdsap";
-import { RECOMMENDATION_COPY } from "@/app/content/rdsap/recommendation-copy";
+import type { SgDomesticEpcCertificateSummary } from "@/types/sg-epc-dom-rdsap";
+import MissingData from "@/app/components/MissingData";
+import improvements from "@/app/content/rdsap/improvements.json";
+
+type ImprovementInfo = {
+  heading: string;
+  summary?: string;
+  description?: string;
+};
+
+type ImprovementsJson = {
+  countryCode: string;
+  averageSapRating: number;
+  averageEiRating: number;
+  improvements: Record<string, ImprovementInfo>;
+};
+
+const improvementsJson = improvements as ImprovementsJson;
+const improvementLookup = improvementsJson.improvements;
+
+function formatNumber(n: number): string {
+  return n.toLocaleString("en-GB");
+}
+
+function getImprovementContent(
+  imp: SgDomesticEpcCertificateSummary["recommendedImprovements"][number],
+): { title: string; body: string } {
+  const apiTitle = imp.improvementTitle.trim();
+  const code = imp.improvementCode.trim();
+
+  const fromLookup = code ? improvementLookup[code] : undefined;
+
+  const title =
+    apiTitle ||
+    fromLookup?.heading ||
+    imp.improvementDescription?.trim() ||
+    "Recommended improvement";
+
+  const body =
+    fromLookup?.description ||
+    fromLookup?.summary ||
+    imp.improvementDescription?.trim() ||
+    "";
+
+  return { title, body };
+}
 
 export default function MeasuresAdviceAndHeatDemand({
   data,
 }: {
-  data: EpcDomRdSapSummary;
+  data: SgDomesticEpcCertificateSummary;
 }) {
+  const hasImprovements = data.recommendedImprovements.length > 0;
+
+  const lzc = data.lzcEnergySources;
+
+  const spaceHeat = data.heatDemand.currentSpaceHeatingDemand;
+  const waterHeat = data.heatDemand.currentWaterHeatingDemand;
+
+  const impactLoftSpace: number | null = null;
+  const impactCavitySpace: number | null = null;
+  const impactSolidSpace: number | null = null;
+
+  // Water heating impact columns appear blank on live certs.
+  const waterImpactLoft: null = null;
+  const waterImpactCavity: null = null;
+  const waterImpactSolid: null = null;
+
+  function formatHeatImpact(n: number | null): string {
+    if (n == null) return "N/A";
+    // Live cert shows negative values in brackets like (2,226)
+    const abs = Math.abs(n).toLocaleString("en-GB");
+    return n < 0 ? `(${abs})` : abs;
+  }
+
   return (
     <section
       id="measures-advice-and-heat-demand"
@@ -25,19 +92,44 @@ export default function MeasuresAdviceAndHeatDemand({
           recommended improvement measures for your home.
         </p>
 
-        {Object.values(RECOMMENDATION_COPY).map((copy) => (
-          <section
-            key={copy.key}
-            aria-label={copy.title}
-            className="performance-recommendation-section"
-          >
-            <h3>{copy.title}</h3>
+        {hasImprovements ? (
+          data.recommendedImprovements
+            .slice()
+            .sort((a, b) => a.sequence - b.sequence)
+            .map((imp) => {
+              const { title, body } = getImprovementContent(imp);
 
-            {copy.body.map((p: string) => (
-              <p key={p}>{p}</p>
-            ))}
-          </section>
-        ))}
+              return (
+                <section
+                  key={`${imp.sequence}-${imp.improvementCode}`}
+                  aria-label={title}
+                  className="performance-recommendation-section"
+                >
+                  <h3>
+                    {imp.sequence}. {title}
+                  </h3>
+
+                  {/* Make missing lookup obvious */}
+                  {imp.improvementTitle.trim() === "" &&
+                  !improvementLookup[imp.improvementCode.trim()] ? (
+                    <p>
+                      <MissingData label="Missing improvement lookup for this improvementCode" />
+                    </p>
+                  ) : null}
+
+                  {body ? (
+                    <p>{body}</p>
+                  ) : (
+                    <p>
+                      <MissingData label="Missing improvement description from API" />
+                    </p>
+                  )}
+                </section>
+              );
+            })
+        ) : (
+          <p>There are no recommended measures for this home.</p>
+        )}
       </div>
 
       <div className="cert-section bg-grey">
@@ -48,15 +140,25 @@ export default function MeasuresAdviceAndHeatDemand({
           when they are used. Installing these sources may help reduce energy
           bills as well as cutting carbon.
         </p>
+
         <p>
           <strong>LZC energy sources present:</strong>{" "}
         </p>
-        {data.lzcEnergySources && data.lzcEnergySources.length > 0 ? (
-          <ul className="ds_list">
-            {data.lzcEnergySources.map((s: string) => (
-              <li key={s}>{s}</li>
-            ))}
-          </ul>
+
+        {Array.isArray(lzc) && lzc.length > 0 ? (
+          <>
+            <ul className="ds_list">
+              {lzc.map((code) => (
+                <li key={code}>
+                  {/* API provides codes only in this payload */}
+                  LZC source code {code}
+                </li>
+              ))}
+            </ul>
+            <p>
+              <MissingData label="API provides LZC codes but not display labels in certificate-summary" />
+            </p>
+          </>
         ) : (
           <p>There are none provided for this home</p>
         )}
@@ -87,18 +189,30 @@ export default function MeasuresAdviceAndHeatDemand({
           <tbody>
             <tr>
               <td>Space heating (kWh per year)</td>
-              <td>12,483</td>
-              <td aria-label="Not applicable">—</td>
-              <td aria-label="Not applicable">—</td>
-              <td aria-label="Not applicable">—</td>
+              <td>
+                {typeof spaceHeat === "number" ? (
+                  formatNumber(spaceHeat)
+                ) : (
+                  <MissingData />
+                )}
+              </td>
+              <td>{formatHeatImpact(impactLoftSpace)}</td>
+              <td>{formatHeatImpact(impactCavitySpace)}</td>
+              <td>{formatHeatImpact(impactSolidSpace)}</td>
             </tr>
 
             <tr>
               <td>Water heating (kWh per year)</td>
-              <td>5,316</td>
-              <td aria-label="Not applicable">—</td>
-              <td aria-label="Not applicable">—</td>
-              <td aria-label="Not applicable">—</td>
+              <td>
+                {typeof waterHeat === "number" ? (
+                  formatNumber(waterHeat)
+                ) : (
+                  <MissingData />
+                )}
+              </td>
+              <td>{waterImpactLoft ?? "—"}</td>
+              <td>{waterImpactCavity ?? "—"}</td>
+              <td>{waterImpactSolid ?? "—"}</td>
             </tr>
           </tbody>
         </table>

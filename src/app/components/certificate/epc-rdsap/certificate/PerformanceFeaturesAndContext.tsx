@@ -1,6 +1,65 @@
+import type { SgDomesticEpcCertificateSummary } from "@/types/sg-epc-dom-rdsap";
 import StarRating from "./components/StarRating";
+import MissingData from "@/app/components/MissingData";
 
-export default function PerformanceFeaturesAndContext() {
+const ELEMENT_LABELS: Record<string, string> = {
+  walls: "Walls",
+  wall: "Walls",
+  roof: "Roof",
+  floor: "Floor",
+  windows: "Windows",
+  window: "Windows",
+  main_heating: "Main heating",
+  main_heating_controls: "Main heating controls",
+  secondary_heating: "Secondary heating",
+  hot_water: "Hot water",
+  lighting: "Lighting",
+  air_tightness: "Air tightness",
+};
+
+function normaliseElementKey(name: string): string {
+  const k = name.trim().toLowerCase();
+  // unify singular/plural variants
+  if (k === "wall") return "walls";
+  if (k === "window") return "windows";
+  return k;
+}
+
+export default function PerformanceFeaturesAndContext({
+  data,
+}: {
+  data: SgDomesticEpcCertificateSummary;
+}) {
+  const rows = data.propertySummary.slice().map((item) => {
+    const key = normaliseElementKey(item.name);
+    return {
+      key,
+      element: ELEMENT_LABELS[key] ?? item.name,
+      description: item.description,
+      energy: item.energyEfficiencyRating,
+      env: item.environmentalEfficiencyRating,
+    };
+  });
+
+  // Optional: stable ordering like the certificate
+  const ORDER: string[] = [
+    "walls",
+    "roof",
+    "floor",
+    "windows",
+    "main_heating",
+    "main_heating_controls",
+    "secondary_heating",
+    "hot_water",
+    "lighting",
+    "air_tightness",
+  ];
+
+  rows.sort((a, b) => ORDER.indexOf(a.key) - ORDER.indexOf(b.key));
+
+  const emissionsKgPerM2PerYear = data.emissionsKgPerM2PerYear;
+  const co2TonnesPerYearCurrent = data.co2TonnesPerYearCurrent;
+
   return (
     <section
       id="performance-features-and-context"
@@ -40,6 +99,7 @@ export default function PerformanceFeaturesAndContext() {
             </li>
           </ul>
         </div>
+
         <p>
           The assessment does not take into consideration the condition of an
           element and how well it is working. ‘Assumed’ means that the
@@ -57,104 +117,24 @@ export default function PerformanceFeaturesAndContext() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td scope="row">Walls</td>
-              <td>Cavity wall, filled cavity</td>
-              <td>
-                <StarRating value={4} />
-              </td>
-              <td>
-                <StarRating value={4} />
-              </td>
-            </tr>
-
-            <tr>
-              <td scope="row">Roof</td>
-              <td>Pitched, 250&nbsp;mm loft insulation</td>
-              <td>
-                <StarRating value={4} />
-              </td>
-              <td>
-                <StarRating value={4} />
-              </td>
-            </tr>
-
-            <tr>
-              <td scope="row">Floor</td>
-              <td>Suspended, no insulation (assumed)</td>
-              <td>
-                <StarRating value={null} />
-              </td>
-              <td>
-                <StarRating value={null} />
-              </td>
-            </tr>
-
-            <tr>
-              <td scope="row">Windows</td>
-              <td>Mostly double glazing</td>
-              <td>
-                <StarRating value={3} />
-              </td>
-              <td>
-                <StarRating value={3} />
-              </td>
-            </tr>
-
-            <tr>
-              <td scope="row">Main heating</td>
-              <td>Boiler and radiators, mains gas</td>
-              <td>
-                <StarRating value={4} />
-              </td>
-              <td>
-                <StarRating value={4} />
-              </td>
-            </tr>
-
-            <tr>
-              <td scope="row">Main heating controls</td>
-              <td>Programmer, TRVs and bypass</td>
-              <td>
-                <StarRating value={3} />
-              </td>
-              <td>
-                <StarRating value={3} />
-              </td>
-            </tr>
-
-            <tr>
-              <td scope="row">Secondary heating</td>
-              <td>None</td>
-              <td>
-                <StarRating value={null} />
-              </td>
-              <td>
-                <StarRating value={null} />
-              </td>
-            </tr>
-
-            <tr>
-              <td scope="row">Hot water</td>
-              <td>From main system, no cylinder thermostat</td>
-              <td>
-                <StarRating value={2} />
-              </td>
-              <td>
-                <StarRating value={2} />
-              </td>
-            </tr>
-
-            <tr>
-              <td scope="row">Lighting</td>
-              <td>Low energy lighting in all fixed outlets</td>
-              <td>
-                <StarRating value={5} />
-              </td>
-              <td>
-                <StarRating value={5} />
-              </td>
-            </tr>
+            {rows.length === 0 ? (
+              <tr>
+                <td colSpan={4}>—</td>
+              </tr>
+            ) : (
+              rows.map((r) => (
+                <tr key={`${r.key}-${r.description}`}>
+                  <td scope="row">{r.element}</td>
+                  <td>{r.description || "—"}</td>
+                  <td>
+                    <StarRating value={r.energy || null} />
+                  </td>
+                  <td>
+                    <StarRating value={r.env || null} />
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
@@ -164,19 +144,21 @@ export default function PerformanceFeaturesAndContext() {
           Your Energy Efficiency Rating is calculated using the standard UK
           methodology, RdSAP. This calculates energy used for heating, hot
           water, lighting and ventilation and then applies fuel costs to that
-          energy use to give an overall rating for your home.
+          energy use to give an overall rating for your home. The rating is
+          given on a scale of 1 to 100. Other than the cost of fuel for
+          electrical appliances and for cooking, a building with a rating of 100
+          would cost almost nothing to run.
         </p>
+
         <p>
           As we all use our homes in different ways, the energy rating is
           calculated using standard occupancy assumptions which may be different
           from the way you use it. The rating also uses national weather
           information to allow comparison between buildings in different parts
-          of Scotland.
-        </p>
-        <p>
-          However, to make information more relevant to your home, local weather
-          data is used to calculate your energy use, CO2 emissions, running
-          costs and the savings possible from making improvements.
+          of Scotland. However, to make information more relevant to your home,
+          local weather data is used to calculate your energy use, CO
+          <sub>2</sub> emissions, running costs and the savings possible from
+          making improvements.
         </p>
       </div>
       <div className=" cert-section bg-blue">
@@ -185,8 +167,6 @@ export default function PerformanceFeaturesAndContext() {
           One of the biggest contributors to global warming is carbon dioxide.
           The energy we use for heating, lighting and power in our homes
           produces over a quarter of the UK’s carbon dioxide emissions.
-        </p>
-        <p>
           Different fuels produce different amounts of carbon dioxide for every
           kilowatt hour (kWh) of energy used. The Environmental Impact Rating of
           your home is calculated by applying these &apos;carbon factors&apos;
@@ -196,21 +176,19 @@ export default function PerformanceFeaturesAndContext() {
         <p>
           The calculated emissions for your home are{" "}
           <strong>
-            46 kg CO<sub>2</sub>/m²/yr
+            {emissionsKgPerM2PerYear ?? <MissingData />} kg CO
+            <sub>2</sub>/m²/yr
           </strong>
           .
         </p>
 
         <p>
-          The average Scottish household produces about{" "}
-          <strong>6 tonnes of carbon dioxide every year</strong>. Based on this
-          assessment, the average Scottish household produces approximately{" "}
-          <strong>5.7 tonnes of carbon dioxide per year</strong>. Adopting the
-          recommendations in this report can reduce emissions and protect the
-          environment. If you were to install all of these recommendations this
-          could reduce emissions by <strong>2.2 tonnes per year</strong>. You
-          could reduce emissions even more by switching to renewable energy
-          sources.
+          The average Scottish household produces about 6 tonnes of carbon
+          dioxide every year. Based on this assessment, heating and lighting
+          this home currently produces approximately{" "}
+          <strong>{co2TonnesPerYearCurrent ?? <MissingData />} tonnes</strong>{" "}
+          of carbon dioxide every year. You could reduce emissions by switching
+          to renewable energy sources.
         </p>
       </div>
     </section>
