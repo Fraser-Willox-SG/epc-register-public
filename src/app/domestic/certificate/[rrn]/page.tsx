@@ -4,6 +4,7 @@ import { selfUrl } from "@/app/utils/self-url";
 import PrintButton from "@/app/components/PrintButton";
 
 import type { EpcDomRdSapSummary } from "@/types/epc-dom-rdsap";
+import type { SgDomesticEpcCertificateSummary } from "@/types/sg-epc-dom-rdsap";
 
 // RdSap Imports
 import RdSapEpcDocument from "@/app/components/certificate/epc-rdsap/RdSapEpcDocument";
@@ -17,7 +18,7 @@ import ContentsNavDomHem from "@/app/components/certificate/epc-hem/ContentsNavD
 // import LegacyEpcDocument from "@/app/components/certificate/epc-legacy/LegacyEpcDocument";
 // import ContentsNavDomLegacy from "@/app/components/certificate/epc-legacy/ContentsNavDomLegacy";
 
-type Summary = { data: EpcDomRdSapSummary };
+type Summary = { data: SgDomesticEpcCertificateSummary };
 
 // ---- page
 export default async function DomesticCertificatePage({
@@ -28,7 +29,7 @@ export default async function DomesticCertificatePage({
   const { rrn } = await params;
 
   const apiUrl = selfUrl(
-    `/api/ukg/assessments/${encodeURIComponent(rrn)}/summary`,
+    `/api/sg/assessments/${encodeURIComponent(rrn)}/certificate-summary`,
   );
 
   let data: Summary["data"] | null = null;
@@ -77,7 +78,9 @@ export default async function DomesticCertificatePage({
   }
 
   const addressSummary = data
-    ? [data.addressLine1, data.town, data.postcode].filter(Boolean).join(", ")
+    ? [data.address.addressLine1, data.address.town, data.address.postcode]
+        .filter(Boolean)
+        .join(", ")
     : "";
 
   return (
@@ -121,7 +124,7 @@ export default async function DomesticCertificatePage({
             style={{ border: "1px solid grey" }}
           >
             {/* RdSAP only for now – HEM and legacy documents will be added later when required */}
-            <RdSapEpcDocument data={data as EpcDomRdSapSummary} />
+            <RdSapEpcDocument data={data as SgDomesticEpcCertificateSummary} />
             {/* <HemEpcDocument data={data} /> */}
             {/* <LegacyEpcDocument data={data} /> */}
           </main>

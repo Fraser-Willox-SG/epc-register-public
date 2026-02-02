@@ -1,39 +1,43 @@
-import { EpcDomRdSapSummary } from "@/types/epc-dom-rdsap";
+import type { SgDomesticEpcCertificateSummary } from "@/types/sg-epc-dom-rdsap";
+import MissingData from "@/app/components/MissingData";
+
+function formatAssessorName(
+  firstName?: string,
+  lastName?: string,
+): string | null {
+  const full = `${firstName ?? ""} ${lastName ?? ""}`.trim();
+  return full.length > 0 ? full : null;
+}
 
 export default function AboutThisDocument({
   data,
 }: {
-  data: EpcDomRdSapSummary;
+  data: SgDomesticEpcCertificateSummary;
 }) {
-  const { assessor, relatedPartyDisclosureText } = data;
+  const assessorName = formatAssessorName(
+    data.assessor.firstName,
+    data.assessor.lastName,
+  );
 
-  const assessorName = assessor
-    ? [assessor.firstName, assessor.middleNames, assessor.lastName]
-        .filter(Boolean)
-        .join(" ")
-    : undefined;
+  const membershipNumber = data.assessor.schemeAssessorId?.trim() || null;
+  const approvedOrganisation = data.assessor.registeredBy?.name?.trim() || null;
 
-  const assessorMembershipNumber = assessor?.schemeAssessorId;
+  // Not present in SG certificate-summary payload
+  const companyTradingName: string | null = null;
+  const assessorAddress: string | null = null;
 
-  const companyName = assessor?.companyDetails?.companyName;
+  const phone = data.assessor.contactDetails?.telephoneNumber?.trim() || null;
+  const email = data.assessor.contactDetails?.email?.trim() || null;
 
-  const companyAddressLine1 = assessor?.companyDetails?.companyAddressLine1;
-  const companyAddressLine2 = assessor?.companyDetails?.companyAddressLine2;
-  const companyTown = assessor?.companyDetails?.companyTown;
-  const companyPostcode = assessor?.companyDetails?.companyPostcode;
-
-  const companyTelephoneNumber =
-    assessor?.companyDetails?.companyTelephoneNumber;
-
-  const companyEmail = assessor?.companyDetails?.companyEmail;
+  const relatedPartyDisclosure =
+    data.relatedPartyDisclosureNumber === 1
+      ? "No related party"
+      : data.relatedPartyDisclosureText?.trim() || null;
 
   return (
-    <section
-      id="about-this-document"
-      aria-labelledby="about-this-document-title"
-    >
+    <section id="about-this-document">
       <div className="cert-section">
-        <h2 id="about-this-document-title">About this document</h2>
+        <h2>About this document</h2>
 
         <p>
           This Recommendations Report and the accompanying Energy Performance
@@ -45,118 +49,112 @@ export default function AboutThisDocument({
         <p>
           The Energy Performance Certificate and this Recommendations Report for
           this building were produced following an energy assessment undertaken
-          by an assessor accredited by an Approved Organisation appointed by
-          Scottish Ministers.
-        </p>
-
-        <p>
-          You can verify the validity of this document by visiting the Scottish
-          EPC register and entering the report reference number (RRN) printed at
-          the top of this page.
+          by an assessor accredited by{" "}
+          <strong>{approvedOrganisation ?? <MissingData />}</strong>, an
+          Approved Organisation Appointed by Scottish Ministers. The certificate
+          has been produced under the Energy Performance of Buildings (Scotland)
+          Regulations 2008 from data lodged to the Scottish EPC register. You
+          can verify the validity of this document by visiting{" "}
+          <a
+            href="https://www.scottishepcregister.org.uk"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            www.scottishepcregister.org.uk
+          </a>{" "}
+          and entering the report reference number (RRN) printed at the top of
+          this page.
         </p>
       </div>
 
       <div className="cert-section bg-blue">
         <dl className="summary-list">
           <div className="row-2col border-b-grey">
-            <dt>
-              <strong>Assessor’s name:</strong>
-            </dt>
-            <dd>{assessorName || "—"}</dd>
+            <dt>Assessor&apos;s name:</dt>
+            <dd>{assessorName ?? <MissingData />}</dd>
           </div>
 
           <div className="row-2col border-b-grey">
-            <dt>
-              <strong>Assessor membership number:</strong>
-            </dt>
-            <dd>{assessorMembershipNumber || "—"}</dd>
+            <dt>Assessor membership number:</dt>
+            <dd>{membershipNumber ?? <MissingData />}</dd>
           </div>
 
           <div className="row-2col border-b-grey">
-            <dt>
-              <strong>Company name/trading name:</strong>
-            </dt>
-            <dd>{companyName || "—"}</dd>
+            <dt>Company name/trading name:</dt>
+            <dd>{companyTradingName ?? <MissingData />}</dd>
           </div>
 
           <div className="row-2col border-b-grey">
-            <dt>
-              <strong>Address:</strong>
-            </dt>
-            <dd>
-              {companyAddressLine1 && <div>{companyAddressLine1}</div>}
-              {companyAddressLine2 && <div>{companyAddressLine2}</div>}
-              {companyTown && <div>{companyTown}</div>}
-              {companyPostcode && <div>{companyPostcode}</div>}
-              {!companyAddressLine1 &&
-                !companyAddressLine2 &&
-                !companyTown &&
-                !companyPostcode &&
-                "—"}
-            </dd>
+            <dt>Address:</dt>
+            <dd>{assessorAddress ?? <MissingData />}</dd>
           </div>
 
           <div className="row-2col border-b-grey">
-            <dt>
-              <strong>Phone number:</strong>
-            </dt>
-            <dd>
-              {companyTelephoneNumber ? (
-                <a
-                  className="ds_link"
-                  href={`tel:${companyTelephoneNumber.replace(/\s+/g, "")}`}
-                >
-                  {companyTelephoneNumber}
-                </a>
-              ) : (
-                "—"
-              )}
-            </dd>
+            <dt>Phone number:</dt>
+            <dd>{phone ?? <MissingData />}</dd>
           </div>
 
           <div className="row-2col border-b-grey">
-            <dt>
-              <strong>Email address:</strong>
-            </dt>
-            <dd>
-              {companyEmail ? (
-                <a className="ds_link" href={`mailto:${companyEmail}`}>
-                  {companyEmail}
-                </a>
-              ) : (
-                "—"
-              )}
-            </dd>
+            <dt>Email address:</dt>
+            <dd>{email ?? <MissingData />}</dd>
           </div>
 
-          <div className="row-2col border-b-grey">
-            <dt>
-              <strong>Related party disclosure:</strong>
-            </dt>
-            <dd>{relatedPartyDisclosureText || "No related party"}</dd>
+          <div className="row-2col">
+            <dt>Related party disclosure:</dt>
+            <dd>{relatedPartyDisclosure ?? <MissingData />}</dd>
           </div>
         </dl>
       </div>
-      <div className="cert-section">
+      <div className="cert-section bg-grey">
         <p>
           If you have any concerns regarding the content of this report or the
           service provided by your assessor you should in the first instance
           raise these matters with your assessor and with the Approved
-          Organisation to which they belong.
+          Organisation to which they belong. All Approved Organisations are
+          required to publish their complaints and disciplinary procedures and
+          details can be found online at the web address given above.
         </p>
       </div>
-
-      <div className="cert-section bg-grey">
+      <div className="cert-section">
         <h3>Use of this energy performance information</h3>
+
         <p>
           Once lodged by your EPC assessor, this Energy Performance Certificate
-          and Recommendations Report are available to view online at the
-          Scottish EPC register.
+          and Recommendations Report are available to view online at{" "}
+          <a
+            href="https://www.scottishepcregister.org.uk"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            www.scottishepcregister.org.uk
+          </a>
+          , with the facility to search for any single record by entering the
+          property address. This gives everyone access to any current, valid EPC
+          except where a property has a Green Deal Plan, in which case the
+          report reference number (RRN) must first be provided.
         </p>
+
         <p>
           The energy performance data in these documents, together with other
           building information gathered during the assessment is held on the
-          Scottish EPC Register and is available to authorised recipients.
+          Scottish EPC Register and is available to authorised recipients,
+          including organisations delivering energy efficiency and carbon
+          reduction initiatives on behalf of the Scottish and UK governments. A
+          range of data from all assessments undertaken in Scotland is also
+          published periodically by the Scottish Government.
+        </p>
+
+        <p>
+          Further information on these matters and on Energy Performance
+          Certificates in general, can be found at{" "}
+          <a
+            href="https://www.gov.scot/epc"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            www.gov.scot/epc
+          </a>
+          .
         </p>
       </div>
     </section>

@@ -1,0 +1,92 @@
+{
+  "countryCode": "SCT",
+  "averageSapRating": 61,
+  "averageEiRating": 59,
+  "improvements": {
+    "1": {
+      "heading": "Hot water cylinder insulation",
+      "summary": "Insulate hot water cylinder with 80 mm jacket",
+      "description": "Installing an 80 mm thick cylinder jacket around the hot water cylinder will help to maintain the water at the required temperature; this will reduce the amount of energy used and lower fuel bills. A cylinder jacket is a layer of insulation that is fitted around the hot water cylinder. The jacket should be fitted over any thermostat clamped to the cylinder. Hot water pipes from the hot water cylinder should also be insulated, using pre-formed pipe insulation of up to 50 mm thickness, or to suit the space available, for as far as they can be accessed to reduce losses in summer. All these materials can be purchased from DIY stores and installed by a competent DIY enthusiast."
+    },
+    "2": {
+      "heading": "Hot water cylinder insulation",
+      "summary": "Increase hot water cylinder insulation",
+      "description": "Increasing the thickness of existing insulation around the hot water cylinder will help to maintain the water at the required temperature; this will reduce the amount of energy used and lower fuel bills. An additional cylinder jacket or other suitable insulation layer can be used. The insulation should be fitted over any thermostat clamped to the cylinder. Hot water pipes from the hot water cylinder should also be insulated, using pre-formed pipe insulation of up to 50 mm thickness, or to suit the space available, for as far as they can be accessed to reduce losses in summer. All these materials can be purchased from DIY stores and installed by a competent DIY enthusiast."
+    },
+    "3": {
+      "heading": "Hot water cylinder insulation",
+      "summary": "Add additional 80 mm jacket to hot water cylinder",
+      "description": "Increasing the thickness of existing insulation by adding an 80 mm cylinder jacket around the hot water cylinder will help maintain the water at the required temperature; this will reduce the amount of energy used and lower fuel bills. The jacket should be fitted over the top of the existing foam insulation and over any thermostat clamped to the cylinder. Hot water pipes from the hot water cylinder should also be insulated, using pre-formed pipe insulation of up to 50 mm thickness, or to suit the space available, for as far as they can be accessed to reduce losses in summer. All these materials can be purchased from DIY stores and installed by a competent DIY enthusiast."
+    },
+    "4": {
+      "heading": "Cylinder thermostat",
+      "summary": "Hot water cylinder thermostat",
+      "description": "A hot water cylinder thermostat enables the boiler to switch off when the water in the cylinder reaches the required temperature; this minimises the amount of energy that is used and lowers fuel bills. The thermostat is a temperature sensor that sends a signal to the boiler when the required temperature is reached. To be fully effective it needs to be sited in the correct position and hard wired in place, so it should be installed by a competent plumber or heating engineer. Building regulations apply to this work, so it is best to check with your local authority building standards department whether a building warrant will be required."
+    },
+    "5": {
+      "heading": "Loft insulation",
+      "summary": "Increase loft insulation to 270 mm",
+      "description": "Loft insulation laid in the loft space or between roof rafters to a depth of at least 270 mm will significantly reduce heat loss through the roof; this will improve levels of comfort, reduce energy use and lower fuel bills."
+    },
+    "6": {
+      "heading": "Cavity wall insulation",
+      "summary": "Cavity wall insulation",
+      "description": "Cavity wall insulation, to fill the gap between the inner and outer layers of external walls with an insulating material, reduces heat loss; this will improve levels of comfort, reduce energy use and lower fuel bills."
+    },
+    "7": {
+      "heading": "Internal or external wall insulation",
+      "summary": "Internal or external wall insulation",
+      "description": "Internal or external wall insulation involves adding a layer of insulation to either the inside or the outside surface of the external walls, which reduces heat loss and lowers fuel bills."
+    },
+    "8": {
+      "heading": "Double glazing",
+      "summary": "Replace single glazed windows with low-E double glazing",
+      "description": "Replacing existing single-glazed windows with double glazing will improve comfort in the home by reducing draughts and cold spots near windows."
+    },
+    "9": {
+      "heading": "Secondary glazing",
+      "summary": "Secondary glazing to single glazed windows",
+      "description": "Secondary glazing is the addition of a second pane of glass inside the existing window."
+    },
+    "10": {
+      "heading": "Draughtproofing",
+      "summary": "Draughtproofing",
+      "description": "Fitting draughtproofing strips of insulation around windows and doors will improve the comfort in the home."
+    },
+    "11": {
+      "heading": "Heating controls (programmer, room thermostat and thermostatic radiator valves)",
+      "summary": "Upgrade heating controls",
+      "description": "The heating system would benefit from a programmer and room thermostat to allow you to set the temperature and programme when you want the heating and hot water to switch on and off."
+    },
+    "19": {
+      "heading": "Solar water heating",
+      "summary": "Solar water heating",
+      "description": "A solar water heating panel, usually fixed to the roof, uses the sun to pre-heat the hot water supply."
+    },
+    "20": {
+      "heading": "Condensing boiler",
+      "summary": "Replace boiler with new condensing boiler",
+      "description": "A condensing boiler is capable of much higher efficiencies than other types of boiler, meaning it will burn less fuel to heat this property."
+    },
+    "22": {
+      "heading": "Biomass boiler",
+      "summary": "Replace boiler with biomass boiler",
+      "description": "A biomass boiler burns renewable fuel such as wood logs or pellets and therefore is less damaging to the environment."
+    },
+    "27": {
+      "heading": "Gas condensing boiler",
+      "summary": "Change heating to gas condensing boiler",
+      "description": "Changing the heating to use a mains gas boiler that provides both space and water heating will save money."
+    },
+    "34": {
+      "heading": "Solar photovoltaic (PV) panels",
+      "summary": "Solar photovoltaic panels, 2.5 kWp",
+      "description": "A solar PV system converts light directly into electricity via panels placed on the roof."
+    },
+    "35": {
+      "heading": "Low energy lighting",
+      "summary": "Low energy lighting for all fixed outlets",
+      "description": "Replacement of traditional light bulbs with energy saving recommended ones will reduce lighting costs."
+    }
+  }
+}

@@ -1,11 +1,30 @@
-import type { EpcDomRdSapSummary } from "@/types/epc-dom-rdsap";
 import { formatIsoDateLong } from "@/app/utils/date";
 import RdSapBandChart from "../../EpcBandChart";
+import { SgDomesticEpcCertificateSummary } from "@/types/sg-epc-dom-rdsap";
+import { bandFromScore } from "@/app/utils/epc-bands";
+import improvements from "@/app/content/rdsap/improvements.json";
+import RatingBadge from "./components/RatingBadge";
+
+type ImprovementInfo = {
+  heading: string;
+  summary: string;
+  description: string;
+};
+
+type ImprovementsJson = {
+  countryCode: string;
+  averageSapRating: number;
+  averageEiRating: number;
+  improvements: Record<string, ImprovementInfo>;
+};
+
+const improvementsJson = improvements as ImprovementsJson;
+const improvementLookup = improvementsJson.improvements;
 
 export default function CertificateOverview({
   data,
 }: {
-  data: EpcDomRdSapSummary;
+  data: SgDomesticEpcCertificateSummary;
 }) {
   const {
     dwellingType,
@@ -23,12 +42,57 @@ export default function CertificateOverview({
       : typeOfAssessment || "—";
 
   const approvedOrganisation = assessor?.registeredBy?.name || "—";
-  const mainHeatingAndFuel = "—";
+
+  const mainHeatingAndFuel =
+    data.propertySummary?.find(
+      (item) => item.name?.toLowerCase() === "main_heating",
+    )?.description || "—";
 
   const totalFloorAreaDisplay = totalFloorArea ? `${totalFloorArea} m²` : "—";
   const primaryEnergyIndicatorDisplay = primaryEnergyUse
     ? `${primaryEnergyUse} kWh/m²/year`
     : "—";
+
+  const estimatedEnergyCost3yr = data.estimatedEnergyCost
+    ? Math.round(Number(data.estimatedEnergyCost) * 3)
+    : null;
+
+  const potentialSaving3yr = data.potentialEnergySaving
+    ? Math.round(Number(data.potentialEnergySaving) * 3)
+    : null;
+
+  const envCurrentBand = bandFromScore(data.environmentalImpactCurrent);
+  const envPotentialBand = bandFromScore(data.environmentalImpactPotential);
+
+  const efficiencyCurrentBand = bandFromScore(
+    data.currentEnergyEfficiencyRating,
+  );
+  const efficiencyPotentialBand = bandFromScore(
+    data.potentialEnergyEfficiencyRating,
+  );
+
+  function formatPounds(amount: number): string {
+    return `£${amount.toLocaleString("en-GB", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })}`;
+  }
+
+  function getImprovementLabel(
+    imp: SgDomesticEpcCertificateSummary["recommendedImprovements"][number],
+  ): string {
+    const title = imp.improvementTitle.trim();
+    if (title) return title;
+
+    const code = imp.improvementCode.trim();
+    const fromLookup = improvementLookup[code]?.heading;
+    if (fromLookup) return fromLookup;
+
+    const desc = imp.improvementDescription?.trim();
+    if (desc) return desc;
+
+    return "Recommended improvement";
+  }
 
   return (
     <section id="certificate-overview">
@@ -121,12 +185,14 @@ export default function CertificateOverview({
           <tbody>
             <tr>
               <td>Estimated energy costs for your home for 3 years*</td>
-              <td>£4,224</td>
+              <td>
+                {estimatedEnergyCost3yr ? `£${estimatedEnergyCost3yr}` : "—"}
+              </td>
             </tr>
 
             <tr>
               <td>Over 3 years you could save*</td>
-              <td>£1,524</td>
+              <td>{potentialSaving3yr ? `£${potentialSaving3yr}` : "—"}</td>
             </tr>
           </tbody>
         </table>
@@ -152,20 +218,38 @@ export default function CertificateOverview({
           the lower your fuel bills are likely to be.
         </p>
         <p>
-          Your current rating is <strong>band D (56)</strong>. The average
-          rating for EPCs in Scotland is <strong>band D (61)</strong>.
+          <span
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.5rem",
+            }}
+          >
+            <span>Your current band and rating is:</span>
+
+            <RatingBadge
+              variant="energy"
+              band={data.currentEnergyEfficiencyBand.toUpperCase()}
+              score={data.currentEnergyEfficiencyRating}
+              aria-hidden="true"
+            />
+          </span>
         </p>
 
         <p>
           The potential rating shows the effect of undertaking all of the
           improvement measures listed within your recommendations report.
         </p>
-        <RdSapBandChart
-          current="E"
-          potential="C"
-          topLabel="Very energy efficient - lower running costs"
-          bottomLabel="Not energy efficient - higher running costs"
-        />
+        {efficiencyCurrentBand && efficiencyPotentialBand ? (
+          <RdSapBandChart
+            current={efficiencyCurrentBand}
+            potential={efficiencyPotentialBand}
+            topLabel="Very energy efficient - lower running costs"
+            bottomLabel="Not energy efficient - higher running costs"
+          />
+        ) : (
+          <p>—</p>
+        )}
       </div>
       <div className="cert-section bg-grey">
         <h3>Environmental Impact (CO2) Rating</h3>
@@ -178,13 +262,17 @@ export default function CertificateOverview({
           The potential rating shows the effect of undertaking all of the
           improvement measures listed within your recommendations report.
         </p>
-        <RdSapBandChart
-          current="E"
-          potential="C"
-          isEnvironmental={true}
-          topLabel="Very environmentally friendly - lower CO2 emmisions"
-          bottomLabel="Not environmentally friendly - higher CO2 emmisions"
-        />
+        {envCurrentBand && envPotentialBand ? (
+          <RdSapBandChart
+            current={envCurrentBand}
+            potential={envPotentialBand}
+            isEnvironmental={true}
+            topLabel="Very environmentally friendly - lower CO2 emmisions"
+            bottomLabel="Not environmentally friendly - higher CO2 emmisions"
+          />
+        ) : (
+          <p>—</p>
+        )}
       </div>
       <div className="cert-section bg-blue">
         <h3>
@@ -200,21 +288,36 @@ export default function CertificateOverview({
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1. Floor insulation</td>
-              <td>£800 – £1,200</td>
-              <td>£444.00</td>
-            </tr>
-            <tr>
-              <td>2. Condensing boiler</td>
-              <td>£2,200 – £3,000</td>
-              <td>£915.00</td>
-            </tr>
-            <tr>
-              <td>3. Solar water heating</td>
-              <td>£4,000 – £6,000</td>
-              <td>£165.00</td>
-            </tr>
+            {data.recommendedImprovements.length === 0 ? (
+              <tr>
+                <td colSpan={3}>—</td>
+              </tr>
+            ) : (
+              data.recommendedImprovements
+                .slice()
+                .sort((a, b) => a.sequence - b.sequence)
+                .slice(0, 3)
+                .map((imp) => {
+                  const label = getImprovementLabel(imp);
+                  const indicativeCost = imp.indicativeCost.trim() || "—";
+
+                  const saving3yr =
+                    imp.typicalSaving.trim().length > 0 &&
+                    !Number.isNaN(Number(imp.typicalSaving))
+                      ? formatPounds(Number(imp.typicalSaving) * 3)
+                      : "—";
+
+                  return (
+                    <tr key={`${imp.sequence}-${imp.improvementCode}`}>
+                      <td>
+                        {imp.sequence}. {label}
+                      </td>
+                      <td>{indicativeCost}</td>
+                      <td>{saving3yr}</td>
+                    </tr>
+                  );
+                })
+            )}
           </tbody>
         </table>
         <p>
