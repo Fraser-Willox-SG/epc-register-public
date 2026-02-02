@@ -26,67 +26,232 @@
     "5": {
       "heading": "Loft insulation",
       "summary": "Increase loft insulation to 270 mm",
-      "description": "Loft insulation laid in the loft space or between roof rafters to a depth of at least 270 mm will significantly reduce heat loss through the roof; this will improve levels of comfort, reduce energy use and lower fuel bills."
+      "description": "Loft insulation laid in the loft space or between roof rafters to a depth of at least 270 mm will significantly reduce heat loss through the roof; this will improve levels of comfort, reduce energy use and lower fuel bills. Insulation should not be placed below any cold water storage tank, any such tank should also be insulated on its sides and top, and there should be boarding on battens over the insulation to provide safe access between the loft hatch and the cold water tank. The insulation can be installed by professional contractors but also by a capable DIY enthusiast. Loose granules may be used instead of insulation quilt; this form of loft insulation can be blown into place and can be useful where access is difficult. The loft space must have adequate ventilation to prevent dampness; seek advice about this if unsure. Further information about loft insulation and details of local contractors can be obtained from the National Insulation Association (www.nationalinsulationassociation.org.uk)."
     },
     "6": {
       "heading": "Cavity wall insulation",
       "summary": "Cavity wall insulation",
-      "description": "Cavity wall insulation, to fill the gap between the inner and outer layers of external walls with an insulating material, reduces heat loss; this will improve levels of comfort, reduce energy use and lower fuel bills."
+      "description": "Cavity wall insulation, to fill the gap between the inner and outer layers of external walls with an insulating material, reduces heat loss; this will improve levels of comfort, reduce energy use and lower fuel bills. The insulation material is pumped into the gap through small holes that are drilled into the outer walls, and the holes are made good afterwards. As specialist machinery is used to fill the cavity, a professional installation company should carry out this work, and they should carry out a thorough survey before commencing work to ensure that this type of insulation is suitable for this home and its exposure. They should also provide a guarantee for the work and handle any building standards issues. Further information about cavity wall insulation and details of local installers can be obtained from the Building Standards Division’s section of the Scottish Government website (www.scotland.gov.uk/Topics/Built-Environment/Building/Building-standards/publications/pubguide/cavitywallinsul) or the National Insulation Association (www.nationalinsulationassociation.org.uk)."
     },
     "7": {
       "heading": "Internal or external wall insulation",
       "summary": "Internal or external wall insulation",
-      "description": "Internal or external wall insulation involves adding a layer of insulation to either the inside or the outside surface of the external walls, which reduces heat loss and lowers fuel bills."
+      "description": "Internal or external wall insulation involves adding a layer of insulation to either the inside or the outside surface of the external walls, which reduces heat loss and lowers fuel bills. As it is more expensive than cavity wall insulation it is only recommended for walls without a cavity, or where for technical reasons a cavity cannot be filled. Internal insulation, known as dry-lining, is where a layer of insulation is fixed to the inside surface of external walls; this type of insulation is best applied when rooms require redecorating. External solid wall insulation is the application of an insulant and a weather-protective finish to the outside of the wall. This may improve the look of the home, particularly where existing brickwork or rendering is poor, and will provide long-lasting weather protection. Further information can be obtained from the National Insulation Association (www.nationalinsulationassociation.org.uk). It should be noted that planning permission might be required and that building regulations apply to this work so it is best to check with your local authority whether a building warrant or planning permission will be required."
     },
     "8": {
       "heading": "Double glazing",
       "summary": "Replace single glazed windows with low-E double glazing",
-      "description": "Replacing existing single-glazed windows with double glazing will improve comfort in the home by reducing draughts and cold spots near windows."
+      "description": "Double glazing is the term given to a system where two panes of glass are made up into a sealed unit. Replacing existing single-glazed windows with double glazing will improve comfort in the home by reducing draughts and cold spots near windows. Double-glazed windows may also reduce noise, improve security and combat problems with condensation. Building regulations apply to this work and planning permission may also be required, so it is best to check with your local authority on what standards need to be met. A building warrant is not required if the windows comply with the current requirements."
     },
     "9": {
       "heading": "Secondary glazing",
       "summary": "Secondary glazing to single glazed windows",
-      "description": "Secondary glazing is the addition of a second pane of glass inside the existing window."
+      "description": "Secondary glazing is the addition of a second pane of glass inside the existing window. Adding secondary glazing will improve comfort in the home by reducing draughts and cold spots near windows. It may also reduce noise and combat problems with condensation. Installation can be carried out by a competent DIY enthusiast. Building regulations may apply to this work, so it is best to check this with your local authority building standards department."
     },
     "10": {
       "heading": "Draughtproofing",
       "summary": "Draughtproofing",
-      "description": "Fitting draughtproofing strips of insulation around windows and doors will improve the comfort in the home."
+      "description": "Fitting draughtproofing, strips of insulation around windows and doors, will improve the comfort in the home. A contractor can be employed but draughtproofing can be installed by a competent DIY enthusiast."
     },
     "11": {
       "heading": "Heating controls (programmer, room thermostat and thermostatic radiator valves)",
       "summary": "Upgrade heating controls",
-      "description": "The heating system would benefit from a programmer and room thermostat to allow you to set the temperature and programme when you want the heating and hot water to switch on and off."
+      "description": "The heating system would benefit from a programmer and room thermostat to allow you to set the temperature and programme when you want the heating and hot water to switch on and off; this will reduce the amount of energy used and lower fuel bills. Thermostatic radiator valves should also be installed, to allow the temperature of each room to be controlled to suit individual needs, adding to comfort and reducing heating bills. For example, they can be set to be warmer in the living room and bathroom than in the bedrooms. Ask a competent heating engineer to install radiator valves and a fully pumped system with the pump and the boiler turned off by the room thermostat. Radiator valves should be fitted to every radiator except one – the radiator in the same room as the room thermostat. Remember the room thermostat is needed to enable the boiler to switch off when no heat is required, thermostatic radiator valves on their own do not turn the boiler off. Building regulations generally apply to this work and a building warrant may be required, so it is best to obtain advice from your local authority building standards department and from a qualified heating engineer."
+    },
+    "12": {
+      "heading": "Heating controls (room thermostat and thermostatic radiator valves)",
+      "summary": "Upgrade heating controls",
+      "description": "A room thermostat will increase the efficiency of the heating system by enabling the boiler to switch off when no heat is required; this will reduce the amount of energy used and lower fuel bills. Thermostatic radiator valves should also be installed, to allow the temperature of each room to be controlled to suit individual needs, adding to comfort and reducing heating bills provided internal doors are kept closed. For example, they can be set to be warmer in the living room and bathroom than in the bedrooms. Ask a competent heating engineer to install thermostatic radiator valves and a fully pumped system with the pump and the boiler turned off by the room thermostat. Thermostatic radiator valves should be fitted to every radiator except for the radiator in the same room as the room thermostat. Remember the room thermostat is needed to enable the boiler to switch off when no heat is required, thermostatic radiator valves on their own do not turn the boiler off. Building regulations generally apply to this work and a building warrant may be required, so it is best to obtain advice from your local authority building standards department and from a qualified heating engineer."
+    },
+    "13": {
+      "heading": "Heating controls (thermostatic radiator valves)",
+      "summary": "Upgrade heating controls",
+      "description": "Thermostatic radiator valves allow the temperature of each room to be controlled to suit individual needs, adding to comfort and reducing heating bills provided internal doors are kept closed. For example, they can be set to be warmer in the living room and bathroom than in the bedrooms. Ask a competent heating engineer to install thermostatic radiator valves. Thermostatic radiator valves should be fitted to every radiator except the radiator in the same room as the room thermostat. Remember the room thermostat is needed as well as the thermostatic radiator valves, to enable the boiler to switch off when no heat is required. Building regulations generally apply to this work, so it is best to obtain advice from your local authority building standards department and from a qualified heating engineer."
+    },
+    "14": {
+      "heading": "Heating controls (room thermostat)",
+      "summary": "Upgrade heating controls",
+      "description": "The heating system should have a room thermostat to enable the boiler to switch off when no heat is required. A competent heating engineer should be asked to do this work. Insist that the thermostat switches off the boiler as well as the pump and that the thermostatic radiator valve is removed from any radiator in the same room as the thermostat. Building regulations generally apply to this work and a building warrant may be required, so it is best to obtain advice from your local authority building standards department and from a qualified heating engineer."
+    },
+    "15": {
+      "heading": "Heating controls (programmer and thermostatic radiator valves)",
+      "summary": "Upgrade heating controls",
+      "description": "The heating system would benefit from a programmer to provide better comfort through automatic control of the system. A modern programmer can provide different time programmes for heating and hot water, allowing different time periods to be set for each; seven-day programmers also allow different heating and/or hot water patterns to be set for weekdays and weekends and holidays. Thermostatic radiator valves should also be installed, to allow the temperature of each room to be controlled to suit individual needs, adding to comfort and reducing heating bills provided internal doors are kept closed. For example, they can be set to be warmer in the living room and bathroom than in the bedrooms. Ask a competent heating engineer to install thermostatic radiator valves and a fully pumped system with the pump and the boiler turned off by the room thermostat. Thermostatic radiator valves should be fitted to every radiator except for the radiator in the same room as the room thermostat. Remember the room thermostat is needed to enable the boiler to switch off when no heat is required, thermostatic radiator valves on their own do not turn the boiler off. Building regulations generally apply to this work and a building warrant may be required, so it is best to obtain advice from your local authority building standards department and from a qualified heating engineer."
+    },
+    "16": {
+      "heading": "Heating controls (time and temperature zone control)",
+      "summary": "Time and temperature zone control",
+      "description": "The heating system controls should be improved so that both the temperature and time of heating can be set differently in separate areas of your house; this will reduce the amount of energy used and lower fuel bills. For example, it is possible to have cooler temperatures in the bedrooms than in the living room provided internal doors are kept closed, and to have a longer heating period for the living room. Building regulations generally apply to this work and a building warrant may be required, so it is best to obtain advice from your local authority building standards department and from a qualified heating engineer."
+    },
+    "17": {
+      "heading": "Heating controls (programmer and room thermostat)",
+      "summary": "Upgrade heating controls",
+      "description": "The warm air heating system would benefit from the addition of a programmer and room thermostat so that it switches off when no heat is required; this will reduce the amount of energy used and lower fuel bills. Insist that the thermostat switches off the warm air burner as well as the blower. A modern programmer can provide different time programmes for heating and hot water, allowing different time periods to be set for each; seven-day programmers also allow different heating patterns to be set for weekdays and weekends and holidays. Building regulations generally apply to this work and a building warrant may be required, so it is best to obtain advice from your local authority building standards department and from a qualified heating engineer."
+    },
+    "18": {
+      "heading": "Heating controls (room thermostat)",
+      "summary": "Upgrade heating controls",
+      "description": "The warm air heating system in this home would benefit from the addition of a room thermostat so that it switches off when no heat is required; this will reduce the amount of energy used and lower fuel bills. Insist that the thermostat switches off the warm air burner as well as the blower. Building regulations generally apply to this work and a building warrant may be required, so it is best to obtain advice from your local authority building standards department and from a qualified heating engineer."
     },
     "19": {
       "heading": "Solar water heating",
       "summary": "Solar water heating",
-      "description": "A solar water heating panel, usually fixed to the roof, uses the sun to pre-heat the hot water supply."
+      "description": "A solar water heating panel, usually fixed to the roof, uses the sun to pre-heat the hot water supply. This can significantly reduce the demand on the heating system to provide hot water and hence save fuel and money. Planning permission might be required, building regulations generally apply to this work and a building warrant may be required, so it is best to check these with your local authority. You could be eligible for Renewable Heat Incentive payments which could appreciably increase the savings beyond those shown on your EPC, provided that both the product and the installer are certified by the Microgeneration Certification Scheme (or equivalent). Details of local MCS installers are available at www.microgenerationcertification.org."
     },
     "20": {
       "heading": "Condensing boiler",
       "summary": "Replace boiler with new condensing boiler",
-      "description": "A condensing boiler is capable of much higher efficiencies than other types of boiler, meaning it will burn less fuel to heat this property."
+      "description": "A condensing boiler is capable of much higher efficiencies than other types of boiler, meaning it will burn less fuel to heat this property. This improvement is most appropriate when the existing central heating boiler needs repair or replacement, however there may be exceptional circumstances making this impractical. Condensing boilers need a drain for the condensate which limits their location; remember this when considering remodelling the room containing the existing boiler even if the latter is to be retained for the time being (for example a kitchen makeover). Building regulations generally apply to this work and a building warrant may be required, so it is best to obtain advice from your local authority building standards department and from a qualified heating engineer."
     },
     "22": {
       "heading": "Biomass boiler",
       "summary": "Replace boiler with biomass boiler",
-      "description": "A biomass boiler burns renewable fuel such as wood logs or pellets and therefore is less damaging to the environment."
+      "description": "Modern boilers are cleaner burning and more efficient than the boiler in this home and cost less to run. A biomass boiler burns renewable fuel such as wood logs or pellets and therefore is less damaging to the environment. This improvement is most appropriate when the existing heating system needs repair or replacement. Building regulations generally apply to this work and a building warrant may be required, so it is best to check this with your local authority building standards department and also seek advice from a qualified heating engineer. Provisions under the Clean Air Act may determine if you can install such an appliance in your area so check this with your local authority. You could be eligible for Renewable Heat Incentive payments which could appreciably increase the savings beyond those shown on your EPC, provided that both the product and the installer are certified by the Microgeneration Certification Scheme (or equivalent). Details of local MCS installers are available at www.microgenerationcertification.org."
+    },
+    "23": {
+      "heading": "Biomass stove with boiler",
+      "summary": "Wood pellet stove with boiler and radiators",
+      "description": "A closed-in solid fuel stove (also called a room heater) is about twice as efficient as an open fire. Modern heaters with glass doors are clean, easy to use and provide an attractive source of heating. A biomass boiler burns renewable fuel such as wood pellets and therefore is much less damaging to the environment. This improvement is most appropriate when the existing heating system needs repair or replacement. Building regulations generally apply to this work and a building warrant may be required, so it is best to check this with your local authority building standards department and also seek advice from a qualified heating engineer. Provisions under the Clean Air Act may determine if you can install such an appliance in your area so check this with your local authority. You could be eligible for Renewable Heat Incentive payments which could appreciably increase the savings beyond those shown on your EPC, provided that both the product and the installer are certified by the Microgeneration Certification Scheme (or equivalent). Details of local MCS installers are available at www.microgenerationcertification.org."
+    },
+    "24": {
+      "heading": "Fan assisted storage heaters",
+      "summary": "Fan assisted storage heaters and dual immersion cylinder",
+      "description": "Modern storage heaters are smaller and easier to control than the older type in this property. Ask for a quotation for new, fan-assisted heaters with automatic charge control. A dual-immersion cylinder, which can be installed at the same time, will provide cheaper hot water than the system currently installed. Installations should be in accordance with the current regulations covering electrical wiring. Ask the heating engineer to explain the options, which might also include switching to other forms of electric heating."
+    },
+    "25": {
+      "heading": "Fan assisted storage heaters",
+      "summary": "Fan-assisted storage heaters",
+      "description": "Modern storage heaters are smaller and easier to control than the older type in this property. Ask for a quotation for new, fan-assisted heaters with automatic charge control. Installations should be in accordance with the current regulations covering electrical wiring. Ask the heating engineer to explain the options, which might also include switching to other forms of electric heating."
+    },
+    "26": {
+      "heading": "Replacement warm air unit",
+      "summary": "Replacement warm air unit",
+      "description": "A modern warm air unit is capable of higher efficiency than older types, meaning it will burn less fuel for heating and (if fitted) the hot water system in your property. This improvement is most appropriate when the existing central heating warm air unit or hot water service needs repair or replacement. Building regulations may apply to this work, so it is best to obtain advice from your local authority building standards department and from a qualified heating engineer."
     },
     "27": {
       "heading": "Gas condensing boiler",
       "summary": "Change heating to gas condensing boiler",
-      "description": "Changing the heating to use a mains gas boiler that provides both space and water heating will save money."
+      "description": "Changing the heating to use a mains gas boiler that provides both space and water heating will save money, as mains gas is currently cheaper than the fuel being used at present. A condensing boiler is capable of much higher efficiencies than other types of boiler, meaning it will burn less fuel to heat the property, but there may be exceptional circumstances making this impractical. Condensing boilers need a drain for the condensate which limits their location; remember this when considering remodelling the room containing the existing boiler even if the latter is to be retained for the time being (for example a kitchen makeover). This improvement is most appropriate when the existing heating system needs repair or replacement. Building regulations generally apply to this work and a building warrant may be required, so it is best to obtain advice from your local authority building standards department and from a qualified heating engineer. It is also recommended to change the electricity tariff to standard tariff when off-peak is no longer used."
+    },
+    "28": {
+      "heading": "Condensing oil boiler",
+      "summary": "Condensing oil boiler with radiators",
+      "description": "Condensing boilers have a much higher efficiency than other types of heating appliance, meaning they will burn less fuel to heat the property. This option is best taken up when the present warm air unit requires repair or replacement. Building regulations generally apply to this work, and require replacement oil boilers to be of the condensing type, unless there are exceptional circumstances. As a building warrant may be required it is best to obtain advice from your local authority building standards department and from a qualified heating engineer."
+    },
+    "29": {
+      "heading": "Gas condensing boiler",
+      "summary": "Change heating to gas condensing boiler",
+      "description": "Changing the heating to use a mains gas boiler that provides both space and water heating will save money, as mains gas is currently cheaper than the fuel being used at present. A condensing boiler is capable of higher efficiencies than other types of boiler, meaning it will burn less fuel to heat the property, but there may be exceptional circumstances making this impractical. Condensing boilers need a drain for the condensate which limits their location; remember this when considering remodelling the room containing the existing boiler even if the latter is to be retained for the time being (for example a kitchen makeover). This improvement is most appropriate when the existing heating system needs repair or replacement. Building regulations generally apply to this work and a building warrant may be required, so it is best to obtain advice from your local authority building standards department and from a qualified heating engineer."
+    },
+    "30": {
+      "heading": "Fan assisted storage heaters",
+      "summary": "Fan assisted storage heaters and dual immersion cylinder",
+      "description": "Modern storage heaters are less expensive to run than the direct acting, on-peak heating system in the property. A dual-rate electricity supply is required to provide the off-peak electricity that these heaters use; this is easily obtained by contacting the energy supplier. Ask for a quotation for fan-assisted heaters with automatic charge control. A dual-immersion cylinder, which can be installed at the same time, will provide cheaper hot water than the system currently installed. Installations should be in accordance with the national wiring standards. Building regulations generally apply to this work and a building warrant may be required, so it is best to obtain advice from your local authority building standards department and from a qualified electrical heating engineer. Ask the heating engineer to explain the options, which might also include switching to other forms of electric heating."
+    },
+    "31": {
+      "heading": "Fan assisted storage heaters",
+      "summary": "Fan-assisted storage heaters",
+      "description": "Modern storage heaters are less expensive to run than the direct acting, on-peak heating system in the property. A dual-rate electricity supply is required to provide the off-peak electricity that these heaters use; this is easily obtained by contacting the energy supplier. Ask for a quotation for fan-assisted heaters with automatic charge control. Installations should be in accordance with the national wiring standards. Ask the heating engineer to explain the options, which might also include switching to other forms of electric heating."
     },
     "34": {
       "heading": "Solar photovoltaic (PV) panels",
       "summary": "Solar photovoltaic panels, 2.5 kWp",
-      "description": "A solar PV system converts light directly into electricity via panels placed on the roof."
+      "description": "A solar PV system is one which converts light directly into electricity via panels placed on the roof with no waste and no emissions. This electricity is used throughout the home in the same way as the electricity purchased from an energy supplier. Planning permission might be required, building regulations generally apply to this work and a building warrant may be required, so it is best to check these with your local authority. The assessment does not include the effect of any Feed-in Tariff which could appreciably increase the savings that are shown on this EPC for solar photovoltaic panels, provided that both the product and the installer are certified by the Microgeneration Certification Scheme (or equivalent). Details of local MCS installers are available at www.microgenerationcertification.org."
     },
     "35": {
       "heading": "Low energy lighting",
       "summary": "Low energy lighting for all fixed outlets",
-      "description": "Replacement of traditional light bulbs with energy saving recommended ones will reduce lighting costs."
+      "description": "Replacement of traditional light bulbs with energy saving recommended ones will reduce lighting costs over the lifetime of the bulb, and they last up to 12 times longer than ordinary light bulbs. Also consider selecting low energy light fittings when redecorating; contact the Lighting Association for your nearest stockist of Domestic Energy Efficient Lighting Scheme fittings."
+    },
+    "36": {
+      "heading": "Condensing heating unit",
+      "summary": "Replace heating unit with condensing unit",
+      "description": "A condensing unit is capable of much higher efficiencies than other types, meaning it will burn less fuel to heat this property but there may be exceptional circumstances making this impractical. Condensing boilers need a drain for the condensate which limits their location. Remember this when considering remodelling the room containing the existing boiler even if the latter is to be retained for the time being (for example a kitchen makeover). This improvement is most appropriate when the existing central heating unit needs repair or replacement. Building regulations generally apply to this work and a building warrant may be required, so it is best to obtain advice from your local authority building standards department and from a qualified heating engineer."
+    },
+    "37": {
+      "heading": "Condensing boiler (separate from the range cooker)",
+      "summary": "Condensing boiler",
+      "description": "A condensing boiler is capable of much higher efficiencies than other types of boiler, meaning it will burn less fuel to heat the property. It is recommended to install a separate condensing boiler, independent of the range cooker, but there may be exceptional circumstances making this impractical. Condensing boilers need a drain for the condensate which limits their location. Building regulations generally apply to this work and a building warrant may be required, so it is best to obtain advice from your local authority building standards department and from a qualified heating engineer."
+    },
+    "38": {
+      "heading": "Condensing boiler (separate from the range cooker)",
+      "summary": "Condensing boiler",
+      "description": "A condensing boiler is capable of much higher efficiencies than other types of boiler, meaning it will burn less fuel to heat the property. It is recommended to install a separate condensing boiler, independent of the range cooker, but there may be exceptional circumstances making this impractical. Condensing boilers need a drain for the condensate which limits their location. Building regulations generally apply to this work and a building warrant may be required, so it is best to obtain advice from your local authority building standards department and from a qualified heating engineer."
+    },
+    "39": {
+      "heading": "Biomass stove with boiler",
+      "summary": "Wood pellet stove with boiler and radiators",
+      "description": "A biomass stove (also called a room heater) burns renewable fuel such as wood pellets and therefore is less damaging to the environment than the solid fuel room heater in this home. This improvement is most appropriate when the existing heating system needs repair or replacement. Building regulations generally apply to this work and a building warrant may be required, so it is best to check this with your local authority building standards department and also seek advice from a qualified heating engineer. Provisions under the Clean Air Act may determine if you can install such an appliance in your area so check this with your local authority. You could be eligible for Renewable Heat Incentive payments which could appreciably increase the savings beyond those shown on your EPC, provided that both the product and the installer are certified by the Microgeneration Certification Scheme (or equivalent). Details of local MCS installers are available at www.microgenerationcertification.org."
+    },
+    "40": {
+      "heading": "Condensing boiler",
+      "summary": "Change room heaters to condensing boiler",
+      "description": "A full central heating system using a condensing boiler will provide space and water heating at greater efficiency than gas room heaters, meaning it will burn less fuel to heat this property, but there may be exceptional circumstances making this impractical. Condensing boilers need a drain for the condensate which limits their location. Building regulations generally apply to this work and a building warrant may be required, so it is best to obtain advice from your local authority building standards department and from a qualified heating engineer."
+    },
+    "42": {
+      "heading": "Mains gas condensing heating unit",
+      "summary": "Replace heating unit with mains gas condensing unit",
+      "description": "Changing the heating to use a mains gas heating unit will save money, as mains gas is currently cheaper than the fuel being used at present. A condensing unit is capable of much higher efficiencies than other types, meaning it will burn less fuel to heat this property, but there may be exceptional circumstances making this impractical. Condensing units need a drain for the condensate which limits their location. Remember this when considering remodelling the room containing the existing boiler even if the latter is to be retained for the time being (for example a kitchen makeover). This improvement is most appropriate when the existing central heating unit needs repair or replacement. Building regulations generally apply to this work and a building warrant may be required, so it is best to obtain advice from your local authority building standards department and from a qualified heating engineer."
+    },
+    "44": {
+      "heading": "Wind turbine",
+      "summary": "Wind turbine",
+      "description": "A wind turbine provides electricity from wind energy. This electricity is used throughout the home in the same way as the electricity purchased from an energy supplier. Wind turbines are not suitable for all properties. The system’s effectiveness depends on local wind speeds and the presence of nearby obstructions, and a site survey should be undertaken by an accredited installer. Planning permission might be required and building regulations generally apply to this work and a building warrant may be required, so it is best to check these with your local authority. The assessment does not include the effect of any Feed-in Tariff which could appreciably increase the savings that are shown on this EPC for a wind turbine, provided that both the product and the installer are certified by the Microgeneration Certification Scheme (or equivalent). Details of local MCS installers are available at www.microgenerationcertification.org."
+    },
+    "45": {
+      "heading": "Flat roof insulation",
+      "summary": "Flat roof insulation",
+      "description": "Insulating a flat roof will significantly reduce heat loss through the roof; this will improve levels of comfort, reduce energy use and lower fuel bills. Insulation can be placed on top of the roof under the waterproof membrane and should particularly be considered when the waterproofing needs to be replaced. Further information about roof insulation and details of local contractors can be obtained from the National Insulation Association (www.nationalinsulationassociation.org.uk). Building regulations generally apply to this work so it is best to check this with your local authority building standards department."
+    },
+    "46": {
+      "heading": "Room-in-roof insulation",
+      "summary": "Room-in-roof insulation",
+      "description": "Insulating roof rooms will significantly reduce heat loss; this will improve levels of comfort, reduce energy use and lower fuel bills. If it has a flat ceiling insulation can usually be added above the ceiling, and sloping ceilings and walls of roof rooms can be insulated using an internal lining board. Roof voids must have adequate ventilation to prevent dampness; seek advice about this if unsure. Further information about roof room insulation and details of local contractors can be obtained from the National Insulation Association (www.nationalinsulationassociation.org.uk). Building regulations generally apply to this work so it is best to check this with your local authority building standards department."
+    },
+    "47": {
+      "heading": "Floor insulation",
+      "summary": "Floor insulation",
+      "description": "Insulation of a floor will significantly reduce heat loss; this will improve levels of comfort, reduce energy use and lower fuel bills. Suspended floors can often be insulated from below but must have adequate ventilation to prevent dampness; seek advice about this if unsure. Further information about floor insulation and details of local contractors can be obtained from the National Insulation Association (www.nationalinsulationassociation.org.uk). Building regulations generally apply to this work so it is best to check this with your local authority building standards department."
+    },
+    "48": {
+      "heading": "High performance external doors",
+      "summary": "High performance external doors",
+      "description": "High performance external doors contain insulation and lose heat at about half the rate of conventional external doors. Building regulations generally apply to this work, so it is best to check this with your local authority building standards department."
+    },
+    "49": {
+      "heading": "Heat recovery system for mixer showers",
+      "summary": "Heat recovery system for mixer showers",
+      "description": "A shower heat recovery system extracts heat from the water in the shower drain and transfers it to incoming cold water. This reduces the amount of energy needed per shower. You should seek advice from a qualified plumber. Building regulations generally apply to this work, so it is best to check this with your local authority building standards department."
+    },
+    "50": {
+      "heading": "Flue gas heat recovery",
+      "summary": "Flue gas heat recovery device in conjunction with boiler",
+      "description": "A flue gas heat recovery system extracts heat from the boiler flue gases and transfers it to the incoming cold water so that the boiler needs to supply less heat. It is suitable for use only with modern condensing gas boiler and should be fitted when a replacement boiler is installed. You should seek advice from a qualified heating engineer."
+    },
+    "51": {
+      "heading": "Air or ground source heat pump",
+      "summary": "Air or ground source heat pump",
+      "description": ".."
+    },
+    "52": {
+      "heading": "Air or ground source heat pump with underfloor heating",
+      "summary": "Air or ground source heat pump with underfloor heating",
+      "description": ".."
+    },
+    "53": {
+      "heading": "Micro CHP",
+      "summary": "Micro CHP",
+      "description": ".."
+    },
+    "54": {
+      "heading": "Biomass boiler",
+      "summary": "Biomass boiler (Exempted Appliance if in Smoke Control Area)",
+      "description": ".."
+    },
+    "55": {
+      "heading": "External and cavity wall insulation",
+      "summary": "External insulation with cavity wall insulation",
+      "description": ".."
     }
   }
 }
