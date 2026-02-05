@@ -15,7 +15,7 @@ export default function ContentsNavDomHem() {
         <strong>Building Report:</strong> Heat &amp; Energy Model summary
       </ContentsNav.Item>
 
-      <ContentsNav.Item href="#br-potential-improvements">
+      <ContentsNav.Item href="#hem-br-potential-improvements">
         <strong>Building Report:</strong> Potential Improvements
       </ContentsNav.Item>
       <ContentsNav.Item href="#br-about-this-document">

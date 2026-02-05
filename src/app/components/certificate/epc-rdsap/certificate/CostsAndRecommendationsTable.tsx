@@ -111,7 +111,7 @@ export default function CostsAndRecommendationsTable({
       id="costs-and-recommendations"
       aria-labelledby="costs-and-recommendations-title"
     >
-      <div className="cert-section">
+      <div className="cert-section print-no-break">
         <h2 id="costs-and-recommendations-title">Costs and recommendations</h2>
 
         <h3>Estimated energy costs for this home</h3>
@@ -227,7 +227,7 @@ export default function CostsAndRecommendationsTable({
         </p>
       </div>
 
-      <div className="cert-section bg-blue">
+      <div className="cert-section bg-blue print-no-break">
         <h3>Recommendations for improvement</h3>
         <p>
           The measures below will improve the energy and environmental
@@ -339,7 +339,7 @@ export default function CostsAndRecommendationsTable({
         </table>
       </div>
 
-      <div className="cert-section bg-grey">
+      <div className="cert-section bg-grey print-no-break">
         <h3>Choosing the right improvement package</h3>
         <p>
           For free and impartial advice on choosing suitable measures for your

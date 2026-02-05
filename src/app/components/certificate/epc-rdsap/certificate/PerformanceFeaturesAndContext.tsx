@@ -65,7 +65,7 @@ export default function PerformanceFeaturesAndContext({
       id="performance-features-and-context"
       aria-labelledby="performance-features-and-context-title"
     >
-      <div className="cert-section">
+      <div className="cert-section print-page-break">
         <h2 id="performance-features-and-context-title">
           Recommendations Report
         </h2>

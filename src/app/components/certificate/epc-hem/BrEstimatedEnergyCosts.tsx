@@ -3,7 +3,7 @@ import { formatGBP } from "@/app/utils/epc";
 
 export default function BrEstimatedEnergyCosts() {
   return (
-    <div id="br-estimated-energy-costs" className="cert-section bg-blue ">
+    <div id="hem-br-estimated-energy-costs" className="cert-section bg-blue ">
       <div>
         <h3>Estimated energy costs for this home</h3>
         <p className="print-to-inline-span">
