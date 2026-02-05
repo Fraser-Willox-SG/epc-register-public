@@ -36,7 +36,7 @@ export default function BrHeatingSystemInformation() {
           </tbody>
         </table>
 
-        <BandLegend className="epc-band-legend-print-2col" />
+        <BandLegend className="hem-epc-band-legend-print-2col" />
 
         <HeatingSystemsAlternativesTable
           rows={[

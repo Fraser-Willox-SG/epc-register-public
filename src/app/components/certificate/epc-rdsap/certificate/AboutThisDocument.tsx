@@ -36,7 +36,7 @@ export default function AboutThisDocument({
 
   return (
     <section id="about-this-document">
-      <div className="cert-section">
+      <div className="cert-section print-no-break">
         <h2>About this document</h2>
 
         <p>
@@ -67,7 +67,7 @@ export default function AboutThisDocument({
         </p>
       </div>
 
-      <div className="cert-section bg-blue">
+      <div className="cert-section bg-blue print-no-break">
         <dl className="summary-list">
           <div className="row-2col border-b-grey">
             <dt>Assessor&apos;s name:</dt>
@@ -105,7 +105,7 @@ export default function AboutThisDocument({
           </div>
         </dl>
       </div>
-      <div className="cert-section bg-grey">
+      <div className="cert-section bg-grey print-no-break">
         <p>
           If you have any concerns regarding the content of this report or the
           service provided by your assessor you should in the first instance
@@ -115,7 +115,7 @@ export default function AboutThisDocument({
           details can be found online at the web address given above.
         </p>
       </div>
-      <div className="cert-section">
+      <div className="cert-section print-no-break">
         <h3>Use of this energy performance information</h3>
 
         <p>

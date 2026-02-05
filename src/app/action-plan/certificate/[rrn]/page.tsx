@@ -16,7 +16,7 @@ export default async function DomesticCertificatePage({
   const { rrn } = await params;
 
   const apiUrl = selfUrl(
-    `/api/action-plan/certificate?rrn=${encodeURIComponent(rrn)}`
+    `/api/action-plan/certificate?rrn=${encodeURIComponent(rrn)}`,
   );
 
   let data: Summary["data"] | null = null;
@@ -112,17 +112,15 @@ export default async function DomesticCertificatePage({
               <ContentsNav.Item href="#br-intro">
                 Parties involved
               </ContentsNav.Item>
-              <ContentsNav.Item href="#br-estimated-energy-costs">
-                Improvement Type
-              </ContentsNav.Item>
-              <ContentsNav.Item href="#br-heat-retention-summary">
+              <ContentsNav.Item href="#">Improvement Type</ContentsNav.Item>
+              <ContentsNav.Item href="#">
                 Prescriptive Improvement Measures
               </ContentsNav.Item>
 
-              <ContentsNav.Item href="#br-heating-system-information">
+              <ContentsNav.Item href="#">
                 Operational Rating System
               </ContentsNav.Item>
-              <ContentsNav.Item href="#br-potential-improvements">
+              <ContentsNav.Item href="#">
                 Completion Of Improvements
               </ContentsNav.Item>
             </ContentsNav>

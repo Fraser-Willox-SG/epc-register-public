@@ -19,7 +19,7 @@ export default function HeatingSystemsAlternativesTable({
   className?: string;
 }) {
   return (
-    <div id="epc-heating-system-alternatives">
+    <div id="hem-epc-heating-system-alternatives">
       <h4 className="ds_h4">Heating system alternatives</h4>
       <table
         className={`ds_table ${className ?? ""}`}

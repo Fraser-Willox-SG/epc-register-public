@@ -95,7 +95,7 @@ export default function CertificateOverview({
   }
 
   return (
-    <section id="certificate-overview">
+    <section id="epc-certificate-overview">
       <div className="cert-section">
         <dl className=" summary-list ">
           <div className="row-2col border-b-grey">
@@ -159,7 +159,7 @@ export default function CertificateOverview({
           </div>
         </dl>
       </div>
-      <div className="cert-section bg-blue ">
+      <div className="cert-section bg-blue" id="epc-dom-document-usage">
         <p>You can use this document to:</p>
         <ul>
           <li>
@@ -210,7 +210,7 @@ export default function CertificateOverview({
           </li>
         </ul>
       </div>
-      <div className="cert-section">
+      <div className="cert-section print-no-break">
         <h3>Energy Efficiency Rating</h3>
         <p>
           This graph shows the current efficiency of your home, taking into
@@ -251,7 +251,7 @@ export default function CertificateOverview({
           <p>—</p>
         )}
       </div>
-      <div className="cert-section bg-grey">
+      <div className="cert-section bg-grey print-no-break">
         <h3>Environmental Impact (CO2) Rating</h3>
         <p>
           This graph shows the effect of your home on the environment in terms
@@ -274,7 +274,7 @@ export default function CertificateOverview({
           <p>—</p>
         )}
       </div>
-      <div className="cert-section bg-blue">
+      <div className="cert-section bg-blue print-no-break">
         <h3>
           Top actions you can take to save money and make your home more
           efficient

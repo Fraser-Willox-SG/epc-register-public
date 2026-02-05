@@ -138,7 +138,7 @@ export default function BrAboutThisDocument() {
       </div>
 
       {/* ---------------- OTHER CERTIFICATES ---------------- */}
-      <div id="epc-other-property-certificates" className="print-no-break">
+      <div id="hem-epc-other-property-certificates" className="print-no-break">
         <h3>Other certificates for this property</h3>
         <p>
           If you are aware of previous certificates for this property and they
