@@ -1,48 +1,75 @@
-import type { EpcNonDomCepcDocument } from "@/types/epc-non-dom-cepc";
 import { formatIsoDateLong } from "@/app/utils/date";
-import EPCBandChart from "../../EpcBandChart";
-import RatingBadge from "../../epc-rdsap/certificate/components/RatingBadge";
+import EPCBandChart from "@/app/components/certificate/EpcBandChart";
+import RatingBadge from "@/app/components/certificate/RatingBadge";
+import MissingData from "@/app/components/MissingData";
 import type { Band } from "@/app/utils/epc";
+import type { SgNonDomesticCepcCertificateSummary } from "@/types/sg-epc-non-dom-cepc";
+
+function normaliseBand(band: string | null | undefined): Band | null {
+  const b = (band ?? "").trim().toUpperCase();
+  return b ? (b as Band) : null;
+}
+
+function normaliseText(value: string | null | undefined): string | null {
+  const v = (value ?? "").trim();
+  return v.length > 0 ? v : null;
+}
+
+function parseNumber(value: string | number | null | undefined): number | null {
+  if (typeof value === "number" && Number.isFinite(value)) return value;
+  if (typeof value === "string") {
+    const trimmed = value.trim();
+    if (!trimmed) return null;
+    const n = Number(trimmed);
+    return Number.isFinite(n) ? n : null;
+  }
+  return null;
+}
 
 export default function CepcCertificateSummary({
   data,
 }: {
-  data: EpcNonDomCepcDocument;
+  data: SgNonDomesticCepcCertificateSummary;
 }) {
   const isCepc = data.typeOfAssessment === "CEPC";
 
   const dateOfAssessment = data.dateOfAssessment;
   const dateOfCertificate = data.dateOfRegistration;
 
-  const buildingType = isCepc ? data.propertyType : undefined;
+  // Prefer the short, clean label for UI (propertyType includes newlines in SG payload)
+  const buildingType = isCepc
+    ? normaliseText(data.propertyShortDescription)
+    : null;
 
   const totalConditionedArea =
     isCepc && data.technicalInformation?.floorArea
       ? `${data.technicalInformation.floorArea} m²`
       : "—";
 
+  // SG field name
   const primaryEnergyIndicator =
-    isCepc && data.primaryEnergyUse
-      ? `${data.primaryEnergyUse} kWh/m²/year`
+    isCepc && data.primaryEnergyIndicator
+      ? `${String(data.primaryEnergyIndicator).trim()} kWh/m²/year`
       : "—";
 
-  const assessmentSoftware = "—";
+  // SG provides calculationTool (avoid hardcoded dash)
+  const assessmentSoftware = normaliseText(data.calculationTool) ?? "—";
+
   const approvedOrganisation = data.assessor?.registeredBy?.name ?? "—";
 
-  const currentBand = isCepc
-    ? data.currentEnergyEfficiencyBand
-    : data.energyBandFromRelatedCertificate;
+  const currentBand = data.currentEnergyEfficiencyBand;
 
-  // Benchmark shown on the legacy certificate page (value may not be available yet)
-  const benchmarkRatingNumber =
-    isCepc && typeof data.newBuildRating === "number"
-      ? data.newBuildRating
-      : undefined;
-  const benchmarkBand = isCepc ? data.newBuildBand : undefined;
+  const potentialBand = data.potentialEnergyBand;
 
-  const normalisedCurrentBand: Band | null = currentBand
-    ? (String(currentBand).toUpperCase() as Band)
-    : null;
+  const normalisedCurrentBand = normaliseBand(currentBand);
+  const normalisedPotentialBand = normaliseBand(potentialBand);
+
+  const benchmarkRatingNumber = parseNumber(data.newBuildBenchmarkRating);
+  const benchmarkBand = normaliseBand(data.newBuildBenchmarkBand);
+
+  const topRecommendations = Array.isArray(data.recommendations)
+    ? data.recommendations.slice(0, 3)
+    : [];
 
   return (
     <section aria-label="Energy Performance Certificate">
@@ -110,7 +137,7 @@ export default function CepcCertificateSummary({
 
         <EPCBandChart
           current={normalisedCurrentBand}
-          potential="A"
+          potential={normalisedPotentialBand}
           topLabel="Excellent"
           bottomLabel="Very poor"
           markerPlacement="right"
@@ -118,10 +145,14 @@ export default function CepcCertificateSummary({
 
         <div className="print-no-break print-padding-top">
           <p>
-            <strong>Approximate energy use:</strong> —
+            <strong>Approximate energy use:</strong>{" "}
+            {normaliseText(data.approximateEnergyUse)
+              ? `${String(data.approximateEnergyUse).trim()} kWh/m²/year`
+              : "—"}
           </p>
           <p>
-            <strong>Approximate carbon dioxide emissions:</strong> —
+            <strong>Approximate carbon dioxide emissions:</strong>{" "}
+            <MissingData />
           </p>
           <p>
             The building energy performance rating is a measure of the effect of
@@ -156,19 +187,38 @@ export default function CepcCertificateSummary({
                 ? `band ${String(benchmarkBand).toUpperCase()}`
                 : ""}
             </span>
-            <RatingBadge variant="energy" band="A" score={80} />
+
+            {benchmarkBand && benchmarkRatingNumber != null ? (
+              <RatingBadge
+                variant="energy"
+                band={String(benchmarkBand).toUpperCase()}
+                score={benchmarkRatingNumber}
+              />
+            ) : (
+              <MissingData />
+            )}
           </div>
         </div>
       </div>
+
       <div className="cert-section bg-grey">
         <h3>
           Recommendations for the cost-effective improvement of energy
           performance
         </h3>
+
         <ol>
-          <li>Consider installing PV.</li>
-          <li>Replace lighting systems with LEDs of at least 110 lm/W.</li>
-          <li>Install ASHP to supply existing radiators.</li>
+          {topRecommendations.length > 0 ? (
+            topRecommendations.map((rec) => (
+              <li key={rec.recommendationCode}>{rec.recommendation}</li>
+            ))
+          ) : (
+            <>
+              <li>
+                <MissingData label="No recommendations returned from API" />
+              </li>
+            </>
+          )}
         </ol>
 
         <p>

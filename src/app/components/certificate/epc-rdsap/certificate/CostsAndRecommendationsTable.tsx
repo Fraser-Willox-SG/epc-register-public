@@ -1,7 +1,7 @@
 import type { SgDomesticEpcCertificateSummary } from "@/types/sg-epc-dom-rdsap";
 import { bandFromScore } from "@/app/utils/epc-bands";
 import improvements from "@/app/content/rdsap/improvements.json";
-import RatingBadge from "./components/RatingBadge";
+import RatingBadge from "@/app/components/certificate/RatingBadge";
 import MissingData from "@/app/components/MissingData";
 
 type ImprovementInfo = {

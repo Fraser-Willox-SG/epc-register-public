@@ -1,8 +1,13 @@
-// app/components/certificate/epc-cepc/recommendations/CepcPaybackAndSavingsExplained.tsx
-
+import MissingData from "@/app/components/MissingData";
 import BandBadge from "../../BandBadge";
+import type { SgNonDomesticCepcCertificateSummary } from "@/types/sg-epc-non-dom-cepc";
+import { Band } from "@/app/utils/epc";
 
-export default function CepcPaybackAndSavingsExplained() {
+type Props = {
+  data?: SgNonDomesticCepcCertificateSummary;
+};
+
+export default function CepcPaybackAndSavingsExplained({ data }: Props) {
   return (
     <section id="report-payback">
       <div className="cert-section bg-grey">
@@ -58,7 +63,18 @@ export default function CepcPaybackAndSavingsExplained() {
           <strong>
             If calculated using this process, but using Scottish climate data,
             your building would currently have an EPC band{" "}
-            <BandBadge band="D" title="EPC band D" /> (and a rating of 96).
+            {data?.currentEnergyEfficiencyBand &&
+            data.currentEnergyEfficiencyRating != null ? (
+              <>
+                <BandBadge
+                  band={data.currentEnergyEfficiencyBand.toUpperCase() as Band}
+                  title={`EPC band ${data.currentEnergyEfficiencyBand.toUpperCase()}`}
+                />{" "}
+                (and a rating of {data.currentEnergyEfficiencyRating}).
+              </>
+            ) : (
+              <MissingData />
+            )}
           </strong>
         </p>
       </div>

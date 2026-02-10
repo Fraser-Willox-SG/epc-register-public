@@ -1,19 +1,24 @@
-import type { EpcNonDomCepcDocument } from "@/types/epc-non-dom-cepc";
+import type { SgNonDomesticCepcCertificateSummary } from "@/types/sg-epc-non-dom-cepc";
 import { formatIsoDateLong } from "@/app/utils/date";
 
-type Props = { data?: EpcNonDomCepcDocument };
+type Props = { data?: SgNonDomesticCepcCertificateSummary };
 
 export default function CepcAboutThisReport({ data }: Props) {
   const assessor = data?.assessor;
 
-  const assessorName = assessor?.name ?? "—";
+  const assessorName =
+    assessor && `${assessor.firstName ?? ""} ${assessor.lastName ?? ""}`.trim()
+      ? `${assessor.firstName ?? ""} ${assessor.lastName ?? ""}`.trim()
+      : "—";
+
   const membershipNumber = assessor?.schemeAssessorId ?? "—";
 
-  const companyName = assessor?.companyDetails?.name ?? "—";
-  const companyAddress = assessor?.companyDetails?.address ?? "—";
+  const companyName = assessor?.companyName ?? "—";
 
-  const telephone = assessor?.contactDetails?.telephone ?? "—";
-  const email = assessor?.contactDetails?.email ?? "—";
+  const companyAddress = assessor?.contactDetails?.tradingAddress ?? "—";
+  const telephoneValue =
+    assessor?.contactDetails?.telephoneNumber?.trim() || "";
+  const emailValue = assessor?.contactDetails?.email?.trim() || "";
 
   return (
     <section id="report-about">
@@ -93,12 +98,12 @@ export default function CepcAboutThisReport({ data }: Props) {
               <strong>Phone number</strong>
             </dt>
             <dd>
-              {telephone ? (
+              {telephoneValue ? (
                 <a
                   className="ds_link"
-                  href={`tel:${telephone.replace(/\s+/g, "")}`}
+                  href={`tel:${telephoneValue.replace(/\s+/g, "")}`}
                 >
-                  {telephone}
+                  {telephoneValue}
                 </a>
               ) : (
                 "—"
@@ -110,9 +115,9 @@ export default function CepcAboutThisReport({ data }: Props) {
               <strong>E-mail address</strong>
             </dt>
             <dd>
-              {email ? (
-                <a className="ds_link" href={`mailto:${email}`}>
-                  {email}
+              {emailValue ? (
+                <a className="ds_link" href={`mailto:${emailValue}`}>
+                  {emailValue}
                 </a>
               ) : (
                 "—"

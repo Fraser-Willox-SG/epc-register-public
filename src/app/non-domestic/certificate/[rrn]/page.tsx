@@ -4,6 +4,7 @@ import { selfUrl } from "@/app/utils/self-url";
 import PrintButton from "@/app/components/PrintButton";
 
 import type { EpcDomRdSapSummary } from "@/types/epc-dom-rdsap";
+import type { SgNonDomesticCepcCertificateSummary } from "@/types/sg-epc-non-dom-cepc";
 
 // RdSap Imports
 import RdSapEpcDocument from "@/app/components/certificate/epc-rdsap/RdSapEpcDocument";
@@ -20,7 +21,7 @@ import { EpcNonDomCepcDocument } from "@/types/epc-non-dom-cepc";
 // import LegacyEpcDocument from "@/app/components/certificate/epc-legacy/LegacyEpcDocument";
 // import ContentsNavDomLegacy from "@/app/components/certificate/epc-legacy/ContentsNavDomLegacy";
 
-type Summary = { data: EpcDomRdSapSummary };
+type Summary = { data: SgNonDomesticCepcCertificateSummary };
 
 // ---- page
 export default async function NonDomesticCertificatePage({
@@ -31,7 +32,7 @@ export default async function NonDomesticCertificatePage({
   const { rrn } = await params;
 
   const apiUrl = selfUrl(
-    `/api/ukg/assessments/${encodeURIComponent(rrn)}/summary`
+    `/api/sg/assessments/${encodeURIComponent(rrn)}/certificate-summary`,
   );
 
   let data: Summary["data"] | null = null;
@@ -80,7 +81,9 @@ export default async function NonDomesticCertificatePage({
   }
 
   const addressSummary = data
-    ? [data.addressLine1, data.town, data.postcode].filter(Boolean).join(", ")
+    ? [data.address.addressLine1, data.address.town, data.address.postcode]
+        .filter(Boolean)
+        .join(", ")
     : "";
 
   return (
@@ -126,7 +129,9 @@ export default async function NonDomesticCertificatePage({
           >
             {/* RdSAP only for now – HEM and legacy documents will be added later when required */}
             {/* <RdSapEpcDocument data={data as EpcDomRdSapSummary} /> */}
-            <CepcEpcDocument data={data as EpcNonDomCepcDocument} />
+            <CepcEpcDocument
+              data={data as SgNonDomesticCepcCertificateSummary}
+            />
             {/* <HemEpcDocument data={data} /> */}
             {/* <LegacyEpcDocument data={data} /> */}
           </main>
