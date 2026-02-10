@@ -1,6 +1,43 @@
-// app/components/certificate/epc-cepc/recommendations/CepcRecommendationsIntroduction.tsx
+import MissingData from "@/app/components/MissingData";
+import type { SgNonDomesticCepcCertificateSummary } from "@/types/sg-epc-non-dom-cepc";
 
-export default function CepcRecommendationsIntroduction() {
+function cleanText(value: string | null | undefined): string | null {
+  const v = (value ?? "").trim();
+  return v.length > 0 ? v : null;
+}
+
+function cleanList(value: unknown): string | null {
+  // SG gives arrays of strings (often with newlines), but guard in case of odd shapes
+  if (Array.isArray(value)) {
+    const items = value
+      .map((v) => (typeof v === "string" ? v.trim() : ""))
+      .filter(Boolean);
+    return items.length > 0 ? items.join(", ") : null;
+  }
+  if (typeof value === "string") {
+    const v = value.trim();
+    return v.length > 0 ? v : null;
+  }
+  return null;
+}
+
+export default function CepcRecommendationsIntroduction({
+  data,
+}: {
+  data: SgNonDomesticCepcCertificateSummary;
+}) {
+  const buildingType = cleanText(data.propertyShortDescription);
+  const totalUsefulFloorArea = cleanText(data.technicalInformation?.floorArea);
+  const mainHeatingFuel = cleanText(data.technicalInformation?.mainHeatingFuel);
+  const buildingEnvironment = cleanText(
+    data.technicalInformation?.buildingEnvironment,
+  );
+
+  const renewableEnergySource = cleanList(data.renewableEnergySources);
+  const electricity = cleanList(data.electricitySources);
+
+  const calculationTool = cleanText(data.calculationTool);
+
   return (
     <section id="report-background" aria-label="Recommendations Report">
       <div className="cert-section">
@@ -18,51 +55,61 @@ export default function CepcRecommendationsIntroduction() {
             <dt>
               <strong>Building type</strong>
             </dt>
-            <dd>—</dd>
+            <dd>{buildingType ?? <MissingData />}</dd>
           </div>
 
           <div className="row-2col border-b-grey">
             <dt>
               <strong>Total useful floor area</strong>
             </dt>
-            <dd>—</dd>
+            <dd>
+              {totalUsefulFloorArea ? (
+                `${totalUsefulFloorArea} m²`
+              ) : (
+                <MissingData />
+              )}
+            </dd>
           </div>
 
           <div className="row-2col border-b-grey">
             <dt>
               <strong>Main heating fuel</strong>
             </dt>
-            <dd>—</dd>
+            <dd>{mainHeatingFuel ?? <MissingData />}</dd>
           </div>
 
           <div className="row-2col border-b-grey">
             <dt>
               <strong>Building environment</strong>
             </dt>
-            <dd>—</dd>
+            <dd>{buildingEnvironment ?? <MissingData />}</dd>
           </div>
 
           <div className="row-2col border-b-grey">
             <dt>
               <strong>Renewable energy source</strong>
             </dt>
-            <dd>—</dd>
+            <dd>{renewableEnergySource ?? <MissingData />}</dd>
           </div>
 
           <div className="row-2col border-b-grey">
             <dt>
               <strong>Electricity</strong>
             </dt>
-            <dd>—</dd>
+            <dd>{electricity ?? <MissingData />}</dd>
           </div>
         </dl>
+
         <div className="print-no-break print-padding-top">
           <p>
             The Recommendations Report provides additional information in
             support of your Energy Performance Certificate. It was produced in
             line with the Government’s approved calculation methodology and is
-            based upon output from IES Ltd, Virtual Environment, v7.0.22,
-            ApacheSim, v7.0.22.
+            based upon output from{" "}
+            {calculationTool ?? (
+              <MissingData label="MISSING DATA FROM UKG API" />
+            )}
+            .
           </p>
 
           <p>
@@ -94,6 +141,7 @@ export default function CepcRecommendationsIntroduction() {
           </p>
         </div>
       </div>
+
       <div className="cert-section bg-blue">
         <h3>Recommendations for improvement</h3>
 

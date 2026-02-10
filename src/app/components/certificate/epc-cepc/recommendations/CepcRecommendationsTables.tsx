@@ -1,10 +1,8 @@
-// app/components/certificate/epc-cepc/recommendations/CepcRecommendationsTables.tsx
 import EpcPill from "@/app/components/certificate/EpcPill";
-
-import type { EpcNonDomCepcDocument } from "@/types/epc-non-dom-cepc";
+import type { SgNonDomesticCepcCertificateSummary } from "@/types/sg-epc-non-dom-cepc";
 
 type Props = {
-  data?: EpcNonDomCepcDocument; // optional for now; wire later
+  data?: SgNonDomesticCepcCertificateSummary;
 };
 
 type Impact = "LOW" | "MEDIUM" | "HIGH" | "VERY HIGH" | string;
@@ -52,26 +50,41 @@ function RecommendationsTable({
   );
 }
 
-export default function CepcRecommendationsTables({ data }: Props) {
-  const otherMeasuresRows: RecommendationRow[] = [
-    { recommendation: "Consider installing PV.", potentialImpact: "MEDIUM" },
-    {
-      recommendation: "Replace lighting systems with LEDs of at least 110lm/W.",
-      potentialImpact: "HIGH",
-    },
-    {
-      recommendation: "Install ASHP to supply existing radiators.",
-      potentialImpact: "HIGH",
-    },
-    {
-      recommendation: "Replace glazing with new double glazed units",
-      potentialImpact: "MEDIUM",
-    },
-  ];
+function toRow(rec: {
+  recommendation: string;
+  cO2Impact: string;
+}): RecommendationRow {
+  return {
+    recommendation: rec.recommendation.trim(),
+    potentialImpact: rec.cO2Impact,
+  };
+}
 
-  const shortPaybackRows: RecommendationRow[] = [];
-  const mediumPaybackRows: RecommendationRow[] = [];
-  const longPaybackRows: RecommendationRow[] = [];
+export default function CepcRecommendationsTables({ data }: Props) {
+  const recommendations = Array.isArray(data?.recommendations)
+    ? data.recommendations
+    : [];
+
+  const shortPaybackRows: RecommendationRow[] = recommendations
+    .filter((r) => r.paybackType === "short")
+    .map(toRow);
+
+  const mediumPaybackRows: RecommendationRow[] = recommendations
+    .filter((r) => r.paybackType === "medium")
+    .map(toRow);
+
+  const longPaybackRows: RecommendationRow[] = recommendations
+    .filter((r) => r.paybackType === "long")
+    .map(toRow);
+
+  const otherMeasuresRows: RecommendationRow[] = recommendations
+    .filter(
+      (r) =>
+        r.paybackType !== "short" &&
+        r.paybackType !== "medium" &&
+        r.paybackType !== "long",
+    )
+    .map(toRow);
 
   return (
     <section
