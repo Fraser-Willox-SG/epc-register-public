@@ -10,7 +10,7 @@ type Props = {
 export default function CepcPaybackAndSavingsExplained({ data }: Props) {
   return (
     <section id="report-payback">
-      <div className="cert-section bg-grey">
+      <div className="cert-section bg-grey print-no-break">
         <h2>Payback period</h2>
 
         <p>
@@ -29,7 +29,7 @@ export default function CepcPaybackAndSavingsExplained({ data }: Props) {
           improve the energy efficiency of your building.
         </p>
       </div>
-      <div className="cert-section">
+      <div className="cert-section print-no-break">
         <h2>Carbon Impact</h2>
 
         <p>
@@ -46,7 +46,7 @@ export default function CepcPaybackAndSavingsExplained({ data }: Props) {
           ‘other recommendations’ is determined by the assessor.
         </p>
       </div>
-      <div className="cert-section bg-blue">
+      <div className="cert-section bg-blue print-no-break">
         <h2>Comparative assessment – Feed-in Tariff</h2>
 
         <p>
@@ -78,7 +78,7 @@ export default function CepcPaybackAndSavingsExplained({ data }: Props) {
           </strong>
         </p>
       </div>
-      <div className="cert-section bg-grey">
+      <div className="cert-section bg-grey print-no-break">
         <h2>
           Requirements under section 63 of the Climate Change (Scotland) Act
         </h2>

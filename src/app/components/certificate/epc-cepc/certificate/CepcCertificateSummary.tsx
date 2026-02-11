@@ -169,7 +169,7 @@ export default function CepcCertificateSummary({
       </div>
 
       {/* Benchmark + top recommendations */}
-      <div className="cert-section">
+      <div className="cert-section print-no-break">
         <h3>Benchmark</h3>
         <div className="row-2col--value">
           <div>
@@ -201,7 +201,7 @@ export default function CepcCertificateSummary({
         </div>
       </div>
 
-      <div className="cert-section bg-grey">
+      <div className="cert-section bg-grey print-no-break">
         <h3>
           Recommendations for the cost-effective improvement of energy
           performance

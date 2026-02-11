@@ -92,39 +92,45 @@ export default function CepcRecommendationsTables({ data }: Props) {
       className="cert-section print-page-break"
     >
       <h2>Recommended improvement measures</h2>
-
-      <h3>
-        Recommended measures with a short payback period (less than 3 years)
-      </h3>
-      <RecommendationsTable
-        caption="Recommendations (short payback)"
-        rows={shortPaybackRows}
-      />
-
-      <h3>Recommended measures with a medium payback period (3 to 7 years)</h3>
-      <RecommendationsTable
-        caption="Recommendations (medium payback)"
-        rows={mediumPaybackRows}
-      />
-
-      <h3>
-        Recommended measures with a long payback period (more than 7 years)
-      </h3>
-      <RecommendationsTable
-        caption="Recommendations (long payback)"
-        rows={longPaybackRows}
-      />
-
-      <h3>Other measures</h3>
-      <p>
-        This section lists other measures selected by your assessor based upon
-        an understanding of the building and/or a valid existing Recommendations
-        Report.
-      </p>
-      <RecommendationsTable
-        caption="Recommendations (other)"
-        rows={otherMeasuresRows}
-      />
+      <div className="print-no-break">
+        <h3>
+          Recommended measures with a short payback period (less than 3 years)
+        </h3>
+        <RecommendationsTable
+          caption="Recommendations (short payback)"
+          rows={shortPaybackRows}
+        />
+      </div>
+      <div className="print-no-break">
+        <h3>
+          Recommended measures with a medium payback period (3 to 7 years)
+        </h3>
+        <RecommendationsTable
+          caption="Recommendations (medium payback)"
+          rows={mediumPaybackRows}
+        />
+      </div>
+      <div className="print-no-break">
+        <h3>
+          Recommended measures with a long payback period (more than 7 years)
+        </h3>
+        <RecommendationsTable
+          caption="Recommendations (long payback)"
+          rows={longPaybackRows}
+        />
+      </div>
+      <div className="print-no-break">
+        <h3>Other measures</h3>
+        <p>
+          This section lists other measures selected by your assessor based upon
+          an understanding of the building and/or a valid existing
+          Recommendations Report.
+        </p>
+        <RecommendationsTable
+          caption="Recommendations (other)"
+          rows={otherMeasuresRows}
+        />
+      </div>
     </section>
   );
 }
