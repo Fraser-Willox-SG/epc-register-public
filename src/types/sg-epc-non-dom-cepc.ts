@@ -61,6 +61,11 @@ export type SgCepcRecommendation = {
   cO2Impact: SgCepcRecommendationCo2Impact;
 };
 
+export type SgCepcPropertyType = {
+  propertyTypeLongDescription: string;
+  propertyTypeShortDescription: string;
+};
+
 export type SgNonDomesticCepcCertificateSummary = {
   typeOfAssessment: "CEPC" | string;
   assessmentId: string;
@@ -76,28 +81,28 @@ export type SgNonDomesticCepcCertificateSummary = {
   technicalInformation: SgCepcTechnicalInformation;
 
   currentEnergyEfficiencyRating: number;
-  potentialEnergyRating: string;
-  currentEnergyEfficiencyBand: string; // e.g. "G"
+  potentialEnergyRating: number;
+
+  currentEnergyEfficiencyBand: string; // e.g. "E+"
   potentialEnergyBand: string;
 
-  newBuildBenchmarkRating: string;
-  newBuildBenchmarkBand: string;
+  newBuildBenchmarkRating: number;
+  newBuildBenchmarkBand: string; // e.g. "B+"
 
-  comparativeAssetRating: string;
-  epcRatingBer: string;
-  approximateEnergyUse: string;
+  comparativeAssetRating: number;
+  epcRatingBer: number;
+  approximateEnergyUse: number;
 
-  propertyType: string;
-  propertyShortDescription: string;
+  propertyType: SgCepcPropertyType;
 
-  compliant2002: string; // "Y"/"N" observed
+  compliant2002: string; // "Y"/"N"
   renewableEnergySources: string[];
   electricitySources: string[];
 
-  primaryEnergyIndicator: string;
+  primaryEnergyIndicator: number;
   calculationTool: string;
-  ter2002: string;
-  ter: string;
+  ter2002: number;
+  ter: number;
 
   recommendations: SgCepcRecommendation[];
 

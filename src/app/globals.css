@@ -178,13 +178,36 @@ body {
   justify-content: center;
   font-weight: 700;
   line-height: 1;
-  font-size: calc(var(--badge-size) * 0.6);
+  font-size: calc(var(--badge-size) * 0.7);
   flex: 0 0 auto;
 }
 
 .epc-badge {
   border: 2px solid #374151;
 }
+
+.epc-badge--plus {
+  font-size: calc(var(--badge-size) * 0.52); /* was 0.6 via .epc-badge */
+}
+
+.epc-badge__text {
+  color: #ffffff;
+
+  /* Modern stroke (Chromium/Safari) */
+  -webkit-text-stroke: 1px #111827;
+
+  /* Fallback outline (Firefox / older) */
+  text-shadow:
+    -1px -1px 0 #111827,
+    1px -1px 0 #111827,
+    -1px 1px 0 #111827,
+    1px 1px 0 #111827,
+    0px 1px 0 #111827,
+    1px 0px 0 #111827,
+    -1px 0px 0 #111827,
+    0px -1px 0 #111827;
+}
+
 .num-bullet {
   background: #212121;
   color: #fff;

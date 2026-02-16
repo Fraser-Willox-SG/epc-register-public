@@ -1,15 +1,16 @@
 import React from "react";
 import {
+  type AnyBand,
   type Band,
   COLORS,
   COLORS_CO2,
   LANE,
   LANE_CO2,
-  isBand,
+  toBaseBand,
 } from "@/app/utils/epc";
 
 type Props = {
-  band?: Band | string | null;
+  band?: AnyBand | string | null;
   score?: number | string | null;
   variant: "energy" | "environment";
   size?: number; // circle diameter-ish
@@ -21,21 +22,33 @@ export default function RatingBadge({
   variant,
   size = 34,
 }: Props) {
-  const b = typeof band === "string" ? band.toUpperCase() : band;
-  if (!isBand(b)) return <span>—</span>;
+  const label =
+    typeof band === "string" ? band.trim().toUpperCase() : (band ?? "");
+  const base: Band | undefined = toBaseBand(
+    typeof label === "string" ? label : String(label),
+  );
 
-  const circleFill = variant === "environment" ? COLORS_CO2[b] : COLORS[b];
-  const pillFill = variant === "environment" ? LANE_CO2[b] : LANE[b];
+  if (!base) return <span>—</span>;
+
+  const circleFill =
+    variant === "environment" ? COLORS_CO2[base] : COLORS[base];
+  const pillFill = variant === "environment" ? LANE_CO2[base] : LANE[base];
 
   const scoreText =
     score === null || score === undefined || score === "" ? "—" : String(score);
 
+  const isPlus = typeof label === "string" && label.includes("+");
+
   const w = 88;
   const h = size + 10;
-  const r = size / 2;
-  const pad = 2; // enough for 1.5px stroke
+
+  const r = (isPlus ? size + 6 : size) / 2;
+  const pad = 2;
   const vbW = w + pad * 2;
   const vbH = h + pad * 2;
+
+  // Slightly reduce band font size for '+' so it stays comfortably inside the circle
+  const bandFontSize = isPlus ? 16 : 18;
 
   return (
     <span
@@ -53,7 +66,7 @@ export default function RatingBadge({
         role="img"
         aria-label={`${
           variant === "environment" ? "Environment" : "Energy"
-        } rating ${b} ${scoreText}`}
+        } rating ${label} ${scoreText}`}
       >
         {/* Background pill */}
         <rect
@@ -77,24 +90,24 @@ export default function RatingBadge({
           strokeWidth={1.5}
         />
 
-        {/* Band letter */}
+        {/* Band letter (or E+) */}
         <text
           x={pad + r}
           y={pad + h / 2 + 6}
           textAnchor="middle"
           fontWeight={400}
-          fontSize={18}
+          fontSize={bandFontSize}
           fill="#ffffff"
           stroke="#111827"
           strokeWidth={4}
           paintOrder="stroke"
         >
-          {b}
+          {label}
         </text>
 
         {/* Score */}
         <text
-          x={pad + w - 20}
+          x={pad + w - 15}
           y={pad + h / 2 + 6}
           textAnchor="end"
           fontWeight={900}

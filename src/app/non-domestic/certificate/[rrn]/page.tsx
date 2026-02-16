@@ -31,6 +31,11 @@ export default async function NonDomesticCertificatePage({
 }) {
   const { rrn } = await params;
 
+  // TEMP TEST (Not Production environment)
+  if (process.env.NODE_ENV !== "production" && rrn === "error-test") {
+    throw new Error("Manual test error boundary");
+  }
+
   const apiUrl = selfUrl(
     `/api/sg/assessments/${encodeURIComponent(rrn)}/certificate-summary`,
   );

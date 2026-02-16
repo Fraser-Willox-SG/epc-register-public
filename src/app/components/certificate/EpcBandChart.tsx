@@ -1,7 +1,9 @@
 import React from "react";
 import {
-  Band,
+  type AnyBand,
+  type Band,
   BANDS,
+  toBaseBand,
   COLORS,
   COLORS_CO2,
   LANE,
@@ -10,8 +12,8 @@ import {
 } from "@/app/utils/epc";
 
 type Props = {
-  current?: Band | null;
-  potential?: Band | null;
+  current?: AnyBand | null;
+  potential?: AnyBand | null;
   maxWidth?: string | number;
   markerPlacement?: "right" | "band";
   isEnvironmental?: boolean;
@@ -68,60 +70,75 @@ export default function EPCBandChart({
   const xRightCurrent = barEndX - 330;
   const xRightPotential = barEndX - 140;
 
+  // Map any band (e.g. "E+") -> base A–G band for chart positioning & colours
+  const baseCurrent = toBaseBand(current ? String(current) : undefined);
+  const basePotential = toBaseBand(potential ? String(potential) : undefined);
+
   const xForCurrent =
-    markerPlacement === "band" && current
-      ? xForBandCenter(current)
+    markerPlacement === "band" && baseCurrent
+      ? xForBandCenter(baseCurrent)
       : xRightCurrent;
+
   const xForPotential =
-    markerPlacement === "band" && potential
-      ? xForBandCenter(potential)
+    markerPlacement === "band" && basePotential
+      ? xForBandCenter(basePotential)
       : xRightPotential;
 
   const Marker = ({
     x,
     y,
     label,
+    base,
   }: {
     x: number;
     y: number;
-    label: Band;
+    label: string;
+    base: Band;
     tag: "Current" | "Potential";
-  }) => (
-    <>
-      <line
-        x1={x}
-        y1={topY - 10}
-        x2={x}
-        y2={y - 18}
-        stroke="#6b7280"
-        strokeWidth={2}
-      />
-      <circle
-        cx={x}
-        cy={y}
-        r={24}
-        fill={color_palette[label]}
-        stroke="#374151"
-        strokeWidth={2}
-      />
-      <text
-        x={x}
-        y={y + 11}
-        textAnchor="middle"
-        fontWeight={400}
-        fontSize="32"
-        fill="#ffffff"
-        stroke="#111827"
-        strokeWidth={5}
-        paintOrder="stroke"
-      >
-        {label}
-      </text>
-    </>
-  );
+  }) => {
+    const cleanLabel = label.trim();
+    const isPlus = cleanLabel.includes("+");
+    const r = isPlus ? 28 : 24;
+    const fontSize = isPlus ? 28 : 32;
 
-  const hasCurrent = isBand(current);
-  const hasPotential = isBand(potential);
+    return (
+      <>
+        <line
+          x1={x}
+          y1={topY - 10}
+          x2={x}
+          y2={y - (r - 6)}
+          stroke="#6b7280"
+          strokeWidth={2}
+        />
+        <circle
+          cx={x}
+          cy={y}
+          r={r}
+          fill={color_palette[base]}
+          stroke="#374151"
+          strokeWidth={2}
+        />
+        <text
+          x={x}
+          y={y + 11}
+          textAnchor="middle"
+          fontWeight={400}
+          fontSize={fontSize}
+          fill="#ffffff"
+          stroke="#111827"
+          strokeWidth={5}
+          paintOrder="stroke"
+        >
+          {cleanLabel}
+        </text>
+      </>
+    );
+  };
+
+  // These determine whether we show markers
+  const hasCurrent = Boolean(baseCurrent);
+  const hasPotential = Boolean(basePotential);
 
   return (
     <div style={{ width: "100%", maxWidth }}>
@@ -132,8 +149,8 @@ export default function EPCBandChart({
         preserveAspectRatio="xMinYMin meet"
         role="img"
         aria-label={`Energy cost rating${
-          hasCurrent ? `: current ${current}` : ""
-        }${hasPotential ? `, potential ${potential}` : ""}`}
+          hasCurrent ? `: current ${String(current)}` : ""
+        }${hasPotential ? `, potential ${String(potential)}` : ""}`}
       >
         <text y={topY - 28} fontSize="14" fill="#374151">
           {topLabel ?? ""}
@@ -178,7 +195,7 @@ export default function EPCBandChart({
           );
         })}
 
-        {hasCurrent && (
+        {hasCurrent && baseCurrent && (
           <>
             <text
               x={xForCurrent}
@@ -192,14 +209,15 @@ export default function EPCBandChart({
             </text>
             <Marker
               x={xForCurrent}
-              y={yForBand(current)}
-              label={current}
+              y={yForBand(baseCurrent)}
+              label={String(current)}
+              base={baseCurrent}
               tag="Current"
             />
           </>
         )}
 
-        {hasPotential && (
+        {hasPotential && basePotential && (
           <>
             <text
               x={xForPotential}
@@ -213,8 +231,9 @@ export default function EPCBandChart({
             </text>
             <Marker
               x={xForPotential}
-              y={yForBand(potential)}
-              label={potential}
+              y={yForBand(basePotential)}
+              label={String(potential)}
+              base={basePotential}
               tag="Potential"
             />
           </>

@@ -13,6 +13,26 @@ export const BANDS: readonly Band[] = [
   "G",
 ] as const;
 
+/** CEPC band supports optional "+" */
+export type CepcBand =
+  | "A"
+  | "A+"
+  | "B"
+  | "B+"
+  | "C"
+  | "C+"
+  | "D"
+  | "D+"
+  | "E"
+  | "E+"
+  | "F"
+  | "F+"
+  | "G"
+  | "G+";
+
+/** Any band used in shared components */
+export type AnyBand = Band | CepcBand;
+
 export const COLORS: Record<Band, string> = {
   A: "#0b7a3b",
   B: "#2a9d55",
@@ -54,7 +74,21 @@ export const LANE_CO2: Record<Band, string> = {
 };
 
 export const isBand = (v: unknown): v is Band =>
-  typeof v === "string" && BANDS.includes(v.toUpperCase() as Band);
+  typeof v === "string" && BANDS.includes(v.trim().toUpperCase() as Band);
+
+export const isCepcBand = (v: unknown): v is CepcBand => {
+  if (typeof v !== "string") return false;
+  const up = v.trim().toUpperCase();
+  return /^[A-G](\+)?$/.test(up);
+};
+
+/** Map "E+" -> "E" for lane colours & chart positioning */
+export function toBaseBand(v?: string | null): Band | undefined {
+  if (!v) return undefined;
+  const up = v.trim().toUpperCase();
+  const letter = up[0]; // A..G
+  return isBand(letter) ? (letter as Band) : undefined;
+}
 
 const NA_GREY = "#DDDDDD";
 export const bandColor = (band?: Band | null) =>
@@ -77,7 +111,7 @@ export function toBand(v?: string | null): Band | undefined {
 
 /** Largest numeric 'typicalSaving' across improvements (string), else null */
 export function getMaxTypicalSaving(
-  imps?: RecommendedImprovement[] | null
+  imps?: RecommendedImprovement[] | null,
 ): string | null {
   if (!imps?.length) return null;
   const max = imps.reduce((acc, i) => {
