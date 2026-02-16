@@ -26,7 +26,7 @@ export default function CepcRecommendationsIntroduction({
 }: {
   data: SgNonDomesticCepcCertificateSummary;
 }) {
-  const buildingType = cleanText(data.propertyShortDescription);
+  const buildingType = cleanText(data.propertyType.propertyTypeLongDescription);
   const totalUsefulFloorArea = cleanText(data.technicalInformation?.floorArea);
   const mainHeatingFuel = cleanText(data.technicalInformation?.mainHeatingFuel);
   const buildingEnvironment = cleanText(

@@ -10,18 +10,13 @@ function normaliseBand(band: string | null | undefined): Band | null {
   return b ? (b as Band) : null;
 }
 
-function normaliseText(value: string | null | undefined): string | null {
-  const v = (value ?? "").trim();
-  return v.length > 0 ? v : null;
-}
-
-function parseNumber(value: string | number | null | undefined): number | null {
-  if (typeof value === "number" && Number.isFinite(value)) return value;
+function normaliseText(value: unknown): string | null {
   if (typeof value === "string") {
-    const trimmed = value.trim();
-    if (!trimmed) return null;
-    const n = Number(trimmed);
-    return Number.isFinite(n) ? n : null;
+    const v = value.trim();
+    return v.length > 0 ? v : null;
+  }
+  if (typeof value === "number") {
+    return Number.isFinite(value) ? String(value) : null;
   }
   return null;
 }
@@ -38,7 +33,7 @@ export default function CepcCertificateSummary({
 
   // Prefer the short, clean label for UI (propertyType includes newlines in SG payload)
   const buildingType = isCepc
-    ? normaliseText(data.propertyShortDescription)
+    ? normaliseText(data.propertyType.propertyTypeShortDescription)
     : null;
 
   const totalConditionedArea =
@@ -46,10 +41,9 @@ export default function CepcCertificateSummary({
       ? `${data.technicalInformation.floorArea} m²`
       : "—";
 
-  // SG field name
   const primaryEnergyIndicator =
-    isCepc && data.primaryEnergyIndicator
-      ? `${String(data.primaryEnergyIndicator).trim()} kWh/m²/year`
+    isCepc && data.primaryEnergyIndicator != null
+      ? `${data.primaryEnergyIndicator} kWh/m²/year`
       : "—";
 
   // SG provides calculationTool (avoid hardcoded dash)
@@ -64,7 +58,10 @@ export default function CepcCertificateSummary({
   const normalisedCurrentBand = normaliseBand(currentBand);
   const normalisedPotentialBand = normaliseBand(potentialBand);
 
-  const benchmarkRatingNumber = parseNumber(data.newBuildBenchmarkRating);
+  const benchmarkRatingNumber = Number.isFinite(data.newBuildBenchmarkRating)
+    ? data.newBuildBenchmarkRating
+    : null;
+
   const benchmarkBand = normaliseBand(data.newBuildBenchmarkBand);
 
   const topRecommendations = Array.isArray(data.recommendations)
@@ -146,13 +143,15 @@ export default function CepcCertificateSummary({
         <div className="print-no-break print-padding-top">
           <p>
             <strong>Approximate energy use:</strong>{" "}
-            {normaliseText(data.approximateEnergyUse)
-              ? `${String(data.approximateEnergyUse).trim()} kWh/m²/year`
+            {data.approximateEnergyUse != null
+              ? `${data.approximateEnergyUse} kWh/m²/year`
               : "—"}
           </p>
           <p>
             <strong>Approximate carbon dioxide emissions:</strong>{" "}
-            <MissingData />
+            {data.epcRatingBer != null
+              ? `${data.epcRatingBer} kgCO₂ per m²`
+              : "—"}
           </p>
           <p>
             The building energy performance rating is a measure of the effect of
