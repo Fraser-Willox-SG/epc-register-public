@@ -4,7 +4,10 @@ import { selfUrl } from "@/app/utils/self-url";
 import ContentsNav from "@scottish-government/designsystem-react/dist/components/ContentsNav/ContentsNav";
 import PrintButton from "@/app/components/PrintButton";
 
-import type { SgActionPlanCertificateSummary } from "@/types/action-plan";
+import type {
+  SgActionPlanCertificateSummary,
+  SgActionPlanResponse,
+} from "@/types/action-plan";
 
 import ActionPlanDocument from "@/app/components/certificate/action-plan/ActionPlanDocument";
 
@@ -19,7 +22,7 @@ export default async function DomesticCertificatePage({
     `/api/sg/assessments/${encodeURIComponent(rrn)}/certificate-summary`,
   );
 
-  let data: Summary["data"] | null = null;
+  let data: SgActionPlanResponse["data"] | null = null;
   let error: string | null = null;
   let detail: string | null = null;
 
@@ -41,7 +44,7 @@ export default async function DomesticCertificatePage({
     } else {
       // parse safely
       try {
-        const json = JSON.parse(bodyText) as Summary;
+        const json = JSON.parse(bodyText) as SgActionPlanResponse;
         data = json.data ?? null;
         if (!data) {
           error = "Certificate not found.";
@@ -62,7 +65,7 @@ export default async function DomesticCertificatePage({
     if (process.env.NODE_ENV !== "production") {
       detail = (e as Error).message;
     }
-    console.error("[SSR] postcode fetch failed", {
+    console.error("[SSR] certificate fetch failed", {
       url: apiUrl,
       err: (e as Error).message,
     });
@@ -117,24 +120,24 @@ export default async function DomesticCertificatePage({
                 Parties involved
               </ContentsNav.Item>
               <ContentsNav.Item href="#improvement-type">
-                Improvement Type
+                Improvement type
               </ContentsNav.Item>
               <ContentsNav.Item href="#prescriptive-measures">
-                Prescriptive Improvement Measures
+                Prescriptive improvement measures
               </ContentsNav.Item>
 
               {/* Alternative improvements (only if present) */}
               {hasAlternativeImprovements && (
                 <ContentsNav.Item href="#alternative-measures">
-                  Alternative Improvements
+                  Alternative improvements
                 </ContentsNav.Item>
               )}
 
               <ContentsNav.Item href="#operational-rating-system">
-                Operational Rating System
+                Operational rating system
               </ContentsNav.Item>
               <ContentsNav.Item href="#completion-of-improvements">
-                Completion Of Improvements
+                Completion of improvements
               </ContentsNav.Item>
             </ContentsNav>
           </aside>
@@ -144,7 +147,7 @@ export default async function DomesticCertificatePage({
             className="ds_layout__content"
             style={{ border: "1px solid grey" }}
           >
-            <ActionPlanDocument data={data as SgActionPlanCertificateSummary} />
+            <ActionPlanDocument data={data} />
           </main>
         </div>
       ) : null}
