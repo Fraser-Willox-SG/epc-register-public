@@ -4,9 +4,12 @@ import { selfUrl } from "@/app/utils/self-url";
 import ContentsNav from "@scottish-government/designsystem-react/dist/components/ContentsNav/ContentsNav";
 import PrintButton from "@/app/components/PrintButton";
 
-import type { ActionPlanDocument } from "@/types/action-plan";
+import type {
+  SgActionPlanCertificateSummary,
+  SgActionPlanResponse,
+} from "@/types/action-plan";
 
-type Summary = { data: ActionPlanDocument };
+import ActionPlanDocument from "@/app/components/certificate/action-plan/ActionPlanDocument";
 
 export default async function DomesticCertificatePage({
   params,
@@ -16,10 +19,10 @@ export default async function DomesticCertificatePage({
   const { rrn } = await params;
 
   const apiUrl = selfUrl(
-    `/api/action-plan/certificate?rrn=${encodeURIComponent(rrn)}`,
+    `/api/sg/assessments/${encodeURIComponent(rrn)}/certificate-summary`,
   );
 
-  let data: Summary["data"] | null = null;
+  let data: SgActionPlanResponse["data"] | null = null;
   let error: string | null = null;
   let detail: string | null = null;
 
@@ -41,7 +44,7 @@ export default async function DomesticCertificatePage({
     } else {
       // parse safely
       try {
-        const json = JSON.parse(bodyText) as Summary;
+        const json = JSON.parse(bodyText) as SgActionPlanResponse;
         data = json.data ?? null;
         if (!data) {
           error = "Certificate not found.";
@@ -62,11 +65,15 @@ export default async function DomesticCertificatePage({
     if (process.env.NODE_ENV !== "production") {
       detail = (e as Error).message;
     }
-    console.error("[SSR] postcode fetch failed", {
+    console.error("[SSR] certificate fetch failed", {
       url: apiUrl,
       err: (e as Error).message,
     });
   }
+
+  const hasAlternativeImprovements =
+    Array.isArray(data?.alternativeImprovements) &&
+    data.alternativeImprovements.length > 0;
 
   return (
     <div className="ds_wrapper">
@@ -109,19 +116,28 @@ export default async function DomesticCertificatePage({
               ariaLabel="Document navigation"
             >
               <ContentsNav.Item href="#overview">Action Plan</ContentsNav.Item>
-              <ContentsNav.Item href="#br-intro">
+              <ContentsNav.Item href="#parties-involved">
                 Parties involved
               </ContentsNav.Item>
-              <ContentsNav.Item href="#">Improvement Type</ContentsNav.Item>
-              <ContentsNav.Item href="#">
-                Prescriptive Improvement Measures
+              <ContentsNav.Item href="#improvement-type">
+                Improvement type
+              </ContentsNav.Item>
+              <ContentsNav.Item href="#prescriptive-measures">
+                Prescriptive improvement measures
               </ContentsNav.Item>
 
-              <ContentsNav.Item href="#">
-                Operational Rating System
+              {/* Alternative improvements (only if present) */}
+              {hasAlternativeImprovements && (
+                <ContentsNav.Item href="#alternative-measures">
+                  Alternative improvements
+                </ContentsNav.Item>
+              )}
+
+              <ContentsNav.Item href="#operational-rating-system">
+                Operational rating system
               </ContentsNav.Item>
-              <ContentsNav.Item href="#">
-                Completion Of Improvements
+              <ContentsNav.Item href="#completion-of-improvements">
+                Completion of improvements
               </ContentsNav.Item>
             </ContentsNav>
           </aside>
@@ -131,11 +147,7 @@ export default async function DomesticCertificatePage({
             className="ds_layout__content"
             style={{ border: "1px solid grey" }}
           >
-            <div id="overview" className="ds_inset-text">
-              <pre style={{ whiteSpace: "pre-wrap" }}>
-                {JSON.stringify(data, null, 2)}
-              </pre>
-            </div>
+            <ActionPlanDocument data={data} />
           </main>
         </div>
       ) : null}
