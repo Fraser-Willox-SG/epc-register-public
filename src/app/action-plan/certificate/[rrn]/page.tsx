@@ -4,9 +4,9 @@ import { selfUrl } from "@/app/utils/self-url";
 import ContentsNav from "@scottish-government/designsystem-react/dist/components/ContentsNav/ContentsNav";
 import PrintButton from "@/app/components/PrintButton";
 
-import type { ActionPlanDocument } from "@/types/action-plan";
+import type { SgActionPlanCertificateSummary } from "@/types/action-plan";
 
-type Summary = { data: ActionPlanDocument };
+import ActionPlanDocument from "@/app/components/certificate/action-plan/ActionPlanDocument";
 
 export default async function DomesticCertificatePage({
   params,
@@ -16,7 +16,7 @@ export default async function DomesticCertificatePage({
   const { rrn } = await params;
 
   const apiUrl = selfUrl(
-    `/api/action-plan/certificate?rrn=${encodeURIComponent(rrn)}`,
+    `/api/sg/assessments/${encodeURIComponent(rrn)}/certificate-summary`,
   );
 
   let data: Summary["data"] | null = null;
@@ -68,6 +68,10 @@ export default async function DomesticCertificatePage({
     });
   }
 
+  const hasAlternativeImprovements =
+    Array.isArray(data?.alternativeImprovements) &&
+    data.alternativeImprovements.length > 0;
+
   return (
     <div className="ds_wrapper">
       <div className="ds_page-header no-print">
@@ -109,18 +113,27 @@ export default async function DomesticCertificatePage({
               ariaLabel="Document navigation"
             >
               <ContentsNav.Item href="#overview">Action Plan</ContentsNav.Item>
-              <ContentsNav.Item href="#br-intro">
+              <ContentsNav.Item href="#parties-involved">
                 Parties involved
               </ContentsNav.Item>
-              <ContentsNav.Item href="#">Improvement Type</ContentsNav.Item>
-              <ContentsNav.Item href="#">
+              <ContentsNav.Item href="#improvement-type">
+                Improvement Type
+              </ContentsNav.Item>
+              <ContentsNav.Item href="#prescriptive-measures">
                 Prescriptive Improvement Measures
               </ContentsNav.Item>
 
-              <ContentsNav.Item href="#">
+              {/* Alternative improvements (only if present) */}
+              {hasAlternativeImprovements && (
+                <ContentsNav.Item href="#alternative-measures">
+                  Alternative Improvements
+                </ContentsNav.Item>
+              )}
+
+              <ContentsNav.Item href="#operational-rating-system">
                 Operational Rating System
               </ContentsNav.Item>
-              <ContentsNav.Item href="#">
+              <ContentsNav.Item href="#completion-of-improvements">
                 Completion Of Improvements
               </ContentsNav.Item>
             </ContentsNav>
@@ -131,11 +144,7 @@ export default async function DomesticCertificatePage({
             className="ds_layout__content"
             style={{ border: "1px solid grey" }}
           >
-            <div id="overview" className="ds_inset-text">
-              <pre style={{ whiteSpace: "pre-wrap" }}>
-                {JSON.stringify(data, null, 2)}
-              </pre>
-            </div>
+            <ActionPlanDocument data={data as SgActionPlanCertificateSummary} />
           </main>
         </div>
       ) : null}

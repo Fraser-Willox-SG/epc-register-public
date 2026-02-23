@@ -1,74 +1,100 @@
-export type ActionPlanSearchRow = {
-  actionPlanRrn: string;
-  status?: string;
-  addressLine1?: string | null;
-  addressLine2?: string | null;
-  town?: string | null;
-  postcode?: string | null;
-  epcRrn?: string | null;
-  assessmentDate?: string | null;
+export type SgApiEnvelope<TData> = {
+  data: TData;
+  meta: Record<string, unknown>;
 };
 
-export type ActionPlanDocument = {
-  header?: {
-    title?: string;
-    country?: string;
+export type SgYesNo = "Y" | "N" | string;
+
+export type SgIsoDate = string; // YYYY-MM-DD (treat as string at the boundary)
+
+export type SgActionPlanResponse =
+  SgApiEnvelope<SgActionPlanCertificateSummary>;
+
+export type SgActionPlanCertificateSummary = {
+  typeOfAssessment: string; // e.g. "CS63"
+  assessmentId: string; // Action Plan RRN (e.g. "0016-....")
+  epcAssessmentId: string; // EPC RRN (e.g. "2102-....")
+
+  saleLeaseDate: SgIsoDate;
+  reportType: string; // e.g. "9"
+  dateOfAssessment: SgIsoDate;
+  planReportDate: SgIsoDate;
+
+  address: SgActionPlanAddress;
+  assessor: SgActionPlanAssessor;
+
+  ownerCommissionReport: SgYesNo;
+  delegatedPersonCommissionReport: SgYesNo;
+
+  propertyType: SgActionPlanPropertyType;
+
+  buildingImprovements: SgYesNo;
+  operationalRatings: SgYesNo;
+  dec: SgYesNo;
+
+  plannedCompletionDate: SgIsoDate;
+  actualCompletionDate: SgIsoDate | null;
+
+  targetEmissionSavings: number; // as per payload (e.g. 1.98)
+  targetEnergySavings: number; // as per payload (e.g. 11.42)
+
+  acceptPrescriptiveImprovements: SgYesNo;
+
+  prescriptiveImprovements: SgActionPlanImprovementMeasure[];
+  alternativeImprovements: SgActionPlanImprovementMeasure[];
+
+  addressId: string; // e.g. "RRN-0016-..."
+  optOut: boolean;
+
+  relatedAssessments: unknown[]; // currently []
+  supersededBy: string | null; // currently null
+  countryName: string; // e.g. "Unknown"
+
+  // Optional?: Will message UKG regarding this potentially missing field
+  delegatedProtocolSetUp?: SgYesNo | null;
+
+  // Optional?: Will message UKG regarding this potentially missing field
+  delegatedProtocolSetUpDate?: SgIsoDate | null;
+};
+
+export type SgActionPlanAddress = {
+  addressLine1: string;
+  addressLine2: string;
+  addressLine3: string;
+  addressLine4: string;
+  town: string;
+  postcode: string;
+};
+
+export type SgActionPlanAssessor = {
+  schemeAssessorId: string;
+
+  contactDetails: {
+    email: string;
+    tradingAddress: string;
+    telephoneNumber: string;
   };
 
-  identifiers: {
-    actionPlanRrn: string;
-    epcRrn?: string | null;
-    uprn?: string | null;
+  companyName: string;
+  status: string;
+
+  firstName: string;
+  lastName: string;
+
+  registeredBy: {
+    name: string;
+    schemeId: number;
   };
+};
 
-  address: {
-    addressLine1?: string | null;
-    addressLine2?: string | null;
-    addressLine3?: string | null;
-    addressLine4?: string | null;
-    town?: string | null;
-    postcode?: string | null;
-  };
+export type SgActionPlanPropertyType = {
+  propertyTypeLongDescription: string;
+  propertyTypeShortDescription: string;
+};
 
-  keyDates?: {
-    dateOfSaleOrLease?: string | null;
-    dateOfAssessment?: string | null;
-    dateOfPlan?: string | null;
-  };
-
-  parties?: {
-    ownerInvolved?: boolean;
-    tenantOrDelegatedPersonInvolved?: boolean;
-    assessorId?: string | null;
-    delegatedProtocolSetUp?: boolean;
-  };
-
-  improvementType?: {
-    buildingImprovements?: boolean;
-    operationalRating?: boolean;
-  };
-
-  prescriptiveMeasures?: Array<{
-    description: string;
-    valid: boolean;
-  }>;
-
-  targets?: {
-    co2KgPerM2PerYear?: number | null;
-    energyKwhPerM2PerYear?: number | null;
-  };
-
-  acceptPrescriptiveImprovements?: boolean;
-
-  operationalRatingSystem?: {
-    displayEnergyCertificateLodged?: boolean;
-    note?: string | null;
-  };
-
-  completion?: {
-    plannedDate?: string | null;
-    actualDate?: string | null;
-  };
-
-  footerNote?: string | null;
+export type SgActionPlanImprovementMeasure = {
+  measureDescriptionShort: string;
+  measureDescriptionLong: string | null;
+  measureValid: SgYesNo;
+  measureType: string | null;
 };
