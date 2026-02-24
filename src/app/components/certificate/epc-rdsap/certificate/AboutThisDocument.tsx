@@ -22,9 +22,8 @@ export default function AboutThisDocument({
   const membershipNumber = data.assessor.schemeAssessorId?.trim() || null;
   const approvedOrganisation = data.assessor.registeredBy?.name?.trim() || null;
 
-  // Not present in SG certificate-summary payload
-  const companyTradingName: string | null = null;
-  const assessorAddress: string | null = null;
+  const companyTradingName = data.assessor.companyName;
+  const assessorAddress = data.assessor.contactDetails.address;
 
   const phone = data.assessor.contactDetails?.telephoneNumber?.trim() || null;
   const email = data.assessor.contactDetails?.email?.trim() || null;

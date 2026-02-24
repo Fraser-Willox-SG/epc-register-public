@@ -48,7 +48,7 @@ export type SgDomesticEpcCertificateSummary = {
 
   assessor: SgAssessor;
 
-  currentCarbonEmission: string; // numeric string e.g. "2.7"
+  currentCarbonEmission?: number | null;
   currentEnergyEfficiencyBand: SgEpcBandLetter; // e.g. "b"
   currentEnergyEfficiencyRating: number; // e.g. 90
 
@@ -102,17 +102,7 @@ export type SgDomesticEpcCertificateSummary = {
 
   countryName: string;
 
-  /**
-   * Not currently provided in certificate-summary by UKG, but shown on live certificate.
-   * Unit: kg CO2 per m² per year.
-   */
-  emissionsKgPerM2PerYear?: number | null;
-
-  /**
-   * Not currently provided in certificate-summary by UKG, but shown on live certificate.
-   * Unit: tonnes CO2 per year (heating + lighting statement).
-   */
-  co2TonnesPerYearCurrent?: number | null;
+  carbonEmissionsCurrentPerFloorArea?: number | null;
 };
 
 export type SgDomesticEpcAddress = {
@@ -126,8 +116,9 @@ export type SgDomesticEpcAddress = {
 
 export type SgAssessor = {
   schemeAssessorId: string;
-
+  companyName: string;
   contactDetails: {
+    address: string;
     email: string;
     telephoneNumber: string;
   };

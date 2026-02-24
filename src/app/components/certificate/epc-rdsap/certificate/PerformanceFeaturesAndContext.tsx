@@ -57,8 +57,9 @@ export default function PerformanceFeaturesAndContext({
 
   rows.sort((a, b) => ORDER.indexOf(a.key) - ORDER.indexOf(b.key));
 
-  const emissionsKgPerM2PerYear = data.emissionsKgPerM2PerYear;
-  const co2TonnesPerYearCurrent = data.co2TonnesPerYearCurrent;
+  const carbonEmissionsCurrentPerFloorArea =
+    data.carbonEmissionsCurrentPerFloorArea;
+  const currentCarbonEmission = data.currentCarbonEmission;
 
   return (
     <section
@@ -176,7 +177,7 @@ export default function PerformanceFeaturesAndContext({
         <p>
           The calculated emissions for your home are{" "}
           <strong>
-            {emissionsKgPerM2PerYear ?? <MissingData />} kg CO
+            {carbonEmissionsCurrentPerFloorArea ?? <MissingData />} kg CO
             <sub>2</sub>/m²/yr
           </strong>
           .
@@ -186,9 +187,9 @@ export default function PerformanceFeaturesAndContext({
           The average Scottish household produces about 6 tonnes of carbon
           dioxide every year. Based on this assessment, heating and lighting
           this home currently produces approximately{" "}
-          <strong>{co2TonnesPerYearCurrent ?? <MissingData />} tonnes</strong>{" "}
-          of carbon dioxide every year. You could reduce emissions by switching
-          to renewable energy sources.
+          <strong>{currentCarbonEmission ?? <MissingData />} tonnes</strong> of
+          carbon dioxide every year. You could reduce emissions by switching to
+          renewable energy sources.
         </p>
       </div>
     </section>
