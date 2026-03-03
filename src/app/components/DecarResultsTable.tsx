@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export type AssessmentRow = {
   assessmentId: string; // RRN
-  typeOfAssessment: "DEC" | "DEC-RR" | string;
+  typeOfAssessment: "DEC" | "DEC-AR" | string;
   dateOfRegistration?: string | null;
   dateOfAssessment?: string | null;
   createdAt?: string | null;
@@ -89,7 +89,7 @@ function groupByProperty(rows: AssessmentRow[]): Grouped[] {
         r.town,
         r.postcode,
       ],
-      ", "
+      ", ",
     );
 
     const uprn = parseUprn(r.addressId);
@@ -104,7 +104,7 @@ function groupByProperty(rows: AssessmentRow[]): Grouped[] {
     };
 
     if (r.typeOfAssessment === "DEC") g.dec = pickNewest(g.dec, r);
-    if (r.typeOfAssessment === "DEC-RR") g.ar = pickNewest(g.ar, r);
+    if (r.typeOfAssessment === "DEC-AR") g.ar = pickNewest(g.ar, r);
 
     // Track newest overall date for the row (group-level)
     const prev = g.createdDate;
@@ -127,7 +127,7 @@ function groupByProperty(rows: AssessmentRow[]): Grouped[] {
 
   // Sort by address asc (change to createdDate desc if preferred)
   return Array.from(map.values()).sort((a, b) =>
-    a.address.localeCompare(b.address)
+    a.address.localeCompare(b.address),
   );
 }
 
@@ -299,7 +299,7 @@ export default function DecarResultsTable({
             const combinedHref =
               decRrn && arRrn
                 ? `/display-energy-certificate-and-advisory-report/combined/${encodeURIComponent(
-                    decRrn
+                    decRrn,
                   )}/${encodeURIComponent(arRrn)}`
                 : null;
 

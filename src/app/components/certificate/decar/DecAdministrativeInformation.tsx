@@ -1,6 +1,6 @@
 import React from "react";
 import type { DecAdministrativeInformation, Assessor } from "@/types/decar";
-
+import { getAssessorDisplayName } from "@/types/decar";
 import { formatDecDate } from "@/app/utils/date";
 
 type Props = {
@@ -20,6 +20,8 @@ const DecAdministrativeInformation: React.FC<Props> = ({
   nominateDate,
   validUntil,
 }) => {
+  const assessorName = assessor ? getAssessorDisplayName(assessor).trim() : "";
+
   return (
     <section>
       <h3>Administrative Information</h3>
@@ -30,6 +32,7 @@ const DecAdministrativeInformation: React.FC<Props> = ({
         2016. When produced in response to that legislation, a valid certificate
         should be displayed in a prominent position within the building.
       </p>
+
       <dl className="summary-list">
         <div className="row-2col border-b-grey">
           <dt>
@@ -49,7 +52,7 @@ const DecAdministrativeInformation: React.FC<Props> = ({
           <dt>
             <strong>SG3 Assessor Name:</strong>
           </dt>
-          <dd>{formatValue(assessor?.name)}</dd>
+          <dd>{assessorName || "—"}</dd>
         </div>
 
         <div className="row-2col border-b-grey">
@@ -68,7 +71,7 @@ const DecAdministrativeInformation: React.FC<Props> = ({
 
         <div className="row-2col border-b-grey">
           <dt>
-            <strong>Company Name/Trading Name:</strong>
+            <strong>Company Name/Trading name:</strong>
           </dt>
           <dd>{formatValue(assessor?.companyDetails?.name)}</dd>
         </div>

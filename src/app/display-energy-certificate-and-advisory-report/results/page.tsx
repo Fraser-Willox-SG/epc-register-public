@@ -38,8 +38,8 @@ export default async function AdvisoryReportsResultsPage({
 
   const apiUrl = selfUrl(
     `/api/ukg/search?postcode=${encodeURIComponent(
-      postcode
-    )}&&assessmentTypes=DEC,DEC-RR`
+      postcode,
+    )}&&assessmentTypes=DEC,DEC-AR`,
   );
 
   try {
@@ -102,7 +102,7 @@ export default async function AdvisoryReportsResultsPage({
           resultsPath="/display-energy-certificate-and-advisory-report/results"
           certificateHref={(rrn) =>
             `/display-energy-certificate-and-advisory-report/certificate/${encodeURIComponent(
-              rrn
+              rrn,
             )}`
           }
         />

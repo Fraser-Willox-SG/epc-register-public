@@ -5,10 +5,16 @@ type Props = {
   data: ArSummary;
 };
 
+function formatNumber(value: number | null | undefined): string {
+  return typeof value === "number" && Number.isFinite(value)
+    ? value.toLocaleString("en-GB")
+    : "";
+}
+
 export default function ArBackground({ data }: Props) {
   const t = data.technicalInformation;
 
-  const floorArea = (t?.floorArea ?? "").trim();
+  const floorArea = formatNumber(t?.floorArea);
   const propertyType = (t?.propertyType ?? "").trim();
   const buildingEnv = (t?.buildingEnvironment ?? "").trim();
   const renewableSources = (t?.renewableSources ?? "").trim();
@@ -97,7 +103,11 @@ export default function ArBackground({ data }: Props) {
               {fuels.map((f, idx) => (
                 <tr key={idx}>
                   <td>{f?.description ?? "N/A"}</td>
-                  <td>{f?.quantity ?? "0"}</td>
+                  <td>
+                    {typeof f?.quantity === "number"
+                      ? f.quantity.toLocaleString("en-GB")
+                      : "0"}
+                  </td>
                 </tr>
               ))}
             </tbody>

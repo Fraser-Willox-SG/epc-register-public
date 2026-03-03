@@ -1,5 +1,6 @@
 import React from "react";
 import type { ArSummary, Recommendation } from "@/types/decar";
+import EpcPill from "@/app/components/certificate/EpcPill";
 
 type Props = {
   data: ArSummary;
@@ -34,7 +35,9 @@ function RecommendationsTable({
           {nonEmpty.map((rec, idx) => (
             <tr key={`${rec.code}-${idx}`}>
               <td>{rec.text}</td>
-              <td>{rec.cO2Impact}</td>
+              <td>
+                <EpcPill value={rec.cO2Impact} />
+              </td>
             </tr>
           ))}
         </tbody>
@@ -48,14 +51,14 @@ export default function ArRecommendations({ data }: Props) {
     shortPaybackRecommendations = [],
     mediumPaybackRecommendations = [],
     longPaybackRecommendations = [],
-    otherRecommendations = [],
+    otherPaybackRecommendations = [],
   } = data;
 
   const hasAny =
     shortPaybackRecommendations.length > 0 ||
     mediumPaybackRecommendations.length > 0 ||
     longPaybackRecommendations.length > 0 ||
-    otherRecommendations.length > 0;
+    otherPaybackRecommendations.length > 0;
 
   return (
     <section
@@ -93,7 +96,7 @@ export default function ArRecommendations({ data }: Props) {
           <RecommendationsTable
             title="d) Other recommendations"
             caption="This section lists other recommendations selected by the energy assessor, based on their understanding of the building and/or any existing reports."
-            items={otherRecommendations}
+            items={otherPaybackRecommendations}
           />
         </>
       ) : (

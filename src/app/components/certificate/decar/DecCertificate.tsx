@@ -82,8 +82,11 @@ export default function DecCertificate({ data }: Props) {
           all the energy actually used in the building. It is compared to a
           benchmark that represents performance indicative of all buildings of
           this type. There is more advice on how to interpret this information
-          on the Scottish Government&apos;s website
-          http://www.gov.scot/section63
+          on the Scottish Government&apos;s website {""}
+          <a href="http://www.gov.scot/section63">
+            http://www.gov.scot/section63
+          </a>
+          .
         </p>
       </div>
 
@@ -107,7 +110,7 @@ export default function DecCertificate({ data }: Props) {
           <div id="dec-co2-emissions" className="cert-section">
             <h3>Total CO₂ Emissions</h3>
             <p>
-              This tells you how much carbon dioxide the building emits. it
+              This tells you how much carbon dioxide the building emits. It
               shows tonnes per year of CO₂
             </p>
             {hasCo2Data ? (
