@@ -4,18 +4,18 @@ import ContentsNav from "@scottish-government/designsystem-react/dist/components
 
 import PrintButton from "@/app/components/PrintButton";
 
-import type { DecarSummary } from "@/types/decar";
-import { isDec, isDecRr } from "@/types/decar";
+import type { ApiEnvelope, DecarSummary } from "@/types/decar";
+import { isDec, isDecAr } from "@/types/decar";
 
 import DecCertificate from "@/app/components/certificate/decar/DecCertificate";
 import ArCertificate from "@/app/components/certificate/decar/ArCertificate";
 
-type SummaryResponse = { data: DecarSummary };
+type SummaryResponse = ApiEnvelope<DecarSummary>;
 
 // Small helper to fetch & parse a single summary
 async function fetchDecarSummary(rrn: string) {
   const apiUrl = selfUrl(
-    `/api/ukg/assessments/${encodeURIComponent(rrn)}/summary`
+    `/api/sg/assessments/${encodeURIComponent(rrn)}/certificate-summary`,
   );
 
   const res = await fetch(apiUrl, { cache: "no-store" });
@@ -61,13 +61,13 @@ export default async function CombinedDecarCertificatePage({
     await Promise.all([fetchDecarSummary(decRrn), fetchDecarSummary(arRrn)]);
 
   const decSummary = dec && isDec(dec) ? dec : null;
-  const arSummary = ar && isDecRr(ar) ? ar : null;
+  const arSummary = ar && isDecAr(ar) ? ar : null;
 
   const hasDec = !!decSummary;
   const hasAr = !!arSummary;
 
   // Choose a sensible header address – prefer DEC, then AR.
-  const addressSource = hasDec ? dec! : hasAr ? ar! : null;
+  const addressSource = hasDec ? decSummary : hasAr ? arSummary : null;
   const addressSummary = addressSource
     ? [
         addressSource.address.addressLine1,
@@ -80,7 +80,7 @@ export default async function CombinedDecarCertificatePage({
 
   const pageTitle = "Display Energy Certificate and Advisory Report";
 
-  const hasAnyError = decError || arError;
+  const hasAnyError = !!(decError || arError);
   const bothMissing = !hasDec && !hasAr;
 
   return (
@@ -101,6 +101,7 @@ export default async function CombinedDecarCertificatePage({
             We couldn’t retrieve the combined certificate for{" "}
             <code>{decRrn}</code> and <code>{arRrn}</code>.
           </p>
+
           {hasAnyError && (
             <div className="ds_inset-text">
               <p className="ds_!-margin-bottom-0 ds_small">
@@ -110,6 +111,7 @@ export default async function CombinedDecarCertificatePage({
               </p>
             </div>
           )}
+
           <p className="ds_mt-4">
             <Link
               href="/display-energy-certificate-and-advisory-report"

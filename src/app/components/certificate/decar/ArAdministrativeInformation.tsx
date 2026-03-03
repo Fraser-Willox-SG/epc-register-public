@@ -1,20 +1,35 @@
 import React from "react";
 import { formatIsoDateLong } from "@/app/utils/date";
 import type { ArSummary } from "@/types/decar";
+import { getAssessorDisplayName } from "@/types/decar";
 
 type Props = {
   data: ArSummary;
 };
 
+function formatNumber(value: number | null | undefined): string {
+  return typeof value === "number" && Number.isFinite(value)
+    ? value.toLocaleString("en-GB")
+    : "";
+}
+
 export default function ArAdministrativeInformation({ data }: Props) {
-  const { dateOfExpiry, technicalInformation, assessor, addressId } = data;
+  const {
+    dateOfExpiry,
+    technicalInformation,
+    administrativeInformation,
+    assessor,
+    addressId,
+  } = data;
 
   const buildingOccupier = (technicalInformation?.occupier ?? "").trim();
   const buildingType = (technicalInformation?.propertyType ?? "").trim();
-  const floorArea = (technicalInformation?.floorArea ?? "").trim();
-  const calcTool = (technicalInformation?.calculationTool ?? "").trim();
+  const floorArea = formatNumber(technicalInformation?.floorArea);
+  const calcTool = (administrativeInformation?.calculationTool ?? "").trim();
   const inspectionType = (technicalInformation?.inspectionType ?? "").trim();
   const uprn = (addressId ?? "").trim();
+
+  const assessorName = assessor ? getAssessorDisplayName(assessor) : "";
 
   return (
     <div className="cert-section bg-white">
@@ -46,8 +61,8 @@ export default function ArAdministrativeInformation({ data }: Props) {
             <strong>Issue date:</strong>
           </dt>
           <dd>
-            {technicalInformation?.dateOfIssue
-              ? formatIsoDateLong(technicalInformation.dateOfIssue)
+            {administrativeInformation?.issueDate
+              ? formatIsoDateLong(administrativeInformation.issueDate)
               : "—"}
           </dd>
         </div>
@@ -98,7 +113,7 @@ export default function ArAdministrativeInformation({ data }: Props) {
           <dt>
             <strong>S63 Assessor name:</strong>
           </dt>
-          <dd>{assessor?.name || "—"}</dd>
+          <dd>{assessorName || "—"}</dd>
         </div>
 
         <div className="row-2col border-b-grey">

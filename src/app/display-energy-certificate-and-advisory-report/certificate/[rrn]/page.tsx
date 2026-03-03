@@ -5,17 +5,16 @@ import ContentsNav from "@scottish-government/designsystem-react/dist/components
 
 import PrintButton from "@/app/components/PrintButton";
 
-import type { DecarSummary } from "@/types/decar";
-import { isDecRr } from "@/types/decar";
+import type { ApiEnvelope, DecarSummary } from "@/types/decar";
+import { isDecAr } from "@/types/decar";
 
 import DecCertificate from "@/app/components/certificate/decar/DecCertificate";
 import ArCertificate from "@/app/components/certificate/decar/ArCertificate";
 
-type SummaryResponse = { data: DecarSummary };
+type SummaryResponse = ApiEnvelope<DecarSummary>;
 
 function getViewMode(summary: DecarSummary): "dec" | "ar" {
-  if (isDecRr(summary)) return "ar";
-  return "dec";
+  return isDecAr(summary) ? "ar" : "dec";
 }
 
 export default async function DecarCertificatePage({
@@ -26,7 +25,7 @@ export default async function DecarCertificatePage({
   const { rrn } = await params;
 
   const apiUrl = selfUrl(
-    `/api/ukg/assessments/${encodeURIComponent(rrn)}/summary`
+    `/api/sg/assessments/${encodeURIComponent(rrn)}/certificate-summary`,
   );
 
   let data: DecarSummary | null = null;
@@ -51,9 +50,7 @@ export default async function DecarCertificatePage({
       try {
         const json = JSON.parse(bodyText) as SummaryResponse;
         data = json.data ?? null;
-        if (!data) {
-          error = "Certificate not found.";
-        }
+        if (!data) error = "Certificate not found.";
       } catch (parseErr) {
         error = "Bad JSON from API route.";
         if (process.env.NODE_ENV !== "production") {
@@ -83,7 +80,6 @@ export default async function DecarCertificatePage({
     : "";
 
   const mode = data ? getViewMode(data) : "dec";
-
   const pageTitle =
     mode === "ar" ? "Advisory Report" : "Display Energy Certificate";
 
@@ -114,7 +110,6 @@ export default async function DecarCertificatePage({
         </>
       ) : data ? (
         <div className="ds_layout ds_layout--search-results-with-sidebar">
-          {/* Sidebar */}
           <aside
             className="ds_layout__sidebar no-print"
             aria-label="Document navigation"
@@ -173,13 +168,13 @@ export default async function DecarCertificatePage({
             className="ds_layout__content"
             style={{ border: "1px solid grey" }}
           >
-            {data && !isDecRr(data) && (
+            {!isDecAr(data) && (
               <section id="dec-overview">
                 <DecCertificate data={data} />
               </section>
             )}
 
-            {data && isDecRr(data) && (
+            {isDecAr(data) && (
               <section id="ar-overview">
                 <ArCertificate data={data} />
               </section>

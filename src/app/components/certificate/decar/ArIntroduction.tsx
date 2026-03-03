@@ -8,10 +8,12 @@ type Props = {
 
 export default function ArIntroduction({ data }: Props) {
   const t = data.technicalInformation;
-  const rawCalcTool = t?.calculationTool ?? "";
+  const admin = data.administrativeInformation;
+
+  const rawCalcTool = admin?.calculationTool ?? "";
   const rawInspectionType = t?.inspectionType ?? "";
   const rawDateOfAssessment = data.dateOfAssessment ?? "";
-  const rawDateOfIssue = t?.dateOfIssue ?? "";
+  const rawDateOfIssue = admin?.issueDate ?? "";
 
   const calcTool = rawCalcTool.trim();
   const inspectionType = rawInspectionType.trim();
