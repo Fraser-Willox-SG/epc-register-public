@@ -50,41 +50,37 @@ function RecommendationsTable({
   );
 }
 
-function toRow(rec: {
-  recommendation: string;
-  cO2Impact: string;
-}): RecommendationRow {
+function toRow(rec: { text: string; cO2Impact: string }): RecommendationRow {
   return {
-    recommendation: rec.recommendation.trim(),
+    recommendation: rec.text.trim(),
     potentialImpact: rec.cO2Impact,
   };
 }
 
 export default function CepcRecommendationsTables({ data }: Props) {
-  const recommendations = Array.isArray(data?.recommendations)
-    ? data.recommendations
+  const shortPaybackRows: RecommendationRow[] = Array.isArray(
+    data?.shortPaybackRecommendations,
+  )
+    ? data!.shortPaybackRecommendations.map(toRow)
     : [];
 
-  const shortPaybackRows: RecommendationRow[] = recommendations
-    .filter((r) => r.paybackType === "short")
-    .map(toRow);
+  const mediumPaybackRows: RecommendationRow[] = Array.isArray(
+    data?.mediumPaybackRecommendations,
+  )
+    ? data!.mediumPaybackRecommendations.map(toRow)
+    : [];
 
-  const mediumPaybackRows: RecommendationRow[] = recommendations
-    .filter((r) => r.paybackType === "medium")
-    .map(toRow);
+  const longPaybackRows: RecommendationRow[] = Array.isArray(
+    data?.longPaybackRecommendations,
+  )
+    ? data!.longPaybackRecommendations.map(toRow)
+    : [];
 
-  const longPaybackRows: RecommendationRow[] = recommendations
-    .filter((r) => r.paybackType === "long")
-    .map(toRow);
-
-  const otherMeasuresRows: RecommendationRow[] = recommendations
-    .filter(
-      (r) =>
-        r.paybackType !== "short" &&
-        r.paybackType !== "medium" &&
-        r.paybackType !== "long",
-    )
-    .map(toRow);
+  const otherMeasuresRows: RecommendationRow[] = Array.isArray(
+    data?.otherPaybackRecommendations,
+  )
+    ? data!.otherPaybackRecommendations.map(toRow)
+    : [];
 
   return (
     <section
@@ -92,6 +88,7 @@ export default function CepcRecommendationsTables({ data }: Props) {
       className="cert-section print-page-break"
     >
       <h2>Recommended improvement measures</h2>
+
       <div className="print-no-break">
         <h3>
           Recommended measures with a short payback period (less than 3 years)
@@ -101,6 +98,7 @@ export default function CepcRecommendationsTables({ data }: Props) {
           rows={shortPaybackRows}
         />
       </div>
+
       <div className="print-no-break">
         <h3>
           Recommended measures with a medium payback period (3 to 7 years)
@@ -110,6 +108,7 @@ export default function CepcRecommendationsTables({ data }: Props) {
           rows={mediumPaybackRows}
         />
       </div>
+
       <div className="print-no-break">
         <h3>
           Recommended measures with a long payback period (more than 7 years)
@@ -119,6 +118,7 @@ export default function CepcRecommendationsTables({ data }: Props) {
           rows={longPaybackRows}
         />
       </div>
+
       <div className="print-no-break">
         <h3>Other measures</h3>
         <p>

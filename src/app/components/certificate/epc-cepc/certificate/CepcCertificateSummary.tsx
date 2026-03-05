@@ -53,7 +53,8 @@ export default function CepcCertificateSummary({
 
   const currentBand = data.currentEnergyEfficiencyBand;
 
-  const potentialBand = data.potentialEnergyBand;
+  // ✅ updated field name
+  const potentialBand = data.potentialEnergyEfficiencyBand;
 
   const normalisedCurrentBand = normaliseBand(currentBand);
   const normalisedPotentialBand = normaliseBand(potentialBand);
@@ -64,9 +65,23 @@ export default function CepcCertificateSummary({
 
   const benchmarkBand = normaliseBand(data.newBuildBenchmarkBand);
 
-  const topRecommendations = Array.isArray(data.recommendations)
-    ? data.recommendations.slice(0, 3)
-    : [];
+  // ✅ new recommendations are split into 4 arrays; combine + take top 3
+  const allRecommendations = [
+    ...(Array.isArray(data.shortPaybackRecommendations)
+      ? data.shortPaybackRecommendations
+      : []),
+    ...(Array.isArray(data.mediumPaybackRecommendations)
+      ? data.mediumPaybackRecommendations
+      : []),
+    ...(Array.isArray(data.longPaybackRecommendations)
+      ? data.longPaybackRecommendations
+      : []),
+    ...(Array.isArray(data.otherPaybackRecommendations)
+      ? data.otherPaybackRecommendations
+      : []),
+  ];
+
+  const topRecommendations = allRecommendations.slice(0, 3);
 
   return (
     <section aria-label="Energy Performance Certificate">
@@ -208,15 +223,13 @@ export default function CepcCertificateSummary({
 
         <ol>
           {topRecommendations.length > 0 ? (
-            topRecommendations.map((rec) => (
-              <li key={rec.recommendationCode}>{rec.recommendation}</li>
+            topRecommendations.map((rec, idx) => (
+              <li key={`${rec.code}-${idx}`}>{rec.text}</li>
             ))
           ) : (
-            <>
-              <li>
-                <MissingData label="No recommendations returned from API" />
-              </li>
-            </>
+            <li>
+              <MissingData label="No recommendations returned from API" />
+            </li>
           )}
         </ol>
 

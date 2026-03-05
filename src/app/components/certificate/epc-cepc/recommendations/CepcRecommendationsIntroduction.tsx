@@ -1,9 +1,15 @@
 import MissingData from "@/app/components/MissingData";
 import type { SgNonDomesticCepcCertificateSummary } from "@/types/sg-epc-non-dom-cepc";
 
-function cleanText(value: string | null | undefined): string | null {
-  const v = (value ?? "").trim();
-  return v.length > 0 ? v : null;
+function cleanText(value: unknown): string | null {
+  if (typeof value === "string") {
+    const v = value.trim();
+    return v.length > 0 ? v : null;
+  }
+  if (typeof value === "number") {
+    return Number.isFinite(value) ? String(value) : null;
+  }
+  return null;
 }
 
 function cleanList(value: unknown): string | null {

@@ -19,6 +19,7 @@ export type SgActionPlanCertificateSummary = {
   reportType: string; // e.g. "9"
   dateOfAssessment: SgIsoDate;
   planReportDate: SgIsoDate;
+  delegatedProtocolDate: SgIsoDate | null;
 
   address: SgActionPlanAddress;
   assessor: SgActionPlanAssessor;
@@ -52,9 +53,6 @@ export type SgActionPlanCertificateSummary = {
 
   // Optional?: Will message UKG regarding this potentially missing field
   delegatedProtocolSetUp?: SgYesNo | null;
-
-  // Optional?: Will message UKG regarding this potentially missing field
-  delegatedProtocolSetUpDate?: SgIsoDate | null;
 };
 
 export type SgActionPlanAddress = {
