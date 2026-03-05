@@ -43,21 +43,14 @@ export type SgCepcAssessor = {
 export type SgCepcTechnicalInformation = {
   mainHeatingFuel: string;
   buildingEnvironment: string;
-  floorArea: string; // comes as string in payload
+  floorArea: number;
 };
 
-export type SgCepcRecommendationPaybackType =
-  | "short"
-  | "medium"
-  | "long"
-  | string; // keep forward-compatible
+export type SgCepcRecommendationCo2Impact = "LOW" | "MEDIUM" | "HIGH" | string; // forward-compatible
 
-export type SgCepcRecommendationCo2Impact = "LOW" | "MEDIUM" | "HIGH" | string; // keep forward-compatible
-
-export type SgCepcRecommendation = {
-  paybackType: SgCepcRecommendationPaybackType;
-  recommendationCode: string;
-  recommendation: string;
+export type SgCepcPaybackRecommendation = {
+  code: string;
+  text: string;
   cO2Impact: SgCepcRecommendationCo2Impact;
 };
 
@@ -81,10 +74,10 @@ export type SgNonDomesticCepcCertificateSummary = {
   technicalInformation: SgCepcTechnicalInformation;
 
   currentEnergyEfficiencyRating: number;
-  potentialEnergyRating: number;
+  potentialEnergyEfficiencyRating: number;
 
   currentEnergyEfficiencyBand: string; // e.g. "E+"
-  potentialEnergyBand: string;
+  potentialEnergyEfficiencyBand: string;
 
   newBuildBenchmarkRating: number;
   newBuildBenchmarkBand: string; // e.g. "B+"
@@ -104,7 +97,10 @@ export type SgNonDomesticCepcCertificateSummary = {
   ter2002: number;
   ter: number;
 
-  recommendations: SgCepcRecommendation[];
+  shortPaybackRecommendations: SgCepcPaybackRecommendation[];
+  mediumPaybackRecommendations: SgCepcPaybackRecommendation[];
+  longPaybackRecommendations: SgCepcPaybackRecommendation[];
+  otherPaybackRecommendations: SgCepcPaybackRecommendation[];
 
   addressId: string;
   optOut: boolean;

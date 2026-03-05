@@ -4,19 +4,21 @@ import { formatIsoDateLong } from "@/app/utils/date";
 import type { SgActionPlanCertificateSummary } from "@/types/action-plan";
 import Link from "next/link";
 
+const PLACEHOLDER = "—";
+
 // Small, local helpers (keep page resilient)
 function isBlank(value: unknown): boolean {
   return value == null || (typeof value === "string" && value.trim() === "");
 }
 
-function displayText(value: unknown, fallback = "Not available") {
+function displayText(value: unknown, fallback = PLACEHOLDER) {
   return isBlank(value) ? fallback : String(value);
 }
 
-function ynToYesNo(value: unknown): "Yes" | "No" | "Not available" {
+function ynToYesNo(value: unknown): "Yes" | "No" | "—" {
   if (value === "Y" || value === true) return "Yes";
   if (value === "N" || value === false) return "No";
-  return "Not available";
+  return "—";
 }
 
 export default function ActionPlanDocument({
@@ -40,7 +42,8 @@ export default function ActionPlanDocument({
   const tenantOrDelegated = ynToYesNo(data.delegatedPersonCommissionReport);
 
   const delegatedProtocolSetUp = data.delegatedProtocolSetUp;
-  const delegatedProtocolSetUpDate = data.delegatedProtocolSetUpDate;
+  const delegatedProtocolDate = data.delegatedProtocolDate;
+  const hasDelegatedProtocolDateField = "delegatedProtocolDate" in data;
 
   const buildingImprovements = ynToYesNo(data.buildingImprovements);
   const operationalRating = ynToYesNo(data.operationalRatings);
@@ -171,8 +174,12 @@ export default function ActionPlanDocument({
             <tr>
               <td>Date</td>
               <td>
-                {delegatedProtocolSetUpDate ? (
-                  formatIsoDateLong(delegatedProtocolSetUpDate)
+                {hasDelegatedProtocolDateField ? (
+                  delegatedProtocolDate ? (
+                    formatIsoDateLong(delegatedProtocolDate)
+                  ) : (
+                    PLACEHOLDER
+                  )
                 ) : (
                   <MissingData />
                 )}
@@ -412,7 +419,7 @@ export default function ActionPlanDocument({
             </tr>
             <tr>
               <td>Actual completion date</td>
-              <td>{actualCompletionDate ?? "-"}</td>
+              <td>{actualCompletionDate ?? PLACEHOLDER}</td>
             </tr>
           </tbody>
         </table>

@@ -26,7 +26,14 @@ export default function CepcEpcDocument({
   const currentBand = data.currentEnergyEfficiencyBand;
 
   const hasRecommendations =
-    Array.isArray(data.recommendations) && data.recommendations.length > 0;
+    (Array.isArray(data.shortPaybackRecommendations) &&
+      data.shortPaybackRecommendations.length > 0) ||
+    (Array.isArray(data.mediumPaybackRecommendations) &&
+      data.mediumPaybackRecommendations.length > 0) ||
+    (Array.isArray(data.longPaybackRecommendations) &&
+      data.longPaybackRecommendations.length > 0) ||
+    (Array.isArray(data.otherPaybackRecommendations) &&
+      data.otherPaybackRecommendations.length > 0);
 
   return (
     <>
