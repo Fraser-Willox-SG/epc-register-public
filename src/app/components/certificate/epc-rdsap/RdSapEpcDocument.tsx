@@ -1,4 +1,4 @@
-import type { SgDomesticEpcCertificateSummary } from "@/types/sg-epc-dom-rdsap";
+import type { DomesticCertificateData } from "@/types/sg-epc-dom";
 import Header from "@/app/components/certificate/CertificateHeader";
 import CertificateOverview from "./certificate/CertificateOverview";
 import PerformanceFeaturesAndContext from "./certificate/PerformanceFeaturesAndContext";
@@ -9,7 +9,7 @@ import AboutThisDocument from "./certificate/AboutThisDocument";
 export default function RdSapEpcDocument({
   data,
 }: {
-  data: SgDomesticEpcCertificateSummary;
+  data: DomesticCertificateData;
 }) {
   const {
     assessmentId: rrn,
@@ -39,7 +39,7 @@ export default function RdSapEpcDocument({
           rrn={rrn}
           dateOfExpiry={dateOfExpiry}
           currentBand={currentBand}
-          printTitle="SG Energy Performance Certificate"
+          printTitle="Energy Performance Certificate"
         />
       </div>
 

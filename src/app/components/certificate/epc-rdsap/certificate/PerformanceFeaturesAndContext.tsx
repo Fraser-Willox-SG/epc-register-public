@@ -1,4 +1,5 @@
-import type { SgDomesticEpcCertificateSummary } from "@/types/sg-epc-dom-rdsap";
+import type { DomesticCertificateData } from "@/types/sg-epc-dom";
+import { isRdSapCertificate, isSapCertificate } from "@/types/sg-epc-dom";
 import StarRating from "./components/StarRating";
 import MissingData from "@/app/components/MissingData";
 
@@ -17,49 +18,69 @@ const ELEMENT_LABELS: Record<string, string> = {
   air_tightness: "Air tightness",
 };
 
+const ORDER: string[] = [
+  "walls",
+  "roof",
+  "floor",
+  "windows",
+  "main_heating",
+  "main_heating_controls",
+  "secondary_heating",
+  "hot_water",
+  "lighting",
+  "air_tightness",
+];
+
 function normaliseElementKey(name: string): string {
-  const k = name.trim().toLowerCase();
-  // unify singular/plural variants
-  if (k === "wall") return "walls";
-  if (k === "window") return "windows";
-  return k;
+  const key = name.trim().toLowerCase();
+
+  if (key === "wall") return "walls";
+  if (key === "window") return "windows";
+
+  return key;
 }
 
 export default function PerformanceFeaturesAndContext({
   data,
 }: {
-  data: SgDomesticEpcCertificateSummary;
+  data: DomesticCertificateData;
 }) {
-  const rows = data.propertySummary.slice().map((item) => {
-    const key = normaliseElementKey(item.name);
-    return {
-      key,
-      element: ELEMENT_LABELS[key] ?? item.name,
-      description: item.description,
-      energy: item.energyEfficiencyRating,
-      env: item.environmentalEfficiencyRating,
-    };
-  });
+  const rows = data.propertySummary
+    .slice()
+    .map((item) => {
+      const key = normaliseElementKey(item.name);
 
-  // Optional: stable ordering like the certificate
-  const ORDER: string[] = [
-    "walls",
-    "roof",
-    "floor",
-    "windows",
-    "main_heating",
-    "main_heating_controls",
-    "secondary_heating",
-    "hot_water",
-    "lighting",
-    "air_tightness",
-  ];
+      return {
+        key,
+        element: ELEMENT_LABELS[key] ?? item.name,
+        description: item.description,
+        energy: item.energyEfficiencyRating,
+        env: item.environmentalEfficiencyRating,
+      };
+    })
+    .sort((a, b) => {
+      const aIndex = ORDER.indexOf(a.key);
+      const bIndex = ORDER.indexOf(b.key);
 
-  rows.sort((a, b) => ORDER.indexOf(a.key) - ORDER.indexOf(b.key));
+      const safeAIndex = aIndex === -1 ? Number.MAX_SAFE_INTEGER : aIndex;
+      const safeBIndex = bIndex === -1 ? Number.MAX_SAFE_INTEGER : bIndex;
+
+      return safeAIndex - safeBIndex;
+    });
 
   const carbonEmissionsCurrentPerFloorArea =
     data.carbonEmissionsCurrentPerFloorArea;
   const currentCarbonEmission = data.currentCarbonEmission;
+
+  const assessmentMethodology = isSapCertificate(data) ? "SAP" : "RdSAP";
+
+  const hasThermalTransmittance = rows.some((row) =>
+    row.description.toLowerCase().includes("transmittance"),
+  );
+
+  const hasAirPermeability = rows.some((row) =>
+    row.description.toLowerCase().includes("air permeability"),
+  );
 
   return (
     <section
@@ -75,7 +96,7 @@ export default function PerformanceFeaturesAndContext({
         <p>
           This table sets out the results of the survey which lists the current
           energy-related features of this home. Each element is assessed by the
-          national calculation methodology
+          national calculation methodology.
         </p>
 
         <div>
@@ -123,46 +144,72 @@ export default function PerformanceFeaturesAndContext({
                 <td colSpan={4}>—</td>
               </tr>
             ) : (
-              rows.map((r) => (
-                <tr key={`${r.key}-${r.description}`}>
-                  <td scope="row">{r.element}</td>
-                  <td>{r.description || "—"}</td>
+              rows.map((row) => (
+                <tr key={`${row.key}-${row.description}`}>
+                  <th scope="row">{row.element}</th>
+                  <td>{row.description || "—"}</td>
                   <td>
-                    <StarRating value={r.energy || null} />
+                    <StarRating value={row.energy} />
                   </td>
                   <td>
-                    <StarRating value={r.env || null} />
+                    <StarRating value={row.env} />
                   </td>
                 </tr>
               ))
             )}
           </tbody>
         </table>
+        {hasThermalTransmittance && (
+          <p>
+            Thermal transmittance is a measure of the rate of heat loss through
+            a building element; the lower the value the better the energy
+            performance.
+          </p>
+        )}
+
+        {hasAirPermeability && (
+          <p>
+            Air permeability is a measure of the air tightness of a building;
+            the lower the value the better the air tightness.
+          </p>
+        )}
       </div>
+
       <div className="cert-section bg-grey">
         <h3>The energy efficiency rating of your home</h3>
         <p>
           Your Energy Efficiency Rating is calculated using the standard UK
-          methodology, RdSAP. This calculates energy used for heating, hot
-          water, lighting and ventilation and then applies fuel costs to that
-          energy use to give an overall rating for your home. The rating is
-          given on a scale of 1 to 100. Other than the cost of fuel for
-          electrical appliances and for cooking, a building with a rating of 100
-          would cost almost nothing to run.
+          methodology, {assessmentMethodology}. This calculates energy used for
+          heating, hot water, lighting and ventilation and then applies fuel
+          costs to that energy use to give an overall rating for your home. The
+          rating is given on a scale of 1 to 100. Other than the cost of fuel
+          for electrical appliances and for cooking, a building with a rating of
+          100 would cost almost nothing to run.
         </p>
 
-        <p>
-          As we all use our homes in different ways, the energy rating is
-          calculated using standard occupancy assumptions which may be different
-          from the way you use it. The rating also uses national weather
-          information to allow comparison between buildings in different parts
-          of Scotland. However, to make information more relevant to your home,
-          local weather data is used to calculate your energy use, CO
-          <sub>2</sub> emissions, running costs and the savings possible from
-          making improvements.
-        </p>
+        {isRdSapCertificate(data) ? (
+          <p>
+            As we all use our homes in different ways, the energy rating is
+            calculated using standard occupancy assumptions which may be
+            different from the way you use it. The rating also uses national
+            weather information to allow comparison between buildings in
+            different parts of Scotland. However, to make information more
+            relevant to your home, local weather data is used to calculate your
+            energy use, CO<sub>2</sub> emissions, running costs and the savings
+            possible from making improvements.
+          </p>
+        ) : (
+          <p>
+            As we all use our homes in different ways, the energy rating is
+            calculated using standard occupancy assumptions which may be
+            different from the way you use it. The rating also uses national
+            weather information to allow comparison between buildings in
+            different parts of Scotland.
+          </p>
+        )}
       </div>
-      <div className=" cert-section bg-blue">
+
+      <div className="cert-section bg-blue">
         <h3>The impact of your home on the environment</h3>
         <p>
           One of the biggest contributors to global warming is carbon dioxide.

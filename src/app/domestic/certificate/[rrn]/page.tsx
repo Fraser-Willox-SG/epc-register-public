@@ -3,22 +3,25 @@ import Link from "next/link";
 import { selfUrl } from "@/app/utils/self-url";
 import PrintButton from "@/app/components/PrintButton";
 
-import type { EpcDomRdSapSummary } from "@/types/epc-dom-rdsap";
-import type { SgDomesticEpcCertificateSummary } from "@/types/sg-epc-dom-rdsap";
+import type { DomesticCertificateData } from "@/types/sg-epc-dom";
+import { isSapCertificate, isRdSapCertificate } from "@/types/sg-epc-dom";
 
-// RdSap Imports
+import type { SgDomesticRdSapEpcCertificateSummary } from "@/types/sg-epc-dom-rdsap";
+import type { SgDomesticSapEpcCertificateSummary } from "@/types/sg-epc-dom-sap";
+
+// Domestic RdSAP / SAP imports
 import RdSapEpcDocument from "@/app/components/certificate/epc-rdsap/RdSapEpcDocument";
 import ContentsNavDomRdSap from "@/app/components/certificate/epc-rdsap/ContentsNavDomRdSap";
 
-// Hem Imports
+// HEM imports
 import HemEpcDocument from "@/app/components/certificate/epc-hem/HemEpcDocument";
 import ContentsNavDomHem from "@/app/components/certificate/epc-hem/ContentsNavDomHem";
 
-// Legacy Imports
+// Legacy imports
 // import LegacyEpcDocument from "@/app/components/certificate/epc-legacy/LegacyEpcDocument";
 // import ContentsNavDomLegacy from "@/app/components/certificate/epc-legacy/ContentsNavDomLegacy";
 
-type Summary = { data: SgDomesticEpcCertificateSummary };
+type Summary = { data: DomesticCertificateData };
 
 // ---- page
 export default async function DomesticCertificatePage({
@@ -32,7 +35,7 @@ export default async function DomesticCertificatePage({
     `/api/sg/assessments/${encodeURIComponent(rrn)}/certificate-summary`,
   );
 
-  let data: Summary["data"] | null = null;
+  let data: DomesticCertificateData | null = null;
   let error: string | null = null;
   let detail: string | null = null;
 
@@ -54,7 +57,10 @@ export default async function DomesticCertificatePage({
       try {
         const json = JSON.parse(bodyText) as Summary;
         data = json.data ?? null;
-        if (!data) error = "Certificate not found.";
+
+        if (!data) {
+          error = "Certificate not found.";
+        }
       } catch (parseErr) {
         error = "Bad JSON from API route.";
         if (process.env.NODE_ENV !== "production") {
@@ -108,23 +114,25 @@ export default async function DomesticCertificatePage({
         </>
       ) : data ? (
         <div className="ds_layout ds_layout--search-results-with-sidebar">
-          {/* Sidebar */}
           <aside
             className="ds_layout__sidebar no-print"
             aria-label="Document navigation"
           >
-            <ContentsNavDomRdSap />
+            {(isRdSapCertificate(data) || isSapCertificate(data)) && (
+              <ContentsNavDomRdSap />
+            )}
             {/* <ContentsNavDomHem />
             <ContentsNavDomLegacy /> */}
           </aside>
 
-          {/* Main content */}
           <main
             className="ds_layout__content"
             style={{ border: "1px solid grey" }}
           >
-            {/* RdSAP only for now – HEM and legacy documents will be added later when required */}
-            <RdSapEpcDocument data={data as SgDomesticEpcCertificateSummary} />
+            {(isRdSapCertificate(data) || isSapCertificate(data)) && (
+              <RdSapEpcDocument data={data} />
+            )}
+
             {/* <HemEpcDocument data={data} /> */}
             {/* <LegacyEpcDocument data={data} /> */}
           </main>

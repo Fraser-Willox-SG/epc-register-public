@@ -1,4 +1,4 @@
-import type { SgDomesticEpcCertificateSummary } from "@/types/sg-epc-dom-rdsap";
+import type { DomesticCertificateData } from "@/types/sg-epc-dom";
 import MissingData from "@/app/components/MissingData";
 import improvements from "@/app/content/rdsap/improvements.json";
 
@@ -23,55 +23,63 @@ function formatNumber(n: number): string {
 }
 
 function getImprovementContent(
-  imp: SgDomesticEpcCertificateSummary["recommendedImprovements"][number],
+  imp: DomesticCertificateData["recommendedImprovements"][number],
 ): { title: string; body: string } {
-  const apiTitle = imp.improvementTitle.trim();
-  const code = imp.improvementCode.trim();
+  const apiTitle =
+    typeof imp.improvementTitle === "string" ? imp.improvementTitle.trim() : "";
+
+  const code =
+    typeof imp.improvementCode === "string" ? imp.improvementCode.trim() : "";
 
   const fromLookup = code ? improvementLookup[code] : undefined;
+
+  const apiDescription =
+    typeof imp.improvementDescription === "string"
+      ? imp.improvementDescription.trim()
+      : "";
 
   const title =
     apiTitle ||
     fromLookup?.heading ||
-    imp.improvementDescription?.trim() ||
+    apiDescription ||
     "Recommended improvement";
 
   const body =
-    fromLookup?.description ||
-    fromLookup?.summary ||
-    imp.improvementDescription?.trim() ||
-    "";
+    fromLookup?.description || fromLookup?.summary || apiDescription || "";
 
   return { title, body };
+}
+
+function formatHeatImpact(n: number | null): string {
+  if (n == null) return "N/A";
+  const abs = Math.abs(n).toLocaleString("en-GB");
+  return n < 0 ? `(${abs})` : abs;
 }
 
 export default function MeasuresAdviceAndHeatDemand({
   data,
 }: {
-  data: SgDomesticEpcCertificateSummary;
+  data: DomesticCertificateData;
 }) {
   const hasImprovements = data.recommendedImprovements.length > 0;
 
   const lzc = data.lzcEnergySources;
 
-  const spaceHeat = data.heatDemand.currentSpaceHeatingDemand;
-  const waterHeat = data.heatDemand.currentWaterHeatingDemand;
+  const spaceHeat = data.heatDemand?.currentSpaceHeatingDemand ?? null;
+  const waterHeat = data.heatDemand?.currentWaterHeatingDemand ?? null;
 
+  const hasHeatDemandData =
+    typeof spaceHeat === "number" || typeof waterHeat === "number";
+
+  // These impact fields are not present in the SG certificate-summary payload
   const impactLoftSpace: number | null = null;
   const impactCavitySpace: number | null = null;
   const impactSolidSpace: number | null = null;
 
-  // Water heating impact columns appear blank on live certs.
+  // Water-heating impact columns also not present in payload
   const waterImpactLoft: null = null;
   const waterImpactCavity: null = null;
   const waterImpactSolid: null = null;
-
-  function formatHeatImpact(n: number | null): string {
-    if (n == null) return "N/A";
-    // Live cert shows negative values in brackets like (2,226)
-    const abs = Math.abs(n).toLocaleString("en-GB");
-    return n < 0 ? `(${abs})` : abs;
-  }
 
   return (
     <section
@@ -87,46 +95,59 @@ export default function MeasuresAdviceAndHeatDemand({
           About the recommended measures to improve your home’s performance
           rating
         </h3>
-        <p>
-          This section offers additional information and advice on the
-          recommended improvement measures for your home.
-        </p>
 
         {hasImprovements ? (
-          data.recommendedImprovements
-            .slice()
-            .sort((a, b) => a.sequence - b.sequence)
-            .map((imp) => {
-              const { title, body } = getImprovementContent(imp);
+          <>
+            <p>
+              This section offers additional information and advice on the
+              recommended improvement measures for your home.
+            </p>
 
-              return (
-                <section
-                  key={`${imp.sequence}-${imp.improvementCode}`}
-                  aria-label={title}
-                  className="performance-recommendation-section"
-                >
-                  <h3>
-                    {imp.sequence}. {title}
-                  </h3>
+            {data.recommendedImprovements
+              .slice()
+              .sort((a, b) => a.sequence - b.sequence)
+              .map((imp) => {
+                const { title, body } = getImprovementContent(imp);
 
-                  {/* Make missing lookup obvious */}
-                  {imp.improvementTitle.trim() === "" &&
-                  !improvementLookup[imp.improvementCode.trim()] ? (
-                    <p>
-                      <MissingData label="Missing improvement lookup for this improvementCode" />
-                    </p>
-                  ) : null}
+                const impTitle =
+                  typeof imp.improvementTitle === "string"
+                    ? imp.improvementTitle.trim()
+                    : "";
 
-                  {body ? (
-                    <p>{body}</p>
-                  ) : (
-                    <p>
-                      <MissingData label="Missing improvement description from API" />
-                    </p>
-                  )}
-                </section>
-              );
-            })
+                const impCode =
+                  typeof imp.improvementCode === "string"
+                    ? imp.improvementCode.trim()
+                    : "";
+
+                const hasLookup = !!(impCode && improvementLookup[impCode]);
+
+                return (
+                  <section
+                    key={`${imp.sequence}-${imp.improvementCode || "no-code"}`}
+                    aria-label={title}
+                    className="performance-recommendation-section"
+                  >
+                    <h3>
+                      {imp.sequence}. {title}
+                    </h3>
+
+                    {impTitle === "" && !hasLookup ? (
+                      <p>
+                        <MissingData label="Missing improvement lookup for this improvementCode" />
+                      </p>
+                    ) : null}
+
+                    {body ? (
+                      <p>{body}</p>
+                    ) : (
+                      <p>
+                        <MissingData label="Missing improvement description from API" />
+                      </p>
+                    )}
+                  </section>
+                );
+              })}
+          </>
         ) : (
           <p>There are no recommended measures for this home.</p>
         )}
@@ -142,17 +163,14 @@ export default function MeasuresAdviceAndHeatDemand({
         </p>
 
         <p>
-          <strong>LZC energy sources present:</strong>{" "}
+          <strong>LZC energy sources present:</strong>
         </p>
 
         {Array.isArray(lzc) && lzc.length > 0 ? (
           <>
             <ul className="ds_list">
               {lzc.map((code) => (
-                <li key={code}>
-                  {/* API provides codes only in this payload */}
-                  LZC source code {code}
-                </li>
+                <li key={code}>LZC source code {code}</li>
               ))}
             </ul>
             <p>
@@ -160,63 +178,65 @@ export default function MeasuresAdviceAndHeatDemand({
             </p>
           </>
         ) : (
-          <p>There are none provided for this home</p>
+          <p>There are none provided for this home.</p>
         )}
       </div>
 
-      <div className="cert-section bg-blue">
-        <h3>Your home&apos;s heat demand</h3>
-        <p>
-          In this section, you can see how much energy you might need to heat
-          your home and provide hot water. These are estimates showing how an
-          average household uses energy.
-        </p>
-        <p>
-          The table below shows the potential benefit of having your loft and
-          walls insulated.
-        </p>
+      {hasHeatDemandData && (
+        <div className="cert-section bg-blue">
+          <h3>Your home&apos;s heat demand</h3>
+          <p>
+            In this section, you can see how much energy you might need to heat
+            your home and provide hot water. These are estimates showing how an
+            average household uses energy.
+          </p>
+          <p>
+            The table below shows the potential benefit of having your loft and
+            walls insulated.
+          </p>
 
-        <table className="ds_table">
-          <thead>
-            <tr>
-              <th scope="col">Heat demand</th>
-              <th scope="col">Existing dwelling</th>
-              <th scope="col">Impact of loft insulation</th>
-              <th scope="col">Impact of cavity wall insulation</th>
-              <th scope="col">Impact of solid wall insulation</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Space heating (kWh per year)</td>
-              <td>
-                {typeof spaceHeat === "number" ? (
-                  formatNumber(spaceHeat)
-                ) : (
-                  <MissingData />
-                )}
-              </td>
-              <td>{formatHeatImpact(impactLoftSpace)}</td>
-              <td>{formatHeatImpact(impactCavitySpace)}</td>
-              <td>{formatHeatImpact(impactSolidSpace)}</td>
-            </tr>
+          <table className="ds_table">
+            <thead>
+              <tr>
+                <th scope="col">Heat demand</th>
+                <th scope="col">Existing dwelling</th>
+                <th scope="col">Impact of loft insulation</th>
+                <th scope="col">Impact of cavity wall insulation</th>
+                <th scope="col">Impact of solid wall insulation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Space heating (kWh per year)</td>
+                <td>
+                  {typeof spaceHeat === "number" ? (
+                    formatNumber(spaceHeat)
+                  ) : (
+                    <MissingData label="Missing currentSpaceHeatingDemand from API" />
+                  )}
+                </td>
+                <td>{formatHeatImpact(impactLoftSpace)}</td>
+                <td>{formatHeatImpact(impactCavitySpace)}</td>
+                <td>{formatHeatImpact(impactSolidSpace)}</td>
+              </tr>
 
-            <tr>
-              <td>Water heating (kWh per year)</td>
-              <td>
-                {typeof waterHeat === "number" ? (
-                  formatNumber(waterHeat)
-                ) : (
-                  <MissingData />
-                )}
-              </td>
-              <td>{waterImpactLoft ?? "—"}</td>
-              <td>{waterImpactCavity ?? "—"}</td>
-              <td>{waterImpactSolid ?? "—"}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+              <tr>
+                <td>Water heating (kWh per year)</td>
+                <td>
+                  {typeof waterHeat === "number" ? (
+                    formatNumber(waterHeat)
+                  ) : (
+                    <MissingData label="Missing currentWaterHeatingDemand from API" />
+                  )}
+                </td>
+                <td>{waterImpactLoft ?? "—"}</td>
+                <td>{waterImpactCavity ?? "—"}</td>
+                <td>{waterImpactSolid ?? "—"}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      )}
     </section>
   );
 }

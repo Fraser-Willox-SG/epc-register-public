@@ -15,12 +15,12 @@ export type SgEpcBandLetter =
   | "G"
   | string;
 
-export type SgCertificateSummaryResponse = {
-  data: SgDomesticRdSapEpcCertificateSummary;
+export type SgSapCertificateSummaryResponse = {
+  data: SgDomesticSapEpcCertificateSummary;
   meta: Record<string, unknown>;
 };
 
-export type SgRecommendedImprovement = {
+export type SgSapRecommendedImprovement = {
   sequence: number;
   improvementCode: string;
   improvementTitle: string;
@@ -35,15 +35,16 @@ export type SgRecommendedImprovement = {
   greenDealCategoryCode?: string;
 };
 
-export type SgDomesticRdSapEpcCertificateSummary = {
-  typeOfAssessment: "RdSAP" | string;
+export type SgDomesticSapEpcCertificateSummary = {
+  typeOfAssessment: "SAP" | string;
   assessmentId: string;
-  dateOfExpiry: string;
-  dateOfAssessment: string;
-  dateOfRegistration: string;
+  dateOfExpiry: string; // YYYY-MM-DD
+  dateOfAssessment: string; // YYYY-MM-DD
+  dateOfRegistration: string; // YYYY-MM-DD
 
-  address: SgDomesticEpcAddress;
-  assessor: SgAssessor;
+  address: SgDomesticSapEpcAddress;
+
+  assessor: SgSapAssessor;
 
   currentCarbonEmission: number | null;
   carbonEmissionsCurrentPerFloorArea: number | null;
@@ -52,9 +53,10 @@ export type SgDomesticRdSapEpcCertificateSummary = {
   currentEnergyEfficiencyRating: number;
 
   dwellingType: string;
-  estimatedEnergyCost: string;
 
-  heatDemand: SgHeatDemand;
+  estimatedEnergyCost: string; // numeric string e.g. "917.00"
+
+  heatDemand: SgSapHeatDemand;
 
   heatingCostCurrent: string;
   heatingCostPotential: string;
@@ -66,12 +68,13 @@ export type SgDomesticRdSapEpcCertificateSummary = {
   potentialCarbonEmission: number | null;
   potentialEnergyEfficiencyBand: SgEpcBandLetter;
   potentialEnergyEfficiencyRating: number;
-  potentialEnergySaving: string;
+  potentialEnergySaving: string; // numeric string e.g. "0.00"
 
-  propertySummary: SgPropertySummaryItem[];
-  recommendedImprovements: SgRecommendedImprovement[];
+  propertySummary: SgSapPropertySummaryItem[];
 
-  lzcEnergySources: number[] | null;
+  recommendedImprovements: SgSapRecommendedImprovement[];
+
+  lzcEnergySources: number[];
 
   relatedPartyDisclosureNumber: number;
   relatedPartyDisclosureText: string | null;
@@ -94,11 +97,13 @@ export type SgDomesticRdSapEpcCertificateSummary = {
   optOut: boolean;
 
   relatedAssessments: Array<Record<string, unknown>>;
+
   supersededBy: string | null;
+
   countryName: string;
 };
 
-export type SgDomesticEpcAddress = {
+export type SgDomesticSapEpcAddress = {
   addressLine1: string;
   addressLine2: string;
   addressLine3: string;
@@ -107,32 +112,30 @@ export type SgDomesticEpcAddress = {
   postcode: string;
 };
 
-export type SgAssessor = {
+export type SgSapAssessor = {
   schemeAssessorId: string;
   companyName: string;
   contactDetails: {
-    address: string;
     email: string;
+    address: string;
     telephoneNumber: string;
   };
-
   firstName: string;
   lastName: string;
-
   registeredBy: {
     name: string;
     schemeId: number;
   };
 };
 
-export type SgHeatDemand = {
+export type SgSapHeatDemand = {
   currentSpaceHeatingDemand: number | null;
   currentWaterHeatingDemand: number | null;
 };
 
-export type SgPropertySummaryItem = {
+export type SgSapPropertySummaryItem = {
   energyEfficiencyRating: number;
   environmentalEfficiencyRating: number;
-  name: string; // e.g. "walls", "roof", "air_tightness"
+  name: string;
   description: string;
 };

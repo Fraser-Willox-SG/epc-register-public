@@ -166,7 +166,7 @@ export interface ArSummary {
   countryName?: string | null;
 
   // Optional — only if your own API injects this
-  energyBandFromRelatedCertificate?: string | null;
+  energyBandFromRelatedCertificate: string | null;
 }
 
 /**

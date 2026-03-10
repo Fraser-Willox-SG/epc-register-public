@@ -1,4 +1,4 @@
-import type { SgDomesticEpcCertificateSummary } from "@/types/sg-epc-dom-rdsap";
+import type { DomesticCertificateData } from "@/types/sg-epc-dom";
 import { bandFromScore } from "@/app/utils/epc-bands";
 import improvements from "@/app/content/rdsap/improvements.json";
 import RatingBadge from "@/app/components/certificate/RatingBadge";
@@ -22,12 +22,15 @@ const improvementLookup = improvementsJson.improvements;
 
 function toNumber(value: unknown): number | null {
   if (typeof value === "number" && Number.isFinite(value)) return value;
+
   if (typeof value === "string") {
     const trimmed = value.trim();
     if (!trimmed) return null;
+
     const n = Number(trimmed);
     return Number.isFinite(n) ? n : null;
   }
+
   return null;
 }
 
@@ -47,20 +50,17 @@ function over3Years(costPerYear: number): number {
 }
 
 function getImprovementLabel(
-  imp: SgDomesticEpcCertificateSummary["recommendedImprovements"][number],
+  imp: DomesticCertificateData["recommendedImprovements"][number],
 ): string {
-  // 1) API title (if present)
   const title =
     typeof imp.improvementTitle === "string" ? imp.improvementTitle.trim() : "";
   if (title) return title;
 
-  // 2) lookup by improvementCode
   const code =
     typeof imp.improvementCode === "string" ? imp.improvementCode.trim() : "";
   const fromLookup = code ? improvementLookup[code]?.heading : undefined;
   if (fromLookup) return fromLookup;
 
-  // 3) API description (if present)
   const desc =
     typeof imp.improvementDescription === "string"
       ? imp.improvementDescription.trim()
@@ -73,9 +73,8 @@ function getImprovementLabel(
 export default function CostsAndRecommendationsTable({
   data,
 }: {
-  data: SgDomesticEpcCertificateSummary;
+  data: DomesticCertificateData;
 }) {
-  // Costs appear to be yearly strings in the sample; certificate wants "over 3 years"
   const heatingCurrent = toNumber(data.heatingCostCurrent);
   const heatingPotential = toNumber(data.heatingCostPotential);
 
@@ -105,6 +104,8 @@ export default function CostsAndRecommendationsTable({
   const improvementsRows = data.recommendedImprovements
     .slice()
     .sort((a, b) => a.sequence - b.sequence);
+
+  const hasImprovements = improvementsRows.length > 0;
 
   return (
     <section
@@ -229,134 +230,139 @@ export default function CostsAndRecommendationsTable({
 
       <div className="cert-section bg-blue print-no-break">
         <h3>Recommendations for improvement</h3>
-        <p>
-          The measures below will improve the energy and environmental
-          performance of this dwelling. The performance ratings after
-          improvements listed below are cumulative; that is, they assume the
-          improvements have been installed in the order that they appear in the
-          table.
-        </p>
-        <p>
-          Before carrying out work, make sure that the appropriate permissions
-          are obtained, where necessary. This may include permission from a
-          landlord (if you are a tenant) or the need to get a Building Warrant
-          for certain types of work.
-        </p>
 
-        <table className="ds_table">
-          <thead>
-            <tr>
-              <th scope="col">Recommended measures</th>
-              <th scope="col">Indicative cost</th>
-              <th scope="col">Typical saving per year</th>
-              <th scope="col">Rating after improvement: Energy</th>
-              <th scope="col">Rating after improvement: Environment</th>
-            </tr>
-          </thead>
-          <tbody>
-            {improvementsRows.length === 0 ? (
-              <tr>
-                <td colSpan={5}>—</td>
-              </tr>
-            ) : (
-              improvementsRows.map((imp) => {
-                const label = getImprovementLabel(imp);
+        {hasImprovements ? (
+          <>
+            <p>
+              The measures below will improve the energy and environmental
+              performance of this dwelling. The performance ratings after
+              improvements listed below are cumulative; that is, they assume the
+              improvements have been installed in the order that they appear in
+              the table.
+            </p>
+            <p>
+              Before carrying out work, make sure that the appropriate
+              permissions are obtained, where necessary. This may include
+              permission from a landlord (if you are a tenant) or the need to
+              get a Building Warrant for certain types of work.
+            </p>
 
-                const indicativeCost =
-                  typeof imp.indicativeCost === "string" &&
-                  imp.indicativeCost.trim()
-                    ? imp.indicativeCost.trim()
-                    : null;
+            <table className="ds_table">
+              <thead>
+                <tr>
+                  <th scope="col">Recommended measures</th>
+                  <th scope="col">Indicative cost</th>
+                  <th scope="col">Typical saving per year</th>
+                  <th scope="col">Rating after improvement: Energy</th>
+                  <th scope="col">Rating after improvement: Environment</th>
+                </tr>
+              </thead>
+              <tbody>
+                {improvementsRows.map((imp) => {
+                  const label = getImprovementLabel(imp);
 
-                const typicalSaving = toNumber(imp.typicalSaving);
+                  const indicativeCost =
+                    typeof imp.indicativeCost === "string" &&
+                    imp.indicativeCost.trim()
+                      ? imp.indicativeCost.trim()
+                      : null;
 
-                const energyScore = toNumber(
-                  imp.energyPerformanceRatingImprovement,
-                );
-                const envScore = toNumber(
-                  imp.environmentalImpactRatingImprovement,
-                );
+                  const typicalSaving = toNumber(imp.typicalSaving);
 
-                const energyBand =
-                  typeof imp.energyPerformanceBandImprovement === "string" &&
-                  imp.energyPerformanceBandImprovement.trim()
-                    ? imp.energyPerformanceBandImprovement.trim().toUpperCase()
-                    : null;
+                  const energyScore = toNumber(
+                    imp.energyPerformanceRatingImprovement,
+                  );
+                  const envScore = toNumber(
+                    imp.environmentalImpactRatingImprovement,
+                  );
 
-                const envBand =
-                  envScore != null ? bandFromScore(envScore) : null;
+                  const energyBand =
+                    typeof imp.energyPerformanceBandImprovement === "string" &&
+                    imp.energyPerformanceBandImprovement.trim()
+                      ? imp.energyPerformanceBandImprovement
+                          .trim()
+                          .toUpperCase()
+                      : null;
 
-                return (
-                  <tr
-                    key={`${imp.sequence}-${imp.improvementCode ?? "no-code"}`}
-                  >
-                    <td>
-                      {imp.sequence}. {label}
-                    </td>
+                  const envBand =
+                    envScore != null ? bandFromScore(envScore) : null;
 
-                    <td>{indicativeCost ?? <MissingData />}</td>
+                  return (
+                    <tr
+                      key={`${imp.sequence}-${imp.improvementCode ?? "no-code"}`}
+                    >
+                      <td>
+                        {imp.sequence}. {label}
+                      </td>
 
-                    <td>
-                      {typicalSaving != null ? (
-                        formatPounds2dp(typicalSaving)
-                      ) : (
-                        <MissingData />
-                      )}
-                    </td>
+                      <td>{indicativeCost ?? <MissingData />}</td>
 
-                    <td>
-                      <span className="content-center">
-                        {energyBand && energyScore != null ? (
-                          <RatingBadge
-                            variant="energy"
-                            band={energyBand}
-                            score={energyScore}
-                          />
+                      <td>
+                        {typicalSaving != null ? (
+                          formatPounds2dp(typicalSaving)
                         ) : (
                           <MissingData />
                         )}
-                      </span>
-                    </td>
+                      </td>
 
-                    <td>
-                      <span className="content-center">
-                        {envBand && envScore != null ? (
-                          <RatingBadge
-                            variant="environment"
-                            band={envBand}
-                            score={envScore}
-                          />
-                        ) : (
-                          <MissingData />
-                        )}
-                      </span>
-                    </td>
-                  </tr>
-                );
-              })
-            )}
-          </tbody>
-        </table>
+                      <td>
+                        <span className="content-center">
+                          {energyBand && energyScore != null ? (
+                            <RatingBadge
+                              variant="energy"
+                              band={energyBand}
+                              score={energyScore}
+                            />
+                          ) : (
+                            <MissingData />
+                          )}
+                        </span>
+                      </td>
+
+                      <td>
+                        <span className="content-center">
+                          {envBand && envScore != null ? (
+                            <RatingBadge
+                              variant="environment"
+                              band={envBand}
+                              score={envScore}
+                            />
+                          ) : (
+                            <MissingData />
+                          )}
+                        </span>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </>
+        ) : (
+          <p>None</p>
+        )}
       </div>
 
-      <div className="cert-section bg-grey print-no-break">
-        <h3>Choosing the right improvement package</h3>
-        <p>
-          For free and impartial advice on choosing suitable measures for your
-          property, contact the Home Energy Scotland hotline on{" "}
-          <a className="ds_link" href="tel:08088082282">
-            0808 808 2282
-          </a>{" "}
-          or go to{" "}
-          <a
-            href="http://greenerscotland.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            greenerscotland.org
-          </a>
-        </p>
-      </div>
+      {hasImprovements && (
+        <div className="cert-section bg-grey print-no-break">
+          <h3>Choosing the right improvement package</h3>
+          <p>
+            For free and impartial advice on choosing suitable measures for your
+            property, contact the Home Energy Scotland hotline on{" "}
+            <a className="ds_link" href="tel:08088082282">
+              0808 808 2282
+            </a>{" "}
+            or go to{" "}
+            <a
+              href="http://greenerscotland.org"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              greenerscotland.org
+            </a>
+          </p>
+        </div>
+      )}
     </section>
   );
 }
