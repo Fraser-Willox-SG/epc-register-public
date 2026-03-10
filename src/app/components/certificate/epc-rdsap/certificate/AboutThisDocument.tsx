@@ -1,4 +1,4 @@
-import type { SgDomesticEpcCertificateSummary } from "@/types/sg-epc-dom-rdsap";
+import type { DomesticCertificateData } from "@/types/sg-epc-dom";
 import MissingData from "@/app/components/MissingData";
 
 function formatAssessorName(
@@ -12,7 +12,7 @@ function formatAssessorName(
 export default function AboutThisDocument({
   data,
 }: {
-  data: SgDomesticEpcCertificateSummary;
+  data: DomesticCertificateData;
 }) {
   const assessorName = formatAssessorName(
     data.assessor.firstName,
