@@ -1,9 +1,14 @@
 import Link from "next/link";
 import { formatAddress } from "@/lib/format";
+import { formatIsoDateLong } from "../utils/date";
+import RatingBadge from "./certificate/RatingBadge";
 
 export type AssessmentRow = {
   assessmentId: string;
   status?: "ENTERED" | "EXPIRED" | string;
+  currentEnergyEfficiencyRating?: number | null;
+  currentEnergyEfficiencyBand?: string | null;
+  dateOfExpiry?: string | null;
   addressLine1?: string | null;
   addressLine2?: string | null;
   addressLine3?: string | null;
@@ -25,6 +30,7 @@ type Props = {
   certificateHref: (assessmentId: string) => string;
   /** Optional table caption (visually hidden) */
   caption?: string;
+  ratingVariant: "energy" | "environment";
 };
 
 function makePageHref(resultsPath: string, postcode: string, page: number) {
@@ -41,8 +47,8 @@ export default function EpcResultsTable({
   pageSize = 5,
   resultsPath,
   certificateHref,
-}: //   caption = `EPC addresses for ${postcode.toUpperCase()}`,
-Props) {
+  ratingVariant,
+}: Props) {
   const total = rows.length;
   const totalPages = Math.max(1, Math.ceil(total / pageSize));
   const safePage = Math.min(Math.max(page || 1, 1), totalPages);
@@ -67,7 +73,6 @@ Props) {
         style={{ marginTop: "1rem", marginBottom: "1rem" }}
       >
         <ul className="ds_pagination__list">
-          {/* Previous */}
           <li className="ds_pagination__item">
             {safePage > 1 ? (
               <Link
@@ -83,7 +88,6 @@ Props) {
             )}
           </li>
 
-          {/* First + ellipsis */}
           {showFirst && (
             <>
               <li className="ds_pagination__item">
@@ -104,7 +108,6 @@ Props) {
             </>
           )}
 
-          {/* Window */}
           {windowPages.map((p) => (
             <li key={p} className="ds_pagination__item">
               {p === safePage ? (
@@ -125,7 +128,6 @@ Props) {
             </li>
           ))}
 
-          {/* Ellipsis + Last */}
           {showLast && (
             <>
               {to < totalPages - 1 && (
@@ -146,7 +148,6 @@ Props) {
             </>
           )}
 
-          {/* Next */}
           <li className="ds_pagination__item">
             {safePage < totalPages ? (
               <Link
@@ -184,17 +185,21 @@ Props) {
       </p>
 
       <table className="ds_table">
-        {/* <caption className="ds_visually-hidden">{caption}</caption> */}
         <thead>
           <tr>
             <th scope="col">Property address</th>
-            <th scope="col">RRN</th>
-            <th scope="col">View EPC certificate</th>
+            <th scope="col" className="table-cell-center">
+              Energy rating
+            </th>
+            <th scope="col" className="table-cell-center">
+              Valid Until
+            </th>
           </tr>
         </thead>
         <tbody>
           {pageRows.map((r) => {
             const isExpired = r.status === "EXPIRED";
+
             return (
               <tr
                 key={r.assessmentId}
@@ -202,29 +207,36 @@ Props) {
               >
                 <td>
                   <div>
-                    {formatAddress({
-                      addressLine1: r.addressLine1 ?? undefined,
-                      addressLine2: r.addressLine2 ?? undefined,
-                      addressLine3: r.addressLine3 ?? undefined,
-                      addressLine4: r.addressLine4 ?? undefined,
-                      town: r.town ?? undefined,
-                      postcode: r.postcode ?? undefined,
-                    })}
+                    <Link
+                      href={certificateHref(r.assessmentId)}
+                      className="ds_link"
+                    >
+                      {formatAddress({
+                        addressLine1: r.addressLine1 ?? undefined,
+                        addressLine2: r.addressLine2 ?? undefined,
+                        addressLine3: r.addressLine3 ?? undefined,
+                        addressLine4: r.addressLine4 ?? undefined,
+                        town: r.town ?? undefined,
+                        postcode: r.postcode ?? undefined,
+                      })}
+                    </Link>
                   </div>
                   {isExpired && (
                     <div className="ds_hint-text">Expired certificate</div>
                   )}
                 </td>
-                <td>
-                  <code>{r.assessmentId}</code>
+                <td className="table-cell-center">
+                  <div className="content-center">
+                    <RatingBadge
+                      variant={ratingVariant}
+                      band={r.currentEnergyEfficiencyBand?.toUpperCase()}
+                      score={r.currentEnergyEfficiencyRating}
+                      aria-hidden="true"
+                    />
+                  </div>
                 </td>
-                <td>
-                  <Link
-                    href={certificateHref(r.assessmentId)}
-                    className="ds_link"
-                  >
-                    View EPC
-                  </Link>
+                <td className="table-cell-center">
+                  {r.dateOfExpiry ? formatIsoDateLong(r.dateOfExpiry) : "—"}
                 </td>
               </tr>
             );

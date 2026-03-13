@@ -41,14 +41,14 @@ export default function NonDomesticSearchPage() {
     if (mode === "postcode") {
       const pc = normalizePostcode(postcode);
       if (!isValidUKPostcode(pc)) {
-        setError("Enter a valid UK postcode, for example EC2Y 5AS.");
+        setError("Enter a valid UK postcode, for example AB15 9SX.");
         return;
       }
       router.push(`/non-domestic/results?postcode=${encodeURIComponent(pc)}`);
     } else {
       if (!isValidRRN(rrn)) {
         setError(
-          "Enter a valid Report Reference Number (RRN). Example: 1234-5678-9012-3456-7890."
+          "Enter a valid Report Reference Number (RRN). Example: 1234-5678-9012-3456-7890.",
         );
         return;
       }
@@ -78,7 +78,7 @@ export default function NonDomesticSearchPage() {
               id="search-by-postcode"
               name={groupName}
               label="Postcode"
-              hintText="Example: EC2Y 5AS"
+              hintText="Example: AB15 9SX"
               checked={mode === "postcode"}
             />
             <RadioButton
