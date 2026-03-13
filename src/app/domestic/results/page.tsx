@@ -37,9 +37,9 @@ export default async function DomesticResultsPage({
   let error: string | null = null;
 
   const apiUrl = selfUrl(
-    `/api/ukg/search?postcode=${encodeURIComponent(
-      postcode
-    )}&assessmentTypes=RdSAP,SAP`
+    `/api/sg/assessments/search?postcode=${encodeURIComponent(
+      postcode,
+    )}&assessmentTypes=RdSAP,SAP`,
   );
 
   try {
@@ -97,6 +97,7 @@ export default async function DomesticResultsPage({
           certificateHref={(rrn) =>
             `/domestic/certificate/${encodeURIComponent(rrn)}`
           }
+          ratingVariant="energy"
         />
       )}
     </div>

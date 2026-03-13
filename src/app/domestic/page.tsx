@@ -48,7 +48,7 @@ export default function DomesticSearchPage() {
     } else {
       if (!isValidRRN(rrn)) {
         setError(
-          "Enter a valid Report Reference Number (RRN). Example: 1234-5678-9012-3456-7890."
+          "Enter a valid Report Reference Number (RRN). Example: 1234-5678-9012-3456-7890.",
         );
         return;
       }
@@ -78,7 +78,7 @@ export default function DomesticSearchPage() {
               id="search-by-postcode"
               name={groupName}
               label="Postcode"
-              hintText="Example: DA8 1FD"
+              hintText="Example: G60 5JD"
               checked={mode === "postcode"}
             />
             <RadioButton

@@ -42,26 +42,26 @@ export default function AdvisoryReportPage() {
     if (mode === "postcode") {
       const pc = normalizePostcode(postcode);
       if (!isValidUKPostcode(pc)) {
-        setError("Enter a valid UK postcode, for example AL10 0BQ.");
+        setError("Enter a valid UK postcode, for example ML4 1HT.");
         return;
       }
       router.push(
         `/display-energy-certificate-and-advisory-report/results?postcode=${encodeURIComponent(
-          pc
-        )}`
+          pc,
+        )}`,
       );
     } else {
       if (!isValidRRN(rrn)) {
         setError(
-          "Enter a valid Report Reference Number (RRN). Example: 1234-5678-9012-3456-7890."
+          "Enter a valid Report Reference Number (RRN). Example: 1234-5678-9012-3456-7890.",
         );
         return;
       }
       const id = normalizeRRN(rrn);
       router.push(
         `/display-energy-certificate-and-advisory-report/certificate/${encodeURIComponent(
-          id
-        )}`
+          id,
+        )}`,
       );
     }
   };
@@ -89,7 +89,7 @@ export default function AdvisoryReportPage() {
               id="search-by-postcode"
               name={groupName}
               label="Postcode"
-              hintText="Example: AL10 0BQ"
+              hintText="Example: ML4 1HT"
               checked={mode === "postcode"}
             />
             <RadioButton

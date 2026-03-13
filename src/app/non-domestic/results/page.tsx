@@ -37,9 +37,9 @@ export default async function DomesticResultsPage({
   let error: string | null = null;
 
   const apiUrl = selfUrl(
-    `/api/ukg/search?postcode=${encodeURIComponent(
-      postcode
-    )}&assessmentTypes=CEPC,CEPC-RR`
+    `/api/sg/assessments/search?postcode=${encodeURIComponent(
+      postcode,
+    )}&assessmentTypes=CEPC,CEPC-RR`,
   );
 
   try {
@@ -97,6 +97,7 @@ export default async function DomesticResultsPage({
           certificateHref={(rrn) =>
             `/non-domestic/certificate/${encodeURIComponent(rrn)}`
           }
+          ratingVariant="environment"
         />
       )}
     </div>

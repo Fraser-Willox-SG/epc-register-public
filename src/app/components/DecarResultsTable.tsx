@@ -1,12 +1,16 @@
 import Link from "next/link";
+import RatingBadge from "./certificate/RatingBadge";
 
 export type AssessmentRow = {
   assessmentId: string; // RRN
   typeOfAssessment: "DEC" | "DEC-AR" | string;
   dateOfRegistration?: string | null;
   dateOfAssessment?: string | null;
+  dateOfExpiry?: string | null;
   createdAt?: string | null;
-  addressId?: string | null; // may be UPRN-... or RRN-...
+  currentEnergyEfficiencyRating?: number | null;
+  currentEnergyEfficiencyBand?: string | null;
+  addressId?: string | null;
   addressLine1?: string | null;
   addressLine2?: string | null;
   addressLine3?: string | null;
@@ -32,21 +36,8 @@ function makePageHref(resultsPath: string, postcode: string, page: number) {
   return `${resultsPath}?${p.toString()}`;
 }
 
-function asDateStr(d?: string | null) {
-  if (!d) return "";
-  const ms = Date.parse(d);
-  if (Number.isNaN(ms)) return "";
-  return new Date(ms).toLocaleDateString("en-GB");
-}
-
 function bestDate(r?: AssessmentRow) {
   return r?.dateOfRegistration || r?.dateOfAssessment || r?.createdAt || null;
-}
-
-function parseUprn(addressId?: string | null) {
-  if (!addressId) return undefined;
-  const m = /^UPRN-(\d+)/i.exec(addressId);
-  return m ? m[1] : undefined;
 }
 
 function joinNonEmpty(parts: (string | undefined | null)[], sep = ", ") {
@@ -59,14 +50,11 @@ function joinNonEmpty(parts: (string | undefined | null)[], sep = ", ") {
 type Grouped = {
   key: string;
   address: string;
-  uprn?: string;
   dec?: AssessmentRow;
   ar?: AssessmentRow;
-  createdDate?: string | null;
 };
 
 function groupByProperty(rows: AssessmentRow[]): Grouped[] {
-  // Key by "addressLine1|postcode" as a stable fallback
   const map = new Map<string, Grouped>();
 
   const pickNewest = (a?: AssessmentRow, b?: AssessmentRow) => {
@@ -92,43 +80,36 @@ function groupByProperty(rows: AssessmentRow[]): Grouped[] {
       ", ",
     );
 
-    const uprn = parseUprn(r.addressId);
-
     const g = map.get(key) ?? {
       key,
       address,
-      uprn,
       dec: undefined as AssessmentRow | undefined,
       ar: undefined as AssessmentRow | undefined,
-      createdDate: null as string | null,
     };
 
     if (r.typeOfAssessment === "DEC") g.dec = pickNewest(g.dec, r);
     if (r.typeOfAssessment === "DEC-AR") g.ar = pickNewest(g.ar, r);
 
-    // Track newest overall date for the row (group-level)
-    const prev = g.createdDate;
-    const current = bestDate(r);
-
-    if (!prev) {
-      g.createdDate = current;
-    } else if (current) {
-      const tp = Date.parse(prev);
-      const tc = Date.parse(current);
-      if (Number.isNaN(tp) || (!Number.isNaN(tc) && tc >= tp)) {
-        g.createdDate = current;
-      }
-    }
-
-    if (!g.uprn && uprn) g.uprn = uprn;
-
     map.set(key, g);
   }
 
-  // Sort by address asc (change to createdDate desc if preferred)
   return Array.from(map.values()).sort((a, b) =>
     a.address.localeCompare(b.address),
   );
+}
+
+function getDisplayRating(group: Grouped) {
+  const source = group.dec ?? group.ar;
+
+  return {
+    band: source?.currentEnergyEfficiencyBand?.toUpperCase(),
+    score: source?.currentEnergyEfficiencyRating,
+  };
+}
+
+function isGroupExpired(group: Grouped) {
+  const statuses = [group.dec?.status, group.ar?.status].filter(Boolean);
+  return statuses.length > 0 && statuses.every((s) => s === "EXPIRED");
 }
 
 export default function DecarResultsTable({
@@ -262,7 +243,7 @@ export default function DecarResultsTable({
     <>
       <p>
         Select a DEC to view a public building’s Energy Certificate, or select
-        an AR to view a Public building’s Advisory Report.{" "}
+        an AR to view a public building’s Advisory Report.{" "}
         <strong>{postcode.toUpperCase()}</strong>
         {total > 0 && (
           <>
@@ -281,20 +262,26 @@ export default function DecarResultsTable({
         <thead>
           <tr>
             <th scope="col">Property Address</th>
-            <th scope="col">DEC RRN</th>
-            <th scope="col">AR RRN</th>
-            <th scope="col">UPRN</th>
-            <th scope="col">Created Date</th>
-            <th scope="col">View DEC</th>
-            <th scope="col">View AR</th>
-            <th scope="col">Combined</th>
+            <th scope="col" className="table-cell-center">
+              Energy Rating
+            </th>
+            <th scope="col" className="table-cell-center">
+              View DEC
+            </th>
+            <th scope="col" className="table-cell-center">
+              View AR
+            </th>
+            <th scope="col" className="table-cell-center">
+              Combined
+            </th>
           </tr>
         </thead>
         <tbody>
           {pageRows.map((g) => {
-            const created = asDateStr(g.createdDate ?? undefined);
             const decRrn = g.dec?.assessmentId;
             const arRrn = g.ar?.assessmentId;
+            const expired = isGroupExpired(g);
+            const rating = getDisplayRating(g);
 
             const combinedHref =
               decRrn && arRrn
@@ -304,25 +291,28 @@ export default function DecarResultsTable({
                 : null;
 
             return (
-              <tr key={g.key}>
-                <td>{g.address}</td>
+              <tr
+                key={g.key}
+                className={expired ? "ds_table__row--muted" : undefined}
+              >
                 <td>
-                  {decRrn ? (
-                    <code>{decRrn}</code>
-                  ) : (
-                    <span className="ds_hint-text">—</span>
+                  <div>{g.address}</div>
+                  {expired && (
+                    <div className="ds_hint-text">Expired certificate</div>
                   )}
                 </td>
-                <td>
-                  {arRrn ? (
-                    <code>{arRrn}</code>
-                  ) : (
-                    <span className="ds_hint-text">—</span>
-                  )}
+
+                <td className="table-cell-center">
+                  <div className="content-center">
+                    <RatingBadge
+                      variant="environment"
+                      band={rating.band}
+                      score={rating.score}
+                    />
+                  </div>
                 </td>
-                <td>{g.uprn ?? <span className="ds_hint-text">—</span>}</td>
-                <td>{created || <span className="ds_hint-text">—</span>}</td>
-                <td>
+
+                <td className="table-cell-center">
                   {decRrn ? (
                     <Link href={certificateHref(decRrn)} className="ds_link">
                       View DEC
@@ -331,7 +321,8 @@ export default function DecarResultsTable({
                     <span className="ds_hint-text">—</span>
                   )}
                 </td>
-                <td>
+
+                <td className="table-cell-center">
                   {arRrn ? (
                     <Link href={certificateHref(arRrn)} className="ds_link">
                       View AR
@@ -340,10 +331,11 @@ export default function DecarResultsTable({
                     <span className="ds_hint-text">—</span>
                   )}
                 </td>
-                <td>
+
+                <td className="table-cell-center">
                   {combinedHref ? (
                     <Link href={combinedHref} className="ds_link">
-                      View combined
+                      View Combined
                     </Link>
                   ) : (
                     <span className="ds_hint-text">—</span>

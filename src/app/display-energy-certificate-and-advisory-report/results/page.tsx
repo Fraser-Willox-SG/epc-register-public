@@ -37,9 +37,9 @@ export default async function AdvisoryReportsResultsPage({
   let error: string | null = null;
 
   const apiUrl = selfUrl(
-    `/api/ukg/search?postcode=${encodeURIComponent(
+    `/api/sg/assessments/search?postcode=${encodeURIComponent(
       postcode,
-    )}&&assessmentTypes=DEC,DEC-AR`,
+    )}&assessmentTypes=DEC,DEC-AR`,
   );
 
   try {
