@@ -187,6 +187,7 @@ export default function ApResultsTable({
       </p>
 
       <table className="ds_table">
+        <caption>List of addresses with an Action Plan</caption>
         <thead>
           <tr>
             <th scope="col">Property address</th>

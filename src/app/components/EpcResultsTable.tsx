@@ -185,6 +185,7 @@ export default function EpcResultsTable({
       </p>
 
       <table className="ds_table">
+        <caption>List of addresses with an EPC</caption>
         <thead>
           <tr>
             <th scope="col">Property address</th>

@@ -259,6 +259,7 @@ export default function DecarResultsTable({
       </p>
 
       <table className="ds_table">
+        <caption>List of public building addresses</caption>
         <thead>
           <tr>
             <th scope="col">Property Address</th>

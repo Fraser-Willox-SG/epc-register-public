@@ -22,8 +22,8 @@ export default function DataExtractsPage() {
       <p>
         These extracts provide open data about domestic and non-domestic Energy
         Performance Certificates (EPCs). They are updated quarterly. A
-        publication note is included with each dataset, providing more
-        information about the data items.
+        publication note is included with each dataset giving more information
+        about the data items.
       </p>
 
       <h2 className="ds_h3">Available datasets</h2>
