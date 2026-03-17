@@ -14,7 +14,7 @@ function pageHref(
   basePath: string,
   postcode: string,
   types: string,
-  page: number
+  page: number,
 ) {
   const p = new URLSearchParams();
   p.set("postcode", postcode);
@@ -53,7 +53,7 @@ export default function AssessorResultsTable({
                   "/find-advisor/results",
                   postcode,
                   types,
-                  safePage - 1
+                  safePage - 1,
                 )}
               >
                 Previous
@@ -91,7 +91,7 @@ export default function AssessorResultsTable({
                   "/find-advisor/results",
                   postcode,
                   types,
-                  safePage + 1
+                  safePage + 1,
                 )}
               >
                 Next
@@ -124,6 +124,7 @@ export default function AssessorResultsTable({
       </p>
 
       <table className="ds_table">
+        <caption>List of assessors or advisors</caption>
         <thead>
           <tr>
             <th scope="col">Name</th>

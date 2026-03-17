@@ -41,12 +41,12 @@ function parseTypes(input: string | undefined): AdvisorType[] {
 
 async function fetchAssessors(
   postcode: string,
-  qualification: string
+  qualification: string,
 ): Promise<Assessor[]> {
   const apiUrl = selfUrl(
     `/api/ukg/assessors?postcode=${encodeURIComponent(
-      postcode
-    )}&qualification=${encodeURIComponent(qualification)}`
+      postcode,
+    )}&qualification=${encodeURIComponent(qualification)}`,
   );
 
   console.info("[FindAdvisor] GET", apiUrl);
@@ -117,7 +117,7 @@ export default async function FindAdvisorResultsPage({
   try {
     const quals = Array.from(new Set(types.flatMap(qualificationsFor)));
     const batches = await Promise.all(
-      quals.map((q) => fetchAssessors(postcode, q))
+      quals.map((q) => fetchAssessors(postcode, q)),
     );
 
     // Deduplicate by schemeAssessorId, keeping the closest distance
@@ -155,10 +155,10 @@ export default async function FindAdvisorResultsPage({
         {types
           .map((t) =>
             t === "epc"
-              ? "EPC Assessors"
+              ? "Energy Performance Certificate (EPC) Assessors"
               : t === "section63"
-              ? "Section 63 Advisors"
-              : "DEC Assessors"
+                ? "Section 63 Advisors"
+                : "Display Energy Certificate (DEC) Assessors",
           )
           .join(", ")}
       </h2>

@@ -18,13 +18,13 @@ type DSNavigationItem = {
 };
 
 const NAV_ITEMS: NavItem[] = [
-  { href: "/", label: "Energy performance certificate" },
+  { href: "/", label: "Energy Performance Certificate" },
   {
     href: "/display-energy-certificate-and-advisory-report",
-    label: "Display energy certificate / Advisory report",
+    label: "Display Energy Certificate or Advisory Report",
   },
-  { href: "/action-plan", label: "Action plan" },
-  { href: "/data-extracts", label: "Data extracts" },
+  { href: "/action-plan", label: "Action Plan" },
+  { href: "/data-extracts", label: "Data Extracts" },
   { href: "/find-advisor", label: "Find an assessor or advisor" },
 ];
 
@@ -46,7 +46,7 @@ export default function AppHeader() {
       href,
       title: label,
       current,
-    })
+    }),
   );
 
   // 🔒 Derive the exact function type required by the DS component

@@ -8,30 +8,38 @@ import Question from "@scottish-government/designsystem-react/dist/components/Qu
 import RadioGroup from "@scottish-government/designsystem-react/dist/components/RadioButton/RadioGroup";
 import RadioButton from "@scottish-government/designsystem-react/dist/components/RadioButton/RadioButton";
 
-type PropertyType = "domestic" | "non-domestic" | "";
+type PropertyType = "domestic" | "non-domestic";
 
 export default function EPCPage() {
   const router = useRouter();
   const groupName = "property-type";
-  const [selection, setSelection] = useState<PropertyType>("");
+
+  // Default to "domestic"
+  const [selection, setSelection] = useState<PropertyType>("domestic");
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.id === "domestic-property-radio") setSelection("domestic");
-    if (e.target.id === "non-domestic-property-radio")
+    if (e.target.id === "domestic-property-radio") {
+      setSelection("domestic");
+    }
+    if (e.target.id === "non-domestic-property-radio") {
       setSelection("non-domestic");
+    }
   };
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (!selection) return;
-    if (selection === "domestic") router.push("/domestic");
-    else router.push("/non-domestic"); // create this route when you’re ready
+
+    if (selection === "domestic") {
+      router.push("/domestic");
+    } else {
+      router.push("/non-domestic");
+    }
   };
 
   return (
     <div className="ds_wrapper">
       <div className="ds_page-header">
-        <h1>Energy Performance Certificate</h1>
+        <h1>Energy Performance Certificate (EPC)</h1>
       </div>
 
       <h2 className="ds_h3">Property type</h2>
@@ -63,9 +71,7 @@ export default function EPCPage() {
           </RadioGroup>
         </Question>
 
-        <Button type="submit" disabled={!selection}>
-          Continue
-        </Button>
+        <Button type="submit">Continue</Button>
       </form>
     </div>
   );

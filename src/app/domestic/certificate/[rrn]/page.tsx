@@ -84,7 +84,14 @@ export default async function DomesticCertificatePage({
   }
 
   const addressSummary = data
-    ? [data.address.addressLine1, data.address.town, data.address.postcode]
+    ? [
+        data.address.addressLine1,
+        data.address.addressLine2,
+        data.address.addressLine3,
+        data.address.addressLine4,
+        data.address.town,
+        data.address.postcode,
+      ]
         .filter(Boolean)
         .join(", ")
     : "";
@@ -92,7 +99,7 @@ export default async function DomesticCertificatePage({
   return (
     <div className="ds_wrapper">
       <div className="ds_page-header no-print">
-        <h1>Energy Performance Certificate</h1>
+        <h1>Energy Performance Certificate (EPC)</h1>
 
         {data && (
           <div className="sgds-header-row">

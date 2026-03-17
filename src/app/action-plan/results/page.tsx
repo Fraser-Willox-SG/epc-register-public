@@ -24,7 +24,7 @@ export default async function ActionPlanResultsPage({
         <p className="ds_error-message">Postcode is required.</p>
 
         <p className="ds_mt-4">
-          <Link href="/domestic" className="ds_link">
+          <Link href="/action-plan" className="ds_link">
             Back to search
           </Link>
         </p>
@@ -36,12 +36,15 @@ export default async function ActionPlanResultsPage({
   let error: string | null = null;
 
   const apiUrl = selfUrl(
-    `/api/action-plan/search?postcode=${encodeURIComponent(postcode)}`
+    `/api/sg/assessments/search?postcode=${encodeURIComponent(
+      postcode,
+    )}&assessmentTypes=CS63`,
   );
 
   try {
     const res = await fetch(apiUrl, { cache: "no-store" });
     const text = await res.text();
+
     if (!res.ok) {
       error = `There was a problem retrieving results for ${postcode.toUpperCase()}.`;
     } else {
@@ -56,6 +59,8 @@ export default async function ActionPlanResultsPage({
 
   const page = Math.max(parseInt(rawPage ?? "1", 10) || 1, 1);
 
+  console.log("ActionPlan rows=", rows);
+
   return (
     <div className="ds_wrapper">
       <div className="ds_page-header">
@@ -68,7 +73,7 @@ export default async function ActionPlanResultsPage({
         <>
           <p className="ds_error-message">{error}</p>
           <p className="ds_mt-4">
-            <Link href="/domestic" className="ds_link">
+            <Link href="/action-plan" className="ds_link">
               Back to search
             </Link>
           </p>
@@ -79,7 +84,7 @@ export default async function ActionPlanResultsPage({
             <p>No results found for {postcode.toUpperCase()}.</p>
           </div>
           <p className="ds_mt-4">
-            <Link href="/domestic" className="ds_link">
+            <Link href="/action-plan" className="ds_link">
               Back to search
             </Link>
           </p>
@@ -94,7 +99,9 @@ export default async function ActionPlanResultsPage({
           certificateHref={(rrn) =>
             `/action-plan/certificate/${encodeURIComponent(rrn)}`
           }
-          epcHref={(rrn) => `/domestic/certificate/${encodeURIComponent(rrn)}`}
+          // epcHref={(rrn) =>
+          //   `/non-domestic/certificate/${encodeURIComponent(rrn)}`
+          // }
         />
       )}
     </div>

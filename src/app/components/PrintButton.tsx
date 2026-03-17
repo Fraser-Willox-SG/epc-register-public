@@ -9,7 +9,7 @@ export default function PrintButton({
 }) {
   return (
     <Button type="button" className={className} onClick={() => window.print()}>
-      Download / Print
+      Download or Print
     </Button>
   );
 }

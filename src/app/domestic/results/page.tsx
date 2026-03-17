@@ -18,7 +18,7 @@ export default async function DomesticResultsPage({
     return (
       <div className="ds_wrapper">
         <div className="ds_page-header">
-          <h1>Energy Performance Certificate</h1>
+          <h1>Energy Performance Certificate (EPC)</h1>
         </div>
 
         <h2 className="ds_h3">Postcode addresses</h2>
@@ -62,7 +62,7 @@ export default async function DomesticResultsPage({
   return (
     <div className="ds_wrapper">
       <div className="ds_page-header">
-        <h1>Energy Performance Certificate</h1>
+        <h1>Energy Performance Certificate (EPC)</h1>
       </div>
 
       <h2 className="ds_h3">Postcode addresses</h2>

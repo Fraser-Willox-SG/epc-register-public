@@ -42,7 +42,7 @@ export default function AdvisoryReportPage() {
     if (mode === "postcode") {
       const pc = normalizePostcode(postcode);
       if (!isValidUKPostcode(pc)) {
-        setError("Enter a valid UK postcode, for example ML4 1HT.");
+        setError("Enter a valid UK postcode, for example ML5 4TF.");
         return;
       }
       router.push(
@@ -69,16 +69,14 @@ export default function AdvisoryReportPage() {
   return (
     <div className="ds_wrapper">
       <div className="ds_page-header">
-        <h1>Display Energy Certificate / Advisory Report</h1>
+        <h1>Display Energy Certificate or Advisory Report</h1>
       </div>
 
-      <h2 className="ds_h3">
-        Energy Usage and efficiency advice for Public Buildings
-      </h2>
+      <h2 className="ds_h3">Energy usage for public buildings</h2>
       <p>
         {" "}
-        Search by postcode or RRN to get a Display Energy Certificate or its
-        associated Advisory Report.
+        Search by postcode or RRN to get a Display Energy Certificate (DEC) or
+        its associated Advisory Report (AR).
       </p>
 
       <form onSubmit={onSubmit} noValidate>
@@ -89,7 +87,7 @@ export default function AdvisoryReportPage() {
               id="search-by-postcode"
               name={groupName}
               label="Postcode"
-              hintText="Example: ML4 1HT"
+              hintText="Example: ML5 4TF"
               checked={mode === "postcode"}
             />
             <RadioButton
