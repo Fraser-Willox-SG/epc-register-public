@@ -34,7 +34,7 @@ export async function GET(req: Request) {
   if (!rawPostcode) {
     return NextResponse.json(
       { error: "bad_request", message: "postcode required" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -55,12 +55,7 @@ export async function GET(req: Request) {
       addressLine4: r.address?.addressLine4 ?? null,
       town: r.address?.town ?? null,
       postcode: r.address?.postcode ?? key,
-
-      // ✅ pass through to table
-      epcRrn: r.epcRrn ?? null,
-      assessmentDate: r.assessmentDate ?? null,
-      uprn: r.uprn ?? null,
-    })
+    }),
   );
 
   return NextResponse.json({ data: { assessments } }, { status: 200 });
