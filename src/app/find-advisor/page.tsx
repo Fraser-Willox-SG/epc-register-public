@@ -42,7 +42,7 @@ export default function FindAdvisorPage() {
     }
 
     const selected = (Object.keys(types) as AdvisorType[]).filter(
-      (k) => types[k]
+      (k) => types[k],
     );
     if (selected.length === 0) {
       setTypeError("Select at least one option.");
@@ -61,7 +61,6 @@ export default function FindAdvisorPage() {
         <h1>Find an assessor or advisor</h1>
       </div>
 
-      <h2 className="ds_h3">Search for an assessor or advisor</h2>
       <p>
         Enter the postcode and choose the type(s) of assessor or advisor to view
         results in the area.
@@ -76,19 +75,22 @@ export default function FindAdvisorPage() {
           <CheckboxGroup>
             <Checkbox
               id="epc"
-              label="EPC Assessor"
+              label="Energy Performance Certificate (EPC) Assessor"
+              hintText="To help you get an EPC for your building"
               checked={types.epc}
               onChange={() => onCheckboxChange("epc")}
             />
             <Checkbox
               id="section63"
               label="Section 63 Advisor"
+              hintText="To help you comply with teh requirements of section 63 of The Climate Change(Scotland) Act 2009"
               checked={types.section63}
               onChange={() => onCheckboxChange("section63")}
             />
             <Checkbox
               id="dec"
-              label="DEC Assessor"
+              label="Display Energy Certificate (DEC) Assessor"
+              hintText="To help you get a Display Energy Certificate"
               checked={types.dec}
               onChange={() => onCheckboxChange("dec")}
             />
@@ -100,7 +102,7 @@ export default function FindAdvisorPage() {
         <TextInput
           id="postcode"
           label="Postcode"
-          hintText="For example, DA8 1FD"
+          hintText="Example: DA8 1FD"
           width="fixed-20"
           autoComplete="postal-code"
           value={postcode}

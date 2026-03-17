@@ -8,7 +8,7 @@ export default function DataExtractsPage() {
       </div>
 
       <p>
-        Data Extracts are published on{" "}
+        Data extracts are published on{" "}
         <a
           href="https://statistics.gov.scot/home"
           target="_blank"
@@ -20,9 +20,10 @@ export default function DataExtractsPage() {
       </p>
 
       <p>
-        These extracts provide open data about domestic and non-domestic EPCs.
-        They are updated quarterly. A publication note is included with each
-        dataset, describing the data items and methodology.
+        These extracts provide open data about domestic and non-domestic Energy
+        Performance Certificates (EPCs). They are updated quarterly. A
+        publication note is included with each dataset, providing more
+        information about the data items.
       </p>
 
       <h2 className="ds_h3">Available datasets</h2>

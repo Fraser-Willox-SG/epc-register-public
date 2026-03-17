@@ -4,18 +4,24 @@ import { formatIsoDateLong } from "../utils/date";
 
 export type ActionPlanRow = {
   assessmentId: string;
-  status?: "ENTERED" | "EXPIRED" | string;
+  typeOfAssessment?: "CS63" | string;
+  status?: "ENTERED" | "EXPIRED" | "CANCELLED" | string;
 
+  dateOfAssessment?: string | null;
+  dateOfExpiry?: string | null;
+  dateOfRegistration?: string | null;
+  createdAt?: string | null;
+
+  currentEnergyEfficiencyRating?: number | null;
+  currentEnergyEfficiencyBand?: string | null;
+
+  addressId?: string | null;
   addressLine1?: string | null;
   addressLine2?: string | null;
   addressLine3?: string | null;
   addressLine4?: string | null;
   town?: string | null;
   postcode?: string | null;
-
-  epcRrn?: string | null;
-  assessmentDate?: string | null;
-  uprn?: string | null;
 };
 
 type Props = {
@@ -27,7 +33,6 @@ type Props = {
   resultsPath: string;
   /** Build certificate link for a row */
   certificateHref: (assessmentId: string) => string;
-  epcHref?: (epcRrn: string) => string;
   caption?: string;
 };
 
@@ -38,13 +43,6 @@ function makePageHref(resultsPath: string, postcode: string, page: number) {
   return `${resultsPath}?${p.toString()}`;
 }
 
-function formatStatus(status?: string) {
-  if (!status) return "—";
-  if (status === "ENTERED") return "Entered";
-  if (status === "EXPIRED") return "Expired";
-  return status;
-}
-
 export default function ApResultsTable({
   postcode,
   rows,
@@ -52,7 +50,6 @@ export default function ApResultsTable({
   pageSize = 5,
   resultsPath,
   certificateHref,
-  epcHref,
 }: Props) {
   const total = rows.length;
   const totalPages = Math.max(1, Math.ceil(total / pageSize));
@@ -174,7 +171,7 @@ export default function ApResultsTable({
   return (
     <>
       <p>
-        Select an address to view the Action Plan:{" "}
+        Choose an address to view the Action Plan:{" "}
         <strong>{postcode.toUpperCase()}</strong>
         {total > 0 && (
           <>
@@ -193,77 +190,48 @@ export default function ApResultsTable({
         <thead>
           <tr>
             <th scope="col">Property address</th>
-            <th scope="col">RRN</th>
-            <th scope="col">Status</th>
-            <th scope="col">EPC RRN</th>
-            <th scope="col">Assessment date</th>
-            <th scope="col">View Action Plan</th>
+            <th scope="col" className="table-cell-center">
+              Assessment date
+            </th>
+            <th scope="col" className="table-cell-center">
+              View Action Plan
+            </th>
           </tr>
         </thead>
         <tbody>
-          {pageRows.map((r) => {
-            const isExpired = r.status === "EXPIRED";
-            return (
-              <tr
-                key={r.assessmentId}
-                className={isExpired ? "ds_table__row--muted" : undefined}
-              >
-                <td>
-                  <div>
-                    {formatAddress({
-                      addressLine1: r.addressLine1 ?? undefined,
-                      addressLine2: r.addressLine2 ?? undefined,
-                      addressLine3: r.addressLine3 ?? undefined,
-                      addressLine4: r.addressLine4 ?? undefined,
-                      town: r.town ?? undefined,
-                      postcode: r.postcode ?? undefined,
-                    })}
-                  </div>
-                  {isExpired && <div className="ds_hint-text">Expired</div>}
-                </td>
+          {pageRows.map((r) => (
+            <tr key={r.assessmentId}>
+              <td>
+                {formatAddress({
+                  addressLine1: r.addressLine1 ?? undefined,
+                  addressLine2: r.addressLine2 ?? undefined,
+                  addressLine3: r.addressLine3 ?? undefined,
+                  addressLine4: r.addressLine4 ?? undefined,
+                  town: r.town ?? undefined,
+                  postcode: r.postcode ?? undefined,
+                })}
+              </td>
 
-                <td>
-                  <code>{r.assessmentId}</code>
-                </td>
+              <td className="table-cell-center">
+                <span style={{ whiteSpace: "nowrap" }}>
+                  {r.dateOfAssessment
+                    ? formatIsoDateLong(r.dateOfAssessment)
+                    : "—"}
+                </span>
+              </td>
 
-                <td>{formatStatus(r.status)}</td>
-
-                <td>
-                  {r.epcRrn ? (
-                    <span style={{ whiteSpace: "nowrap" }}>
-                      <Link
-                        href={epcHref ? epcHref(r.epcRrn) : "#"}
-                        className="ds_link"
-                      >
-                        View EPC
-                      </Link>
-                    </span>
-                  ) : (
-                    "—"
-                  )}
-                </td>
-
-                <td>
-                  <span style={{ whiteSpace: "nowrap" }}>
-                    {r.assessmentDate
-                      ? formatIsoDateLong(r.assessmentDate)
-                      : "—"}
-                  </span>
-                </td>
-
-                <td>
-                  <span style={{ whiteSpace: "nowrap" }}>
-                    <Link
-                      href={certificateHref(r.assessmentId)}
-                      className="ds_link"
-                    >
-                      View Action Plan
-                    </Link>
-                  </span>
-                </td>
-              </tr>
-            );
-          })}
+              <td className="table-cell-center">
+                <span style={{ whiteSpace: "nowrap" }}>
+                  <Link
+                    href={certificateHref(r.assessmentId)}
+                    className="ds_link"
+                  >
+                    View Action Plan
+                  </Link>
+                </span>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
 

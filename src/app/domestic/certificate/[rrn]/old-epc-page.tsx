@@ -95,7 +95,7 @@ export default async function DomesticCertificatePage({
   const { rrn } = params;
 
   const apiUrl = await absoluteUrl(
-    `/api/ukg/assessments/${encodeURIComponent(rrn)}/summary`
+    `/api/ukg/assessments/${encodeURIComponent(rrn)}/summary`,
   );
 
   let data: Summary["data"] | null = null;
@@ -122,7 +122,7 @@ export default async function DomesticCertificatePage({
   return (
     <div className="ds_wrapper">
       <div className="ds_page-header">
-        <h1>Energy Performance Certificate</h1>
+        <h1>Energy Performance Certificate (EPC)</h1>
         <div className="sgds-header-row">
           <p className="ds_lede ds_!_margin-0">
             {[data?.addressLine1, data?.town, data?.postcode]

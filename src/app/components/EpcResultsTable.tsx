@@ -169,7 +169,7 @@ export default function EpcResultsTable({
   return (
     <>
       <p>
-        Select an address to view the EPC:{" "}
+        Choose an address to view the EPC:{" "}
         <strong>{postcode.toUpperCase()}</strong>
         {total > 0 && (
           <>

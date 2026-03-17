@@ -27,11 +27,19 @@ export default function ActionPlanPage() {
   const router = useRouter();
   const groupName = "search-mode";
 
+  const activeErrorId = mode === "postcode" ? "postcode-error" : "rrn-error";
+
   const onRadioChange = (e: ChangeEvent<HTMLInputElement>) => {
     const id = e.target.id;
     setError(null);
-    if (id === "search-by-postcode") setMode("postcode");
-    if (id === "search-by-rrn") setMode("rrn");
+
+    if (id === "search-by-postcode") {
+      setMode("postcode");
+    }
+
+    if (id === "search-by-rrn") {
+      setMode("rrn");
+    }
   };
 
   const onSubmit = (e: FormEvent) => {
@@ -40,21 +48,25 @@ export default function ActionPlanPage() {
 
     if (mode === "postcode") {
       const pc = normalizePostcode(postcode);
+
       if (!isValidUKPostcode(pc)) {
-        setError("Enter a valid UK postcode, for example G2 1DU.");
+        setError("Enter a valid UK postcode, for example G20 7YD.");
         return;
       }
+
       router.push(`/action-plan/results?postcode=${encodeURIComponent(pc)}`);
-    } else {
-      if (!isValidRRN(rrn)) {
-        setError(
-          "Enter a valid Report Reference Number (RRN). Example: 1234-5678-9012-3456-7890."
-        );
-        return;
-      }
-      const id = normalizeRRN(rrn); // normalises and formats groups
-      router.push(`/action-plan/certificate/${encodeURIComponent(id)}`);
+      return;
     }
+
+    if (!isValidRRN(rrn)) {
+      setError(
+        "Enter a valid Report Reference Number (RRN), for example 1234-5678-9012-3456.",
+      );
+      return;
+    }
+
+    const id = normalizeRRN(rrn);
+    router.push(`/action-plan/certificate/${encodeURIComponent(id)}`);
   };
 
   return (
@@ -63,11 +75,14 @@ export default function ActionPlanPage() {
         <h1>Action Plan</h1>
       </div>
 
-      <h2 className="ds_h3">Energy Usage for Larger Commercial Buildings</h2>
+      <h2 className="ds_h3">Energy usage for larger commercial buildings</h2>
       <p>
-        For larger commercial buildings (1000m²+), this shows energy improvement
-        plans as required under Section 63 legislation. Search by postcode or
-        RRN.
+        The Action Plan sets out energy improvement plans for larger commercial
+        buildings with a floor area of more than 1000m². These are needed under
+        section 63 of The Climate Change (Scotland) Act 2009.
+        <span style={{ display: "block" }}>
+          Search by either the: postcode, or Report Reference Number (RRN).
+        </span>
       </p>
 
       <form onSubmit={onSubmit} noValidate>
@@ -77,7 +92,7 @@ export default function ActionPlanPage() {
               id="search-by-postcode"
               name={groupName}
               label="Postcode"
-              hintText="Example: G2 1DU"
+              hintText="Example: G20 7YD"
               checked={mode === "postcode"}
             />
             <RadioButton
@@ -90,35 +105,50 @@ export default function ActionPlanPage() {
           </RadioGroup>
         </Question>
 
-        {mode === "postcode" ? (
-          <TextInput
-            key="postcode"
-            id="postcode-input"
-            label="Postcode"
-            hintText="Enter a full postcode"
-            width="fixed-20"
-            value={postcode}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              setPostcode(e.target.value)
-            }
-            autoComplete="postal-code"
-          />
-        ) : (
-          <TextInput
-            key="rrn"
-            id="rrn-input"
-            label="Report Reference Number (RRN)"
-            hintText="Enter the 16-character RRN"
-            width="fixed-20"
-            value={rrn}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              setRRN(e.target.value)
-            }
-            inputMode="numeric"
-          />
-        )}
+        <div
+          className={error ? "ds_question ds_question--error" : "ds_question"}
+        >
+          {mode === "postcode" ? (
+            <TextInput
+              key="postcode"
+              id="postcode-input"
+              label="Postcode"
+              hintText="Enter a full postcode"
+              width="fixed-20"
+              value={postcode}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setPostcode(e.target.value)
+              }
+              autoComplete="postal-code"
+              aria-describedby={error ? activeErrorId : undefined}
+              className={error ? "ds_input--error" : undefined}
+            />
+          ) : (
+            <TextInput
+              key="rrn"
+              id="rrn-input"
+              label="Report Reference Number (RRN)"
+              hintText="Enter the 16-character RRN"
+              width="fixed-20"
+              value={rrn}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setRRN(e.target.value)
+              }
+              inputMode="numeric"
+              aria-describedby={error ? activeErrorId : undefined}
+              className={error ? "ds_input--error" : undefined}
+            />
+          )}
 
-        {error && <p className="ds_error-message ds_mt-2">{error}</p>}
+          {error && (
+            <p
+              id={activeErrorId}
+              className="ds_question__error-message ds_mt-1"
+            >
+              <span className="visually-hidden">Error:</span> {error}
+            </p>
+          )}
+        </div>
 
         <Button type="submit" className="ds_mt-4">
           Continue
