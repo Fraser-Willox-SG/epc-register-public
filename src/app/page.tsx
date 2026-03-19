@@ -42,11 +42,11 @@ export default function EPCPage() {
         <h1>Energy Performance Certificate (EPC)</h1>
       </div>
 
-      <h2 className="ds_h3">Property type</h2>
+      {/* <h2 className="ds_h3">Property type</h2>
       <p>
         A domestic property like a house or flat, or a non-domestic property for
         example commercial, industrial or public building.
-      </p>
+      </p> */}
 
       <form onSubmit={onSubmit} noValidate>
         <Question

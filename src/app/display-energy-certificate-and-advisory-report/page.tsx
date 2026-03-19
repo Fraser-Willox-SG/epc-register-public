@@ -42,7 +42,7 @@ export default function AdvisoryReportPage() {
     if (mode === "postcode") {
       const pc = normalizePostcode(postcode);
       if (!isValidUKPostcode(pc)) {
-        setError("Enter a valid UK postcode, for example ML5 4TF.");
+        setError("Enter a valid scottish postcode, for example ML5 4TF.");
         return;
       }
       router.push(
@@ -53,7 +53,7 @@ export default function AdvisoryReportPage() {
     } else {
       if (!isValidRRN(rrn)) {
         setError(
-          "Enter a valid Report Reference Number (RRN). Example: 1234-5678-9012-3456-7890.",
+          "Enter a valid Report Reference Number (RRN). Example: 0001-3410-0212-0899-3692.",
         );
         return;
       }
@@ -69,14 +69,14 @@ export default function AdvisoryReportPage() {
   return (
     <div className="ds_wrapper">
       <div className="ds_page-header">
-        <h1>Display Energy Certificate or Advisory Report</h1>
+        <h1>Display Energy Certificate (DEC) or Advisory Report (AR)</h1>
       </div>
 
       <h2 className="ds_h3">Energy usage for public buildings</h2>
       <p>
         {" "}
-        Search by postcode or RRN to get a Display Energy Certificate (DEC) or
-        its associated Advisory Report (AR).
+        Search by postcode or RRN to get a Display Energy Certificate or its
+        associated Advisory Report.
       </p>
 
       <form onSubmit={onSubmit} noValidate>
@@ -94,7 +94,7 @@ export default function AdvisoryReportPage() {
               id="search-by-rrn"
               name={groupName}
               label="Report Reference Number (RRN)"
-              hintText="Example: 0000-0000-0000-0749-2857"
+              hintText="Example: 0001-3410-0212-0899-3692"
               checked={mode === "rrn"}
             />
           </RadioGroup>

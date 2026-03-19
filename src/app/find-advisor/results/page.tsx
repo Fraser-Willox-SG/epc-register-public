@@ -10,21 +10,22 @@ type SearchParams = {
   page?: string;
 };
 
-/** Mapping of UI type to UKG qualifications, until SG Qualification update **/
+/** Mapping of UI type to Scottish qualifications **/
 function qualificationsFor(t: AdvisorType): string[] {
   switch (t) {
     case "epc":
-      return ["domesticRdSap"];
-    case "dec":
-      return ["nonDomesticDec"];
-    case "section63":
       return [
-        "nonDomesticNos3",
-        "nonDomesticNos4",
-        "nonDomesticNos5",
-        "nonDomesticSp3",
-        "nonDomesticCc4",
+        "scotlandRdsap",
+        "scotlandSapExistingBuilding",
+        "scotlandSapNewBuilding",
+        "scotlandNondomesticExistingBuilding ",
+
+        "scotlandNondomesticNewBuilding ",
       ];
+    case "dec":
+      return ["scotlandDecAndAr"];
+    case "section63":
+      return ["scotlandSection63"];
     default:
       return [];
   }
@@ -44,12 +45,10 @@ async function fetchAssessors(
   qualification: string,
 ): Promise<Assessor[]> {
   const apiUrl = selfUrl(
-    `/api/ukg/assessors?postcode=${encodeURIComponent(
+    `/api/sg/assessors?postcode=${encodeURIComponent(
       postcode,
     )}&qualification=${encodeURIComponent(qualification)}`,
   );
-
-  console.info("[FindAdvisor] GET", apiUrl);
 
   const res = await fetch(apiUrl, { cache: "no-store" });
   const text = await res.text();

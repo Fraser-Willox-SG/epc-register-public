@@ -50,7 +50,7 @@ export default function ActionPlanPage() {
       const pc = normalizePostcode(postcode);
 
       if (!isValidUKPostcode(pc)) {
-        setError("Enter a valid UK postcode, for example G20 7YD.");
+        setError("Enter a valid scottish postcode, for example G20 7YD.");
         return;
       }
 
@@ -60,7 +60,7 @@ export default function ActionPlanPage() {
 
     if (!isValidRRN(rrn)) {
       setError(
-        "Enter a valid Report Reference Number (RRN), for example 1234-5678-9012-3456.",
+        "Enter a valid Report Reference Number (RRN), for example 0019-1950-9933-3640-6020.",
       );
       return;
     }
@@ -78,12 +78,14 @@ export default function ActionPlanPage() {
       <h2 className="ds_h3">Energy usage for larger commercial buildings</h2>
       <p>
         The Action Plan sets out energy improvement plans for larger commercial
-        buildings with a floor area of more than 1000m². These are needed under
+        buildings with a floor area of more than 1,000m². These are needed under
         section 63 of The Climate Change (Scotland) Act 2009.
-        <span style={{ display: "block" }}>
-          Search by either the: postcode, or Report Reference Number (RRN).
-        </span>
       </p>
+      <p>Search by either the:</p>
+      <ul>
+        <li>postcode</li>
+        <li>Report Reference Number (RNN)</li>
+      </ul>
 
       <form onSubmit={onSubmit} noValidate>
         <Question legend="Find the property" tagName="fieldset">
@@ -99,7 +101,7 @@ export default function ActionPlanPage() {
               id="search-by-rrn"
               name={groupName}
               label="Report Reference Number (RRN)"
-              hintText="Example: 1234-5678-9012-3456"
+              hintText="Example: 0019-1950-9933-3640-6020"
               checked={mode === "rrn"}
             />
           </RadioGroup>

@@ -65,7 +65,7 @@ export default async function AdvisoryReportsResultsPage({
         <h1>Display Energy Certificate and Advisory Report</h1>
       </div>
 
-      <h2 className="ds_h3">Energy Usage for public buildings</h2>
+      <h2 className="ds_h3">Energy usage for public buildings</h2>
 
       {error ? (
         <>

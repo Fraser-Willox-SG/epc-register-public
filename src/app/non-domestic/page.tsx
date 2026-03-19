@@ -27,11 +27,19 @@ export default function NonDomesticSearchPage() {
   const router = useRouter();
   const groupName = "non-domestic-search-mode";
 
+  const activeErrorId = mode === "postcode" ? "postcode-error" : "rrn-error";
+
   const onRadioChange = (e: ChangeEvent<HTMLInputElement>) => {
     const id = e.target.id;
     setError(null);
-    if (id === "search-by-postcode") setMode("postcode");
-    if (id === "search-by-rrn") setMode("rrn");
+
+    if (id === "search-by-postcode") {
+      setMode("postcode");
+    }
+
+    if (id === "search-by-rrn") {
+      setMode("rrn");
+    }
   };
 
   const onSubmit = (e: FormEvent) => {
@@ -40,35 +48,39 @@ export default function NonDomesticSearchPage() {
 
     if (mode === "postcode") {
       const pc = normalizePostcode(postcode);
+
       if (!isValidUKPostcode(pc)) {
-        setError("Enter a valid UK postcode, for example AB15 9SX.");
+        setError("Enter a valid scottish postcode, for example AB15 9SX.");
         return;
       }
+
       router.push(`/non-domestic/results?postcode=${encodeURIComponent(pc)}`);
-    } else {
-      if (!isValidRRN(rrn)) {
-        setError(
-          "Enter a valid Report Reference Number (RRN). Example: 1234-5678-9012-3456-7890.",
-        );
-        return;
-      }
-      const id = normalizeRRN(rrn); // normalises and formats groups
-      router.push(`/non-domestic/certificate/${encodeURIComponent(id)}`);
+      return;
     }
+
+    if (!isValidRRN(rrn)) {
+      setError(
+        "Enter a valid Report Reference Number (RRN), for example 0014-1915-8306-2350-8000.",
+      );
+      return;
+    }
+
+    const id = normalizeRRN(rrn);
+    router.push(`/non-domestic/certificate/${encodeURIComponent(id)}`);
   };
 
   return (
     <div className="ds_wrapper">
       <div className="ds_page-header">
-        <h1>Energy Performance Certificate</h1>
+        <h1>Energy Performance Certificate (EPC)</h1>
       </div>
 
       <h2 className="ds_h3">Property search</h2>
-      <p>
-        Search to find and view a property’s Energy Performance Certificate.
-        Search with either a postcode for the property, or the specific Report
-        Reference Number (RRN).
-      </p>
+      <p>Search to find and view a property’s EPC using either:</p>
+      <ul>
+        <li>a postcode for the property</li>
+        <li>the Report Reference Number (RRN)</li>
+      </ul>
 
       <form onSubmit={onSubmit} noValidate>
         <Question legend="Find the property" tagName="fieldset">
@@ -85,41 +97,56 @@ export default function NonDomesticSearchPage() {
               id="search-by-rrn"
               name={groupName}
               label="Report Reference Number (RRN)"
-              hintText="Example: 1234-5678-9012-3456-7890"
+              hintText="Example: 0014-1915-8306-2350-8000"
               checked={mode === "rrn"}
             />
           </RadioGroup>
         </Question>
 
-        {mode === "postcode" ? (
-          <TextInput
-            key="postcode"
-            id="postcode-input"
-            label="Postcode"
-            hintText="Enter a full postcode"
-            width="fixed-20"
-            value={postcode}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              setPostcode(e.target.value)
-            }
-            autoComplete="postal-code"
-          />
-        ) : (
-          <TextInput
-            key="rrn"
-            id="rrn-input"
-            label="Report Reference Number (RRN)"
-            hintText="Enter the RRN (20 digits, with or without hyphens)"
-            width="fixed-20"
-            value={rrn}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              setRRN(e.target.value)
-            }
-            inputMode="numeric"
-          />
-        )}
+        <div
+          className={error ? "ds_question ds_question--error" : "ds_question"}
+        >
+          {mode === "postcode" ? (
+            <TextInput
+              key="postcode"
+              id="postcode-input"
+              label="Postcode"
+              hintText="Enter a full postcode"
+              width="fixed-20"
+              value={postcode}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setPostcode(e.target.value)
+              }
+              autoComplete="postal-code"
+              aria-describedby={error ? activeErrorId : undefined}
+              className={error ? "ds_input--error" : undefined}
+            />
+          ) : (
+            <TextInput
+              key="rrn"
+              id="rrn-input"
+              label="Report Reference Number (RRN)"
+              hintText="Enter the RRN (20 digits, with or without hyphens)"
+              width="fixed-20"
+              value={rrn}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setRRN(e.target.value)
+              }
+              inputMode="numeric"
+              aria-describedby={error ? activeErrorId : undefined}
+              className={error ? "ds_input--error" : undefined}
+            />
+          )}
 
-        {error && <p className="ds_error-message ds_mt-2">{error}</p>}
+          {error && (
+            <p
+              id={activeErrorId}
+              className="ds_question__error-message ds_mt-1"
+            >
+              <span className="visually-hidden">Error:</span> {error}
+            </p>
+          )}
+        </div>
 
         <Button type="submit" className="ds_mt-4">
           Continue
