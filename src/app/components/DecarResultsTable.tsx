@@ -242,7 +242,7 @@ export default function DecarResultsTable({
   return (
     <>
       <p>
-        Select a DEC to view a public building’s Energy Certificate, or select
+        Choose a DEC to view a public building’s Energy Certificate, or choose
         an AR to view a public building’s Advisory Report.{" "}
         <strong>{postcode.toUpperCase()}</strong>
         {total > 0 && (

@@ -50,7 +50,7 @@ export default function DomesticSearchPage() {
       const pc = normalizePostcode(postcode);
 
       if (!isValidUKPostcode(pc)) {
-        setError("Enter a valid UK postcode, for example G60 5JD.");
+        setError("Enter a valid scottish postcode, for example G60 5JD.");
         return;
       }
 
@@ -60,7 +60,7 @@ export default function DomesticSearchPage() {
 
     if (!isValidRRN(rrn)) {
       setError(
-        "Enter a valid Report Reference Number (RRN), for example 1234-5678-9012-3456-7890.",
+        "Enter a valid Report Reference Number (RRN), for example 0014-4522-9000-0543-1222.",
       );
       return;
     }
@@ -76,10 +76,11 @@ export default function DomesticSearchPage() {
       </div>
 
       <h2 className="ds_h3">Property search</h2>
-      <p>
-        Search to find and view a property’s EPC. Search with either a postcode
-        for the property, or the specific Report Reference Number (RRN).
-      </p>
+      <p>Search to find and view a property’s EPC using either:</p>
+      <ul>
+        <li>a postcode for the property</li>
+        <li>the Report Reference Number (RRN)</li>
+      </ul>
 
       <form onSubmit={onSubmit} noValidate>
         <Question legend="Find the property" tagName="fieldset">
@@ -96,7 +97,7 @@ export default function DomesticSearchPage() {
               id="search-by-rrn"
               name={groupName}
               label="Report Reference Number (RRN)"
-              hintText="Example: 1234-5678-9012-3456-7890"
+              hintText="Example: 0014-4522-9000-0543-1222"
               checked={mode === "rrn"}
             />
           </RadioGroup>

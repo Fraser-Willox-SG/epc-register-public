@@ -41,14 +41,14 @@ export default function NonDomesticSearchPage() {
     if (mode === "postcode") {
       const pc = normalizePostcode(postcode);
       if (!isValidUKPostcode(pc)) {
-        setError("Enter a valid UK postcode, for example AB15 9SX.");
+        setError("Enter a valid scottish postcode, for example AB15 9SX.");
         return;
       }
       router.push(`/non-domestic/results?postcode=${encodeURIComponent(pc)}`);
     } else {
       if (!isValidRRN(rrn)) {
         setError(
-          "Enter a valid Report Reference Number (RRN). Example: 1234-5678-9012-3456-7890.",
+          "Enter a valid Report Reference Number (RRN). Example: 0014-1915-8306-2350-8000.",
         );
         return;
       }
@@ -60,15 +60,22 @@ export default function NonDomesticSearchPage() {
   return (
     <div className="ds_wrapper">
       <div className="ds_page-header">
-        <h1>Energy Performance Certificate</h1>
+        <h1>Energy Performance Certificate (EPC)</h1>
       </div>
 
-      <h2 className="ds_h3">Property search</h2>
+      {/* <h2 className="ds_h3">Property search</h2>
       <p>
         Search to find and view a property’s Energy Performance Certificate.
         Search with either a postcode for the property, or the specific Report
         Reference Number (RRN).
-      </p>
+      </p> */}
+
+      <h2 className="ds_h3">Property search</h2>
+      <p>Search to find and view a property’s EPC using either:</p>
+      <ul>
+        <li>a postcode for the property</li>
+        <li>the Report Reference Number (RRN)</li>
+      </ul>
 
       <form onSubmit={onSubmit} noValidate>
         <Question legend="Find the property" tagName="fieldset">
@@ -85,7 +92,7 @@ export default function NonDomesticSearchPage() {
               id="search-by-rrn"
               name={groupName}
               label="Report Reference Number (RRN)"
-              hintText="Example: 1234-5678-9012-3456-7890"
+              hintText="Example: 0014-1915-8306-2350-8000"
               checked={mode === "rrn"}
             />
           </RadioGroup>

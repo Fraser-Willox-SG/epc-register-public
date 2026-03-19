@@ -37,7 +37,7 @@ export default function FindAdvisorPage() {
 
     const pc = normalizePostcode(postcode);
     if (!isValidUKPostcode(pc)) {
-      setError("Enter a valid UK postcode, for example DA8 1FD.");
+      setError("Enter a valid scottish postcode, for example EH1 2NG.");
       return;
     }
 
@@ -83,7 +83,7 @@ export default function FindAdvisorPage() {
             <Checkbox
               id="section63"
               label="Section 63 Advisor"
-              hintText="To help you comply with teh requirements of section 63 of The Climate Change(Scotland) Act 2009"
+              hintText="To help you comply with the requirements of section 63 of The Climate Change(Scotland) Act 2009"
               checked={types.section63}
               onChange={() => onCheckboxChange("section63")}
             />
@@ -102,7 +102,7 @@ export default function FindAdvisorPage() {
         <TextInput
           id="postcode"
           label="Postcode"
-          hintText="Example: DA8 1FD"
+          hintText="Example: EH1 2NG"
           width="fixed-20"
           autoComplete="postal-code"
           value={postcode}
