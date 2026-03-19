@@ -69,14 +69,14 @@ export default function AdvisoryReportPage() {
   return (
     <div className="ds_wrapper">
       <div className="ds_page-header">
-        <h1>Display Energy Certificate or Advisory Report</h1>
+        <h1>Display Energy Certificate (DEC) or Advisory Report (AR)</h1>
       </div>
 
       <h2 className="ds_h3">Energy usage for public buildings</h2>
       <p>
         {" "}
-        Search by postcode or RRN to get a Display Energy Certificate (DEC) or
-        its associated Advisory Report (AR).
+        Search by postcode or RRN to get a Display Energy Certificate or its
+        associated Advisory Report.
       </p>
 
       <form onSubmit={onSubmit} noValidate>

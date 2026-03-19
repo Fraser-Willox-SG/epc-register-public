@@ -242,9 +242,10 @@ export default function DecarResultsTable({
   return (
     <>
       <p>
-        Choose a DEC to view a public building’s Energy Certificate, or choose
-        an AR to view a public building’s Advisory Report.{" "}
-        <strong>{postcode.toUpperCase()}</strong>
+        Choose a &lsquo;view DEC&rsquo; to see a public building&rsquo;s Display
+        Energy Certificate, &lsquo;view AR&rsquo; to see the Advisory Report or
+        &lsquo;view combined&rsquo; to see both the DEC and AR in one document.
+        Showing results for postcode: <strong>{postcode.toUpperCase()}</strong>
         {total > 0 && (
           <>
             {" "}
