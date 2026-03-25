@@ -74,7 +74,14 @@ export default async function DecarCertificatePage({
   }
 
   const addressSummary = data
-    ? [data.address.addressLine1, data.address.town, data.address.postcode]
+    ? [
+        data.address.addressLine1,
+        data.address.addressLine2,
+        data.address.addressLine3,
+        data.address.addressLine4,
+        data.address.town,
+        data.address.postcode,
+      ]
         .filter(Boolean)
         .join(", ")
     : "";

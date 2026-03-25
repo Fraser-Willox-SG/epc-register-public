@@ -29,20 +29,18 @@ export default async function DomesticCertificatePage({
   try {
     const res = await fetch(apiUrl, { cache: "no-store" });
 
-    const bodyText = await res.text(); // read once
+    const bodyText = await res.text();
     if (!res.ok) {
       error = `We couldn’t retrieve the certificate for ${rrn}.`;
       if (process.env.NODE_ENV !== "production") {
         detail = `Status ${res.status} — ${bodyText.slice(0, 300)}`;
       }
-      // log on server for EC2 debugging
       console.error("[SSR] certificate fetch failed", {
         url: apiUrl,
         status: res.status,
         snippet: bodyText.slice(0, 300),
       });
     } else {
-      // parse safely
       try {
         const json = JSON.parse(bodyText) as SgActionPlanResponse;
         data = json.data ?? null;
@@ -75,20 +73,25 @@ export default async function DomesticCertificatePage({
     Array.isArray(data?.alternativeImprovements) &&
     data.alternativeImprovements.length > 0;
 
+  const addressSummary = data
+    ? [
+        data.address.addressLine1,
+        data.address.addressLine2,
+        data.address.addressLine3,
+        data.address.addressLine4,
+        data.address.town,
+        data.address.postcode,
+      ]
+        .filter(Boolean)
+        .join(", ")
+    : "";
+
   return (
     <div className="ds_wrapper">
       <div className="ds_page-header no-print">
         <h1>Action Plan</h1>
         <div className="sgds-header-row">
-          <p className="ds_lede ds_!_margin-0">
-            {[
-              data?.address?.addressLine1,
-              data?.address?.town,
-              data?.address?.postcode,
-            ]
-              .filter(Boolean)
-              .join(", ")}
-          </p>
+          <p className="ds_lede ds_!_margin-0">{addressSummary}</p>
 
           <PrintButton className="ds_button no-print" />
         </div>
@@ -106,7 +109,6 @@ export default async function DomesticCertificatePage({
         </>
       ) : data ? (
         <div className="ds_layout ds_layout--search-results-with-sidebar">
-          {/* Sidebar (SDS grid area) */}
           <aside
             className="ds_layout__sidebar no-print"
             aria-label="Document navigation"
@@ -126,7 +128,6 @@ export default async function DomesticCertificatePage({
                 Prescriptive improvement measures
               </ContentsNav.Item>
 
-              {/* Alternative improvements (only if present) */}
               {hasAlternativeImprovements && (
                 <ContentsNav.Item href="#alternative-measures">
                   Alternative improvements
@@ -142,7 +143,6 @@ export default async function DomesticCertificatePage({
             </ContentsNav>
           </aside>
 
-          {/* Main content (SDS grid area) */}
           <main
             className="ds_layout__content"
             style={{ border: "1px solid grey" }}

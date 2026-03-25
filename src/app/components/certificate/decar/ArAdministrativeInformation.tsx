@@ -111,7 +111,7 @@ export default function ArAdministrativeInformation({ data }: Props) {
       <dl className="summary-list">
         <div className="row-2col border-b-grey">
           <dt>
-            <strong>S63 Assessor name:</strong>
+            <strong>S63 assessor name:</strong>
           </dt>
           <dd>{assessorName || "—"}</dd>
         </div>
@@ -132,7 +132,7 @@ export default function ArAdministrativeInformation({ data }: Props) {
 
         <div className="row-2col border-b-grey">
           <dt>
-            <strong>S63 Assessor membership number:</strong>
+            <strong>S63 assessor membership number:</strong>
           </dt>
           <dd>{assessor?.schemeAssessorId || "—"}</dd>
         </div>

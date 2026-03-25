@@ -71,6 +71,9 @@ export default async function CombinedDecarCertificatePage({
   const addressSummary = addressSource
     ? [
         addressSource.address.addressLine1,
+        addressSource.address.addressLine2,
+        addressSource.address.addressLine3,
+        addressSource.address.addressLine4,
         addressSource.address.town,
         addressSource.address.postcode,
       ]
@@ -123,7 +126,6 @@ export default async function CombinedDecarCertificatePage({
         </>
       ) : (
         <div className="ds_layout ds_layout--search-results-with-sidebar">
-          {/* Sidebar */}
           <aside
             className="ds_layout__sidebar no-print"
             aria-label="Document navigation"
@@ -177,7 +179,6 @@ export default async function CombinedDecarCertificatePage({
             </ContentsNav>
           </aside>
 
-          {/* Main content */}
           <main
             className="ds_layout__content"
             style={{ border: "1px solid grey" }}

@@ -244,7 +244,7 @@ export default function CostsAndRecommendationsTable({
               Before carrying out work, make sure that the appropriate
               permissions are obtained, where necessary. This may include
               permission from a landlord (if you are a tenant) or the need to
-              get a Building Warrant for certain types of work.
+              get a Building warrant for certain types of work.
             </p>
 
             <table className="ds_table">

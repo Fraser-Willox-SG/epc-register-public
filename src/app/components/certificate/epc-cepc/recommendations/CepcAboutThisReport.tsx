@@ -42,7 +42,7 @@ export default function CepcAboutThisReport({ data }: Props) {
           <a href="https://www.scottishepcregister.org.uk">
             www.scottishepcregister.org.uk
           </a>{" "}
-          and entering the report reference number (RRN) printed at the top of
+          and entering the Report Reference Number (RRN) printed at the top of
           this page.
         </p>
 
@@ -60,7 +60,7 @@ export default function CepcAboutThisReport({ data }: Props) {
 
           <div className="row-2col border-b-grey">
             <dt>
-              <strong>Report reference number (RRN)</strong>
+              <strong>Report Reference Number (RRN)</strong>
             </dt>
             <dd>{data?.assessmentId ?? "—"}</dd>
           </div>
@@ -153,7 +153,7 @@ export default function CepcAboutThisReport({ data }: Props) {
           , with the facility to search for any single record by entering the
           property address. This gives everyone access to any current, valid EPC
           except where a property has a Green Deal Plan, in which case the
-          report reference number (RRN) must first be provided. The energy
+          Report Reference Number (RRN) must first be provided. The energy
           performance data in these documents, together with other building
           information gathered during the assessment is held on the Scottish EPC
           Register and is available to authorised recipients, including

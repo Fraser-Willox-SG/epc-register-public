@@ -54,9 +54,15 @@ export default function CepcPaybackAndSavingsExplained({ data }: Props) {
           Tariff initiative is contingent on a minimum energy efficiency
           requirement being met. This requires a building to have an EPC band of
           D or better. Further information can be found at{" "}
-          <a href="https://www.decc.gov.uk/fits">www.decc.gov.uk/fits</a>. This
-          requirement is based upon the means of determining EPC band which is
-          used in England &amp; Wales.
+          <a
+            href="https://www.ofgem.gov.uk/environmental-and-social-schemes/feed-tariffs-fit"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            www.ofgem.gov.uk/environmental-and-social-schemes/feed-tariffs-fit
+          </a>
+          . This requirement is based upon the means of determining EPC band
+          which is used in England &amp; Wales.
         </p>
 
         <p>

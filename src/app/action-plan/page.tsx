@@ -50,7 +50,7 @@ export default function ActionPlanPage() {
       const pc = normalizePostcode(postcode);
 
       if (!isValidUKPostcode(pc)) {
-        setError("Enter a valid scottish postcode, for example G20 7YD.");
+        setError("Enter a valid Scottish postcode, for example G20 7YD.");
         return;
       }
 

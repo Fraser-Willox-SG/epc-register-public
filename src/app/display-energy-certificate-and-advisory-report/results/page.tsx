@@ -62,7 +62,7 @@ export default async function AdvisoryReportsResultsPage({
   return (
     <div className="ds_wrapper">
       <div className="ds_page-header">
-        <h1>Display Energy Certificate and Advisory Report</h1>
+        <h1>Display Energy Certificate (DEC) and Advisory Report (AR)</h1>
       </div>
 
       <h2 className="ds_h3">Energy usage for public buildings</h2>

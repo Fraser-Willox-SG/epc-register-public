@@ -50,7 +50,7 @@ export default function DomesticSearchPage() {
       const pc = normalizePostcode(postcode);
 
       if (!isValidUKPostcode(pc)) {
-        setError("Enter a valid scottish postcode, for example G60 5JD.");
+        setError("Enter a valid Scottish postcode, for example G60 5JD.");
         return;
       }
 

@@ -174,11 +174,11 @@ export default function CertificateOverview({
         <p>You can use this document to:</p>
         <ul>
           <li>
-            Compare current ratings of properties to see which are more energy
+            compare current ratings of properties to see which are more energy
             efficient and environmentally friendly
           </li>
           <li>
-            Find out how to save energy and money and also reduce CO2 emissions
+            find out how to save energy and money and also reduce CO2 emissions
             by improving your home
           </li>
         </ul>
@@ -215,17 +215,17 @@ export default function CertificateOverview({
 
         <ul>
           <li>
-            See your{" "}
+            see your{" "}
             <a href="#performance-features-and-context">
               recommendations report
             </a>{" "}
             for more information.
           </li>
-          <li>
-            *Based upon the cost of energy for heating, hot water, lighting and
-            ventilation, calculated using standard assumptions.
-          </li>
         </ul>
+        <p>
+          *based upon the cost of energy for heating, hot water, lighting and
+          ventilation, calculated using standard assumptions.
+        </p>
       </div>
 
       <div className="cert-section print-no-break">
