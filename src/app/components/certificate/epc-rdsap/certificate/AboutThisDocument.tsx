@@ -61,7 +61,7 @@ export default function AboutThisDocument({
           >
             www.scottishepcregister.org.uk
           </a>{" "}
-          and entering the report reference number (RRN) printed at the top of
+          and entering the Report Reference Number (RRN) printed at the top of
           this page.
         </p>
       </div>
@@ -130,7 +130,7 @@ export default function AboutThisDocument({
           , with the facility to search for any single record by entering the
           property address. This gives everyone access to any current, valid EPC
           except where a property has a Green Deal Plan, in which case the
-          report reference number (RRN) must first be provided.
+          Report Reference Number (RRN) must first be provided.
         </p>
 
         <p>

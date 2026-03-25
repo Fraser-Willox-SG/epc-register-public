@@ -31,7 +31,7 @@ const DecTechnicalInformation: React.FC<Props> = ({ technical }) => {
 
         <div className="row-2col border-b-grey">
           <dt>
-            <strong>Building Environment:</strong>
+            <strong>Building environment:</strong>
           </dt>
           <dd>{formatValue(technical?.buildingEnvironment)}</dd>
         </div>

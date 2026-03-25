@@ -140,8 +140,12 @@ export default function CepcRecommendationsIntroduction({
           <p>
             Further information on the assessment process and approved software
             tools can be found online at{" "}
-            <a href="https://www.scotland.gov.uk/epc">
-              www.scotland.gov.uk/epc
+            <a
+              href="https://www.gov.scot/publications/energy-performance-certificates-guide"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              www.gov.scot/publications/energy-performance-certificates-guide
             </a>
             .
           </p>

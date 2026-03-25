@@ -37,7 +37,7 @@ export default function FindAdvisorPage() {
 
     const pc = normalizePostcode(postcode);
     if (!isValidUKPostcode(pc)) {
-      setError("Enter a valid scottish postcode, for example EH1 2NG.");
+      setError("Enter a valid Scottish postcode, for example EH1 2NG.");
       return;
     }
 

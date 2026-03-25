@@ -28,11 +28,19 @@ export default function AdvisoryReportPage() {
   const groupName =
     "display-energy-certificate-and-advisory-report-search-mode";
 
+  const activeErrorId = mode === "postcode" ? "postcode-error" : "rrn-error";
+
   const onRadioChange = (e: ChangeEvent<HTMLInputElement>) => {
     const id = e.target.id;
     setError(null);
-    if (id === "search-by-postcode") setMode("postcode");
-    if (id === "search-by-rrn") setMode("rrn");
+
+    if (id === "search-by-postcode") {
+      setMode("postcode");
+    }
+
+    if (id === "search-by-rrn") {
+      setMode("rrn");
+    }
   };
 
   const onSubmit = (e: FormEvent) => {
@@ -41,29 +49,33 @@ export default function AdvisoryReportPage() {
 
     if (mode === "postcode") {
       const pc = normalizePostcode(postcode);
+
       if (!isValidUKPostcode(pc)) {
-        setError("Enter a valid scottish postcode, for example ML5 4TF.");
+        setError("Enter a valid Scottish postcode, for example ML5 4TF.");
         return;
       }
+
       router.push(
         `/display-energy-certificate-and-advisory-report/results?postcode=${encodeURIComponent(
           pc,
         )}`,
       );
-    } else {
-      if (!isValidRRN(rrn)) {
-        setError(
-          "Enter a valid Report Reference Number (RRN). Example: 0001-3410-0212-0899-3692.",
-        );
-        return;
-      }
-      const id = normalizeRRN(rrn);
-      router.push(
-        `/display-energy-certificate-and-advisory-report/certificate/${encodeURIComponent(
-          id,
-        )}`,
-      );
+      return;
     }
+
+    if (!isValidRRN(rrn)) {
+      setError(
+        "Enter a valid Report Reference Number (RRN), for example 0001-3410-0212-0899-3692.",
+      );
+      return;
+    }
+
+    const id = normalizeRRN(rrn);
+    router.push(
+      `/display-energy-certificate-and-advisory-report/certificate/${encodeURIComponent(
+        id,
+      )}`,
+    );
   };
 
   return (
@@ -74,7 +86,6 @@ export default function AdvisoryReportPage() {
 
       <h2 className="ds_h3">Energy usage for public buildings</h2>
       <p>
-        {" "}
         Search by postcode or RRN to get a Display Energy Certificate or its
         associated Advisory Report.
       </p>
@@ -100,35 +111,50 @@ export default function AdvisoryReportPage() {
           </RadioGroup>
         </Question>
 
-        {mode === "postcode" ? (
-          <TextInput
-            key="postcode"
-            id="postcode-input"
-            label="Postcode"
-            hintText="Enter a full postcode"
-            width="fixed-20"
-            value={postcode}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              setPostcode(e.target.value)
-            }
-            autoComplete="postal-code"
-          />
-        ) : (
-          <TextInput
-            key="rrn"
-            id="rrn-input"
-            label="Report Reference Number (RRN)"
-            hintText="Enter the RRN (20 digits, with or without hyphens)"
-            width="fixed-20"
-            value={rrn}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              setRRN(e.target.value)
-            }
-            inputMode="numeric"
-          />
-        )}
+        <div
+          className={error ? "ds_question ds_question--error" : "ds_question"}
+        >
+          {mode === "postcode" ? (
+            <TextInput
+              key="postcode"
+              id="postcode-input"
+              label="Postcode"
+              hintText="Enter a full postcode"
+              width="fixed-20"
+              value={postcode}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setPostcode(e.target.value)
+              }
+              autoComplete="postal-code"
+              aria-describedby={error ? activeErrorId : undefined}
+              className={error ? "ds_input--error" : undefined}
+            />
+          ) : (
+            <TextInput
+              key="rrn"
+              id="rrn-input"
+              label="Report Reference Number (RRN)"
+              hintText="Enter the RRN (20 digits, with or without hyphens)"
+              width="fixed-20"
+              value={rrn}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setRRN(e.target.value)
+              }
+              inputMode="numeric"
+              aria-describedby={error ? activeErrorId : undefined}
+              className={error ? "ds_input--error" : undefined}
+            />
+          )}
 
-        {error && <p className="ds_error-message ds_mt-2">{error}</p>}
+          {error && (
+            <p
+              id={activeErrorId}
+              className="ds_question__error-message ds_mt-1"
+            >
+              <span className="visually-hidden">Error:</span> {error}
+            </p>
+          )}
+        </div>
 
         <Button type="submit" className="ds_mt-4">
           Continue

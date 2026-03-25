@@ -36,7 +36,7 @@ const DecAdministrativeInformation: React.FC<Props> = ({
       <dl className="summary-list">
         <div className="row-2col border-b-grey">
           <dt>
-            <strong>Assessment Software:</strong>
+            <strong>Assessment software:</strong>
           </dt>
           <dd>{formatValue(administrative?.calculationTool)}</dd>
         </div>
@@ -50,14 +50,14 @@ const DecAdministrativeInformation: React.FC<Props> = ({
 
         <div className="row-2col border-b-grey">
           <dt>
-            <strong>SG3 Assessor Name:</strong>
+            <strong>S63 assessor name:</strong>
           </dt>
           <dd>{assessorName || "—"}</dd>
         </div>
 
         <div className="row-2col border-b-grey">
           <dt>
-            <strong>SG3 Assessor Membership Number:</strong>
+            <strong>S63 assessor membership number:</strong>
           </dt>
           <dd>{formatValue(assessor?.schemeAssessorId)}</dd>
         </div>
@@ -71,7 +71,7 @@ const DecAdministrativeInformation: React.FC<Props> = ({
 
         <div className="row-2col border-b-grey">
           <dt>
-            <strong>Company Name/Trading name:</strong>
+            <strong>Company name/Trading name:</strong>
           </dt>
           <dd>{formatValue(assessor?.companyDetails?.name)}</dd>
         </div>
@@ -85,28 +85,28 @@ const DecAdministrativeInformation: React.FC<Props> = ({
 
         <div className="row-2col border-b-grey">
           <dt>
-            <strong>Issue Date:</strong>
+            <strong>Issue date:</strong>
           </dt>
           <dd>{formatDecDate(administrative?.issueDate)}</dd>
         </div>
 
         <div className="row-2col border-b-grey">
           <dt>
-            <strong>Nominate Date:</strong>
+            <strong>Nominate date:</strong>
           </dt>
           <dd>{formatDecDate(nominateDate)}</dd>
         </div>
 
         <div className="row-2col border-b-grey">
           <dt>
-            <strong>Valid Until:</strong>
+            <strong>Valid until:</strong>
           </dt>
           <dd>{formatDecDate(validUntil)}</dd>
         </div>
 
         <div className="row-2col border-b-grey">
           <dt>
-            <strong>Related Party Disclosure:</strong>
+            <strong>Related Party disclosure:</strong>
           </dt>
           <dd>{formatValue(administrative?.relatedPartyDisclosure)}</dd>
         </div>

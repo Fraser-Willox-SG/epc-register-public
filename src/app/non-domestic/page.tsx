@@ -50,7 +50,7 @@ export default function NonDomesticSearchPage() {
       const pc = normalizePostcode(postcode);
 
       if (!isValidUKPostcode(pc)) {
-        setError("Enter a valid scottish postcode, for example AB15 9SX.");
+        setError("Enter a valid Scottish postcode, for example AB15 9SX.");
         return;
       }
 
