@@ -4,6 +4,7 @@ import { bandFromScore } from "@/app/utils/epc-bands";
 import improvements from "@/app/content/rdsap/improvements.json";
 import RatingBadge from "@/app/components/certificate/RatingBadge";
 import type { DomesticCertificateData } from "@/types/sg-epc-dom";
+import { formatNumberWithCommas } from "@/app/utils/number";
 
 type ImprovementInfo = {
   heading: string;
@@ -52,12 +53,12 @@ export default function CertificateOverview({
 
   const totalFloorAreaDisplay =
     totalFloorArea !== null && totalFloorArea !== undefined
-      ? `${totalFloorArea} m²`
+      ? `${formatNumberWithCommas(totalFloorArea)} m²`
       : "—";
 
   const primaryEnergyIndicatorDisplay =
     primaryEnergyUse !== null && primaryEnergyUse !== undefined
-      ? `${primaryEnergyUse} kWh/m²/year`
+      ? `${formatNumberWithCommas(primaryEnergyUse)} kWh/m²/year`
       : "—";
 
   const estimatedEnergyCost3yr =
@@ -199,7 +200,7 @@ export default function CertificateOverview({
               <td>Estimated energy costs for your home for 3 years*</td>
               <td>
                 {estimatedEnergyCost3yr !== null
-                  ? `£${estimatedEnergyCost3yr}`
+                  ? `£${formatNumberWithCommas(estimatedEnergyCost3yr)}`
                   : "—"}
               </td>
             </tr>

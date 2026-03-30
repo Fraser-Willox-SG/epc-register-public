@@ -48,12 +48,11 @@ export default function AboutThisDocument({
         <p>
           The Energy Performance Certificate and this Recommendations Report for
           this building were produced following an energy assessment undertaken
-          by an assessor accredited by{" "}
-          <strong>{approvedOrganisation ?? <MissingData />}</strong>, an
-          Approved Organisation Appointed by Scottish Ministers. The certificate
-          has been produced under the Energy Performance of Buildings (Scotland)
-          Regulations 2008 from data lodged to the Scottish EPC register. You
-          can verify the validity of this document by visiting{" "}
+          by an assessor accredited by {approvedOrganisation ?? <MissingData />}
+          , an Approved Organisation appointed by Scottish Ministers. The
+          certificate has been produced under the Energy Performance of
+          Buildings (Scotland) Regulations 2008 from data lodged to the Scottish
+          EPC register. You can verify the validity of this document by visiting{" "}
           <a
             href="https://www.scottishepcregister.org.uk"
             target="_blank"
@@ -95,7 +94,15 @@ export default function AboutThisDocument({
 
           <div className="row-2col border-b-grey">
             <dt>Email address:</dt>
-            <dd>{email ?? <MissingData />}</dd>
+            <dd>
+              {email ? (
+                <a className="ds_link" href={`mailto:${email}`}>
+                  {email}
+                </a>
+              ) : (
+                <MissingData />
+              )}
+            </dd>
           </div>
 
           <div className="row-2col">

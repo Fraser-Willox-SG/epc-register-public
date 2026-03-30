@@ -1,4 +1,5 @@
 import MissingData from "@/app/components/MissingData";
+import { toSentenceCase } from "@/app/utils/text";
 import type { SgNonDomesticCepcCertificateSummary } from "@/types/sg-epc-non-dom-cepc";
 
 function cleanText(value: unknown): string | null {
@@ -61,7 +62,7 @@ export default function CepcRecommendationsIntroduction({
             <dt>
               <strong>Building type</strong>
             </dt>
-            <dd>{buildingType ?? <MissingData />}</dd>
+            <dd>{toSentenceCase(buildingType ?? <MissingData />)}</dd>
           </div>
 
           <div className="row-2col border-b-grey">
@@ -81,14 +82,14 @@ export default function CepcRecommendationsIntroduction({
             <dt>
               <strong>Main heating fuel</strong>
             </dt>
-            <dd>{mainHeatingFuel ?? <MissingData />}</dd>
+            <dd>{toSentenceCase(mainHeatingFuel ?? <MissingData />)}</dd>
           </div>
 
           <div className="row-2col border-b-grey">
             <dt>
               <strong>Building environment</strong>
             </dt>
-            <dd>{buildingEnvironment ?? <MissingData />}</dd>
+            <dd>{toSentenceCase(buildingEnvironment ?? <MissingData />)}</dd>
           </div>
 
           <div className="row-2col border-b-grey">
@@ -110,7 +111,7 @@ export default function CepcRecommendationsIntroduction({
           <p>
             The Recommendations Report provides additional information in
             support of your Energy Performance Certificate. It was produced in
-            line with the Government’s approved calculation methodology and is
+            line with the government’s approved calculation methodology and is
             based upon output from{" "}
             {calculationTool ?? (
               <MissingData label="MISSING DATA FROM UKG API" />
