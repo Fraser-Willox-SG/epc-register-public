@@ -313,8 +313,8 @@ export default function CertificateOverview({
             <table className="ds_table">
               <thead>
                 <tr>
-                  <th scope="col">Recommended Measures</th>
-                  <th scope="col">Indicative Cost</th>
+                  <th scope="col">Recommended measures</th>
+                  <th scope="col">Indicative cost</th>
                   <th scope="col">Typical savings over 3 years</th>
                 </tr>
               </thead>
@@ -364,17 +364,13 @@ export default function CertificateOverview({
               To find out more about the recommended measures and other actions
               you could take today to stop wasting energy and money, visit{" "}
               <a
-                href="http://greenerscotland.org"
+                href="https://www.homeenergyscotland.org"
                 target="_blank"
-                rel="noopener noreferrer"
+                rel="noreferrer"
               >
-                greenerscotland.org
+                Home Energy Scotland
               </a>{" "}
-              or contact <strong>Home Energy Scotland</strong> on{" "}
-              <a className="ds_link" href="tel:08088082282">
-                0808 808 2282
-              </a>
-              .
+              or contact Home Energy Scotland on 0808 808 2282 .
             </p>
           </>
         )}

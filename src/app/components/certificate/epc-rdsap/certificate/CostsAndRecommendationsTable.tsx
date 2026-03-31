@@ -348,18 +348,15 @@ export default function CostsAndRecommendationsTable({
           <h3>Choosing the right improvement package</h3>
           <p>
             For free and impartial advice on choosing suitable measures for your
-            property, contact the Home Energy Scotland hotline on{" "}
-            <a className="ds_link" href="tel:08088082282">
-              0808 808 2282
-            </a>{" "}
+            property, contact the Home Energy Scotland hotline on 0808 808 2282{" "}
             or go to{" "}
             <a
-              href="http://greenerscotland.org"
+              href="https://www.homeenergyscotland.org"
               target="_blank"
-              rel="noopener noreferrer"
+              rel="noreferrer"
             >
-              greenerscotland.org
-            </a>
+              Home Energy Scotland
+            </a>{" "}
           </p>
         </div>
       )}
