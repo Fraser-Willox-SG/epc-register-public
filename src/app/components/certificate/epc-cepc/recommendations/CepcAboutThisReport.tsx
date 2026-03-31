@@ -49,7 +49,7 @@ export default function CepcAboutThisReport({ data }: Props) {
         <dl className="summary-list">
           <div className="row-2col border-b-grey">
             <dt>
-              <strong>Date of assessment</strong>
+              <strong>Date of assessment:</strong>
             </dt>
             <dd>
               {data?.dateOfAssessment
@@ -60,42 +60,42 @@ export default function CepcAboutThisReport({ data }: Props) {
 
           <div className="row-2col border-b-grey">
             <dt>
-              <strong>Report Reference Number (RRN)</strong>
+              <strong>Report Reference Number (RRN):</strong>
             </dt>
             <dd>{data?.assessmentId ?? "—"}</dd>
           </div>
 
           <div className="row-2col border-b-grey">
             <dt>
-              <strong>Assessor’s name</strong>
+              <strong>Assessor’s name:</strong>
             </dt>
             <dd>{assessorName}</dd>
           </div>
 
           <div className="row-2col border-b-grey">
             <dt>
-              <strong>Assessor membership number</strong>
+              <strong>Assessor membership number:</strong>
             </dt>
             <dd>{membershipNumber}</dd>
           </div>
 
           <div className="row-2col border-b-grey">
             <dt>
-              <strong>Company name/trading name</strong>
+              <strong>Company name/trading name:</strong>
             </dt>
             <dd>{companyName}</dd>
           </div>
 
           <div className="row-2col border-b-grey">
             <dt>
-              <strong>Address</strong>
+              <strong>Address:</strong>
             </dt>
             <dd>{companyAddress}</dd>
           </div>
 
           <div className="row-2col border-b-grey">
             <dt>
-              <strong>Phone number</strong>
+              <strong>Phone number:</strong>
             </dt>
             <dd>
               {telephoneValue ? (
@@ -112,7 +112,7 @@ export default function CepcAboutThisReport({ data }: Props) {
           </div>
           <div className="row-2col border-b-grey">
             <dt>
-              <strong>E-mail address</strong>
+              <strong>E-mail address:</strong>
             </dt>
             <dd>
               {emailValue ? (
@@ -127,7 +127,7 @@ export default function CepcAboutThisReport({ data }: Props) {
 
           <div className="row-2col border-b-grey">
             <dt>
-              <strong>Approved organisation</strong>
+              <strong>Approved Organisation:</strong>
             </dt>
             <dd>{assessor?.registeredBy?.name ?? "—"}</dd>
           </div>

@@ -84,7 +84,7 @@ export default function AdvisoryReportPage() {
         <h1>Display Energy Certificate (DEC) or Advisory Report (AR)</h1>
       </div>
 
-      <h2 className="ds_h3">Energy usage for public buildings</h2>
+      <h2 className="ds_h3">Energy usage for non-domestic buildings</h2>
       <p>
         Search by postcode or RRN to get a Display Energy Certificate or its
         associated Advisory Report.

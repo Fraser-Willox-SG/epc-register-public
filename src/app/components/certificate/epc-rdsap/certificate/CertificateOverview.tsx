@@ -4,6 +4,7 @@ import { bandFromScore } from "@/app/utils/epc-bands";
 import improvements from "@/app/content/rdsap/improvements.json";
 import RatingBadge from "@/app/components/certificate/RatingBadge";
 import type { DomesticCertificateData } from "@/types/sg-epc-dom";
+import { formatNumberWithCommas } from "@/app/utils/number";
 
 type ImprovementInfo = {
   heading: string;
@@ -52,12 +53,12 @@ export default function CertificateOverview({
 
   const totalFloorAreaDisplay =
     totalFloorArea !== null && totalFloorArea !== undefined
-      ? `${totalFloorArea} m²`
+      ? `${formatNumberWithCommas(totalFloorArea)} m²`
       : "—";
 
   const primaryEnergyIndicatorDisplay =
     primaryEnergyUse !== null && primaryEnergyUse !== undefined
-      ? `${primaryEnergyUse} kWh/m²/year`
+      ? `${formatNumberWithCommas(primaryEnergyUse)} kWh/m²/year`
       : "—";
 
   const estimatedEnergyCost3yr =
@@ -199,7 +200,7 @@ export default function CertificateOverview({
               <td>Estimated energy costs for your home for 3 years*</td>
               <td>
                 {estimatedEnergyCost3yr !== null
-                  ? `£${estimatedEnergyCost3yr}`
+                  ? `£${formatNumberWithCommas(estimatedEnergyCost3yr)}`
                   : "—"}
               </td>
             </tr>
@@ -312,8 +313,8 @@ export default function CertificateOverview({
             <table className="ds_table">
               <thead>
                 <tr>
-                  <th scope="col">Recommended Measures</th>
-                  <th scope="col">Indicative Cost</th>
+                  <th scope="col">Recommended measures</th>
+                  <th scope="col">Indicative cost</th>
                   <th scope="col">Typical savings over 3 years</th>
                 </tr>
               </thead>
@@ -363,17 +364,13 @@ export default function CertificateOverview({
               To find out more about the recommended measures and other actions
               you could take today to stop wasting energy and money, visit{" "}
               <a
-                href="http://greenerscotland.org"
+                href="https://www.homeenergyscotland.org"
                 target="_blank"
-                rel="noopener noreferrer"
+                rel="noreferrer"
               >
-                greenerscotland.org
+                Home Energy Scotland
               </a>{" "}
-              or contact <strong>Home Energy Scotland</strong> on{" "}
-              <a className="ds_link" href="tel:08088082282">
-                0808 808 2282
-              </a>
-              .
+              or contact Home Energy Scotland on 0808 808 2282 .
             </p>
           </>
         )}

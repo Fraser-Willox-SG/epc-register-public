@@ -7,13 +7,13 @@ export default function ArGlossary() {
 
       {/* a) Payback */}
       <h3 style={{ fontSize: "1rem" }}>a) Payback</h3>
-      <p className="text-small">
+      <p>
         The payback periods are based on data provided by Good Practice Guides
         and Carbon Trust energy survey reports and are average figures
         calculated using a simple payback method. It is assumed that the source
         data is correct and accurate using up-to-date information.
       </p>
-      <p className="text-small">
+      <p>
         The figures have been calculated as an average across a range of
         buildings and may differ from the actual payback period for the building
         being assessed. Therefore, it is recommended that each suggested measure
@@ -23,7 +23,7 @@ export default function ArGlossary() {
 
       {/* b) Carbon impact */}
       <h3 style={{ fontSize: "1rem" }}>b) Carbon impact</h3>
-      <p className="text-small">
+      <p>
         The High / Medium / Low carbon impact indicators against each
         recommendation are provided to distinguish, between the suggested
         recommendations, those that would most effectively reduce carbon
@@ -35,7 +35,7 @@ export default function ArGlossary() {
 
       {/* c) Valid report */}
       <h3 style={{ fontSize: "1rem" }}>c) Valid report</h3>
-      <p className="text-small">
+      <p>
         A valid existing report is defined at the energy assessor&apos;s
         discretion.
       </p>

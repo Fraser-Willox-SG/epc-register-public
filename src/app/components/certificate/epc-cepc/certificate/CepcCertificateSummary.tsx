@@ -4,6 +4,7 @@ import RatingBadge from "@/app/components/certificate/RatingBadge";
 import MissingData from "@/app/components/MissingData";
 import type { Band } from "@/app/utils/epc";
 import type { SgNonDomesticCepcCertificateSummary } from "@/types/sg-epc-non-dom-cepc";
+import { toSentenceCase } from "@/app/utils/text";
 
 function normaliseBand(band: string | null | undefined): Band | null {
   const b = (band ?? "").trim().toUpperCase();
@@ -124,7 +125,7 @@ export default function CepcCertificateSummary({
             <dt>
               <strong>Building type</strong>
             </dt>
-            <dd>{buildingType ?? "—"}</dd>
+            <dd>{toSentenceCase(buildingType ?? "—")}</dd>
           </div>
 
           <div className="row-2col border-b-grey">
@@ -136,7 +137,7 @@ export default function CepcCertificateSummary({
 
           <div className="row-2col border-b-grey">
             <dt>
-              <strong>Approved organisation</strong>
+              <strong>Approved Organisation</strong>
             </dt>
             <dd>{approvedOrganisation}</dd>
           </div>

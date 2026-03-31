@@ -30,10 +30,10 @@ export default function ArIntroduction({ data }: Props) {
 
   return (
     <section className="cert-section bg-grey" id="ar-introduction">
-      <h2 className="mb-0">Introduction</h2>
+      <h2>Introduction</h2>
 
       {/* Main policy-style paragraph */}
-      <p className="text-small">
+      <p>
         This Advisory Report has been produced in line with Scottish
         Ministers&apos; approved methodology and is based on the assessment
         software listed below.

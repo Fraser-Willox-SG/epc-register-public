@@ -65,9 +65,9 @@ export default function ArRecommendations({ data }: Props) {
       className="cert-section bg-white print-no-break"
       id="ar-recommendations"
     >
-      <h2 className="mb-0">Recommendations</h2>
+      <h2>Recommendations</h2>
 
-      <p className="text-small">
+      <p>
         The following sections list recommendations selected by the energy
         assessor for improving the energy performance of the building. They are
         grouped by indicative payback period and by other additional measures.

@@ -30,7 +30,7 @@ export default function CepcPaybackAndSavingsExplained({ data }: Props) {
         </p>
       </div>
       <div className="cert-section print-no-break">
-        <h2>Carbon Impact</h2>
+        <h2>Carbon impact</h2>
 
         <p>
           Each measure is assigned a low, medium or high potential impact on the

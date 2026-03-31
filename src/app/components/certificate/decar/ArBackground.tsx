@@ -1,5 +1,6 @@
 import React from "react";
 import type { ArSummary } from "@/types/decar";
+import { toSentenceCase } from "@/app/utils/text";
 
 type Props = {
   data: ArSummary;
@@ -28,9 +29,9 @@ export default function ArBackground({ data }: Props) {
 
   return (
     <section className="cert-section bg-blue print-no-break" id="ar-background">
-      <h2 className="mb-0">Background</h2>
+      <h2>Background</h2>
 
-      <p className="text-small">
+      <p>
         The Assessment of Energy Performance of Non-domestic Buildings
         (Scotland) Regulations 2016 are made in exercise of the powers conferred
         on Scottish Ministers by section 63 of the Climate Change (Scotland) Act
@@ -41,14 +42,12 @@ export default function ArBackground({ data }: Props) {
         building owner to defer completion of improvement works to meet energy
         performance and emissions reduction targets.
       </p>
-      <p className="text-small">
+      <p>
         This Advisory Report which can accompany a DEC is not a requirement
         under these Regulations but where produced, will offer further
         recommendations for improving the energy efficiency of the building.
       </p>
-      <p className="text-small">
-        This section provides general information regarding the building:
-      </p>
+      <p>This section provides general information regarding the building:</p>
 
       <dl className="summary-list" style={{ marginTop: "1rem" }}>
         <div className="row-2col border-b-grey">
@@ -69,7 +68,7 @@ export default function ArBackground({ data }: Props) {
           <dt>
             <strong>Building environment:</strong>
           </dt>
-          <dd>{buildingEnv || "N/A"}</dd>
+          <dd>{toSentenceCase(buildingEnv) || "N/A"}</dd>
         </div>
 
         <div className="row-2col border-b-grey">

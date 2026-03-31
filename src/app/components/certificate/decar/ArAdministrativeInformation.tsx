@@ -139,7 +139,7 @@ export default function ArAdministrativeInformation({ data }: Props) {
 
         <div className="row-2col border-b-grey">
           <dt>
-            <strong>Approved organisation:</strong>
+            <strong>Approved Organisation:</strong>
           </dt>
           <dd>{assessor?.registeredBy?.name || "—"}</dd>
         </div>
