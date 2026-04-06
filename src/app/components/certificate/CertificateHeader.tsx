@@ -65,7 +65,19 @@ export default function CertificateHeader({
             <p className="mb-0">{postcode}</p>
           </div>
 
-          <div
+          <div>
+            {" "}
+            <img
+              src="/logo.svg"
+              alt="Scottish Government logo"
+              width={160}
+              height={100}
+              style={{ display: "block" }}
+            />
+          </div>
+
+          {/* I have kept the Energy Rating code so we can change back quickly after User Research, April 2026 */}
+          {/* <div
             className="cert-section"
             style={{
               border: "2px solid white",
@@ -85,7 +97,7 @@ export default function CertificateHeader({
             >
               {bandLabel}
             </span>
-          </div>
+          </div> */}
         </div>
       </div>
 

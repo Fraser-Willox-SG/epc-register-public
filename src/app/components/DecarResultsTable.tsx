@@ -264,9 +264,9 @@ export default function DecarResultsTable({
         <thead>
           <tr>
             <th scope="col">Property Address</th>
-            <th scope="col" className="table-cell-center">
+            {/* <th scope="col" className="table-cell-center">
               Energy Rating
-            </th>
+            </th> */}
             <th scope="col" className="table-cell-center">
               View DEC
             </th>
@@ -304,7 +304,7 @@ export default function DecarResultsTable({
                   )}
                 </td>
 
-                <td className="table-cell-center">
+                {/* <td className="table-cell-center">
                   <div className="content-center">
                     <RatingBadge
                       variant="environment"
@@ -312,7 +312,7 @@ export default function DecarResultsTable({
                       score={rating.score}
                     />
                   </div>
-                </td>
+                </td> */}
 
                 <td className="table-cell-center">
                   {decRrn ? (

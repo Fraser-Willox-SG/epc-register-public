@@ -4,23 +4,38 @@ export default function ContentsNavDomRdSap() {
   return (
     <ContentsNav title="Document navigation" ariaLabel="Document navigation">
       <ContentsNav.Item href="#overview">
-        <strong>EPC:</strong> Energy Performance Certificate
+        <span aria-hidden="true">
+          <strong>EPC:</strong>{" "}
+        </span>
+        Energy Performance Certificate
       </ContentsNav.Item>
 
       <ContentsNav.Item href="#report-background">
-        <strong>Report:</strong> Background
+        <span aria-hidden="true">
+          <strong>Report:</strong>{" "}
+        </span>
+        Background
       </ContentsNav.Item>
 
       <ContentsNav.Item href="#report-recommendations">
-        <strong>Report:</strong> Recommendations
+        <span aria-hidden="true">
+          <strong>Report:</strong>{" "}
+        </span>
+        Recommendations
       </ContentsNav.Item>
 
       <ContentsNav.Item href="#report-payback">
-        <strong>Report:</strong> Payback Period
+        <span aria-hidden="true">
+          <strong>Report:</strong>{" "}
+        </span>
+        Payback Period
       </ContentsNav.Item>
 
       <ContentsNav.Item href="#report-about">
-        <strong>Report:</strong> About this document
+        <span aria-hidden="true">
+          <strong>Report:</strong>{" "}
+        </span>
+        About this document
       </ContentsNav.Item>
     </ContentsNav>
   );

@@ -189,9 +189,9 @@ export default function EpcResultsTable({
         <thead>
           <tr>
             <th scope="col">Property address</th>
-            <th scope="col" className="table-cell-center">
+            {/* <th scope="col" className="table-cell-center">
               Energy rating
-            </th>
+            </th> */}
             <th scope="col" className="table-cell-center">
               Valid Until
             </th>
@@ -226,7 +226,7 @@ export default function EpcResultsTable({
                     <div className="ds_hint-text">Expired certificate</div>
                   )}
                 </td>
-                <td className="table-cell-center">
+                {/* <td className="table-cell-center">
                   <div className="content-center">
                     <RatingBadge
                       variant={ratingVariant}
@@ -235,7 +235,7 @@ export default function EpcResultsTable({
                       aria-hidden="true"
                     />
                   </div>
-                </td>
+                </td> */}
                 <td className="table-cell-center">
                   {r.dateOfExpiry ? formatIsoDateLong(r.dateOfExpiry) : "—"}
                 </td>

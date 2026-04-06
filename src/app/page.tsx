@@ -48,6 +48,19 @@ export default function EPCPage() {
         example commercial, industrial or public building.
       </p> */}
 
+      <p>
+        Search to find and view a domestic property like a house or flat, or a
+        non-domestic property for example commercial, industrial or public
+        building using either the:
+      </p>
+      <ul>
+        <li>postcode</li>
+        <li>
+          Report Reference Number (a 20 digit number at the top right corner of
+          the certificate)
+        </li>
+      </ul>
+
       <form onSubmit={onSubmit} noValidate>
         <Question
           legend="What type of property is the certificate for?"
