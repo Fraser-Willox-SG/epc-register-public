@@ -116,7 +116,7 @@ export default function CepcCertificateSummary({
 
           <div className="row-2col border-b-grey">
             <dt>
-              <strong>Primary energy indicator</strong>
+              <strong>Primary energy indicator*</strong>
             </dt>
             <dd>{primaryEnergyIndicator}</dd>
           </div>
@@ -142,6 +142,9 @@ export default function CepcCertificateSummary({
             <dd>{approvedOrganisation}</dd>
           </div>
         </dl>
+        *Primary Energy Indicator - shows the intensity of energy a property
+        needs, accounting for energy losses in generation, transmission and
+        distribution.
       </div>
 
       {/* Rating explanation */}

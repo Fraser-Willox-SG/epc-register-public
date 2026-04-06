@@ -78,8 +78,8 @@ export default function ActionPlanPage() {
       <h2 className="ds_h3">Energy usage for larger commercial buildings</h2>
       <p>
         The Action Plan sets out energy improvement plans for larger commercial
-        buildings with a floor area of more than 1,000m². These are needed under
-        section 63 of The Climate Change (Scotland) Act 2009.
+        buildings with a floor area of more than 1,000 m². These are needed
+        under section 63 of The Climate Change (Scotland) Act 2009.
       </p>
       <p>Search by either the:</p>
       <ul>

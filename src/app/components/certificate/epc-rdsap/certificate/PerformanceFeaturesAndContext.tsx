@@ -82,6 +82,11 @@ export default function PerformanceFeaturesAndContext({
     row.description.toLowerCase().includes("air permeability"),
   );
 
+  const hasTRVs = rows.some((row) => {
+    const description = row.description.toLowerCase();
+    return description.includes("trvs") || description.includes("trv");
+  });
+
   return (
     <section
       id="performance-features-and-context"
@@ -171,6 +176,15 @@ export default function PerformanceFeaturesAndContext({
           <p>
             Air permeability is a measure of the air tightness of a building;
             the lower the value the better the air tightness.
+          </p>
+        )}
+
+        {hasTRVs && (
+          <p>
+            TRV - a thermostatic radiator valve restricts the flow of hot water
+            into the radiator once the room reaches a set temperature, meaning
+            you can save energy by keeping some rooms cooler than others (e.g.
+            hallways).
           </p>
         )}
       </div>

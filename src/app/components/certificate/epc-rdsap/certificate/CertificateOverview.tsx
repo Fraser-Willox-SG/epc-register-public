@@ -164,11 +164,14 @@ export default function CertificateOverview({
 
           <div className="row-2col border-b-grey">
             <dt>
-              <strong>Primary Energy Indicator:</strong>
+              <strong>Primary Energy Indicator*:</strong>
             </dt>
             <dd>{primaryEnergyIndicatorDisplay}</dd>
           </div>
         </dl>
+        *Primary Energy Indicator - shows the intensity of energy a property
+        needs, accounting for energy losses in generation, transmission and
+        distribution.
       </div>
 
       <div className="cert-section bg-blue" id="epc-dom-document-usage">
