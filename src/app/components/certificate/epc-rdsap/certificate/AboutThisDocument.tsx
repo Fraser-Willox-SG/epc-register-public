@@ -1,5 +1,19 @@
 import type { DomesticCertificateData } from "@/types/sg-epc-dom";
 import MissingData from "@/app/components/MissingData";
+import relatedPartyDisclosureJson from "@/app/content/domestic/related-party-disclosure.json";
+
+type RelatedPartyDisclosureEntry = {
+  en: string;
+  cy?: string;
+};
+
+type RelatedPartyDisclosureJson = {
+  relatedPartyDisclosure: Record<string, RelatedPartyDisclosureEntry>;
+};
+
+const disclosureLookup = (
+  relatedPartyDisclosureJson as RelatedPartyDisclosureJson
+).relatedPartyDisclosure;
 
 function formatAssessorName(
   firstName?: string,
@@ -7,6 +21,23 @@ function formatAssessorName(
 ): string | null {
   const full = `${firstName ?? ""} ${lastName ?? ""}`.trim();
   return full.length > 0 ? full : null;
+}
+
+function getRelatedPartyDisclosureText(
+  code?: number | null,
+  fallbackText?: string | null,
+): string | null {
+  const normalizedCode = typeof code === "number" ? String(code) : "";
+  const fromLookup = normalizedCode
+    ? disclosureLookup[normalizedCode]
+    : undefined;
+
+  if (fromLookup?.en?.trim()) {
+    return fromLookup.en.trim();
+  }
+
+  const trimmedFallback = fallbackText?.trim();
+  return trimmedFallback || null;
 }
 
 export default function AboutThisDocument({
@@ -28,10 +59,10 @@ export default function AboutThisDocument({
   const phone = data.assessor.contactDetails?.telephoneNumber?.trim() || null;
   const email = data.assessor.contactDetails?.email?.trim() || null;
 
-  const relatedPartyDisclosure =
-    data.relatedPartyDisclosureNumber === 1
-      ? "No related party"
-      : data.relatedPartyDisclosureText?.trim() || null;
+  const relatedPartyDisclosure = getRelatedPartyDisclosureText(
+    data.relatedPartyDisclosureNumber,
+    data.relatedPartyDisclosureText,
+  );
 
   return (
     <section id="about-this-document">
@@ -111,6 +142,7 @@ export default function AboutThisDocument({
           </div>
         </dl>
       </div>
+
       <div className="cert-section bg-grey print-no-break">
         <p>
           If you have any concerns regarding the content of this report or the
@@ -121,6 +153,7 @@ export default function AboutThisDocument({
           details can be found online at the web address given above.
         </p>
       </div>
+
       <div className="cert-section print-no-break">
         <h3>Use of this energy performance information</h3>
 

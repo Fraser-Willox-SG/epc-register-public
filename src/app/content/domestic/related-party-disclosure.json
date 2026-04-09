@@ -1,0 +1,32 @@
+{
+  "relatedPartyDisclosure": {
+    "1": {
+      "en": "No related party",
+      "cy": "Dim parti perthnasol"
+    },
+    "2": {
+      "en": "Relative of homeowner or of occupier of the property",
+      "cy": "Perthynas i berchennog y cartref neu ddeiliad yr eiddo"
+    },
+    "3": {
+      "en": "Residing at the property",
+      "cy": "Yn byw yn yr eiddo"
+    },
+    "4": {
+      "en": "Financial interest in the property",
+      "cy": "Buddiant ariannol yn yr eiddo"
+    },
+    "5": {
+      "en": "Owner or Director of the organisation dealing with the property transaction",
+      "cy": "Perchennog neu Gyfarwyddwr y corff sy’n delio â’r trafodyn eiddo"
+    },
+    "6": {
+      "en": "Employed by the professional dealing with the property transaction",
+      "cy": "Wedi’i gyflogi gan y person proffesiynol sy’n delio â’r trafodyn eiddo"
+    },
+    "7": {
+      "en": "Relative of the professional dealing with the property transaction",
+      "cy": "Perthynas i’r person proffesiynol sy’n delio â’r trafodyn eiddo"
+    }
+  }
+}

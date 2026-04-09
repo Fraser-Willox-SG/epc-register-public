@@ -2,6 +2,7 @@ import React from "react";
 import type { DecAdministrativeInformation, Assessor } from "@/types/decar";
 import { getAssessorDisplayName } from "@/types/decar";
 import { formatDecDate } from "@/app/utils/date";
+import relatedPartyDisclosureJson from "@/app/content/dec/related-party-disclosure.json";
 
 type Props = {
   administrative?: DecAdministrativeInformation | null;
@@ -11,7 +12,23 @@ type Props = {
   validUntil?: string | null;
 };
 
+type RelatedPartyDisclosureJson = {
+  relatedPartyDisclosure: Record<string, string>;
+};
+
+const disclosureLookup = (
+  relatedPartyDisclosureJson as RelatedPartyDisclosureJson
+).relatedPartyDisclosure;
+
 const formatValue = (v?: string | null) => (v ?? "").trim() || "—";
+
+const getRelatedPartyDisclosureText = (code?: string | null): string => {
+  const trimmedCode = code?.trim() || "";
+
+  if (!trimmedCode) return "—";
+
+  return disclosureLookup[trimmedCode] || trimmedCode;
+};
 
 const DecAdministrativeInformation: React.FC<Props> = ({
   administrative,
@@ -108,7 +125,11 @@ const DecAdministrativeInformation: React.FC<Props> = ({
           <dt>
             <strong>Related Party disclosure:</strong>
           </dt>
-          <dd>{formatValue(administrative?.relatedPartyDisclosure)}</dd>
+          <dd>
+            {getRelatedPartyDisclosureText(
+              administrative?.relatedPartyDisclosure,
+            )}
+          </dd>
         </div>
       </dl>
 
