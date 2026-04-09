@@ -1,0 +1,12 @@
+{
+  "relatedPartyDisclosure": {
+    "1": "Not related to the occupier.",
+    "2": "Employed by the occupier.",
+    "3": "Contractor to the occupier for Section 63 services only.",
+    "4": "Contractor to the occupier for non-Section 63 services.",
+    "5": "Indirect relation to the occupier.",
+    "6": "Financial interest in the occupier and/or property.",
+    "7": "Previous relation to the occupier.",
+    "8": "Not recorded."
+  }
+}

@@ -32,10 +32,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <AppHeader />
-        <div className="ds_page__middle">{children}</div>
-
-        <AppFooter />
+        <div className="ds_page">
+          <AppHeader />
+          <div className="ds_page__middle">{children}</div>
+          <div className="ds_page__bottom">
+            <AppFooter />
+          </div>
+        </div>
       </body>
     </html>
   );

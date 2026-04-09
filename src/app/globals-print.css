@@ -42,7 +42,7 @@
 
   header,
   nav[aria-label="Main"],
-  .site-footer {
+  footer {
     display: none !important;
   }
   .ds_layout {

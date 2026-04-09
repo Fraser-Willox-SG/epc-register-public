@@ -48,11 +48,7 @@ export default function EPCPage() {
         example commercial, industrial or public building.
       </p> */}
 
-      <p>
-        Search to find and view a domestic property like a house or flat, or a
-        non-domestic property for example commercial, industrial or public
-        building using either the:
-      </p>
+      <p>Search to find and view an EPC using either the:</p>
       <ul>
         <li>postcode</li>
         <li>
