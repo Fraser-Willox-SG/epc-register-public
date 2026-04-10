@@ -86,15 +86,22 @@ export default async function NonDomesticCertificatePage({
   }
 
   const addressSummary = data
-    ? [data.address.addressLine1, data.address.town, data.address.postcode]
-        .filter(Boolean)
+    ? [
+        data.address.addressLine1,
+        data.address.addressLine2,
+        data.address.addressLine3,
+        data.address.addressLine4,
+        data.address.town,
+        data.address.postcode,
+      ]
+        .filter((value): value is string => Boolean(value))
         .join(", ")
     : "";
 
   return (
     <div className="ds_wrapper">
       <div className="ds_page-header no-print">
-        <h1>Energy Performance Certificate</h1>
+        <h1>Energy Performance Certificate (EPC)</h1>
 
         {data && (
           <div className="sgds-header-row">

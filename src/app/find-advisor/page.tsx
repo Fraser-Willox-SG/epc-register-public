@@ -25,6 +25,9 @@ export default function FindAdvisorPage() {
   const [error, setError] = useState<string | null>(null);
   const [typeError, setTypeError] = useState<string | null>(null);
 
+  const postcodeErrorId = "postcode-error";
+  const typeErrorId = "advisor-type-error";
+
   function onCheckboxChange(key: AdvisorType) {
     setTypes((prev) => ({ ...prev, [key]: !prev[key] }));
     setTypeError(null);
@@ -44,6 +47,7 @@ export default function FindAdvisorPage() {
     const selected = (Object.keys(types) as AdvisorType[]).filter(
       (k) => types[k],
     );
+
     if (selected.length === 0) {
       setTypeError("Select at least one option.");
       return;
@@ -67,51 +71,73 @@ export default function FindAdvisorPage() {
       </p>
 
       <form onSubmit={onSubmit} noValidate>
-        <Question
-          legend="What are you looking for?"
-          tagName="fieldset"
-          hasError={!!typeError}
-        >
-          <CheckboxGroup>
-            <Checkbox
-              id="epc"
-              label="Energy Performance Certificate (EPC) Assessor"
-              hintText="To help you get an EPC for your building"
-              checked={types.epc}
-              onChange={() => onCheckboxChange("epc")}
-            />
-            <Checkbox
-              id="section63"
-              label="Section 63 Advisor"
-              hintText="To help you comply with the requirements of section 63 of The Climate Change(Scotland) Act 2009"
-              checked={types.section63}
-              onChange={() => onCheckboxChange("section63")}
-            />
-            <Checkbox
-              id="dec"
-              label="Display Energy Certificate (DEC) Assessor"
-              hintText="To help you get a Display Energy Certificate"
-              checked={types.dec}
-              onChange={() => onCheckboxChange("dec")}
-            />
-          </CheckboxGroup>
-
-          {typeError && <p className="ds_error-message ds_mt-2">{typeError}</p>}
-        </Question>
-
-        <TextInput
-          id="postcode"
-          label="Postcode"
-          hintText="Example: EH1 2NG"
-          width="fixed-20"
-          autoComplete="postal-code"
-          value={postcode}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            setPostcode(e.target.value)
+        <div
+          className={
+            typeError ? "ds_question ds_question--error" : "ds_question"
           }
-          hasError={!!error}
-        />
-        {error && <p className="ds_error-message ds_mt-2">{error}</p>}
+        >
+          <Question legend="What are you looking for?" tagName="fieldset">
+            <CheckboxGroup
+              aria-describedby={typeError ? typeErrorId : undefined}
+            >
+              <Checkbox
+                id="epc"
+                label="Energy Performance Certificate (EPC) Assessor"
+                hintText="To help you get an EPC for your building"
+                checked={types.epc}
+                onChange={() => onCheckboxChange("epc")}
+              />
+              <Checkbox
+                id="section63"
+                label="Section 63 Advisor"
+                hintText="To help you comply with the requirements of section 63 of The Climate Change(Scotland) Act 2009"
+                checked={types.section63}
+                onChange={() => onCheckboxChange("section63")}
+              />
+              <Checkbox
+                id="dec"
+                label="Display Energy Certificate (DEC) Assessor"
+                hintText="To help you get a Display Energy Certificate"
+                checked={types.dec}
+                onChange={() => onCheckboxChange("dec")}
+              />
+            </CheckboxGroup>
+          </Question>
+
+          {typeError && (
+            <p id={typeErrorId} className="ds_question__error-message ds_mt-1">
+              <span className="visually-hidden">Error:</span> {typeError}
+            </p>
+          )}
+        </div>
+
+        <div
+          className={error ? "ds_question ds_question--error" : "ds_question"}
+        >
+          <TextInput
+            id="postcode"
+            label="Postcode"
+            hintText="Example: EH1 2NG"
+            width="fixed-20"
+            autoComplete="postal-code"
+            value={postcode}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+              setPostcode(e.target.value);
+              setError(null);
+            }}
+            aria-describedby={error ? postcodeErrorId : undefined}
+            className={error ? "ds_input--error" : undefined}
+          />
+
+          {error && (
+            <p
+              id={postcodeErrorId}
+              className="ds_question__error-message ds_mt-1"
+            >
+              <span className="visually-hidden">Error:</span> {error}
+            </p>
+          )}
+        </div>
 
         <Button type="submit" className="ds_mt-4">
           Continue
