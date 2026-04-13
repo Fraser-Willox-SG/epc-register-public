@@ -13,6 +13,9 @@
   @page {
     margin: 0;
   }
+  * {
+    overflow: visible !important;
+  }
 
   .ds_wrapper {
     padding: 0;
@@ -74,6 +77,7 @@
 
   .bg-white {
     background-color: #ffffff;
+    color: black;
   }
 
   .row-2col {
@@ -104,16 +108,6 @@
     margin: 0;
   }
 
-  /*     ////////////////////////////     */
-  /* Print: Energy Performance Certificate Styles */
-  /*     ////////////////////////////     */
-
-  #epc-dom-document-usage {
-    min-height: 440px;
-  }
-  #epc-certificate-overview svg {
-    max-height: 323px;
-  }
   /*     ////////////////////////////     */
   /* Print: HEM Energy Performance Certificate Styles */
   /*     ////////////////////////////     */
@@ -160,22 +154,18 @@
   /*     ////////////////////////////     */
 
   .dec-operational-rating svg {
-    max-height: 522px;
+    max-height: 500px;
   }
 
   #dec-previous-ratings {
-    background: white;
     color: black;
   }
 
   #dec-technical-information {
-    background-color: #daeef7;
     color: black;
-    height: 549px;
   }
 
   #dec-administrative-information {
-    background: white;
     color: black;
     border-bottom: none;
   }
@@ -184,19 +174,12 @@
   /* Print: Advisory Report Styles */
   /*     ////////////////////////////     */
 
-  #ar-introduction {
-    height: 385px;
-  }
-
-  #ar-next-steps {
-    height: 1123px;
-  }
-
   .ar-recommendations-table {
     padding-top: 16px;
   }
 
   #ar-glossary {
-    border: 1px solid white; /* Temp solution for print end border*/
+    border: 1px solid white;
+    /* Temp solution for print end border*/
   }
 }

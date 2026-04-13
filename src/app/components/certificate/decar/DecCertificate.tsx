@@ -90,7 +90,7 @@ export default function DecCertificate({ data }: Props) {
         </p>
       </div>
 
-      <div className="cert-section bg-blue">
+      <div className="cert-section bg-blue print-no-break">
         <h3 id="dec-operational-rating">
           Energy Performance Operational Rating
         </h3>
@@ -105,7 +105,7 @@ export default function DecCertificate({ data }: Props) {
         )}
       </div>
 
-      <div className="print-only-row-2col">
+      <div className="print-only-row-2col print-no-break">
         {current && (
           <div id="dec-co2-emissions" className="cert-section">
             <h3>Total CO₂ Emissions</h3>
@@ -140,13 +140,19 @@ export default function DecCertificate({ data }: Props) {
         </div>
       </div>
 
-      <div id="dec-technical-information" className="cert-section bg-white">
+      <div
+        id="dec-technical-information"
+        className="cert-section bg-white print-no-break"
+      >
         <DecTechnicalInformation
           technical={data.technicalInformation ?? null}
         />
       </div>
 
-      <div id="dec-administrative-information" className="cert-section bg-blue">
+      <div
+        id="dec-administrative-information"
+        className="cert-section bg-blue print-no-break"
+      >
         <DecAdministrativeInformation
           administrative={data.administrativeInformation}
           assessor={data.assessor}
