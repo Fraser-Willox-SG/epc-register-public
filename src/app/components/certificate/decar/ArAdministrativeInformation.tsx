@@ -32,7 +32,7 @@ export default function ArAdministrativeInformation({ data }: Props) {
   const assessorName = assessor ? getAssessorDisplayName(assessor) : "";
 
   return (
-    <div className="cert-section bg-white">
+    <div className="cert-section bg-white print-no-break">
       {/* Building Occupier + Type */}
       <dl className="summary-list">
         <div className="row-2col border-b-grey">

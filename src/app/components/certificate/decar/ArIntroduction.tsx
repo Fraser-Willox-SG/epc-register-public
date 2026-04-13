@@ -29,7 +29,7 @@ export default function ArIntroduction({ data }: Props) {
     inspectionType.toLowerCase() === "physical" && !!surveyDate;
 
   return (
-    <section className="cert-section bg-grey" id="ar-introduction">
+    <section className="cert-section bg-grey print-no-break">
       <h2>Introduction</h2>
 
       {/* Main policy-style paragraph */}

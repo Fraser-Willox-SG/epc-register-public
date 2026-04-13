@@ -130,7 +130,7 @@ export default function ActionPlanPage() {
               key="rrn"
               id="rrn-input"
               label="Report Reference Number (RRN)"
-              hintText="Enter the 16-character RRN"
+              hintText="Enter the 20-character RRN"
               width="fixed-20"
               value={rrn}
               onChange={(e: ChangeEvent<HTMLInputElement>) =>

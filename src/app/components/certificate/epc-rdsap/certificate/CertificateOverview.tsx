@@ -174,7 +174,7 @@ export default function CertificateOverview({
         distribution.
       </div>
 
-      <div className="cert-section bg-blue" id="epc-dom-document-usage">
+      <div className="cert-section bg-blue print-no-break">
         <p>You can use this document to:</p>
         <ul>
           <li>
