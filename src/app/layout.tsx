@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import SiteHeader from "@scottish-government/designsystem-react/src/components/SiteHeader/SiteHeader";
-import "@scottish-government/design-system/dist/css/design-system.css";
+// import SiteHeader from "@scottish-government/designsystem-react/dist/components/SiteHeader/SiteHeader";
+import AppHeader from "./components/AppHeader";
+import AppFooter from "./components/AppFooter";
+// import "@scottish-government/design-system/dist/css/design-system.css";
 
 import "./globals.css";
+import "./globals-print.css";
+import "./epc-old.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,41 +32,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <SiteHeader
-          logo={{
-            alt: "The Scottish Government",
-            src: "./scottish-government.svg",
-          }}
-          navigationItems={[
-            {
-              href: "/",
-              title: "Energy performance certificate",
-            },
-            {
-              href: "/advisory-report",
-              title: "Display energy certificate / Advisory report",
-            },
-            {
-              href: "/action-plan",
-              title: "Action plan",
-            },
-            {
-              href: "/data-extracts",
-              title: "Data extracts",
-            },
-            {
-              href: "/find-advisor",
-              title: "Find an assessor or advisor ",
-            },
-          ]}
-          // phaseBanner={{
-          //   phaseName: 'Beta'
-          // }}
-          // siteSearch
-          siteTitle="Energy Certificates"
-        />
-
-        {children}
+        <div className="ds_page">
+          <AppHeader />
+          <div className="ds_page__middle">{children}</div>
+          <div className="ds_page__bottom">
+            <AppFooter />
+          </div>
+        </div>
       </body>
     </html>
   );

@@ -1,0 +1,185 @@
+/* 
+////////////////////////////////////////////////
+/////////        Print Styling         /////////
+////////////////////////////////////////////////
+*/
+
+.print-only {
+  display: none !important;
+}
+
+/* Print Styling ONLY */
+@media print {
+  @page {
+    margin: 0;
+  }
+  * {
+    overflow: visible !important;
+  }
+
+  .ds_wrapper {
+    padding: 0;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .print-no-break {
+    break-inside: avoid;
+    page-break-inside: avoid; /* older browsers */
+  }
+
+  .print-page-break {
+    break-before: page; /* modern browsers */
+    page-break-before: always; /* fallback */
+  }
+
+  .print-padding-top {
+    padding-top: 30px;
+  }
+
+  header,
+  nav[aria-label="Main"],
+  footer {
+    display: none !important;
+  }
+  .ds_layout {
+    display: block !important;
+  }
+
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    color: #000;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* ///////////////////////////// */
+  /* Certificate panel backgrounds */
+  /* ///////////////////////////// */
+
+  .bg-dark-blue {
+    background-color: #0065bd;
+    color: #fff;
+  }
+
+  /* Background white for print - for Ink and UX purposes */
+  .bg-blue,
+  .bg-grey {
+    background-color: #ffffff; /* Previously #daeef7, and #ececec */
+  }
+
+  .bg-white {
+    background-color: #ffffff;
+    color: black;
+  }
+
+  .row-2col {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+
+  .row-2col--value {
+    grid-template-columns: 1fr auto;
+  }
+  .row-2col--value > :last-child {
+    justify-self: end;
+  }
+
+  .print-only-row-2col {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+  }
+
+  .print-only-row-2col > :nth-child(2) {
+    border-left: 1px solid #ccc;
+  }
+
+  .print-to-inline-span {
+    display: inline;
+    margin: 0;
+  }
+
+  /*     ////////////////////////////     */
+  /* Print: HEM Energy Performance Certificate Styles */
+  /*     ////////////////////////////     */
+  #hem-epc-energy-cost-rating-is-calculated {
+    height: 178px;
+    display: flex;
+    align-items: center;
+  }
+
+  #hem-epc-heat-system-rating svg,
+  #hem-epc-heat-retention-rating svg {
+    max-height: 377px;
+  }
+
+  .hem-epc-band-legend-print-2col ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(4, auto); /* 8 items -> 4 rows per column */
+    grid-auto-flow: column; /* fill down, then next column */
+    column-gap: 24px;
+    row-gap: 0px;
+  }
+
+  .hem-epc-band-legend-print-2col li {
+    margin: 0;
+  }
+
+  #hem-br-estimated-energy-costs {
+    height: 605px;
+  }
+
+  #hem-br-potential-improvements {
+    height: 776px;
+  }
+
+  #hem-epc-other-property-certificates,
+  #hem-br-potential-improvements-list,
+  #hem-epc-heating-system-alternatives {
+    padding-top: 16px;
+  }
+
+  /*     ////////////////////////////     */
+  /* Print: DEC Energy Certificate Styles */
+  /*     ////////////////////////////     */
+
+  .dec-operational-rating svg {
+    max-height: 500px;
+  }
+
+  #dec-previous-ratings {
+    color: black;
+  }
+
+  #dec-technical-information {
+    color: black;
+  }
+
+  #dec-administrative-information {
+    color: black;
+    border-bottom: none;
+  }
+
+  /*     ////////////////////////////     */
+  /* Print: Advisory Report Styles */
+  /*     ////////////////////////////     */
+
+  .ar-recommendations-table {
+    padding-top: 16px;
+  }
+
+  #ar-glossary {
+    border: 1px solid white;
+    /* Temp solution for print end border*/
+  }
+}
