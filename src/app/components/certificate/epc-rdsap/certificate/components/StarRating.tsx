@@ -1,9 +1,9 @@
 type StarRatingProps = {
-  value: number | null | undefined; // 0–5, null/undefined => —
+  value: number | null | undefined;
   outOf?: 5;
   naText?: string;
   colorize?: boolean;
-  size?: number; // px
+  size?: number;
 };
 
 const STAR_LABELS = [
@@ -58,7 +58,9 @@ export default function StarRating({
   colorize = true,
   size = 24,
 }: StarRatingProps) {
-  if (value === null || value === undefined) return <span>{naText}</span>;
+  if (value === null || value === undefined) {
+    return <span>{naText}</span>;
+  }
 
   const n = Math.max(0, Math.min(outOf, Math.round(value))) as
     | 0
@@ -67,6 +69,7 @@ export default function StarRating({
     | 3
     | 4
     | 5;
+
   const label = n >= 1 ? STAR_LABELS[n - 1] : "Not rated";
 
   const fill =
@@ -74,16 +77,18 @@ export default function StarRating({
       ? STAR_FILL_BY_RATING[n as 1 | 2 | 3 | 4 | 5]
       : "currentColor";
 
+  const accessibleLabel = `${n} out of ${outOf} stars${n ? `, ${label}` : ""}`;
+
   return (
     <span
-      aria-label={`${n} out of ${outOf} stars${n ? `, ${label}` : ""}`}
+      role="img"
+      aria-label={accessibleLabel}
       title={`${n}/${outOf}`}
+      style={{ display: "inline-flex", gap: 2, verticalAlign: "middle" }}
     >
-      <span style={{ display: "inline-flex", gap: 2, verticalAlign: "middle" }}>
-        {Array.from({ length: outOf }, (_, i) => (
-          <Star key={i} filled={i < n} fill={fill} size={size} />
-        ))}
-      </span>
+      {Array.from({ length: outOf }, (_, i) => (
+        <Star key={i} filled={i < n} fill={fill} size={size} />
+      ))}
     </span>
   );
 }

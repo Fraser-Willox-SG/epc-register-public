@@ -75,6 +75,7 @@ export default function CepcPaybackAndSavingsExplained({ data }: Props) {
                 <BandBadge
                   band={data.currentEnergyEfficiencyBand.toUpperCase() as Band}
                   title={`EPC band ${data.currentEnergyEfficiencyBand.toUpperCase()}`}
+                  size={44}
                 />{" "}
                 (and a rating of {data.currentEnergyEfficiencyRating}).
               </>

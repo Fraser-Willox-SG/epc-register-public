@@ -38,7 +38,7 @@ const DEC_FILL_FRACTION: Record<Band, number> = {
 function getBandForRating(rating: number): DecBand {
   const match =
     DEC_BANDS.find((b) =>
-      b.max == null ? rating >= b.min : rating >= b.min && rating <= b.max
+      b.max == null ? rating >= b.min : rating >= b.min && rating <= b.max,
     ) ?? DEC_BANDS[DEC_BANDS.length - 1];
 
   return match;
@@ -111,7 +111,7 @@ export default function DecOperationalRating({
                 height={bandH}
                 fill={COLORS[b.band]}
                 stroke={isActive ? "#000" : COLORS[b.band]}
-                strokeWidth={3}
+                strokeWidth={2}
               />
               {/* band letter */}
               <text
@@ -119,7 +119,10 @@ export default function DecOperationalRating({
                 y={y + bandH / 2 + 6}
                 fontSize="18"
                 fontWeight={700}
-                fill={bandTextColor(b.band)}
+                fill="#ffffff"
+                stroke="#111827"
+                strokeWidth={4}
+                paintOrder="stroke"
               >
                 {b.band}
               </text>
@@ -128,7 +131,11 @@ export default function DecOperationalRating({
                 x={barX + 40}
                 y={y + bandH / 2 + 5}
                 fontSize="13"
-                fill={bandTextColor(b.band)}
+                fontWeight={600}
+                fill="#ffffff"
+                stroke="#111827"
+                strokeWidth={2.25}
+                paintOrder="stroke"
               >
                 {b.rangeLabel}
               </text>
