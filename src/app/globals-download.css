@@ -1,0 +1,41 @@
+#certificate-content {
+  background: #ffffff;
+  color: #000000;
+}
+
+#certificate-content .print-only {
+  display: block !important;
+}
+
+#certificate-content .no-print {
+  display: none !important;
+}
+
+#certificate-content .row-2col {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr;
+  align-items: start;
+}
+
+#certificate-content .row-2col--value {
+  grid-template-columns: 1fr auto;
+}
+
+#certificate-content .row-2col--value > :last-child {
+  justify-self: end;
+}
+
+#certificate-content .bg-dark-blue {
+  background-color: #0065bd;
+  color: #fff;
+}
+
+#certificate-content .bg-blue,
+#certificate-content .bg-grey {
+  background-color: #ffffff;
+}
+
+#certificate-content .bg-white {
+  background-color: #ffffff;
+  color: black;
+}

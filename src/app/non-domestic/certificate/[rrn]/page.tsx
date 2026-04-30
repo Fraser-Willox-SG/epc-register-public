@@ -16,6 +16,7 @@ import ContentsNavDomHem from "@/app/components/certificate/epc-hem/ContentsNavD
 import ContentsNavNonDomRdSap from "@/app/components/certificate/epc-cepc/ContentsNavNonDomRdSap";
 import CepcEpcDocument from "@/app/components/certificate/epc-cepc/CepcEpcDocument";
 import { EpcNonDomCepcDocument } from "@/types/epc-non-dom-cepc";
+import DownloadButton from "@/app/components/DownloadButton";
 
 // Legacy Imports
 // import LegacyEpcDocument from "@/app/components/certificate/epc-legacy/LegacyEpcDocument";
@@ -106,7 +107,13 @@ export default async function NonDomesticCertificatePage({
         {data && (
           <div className="sgds-header-row">
             <p className="ds_lede ds_!_margin-0">{addressSummary}</p>
-            <PrintButton className="ds_button no-print" />
+            <div className="ds_button-group ds_!_margin--0 no-print">
+              <PrintButton className="ds_button ds_button--secondary" />
+              <DownloadButton
+                className="ds_button"
+                filename={`Non-Domestic-EPC-${rrn}.pdf`}
+              />
+            </div>
           </div>
         )}
       </div>

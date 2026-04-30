@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { selfUrl } from "@/app/utils/self-url";
 import PrintButton from "@/app/components/PrintButton";
+import DownloadButton from "@/app/components/DownloadButton";
 
 import type { DomesticCertificateData } from "@/types/sg-epc-dom";
 import { isSapCertificate, isRdSapCertificate } from "@/types/sg-epc-dom";
@@ -104,7 +105,14 @@ export default async function DomesticCertificatePage({
         {data && (
           <div className="sgds-header-row">
             <p className="ds_lede ds_!_margin-0">{addressSummary}</p>
-            <PrintButton className="ds_button no-print" />
+
+            <div className="ds_button-group ds_!_margin--0 no-print">
+              <PrintButton className="ds_button ds_button--secondary" />
+              <DownloadButton
+                className="ds_button"
+                filename={`Domestic-EPC-${rrn}.pdf`}
+              />
+            </div>
           </div>
         )}
       </div>

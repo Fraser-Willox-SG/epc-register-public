@@ -80,6 +80,12 @@ body {
   border: 0;
 }
 
+.certificate-logo {
+  display: block;
+  width: 160px;
+  height: 100px;
+}
+
 /* Summary List */
 .summary-list {
   margin-bottom: 20px;
