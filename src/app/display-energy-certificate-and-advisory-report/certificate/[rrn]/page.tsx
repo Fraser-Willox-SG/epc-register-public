@@ -10,6 +10,7 @@ import { isDecAr } from "@/types/decar";
 
 import DecCertificate from "@/app/components/certificate/decar/DecCertificate";
 import ArCertificate from "@/app/components/certificate/decar/ArCertificate";
+import DownloadButton from "@/app/components/DownloadButton";
 
 type SummaryResponse = ApiEnvelope<DecarSummary>;
 
@@ -90,6 +91,8 @@ export default async function DecarCertificatePage({
   const pageTitle =
     mode === "ar" ? "Advisory Report" : "Display Energy Certificate";
 
+  const downloadFileName = mode === "dec" ? `DEC-${rrn}.pdf` : `AR-${rrn}.pdf`;
+
   return (
     <div className="ds_wrapper">
       <div className="ds_page-header no-print">
@@ -97,7 +100,14 @@ export default async function DecarCertificatePage({
         {data && (
           <div className="sgds-header-row">
             <p className="ds_lede ds_!_margin-0">{addressSummary}</p>
-            <PrintButton className="ds_button no-print" />
+
+            <div className="ds_button-group ds_!_margin--0 no-print">
+              <PrintButton className="ds_button ds_button--secondary" />
+              <DownloadButton
+                className="ds_button"
+                filename={downloadFileName}
+              />
+            </div>
           </div>
         )}
       </div>
@@ -208,17 +218,19 @@ export default async function DecarCertificatePage({
             className="ds_layout__content"
             style={{ border: "1px solid grey" }}
           >
-            {!isDecAr(data) && (
-              <section id="dec-overview">
-                <DecCertificate data={data} />
-              </section>
-            )}
+            <div id="certificate-content">
+              {!isDecAr(data) && (
+                <section id="dec-overview">
+                  <DecCertificate data={data} />
+                </section>
+              )}
 
-            {isDecAr(data) && (
-              <section id="ar-overview">
-                <ArCertificate data={data} />
-              </section>
-            )}
+              {isDecAr(data) && (
+                <section id="ar-overview">
+                  <ArCertificate data={data} />
+                </section>
+              )}
+            </div>
           </main>
         </div>
       ) : null}

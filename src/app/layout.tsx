@@ -7,6 +7,7 @@ import AppFooter from "./components/AppFooter";
 
 import "./globals.css";
 import "./globals-print.css";
+import "./globals-download.css";
 import "./epc-old.css";
 
 const geistSans = Geist({

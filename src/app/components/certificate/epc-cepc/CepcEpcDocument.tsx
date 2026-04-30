@@ -37,33 +37,35 @@ export default function CepcEpcDocument({
 
   return (
     <>
-      <div id="overview">
-        <Header
-          addressLine1={addressLine1}
-          addressLine2={addressLine2}
-          addressLine3={addressLine3}
-          addressLine4={addressLine4 ?? undefined}
-          postcode={postcode}
-          town={town}
-          rrn={rrn}
-          dateOfExpiry={dateOfExpiry}
-          currentBand={currentBand}
-          printTitle="Energy Performance Certificate"
-        />
+      <div id="certificate-content">
+        <div id="overview">
+          <Header
+            addressLine1={addressLine1}
+            addressLine2={addressLine2}
+            addressLine3={addressLine3}
+            addressLine4={addressLine4 ?? undefined}
+            postcode={postcode}
+            town={town}
+            rrn={rrn}
+            dateOfExpiry={dateOfExpiry}
+            currentBand={currentBand}
+            printTitle="Energy Performance Certificate"
+          />
+        </div>
+
+        {/* Non Domestic - Commercial EPC */}
+        <CepcCertificateSummary data={data} />
+
+        {/* Non Domestic - Recommendations Report */}
+        {hasRecommendations && (
+          <>
+            <CepcRecommendationsIntroduction data={data} />
+            <CepcRecommendationsTables data={data} />
+            <CepcPaybackAndSavingsExplained data={data} />
+            <CepcAboutThisReport data={data} />
+          </>
+        )}
       </div>
-
-      {/* Non Domestic - Commercial EPC */}
-      <CepcCertificateSummary data={data} />
-
-      {/* Non Domestic - Recommendations Report */}
-      {hasRecommendations && (
-        <>
-          <CepcRecommendationsIntroduction data={data} />
-          <CepcRecommendationsTables data={data} />
-          <CepcPaybackAndSavingsExplained data={data} />
-          <CepcAboutThisReport data={data} />
-        </>
-      )}
     </>
   );
 }

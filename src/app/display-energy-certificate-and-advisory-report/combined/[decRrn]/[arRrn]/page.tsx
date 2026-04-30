@@ -9,6 +9,7 @@ import { isDec, isDecAr } from "@/types/decar";
 
 import DecCertificate from "@/app/components/certificate/decar/DecCertificate";
 import ArCertificate from "@/app/components/certificate/decar/ArCertificate";
+import DownloadButton from "@/app/components/DownloadButton";
 
 type SummaryResponse = ApiEnvelope<DecarSummary>;
 
@@ -93,7 +94,14 @@ export default async function CombinedDecarCertificatePage({
         {addressSource && (
           <div className="sgds-header-row">
             <p className="ds_lede ds_!_margin-0">{addressSummary}</p>
-            <PrintButton className="ds_button no-print" />
+
+            <div className="ds_button-group ds_!_margin--0 no-print">
+              <PrintButton className="ds_button ds_button--secondary" />
+              <DownloadButton
+                className="ds_button"
+                filename={`DEC-and-AR-${decRrn}-${arRrn}.pdf`}
+              />
+            </div>
           </div>
         )}
       </div>
@@ -183,26 +191,28 @@ export default async function CombinedDecarCertificatePage({
             className="ds_layout__content"
             style={{ border: "1px solid grey" }}
           >
-            {decSummary && (
-              <section id="dec-overview">
-                <DecCertificate data={decSummary} />
-              </section>
-            )}
+            <div id="certificate-content">
+              {decSummary && (
+                <section id="dec-overview">
+                  <DecCertificate data={decSummary} />
+                </section>
+              )}
 
-            {arSummary && (
-              <section id="ar-overview">
-                <ArCertificate data={arSummary} />
-              </section>
-            )}
+              {arSummary && (
+                <section id="ar-overview">
+                  <ArCertificate data={arSummary} />
+                </section>
+              )}
 
-            {hasAnyError && (
-              <div className="ds_inset-text ds_mt-4">
-                <p className="ds_small ds_!-margin-bottom-0">
-                  Some related documents could not be loaded. You may still
-                  print the certificates shown above.
-                </p>
-              </div>
-            )}
+              {hasAnyError && (
+                <div className="ds_inset-text ds_mt-4">
+                  <p className="ds_small ds_!-margin-bottom-0">
+                    Some related documents could not be loaded. You may still
+                    print the certificates shown above.
+                  </p>
+                </div>
+              )}
+            </div>
           </main>
         </div>
       )}

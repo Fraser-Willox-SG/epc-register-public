@@ -1,5 +1,6 @@
 import React from "react";
 import { formatIsoDateLong } from "@/app/utils/date";
+import ScottishGovernmentLogo from "@/app/components/certificate/ScottishGovernmentLogo";
 
 type Props = {
   addressLine1: string | undefined;
@@ -67,13 +68,7 @@ export default function CertificateHeader({
 
           <div>
             {" "}
-            <img
-              src="/logo.svg"
-              alt="Scottish Government logo"
-              width={160}
-              height={100}
-              style={{ display: "block" }}
-            />
+            <ScottishGovernmentLogo />
           </div>
 
           {/* I have kept the Energy Rating code so we can change back quickly after User Research, April 2026 */}
