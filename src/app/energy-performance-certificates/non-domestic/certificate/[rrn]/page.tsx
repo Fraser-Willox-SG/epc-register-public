@@ -123,7 +123,10 @@ export default async function NonDomesticCertificatePage({
           <p className="ds_error-message">{error}</p>
           {detail && <pre className="ds_inset-text">{detail}</pre>}
           <p className="ds_mt-4">
-            <Link href="/non-domestic" className="ds_link">
+            <Link
+              href="/energy-performance-certificates/non-domestic"
+              className="ds_link"
+            >
               Back to search
             </Link>
           </p>

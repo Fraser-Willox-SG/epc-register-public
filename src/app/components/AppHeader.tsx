@@ -18,7 +18,11 @@ type DSNavigationItem = {
 };
 
 const NAV_ITEMS: NavItem[] = [
-  { href: "/", label: "Energy Performance Certificate" },
+  { href: "/", label: "Home" },
+  {
+    href: "/energy-performance-certificates",
+    label: "Energy Performance Certificates",
+  },
   {
     href: "/display-energy-certificate-and-advisory-report",
     label: "Display Energy Certificate or Advisory Report",
@@ -49,7 +53,6 @@ export default function AppHeader() {
     }),
   );
 
-  // 🔒 Derive the exact function type required by the DS component
   type ItemProps = React.ComponentProps<typeof SiteNavigation.Item>;
   type LinkAdapterType = NonNullable<ItemProps["linkComponent"]>;
 
@@ -59,12 +62,29 @@ export default function AppHeader() {
     </Link>
   );
 
+  type BrandProps = React.ComponentProps<typeof SiteHeader.Brand>;
+  type BrandLinkType = NonNullable<BrandProps["linkComponent"]>;
+
+  const BrandLink: BrandLinkType = ({ href, children, ...rest }) => (
+    <Link
+      href={href ?? "/"}
+      aria-label="Energy Certificates Home Page"
+      {...rest}
+    >
+      {children ?? null}
+    </Link>
+  );
+
   return (
     <SiteHeader
       navigationItems={navigationItemsForType}
       siteTitle="Energy Certificates"
     >
-      <SiteHeader.Brand homeUrl="/" siteTitle="Energy Certificates">
+      <SiteHeader.Brand
+        homeUrl="/"
+        siteTitle="Energy Certificates"
+        linkComponent={BrandLink}
+      >
         <img
           alt="The Scottish Government"
           src="/scottish-government.svg"
