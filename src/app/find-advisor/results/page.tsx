@@ -18,9 +18,8 @@ function qualificationsFor(t: AdvisorType): string[] {
         "scotlandRdsap",
         "scotlandSapExistingBuilding",
         "scotlandSapNewBuilding",
-        "scotlandNondomesticExistingBuilding ",
-
-        "scotlandNondomesticNewBuilding ",
+        "scotlandNondomesticExistingBuilding",
+        "scotlandNondomesticNewBuilding",
       ];
     case "dec":
       return ["scotlandDecAndAr"];
@@ -142,6 +141,8 @@ export default async function FindAdvisorResultsPage({
   } catch {
     error = `There was a problem retrieving results for ${postcode}.`;
   }
+
+  console.log("Find an assessor rows=", rows);
 
   return (
     <div className="ds_wrapper">
