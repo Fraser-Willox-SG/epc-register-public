@@ -9,24 +9,32 @@ type HubLink = {
 const hubLinks: HubLink[] = [
   {
     href: "/energy-performance-certificates",
-    title: "Energy Performance Certificates (EPCs)",
-    description: "Find EPCs for domestic and non-domestic properties.",
+    title: "Energy Performance Certificate (EPC)",
+    description:
+      "Existing or historical energy certificate for domestic and non-domestic properties.",
   },
   {
     href: "/display-energy-certificate-and-advisory-report",
-    title: "Display Energy Certificates (DECs) and Advisory Reports (ARs)",
-    description: "View energy usage information for non-domestic buildings.",
+    title: "Display Energy Certificate (DEC) and Advisory Report (AR)",
+    description:
+      "Existing or historical energy certificate or advisory report for public buildings.",
   },
   {
     href: "/action-plan",
     title: "Action Plans",
-    description: "View action plans for larger commercial buildings.",
+    description:
+      "Existing or historical energy improvement plans for large commercial buildings.",
+  },
+  {
+    href: "/data-extracts",
+    title: "Data Extracts",
+    description: "Open data about domestic and non-domestic EPCs.",
   },
   {
     href: "/find-advisor",
     title: "Find an assessor or advisor",
     description:
-      "Find someone who can help if a property needs a new or updated EPC.",
+      "If a property needs a new or updated EPC, then here you can find an assessor or advisor to help you.",
   },
 ];
 
@@ -34,12 +42,11 @@ export default function HomePage() {
   return (
     <main className="ds_wrapper">
       <header className="ds_page-header">
-        <h1>Scottish Energy Certificates</h1>
+        <h1>Scottish EPC Register</h1>
       </header>
 
       <p>
-        Use this service to find energy performance information for properties
-        and buildings in Scotland.
+        You can use this Scottish EPC Register website to find the following:
       </p>
 
       <section aria-labelledby="services-heading">
@@ -50,7 +57,7 @@ export default function HomePage() {
         <ul className="ds_no-bullets">
           {hubLinks.map(({ href, title, description }) => (
             <li key={href} className="ds_!_margin-bottom--2">
-              <h3 className="ds_h4 ds_!_margin-bottom--1">
+              <h3 className="ds_h4 ds_!_margin-bottom--0">
                 <Link href={href} className="ds_link">
                   {title}
                 </Link>
@@ -71,13 +78,13 @@ export default function HomePage() {
 
         <p>
           If information does not appear for the address you are looking for
-          after a postcode search, the property or building may not have an EPC,
-          DEC, AR or Action Plan.
+          following a postcode search, then the property or building may not
+          have an EPC, DEC, AR or Action Plan.
         </p>
 
         <p>
           If a document is not found using a specific Report Reference Number
-          (RRN), it may have been cancelled or withdrawn.
+          (RRN), then this may mean this has been cancelled or withdrawn.
         </p>
       </section>
 
@@ -87,13 +94,14 @@ export default function HomePage() {
         </h2>
 
         <p>
-          This public website does not display information relating to Green
-          Deal. For help with this, contact the team.
+          Our public facing website does not display any information relating to
+          Green Deal. If you require information relating to this, please
+          contact our team for assistance.
         </p>
 
         <p>
-          If you need help using this website, or something you expected to see
-          does not appear, email{" "}
+          If you need help using this website, or what you expect to see does
+          not appear then you can e-mail our team at{" "}
           <a href="mailto:epcenquiries@gov.scot" className="ds_link">
             epcenquiries@gov.scot
           </a>
