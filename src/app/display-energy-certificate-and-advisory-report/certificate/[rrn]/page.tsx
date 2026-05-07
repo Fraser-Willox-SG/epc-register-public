@@ -153,39 +153,27 @@ export default async function DecarCertificatePage({
                 ariaLabel="Display Energy Certificate navigation"
               >
                 <ContentsNav.Item href="#dec-overview">
-                  <span aria-hidden="true">
-                    <strong>DEC:</strong>{" "}
-                  </span>
+                  <span aria-hidden="true">DEC: </span>
                   Display Energy Certificate
                 </ContentsNav.Item>
                 <ContentsNav.Item href="#dec-operational-rating">
-                  <span aria-hidden="true">
-                    <strong>DEC:</strong>{" "}
-                  </span>
+                  <span aria-hidden="true">DEC: </span>
                   Energy Performance Operational Rating
                 </ContentsNav.Item>
                 <ContentsNav.Item href="#dec-co2-emissions">
-                  <span aria-hidden="true">
-                    <strong>DEC:</strong>{" "}
-                  </span>
+                  <span aria-hidden="true">DEC: </span>
                   Total CO2 Emissions
                 </ContentsNav.Item>
                 <ContentsNav.Item href="#dec-previous-ratings">
-                  <span aria-hidden="true">
-                    <strong>DEC:</strong>{" "}
-                  </span>
+                  <span aria-hidden="true">DEC: </span>
                   Previous Operational Ratings
                 </ContentsNav.Item>
                 <ContentsNav.Item href="#dec-technical-information">
-                  <span aria-hidden="true">
-                    <strong>DEC:</strong>{" "}
-                  </span>
+                  <span aria-hidden="true">DEC: </span>
                   Technical Information
                 </ContentsNav.Item>
                 <ContentsNav.Item href="#dec-administrative-information">
-                  <span aria-hidden="true">
-                    <strong>DEC:</strong>{" "}
-                  </span>
+                  <span aria-hidden="true">DEC: </span>
                   Administrative Information
                 </ContentsNav.Item>
               </ContentsNav>
@@ -197,33 +185,23 @@ export default async function DecarCertificatePage({
                 ariaLabel="Advisory Report navigation"
               >
                 <ContentsNav.Item href="#ar-overview">
-                  <span aria-hidden="true">
-                    <strong>AR:</strong>{" "}
-                  </span>
+                  <span aria-hidden="true">AR: </span>
                   Advisory Report
                 </ContentsNav.Item>
                 <ContentsNav.Item href="#ar-background">
-                  <span aria-hidden="true">
-                    <strong>AR:</strong>{" "}
-                  </span>
+                  <span aria-hidden="true">AR: </span>
                   Background
                 </ContentsNav.Item>
                 <ContentsNav.Item href="#ar-recommendations">
-                  <span aria-hidden="true">
-                    <strong>AR:</strong>{" "}
-                  </span>
+                  <span aria-hidden="true">AR: </span>
                   Recommendations
                 </ContentsNav.Item>
                 <ContentsNav.Item href="#ar-next-steps">
-                  <span aria-hidden="true">
-                    <strong>AR:</strong>{" "}
-                  </span>
+                  <span aria-hidden="true">AR: </span>
                   Next steps
                 </ContentsNav.Item>
                 <ContentsNav.Item href="#ar-glossary">
-                  <span aria-hidden="true">
-                    <strong>AR:</strong>{" "}
-                  </span>
+                  <span aria-hidden="true">AR: </span>
                   Glossary
                 </ContentsNav.Item>
               </ContentsNav>

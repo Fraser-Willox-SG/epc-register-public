@@ -170,22 +170,22 @@ export default async function CombinedDecarCertificatePage({
               {hasDec && (
                 <>
                   <ContentsNav.Item href="#dec-overview">
-                    <strong>DEC:</strong> Display Energy Certificate
+                    DEC: Display Energy Certificate
                   </ContentsNav.Item>
                   <ContentsNav.Item href="#dec-operational-rating">
-                    <strong>DEC:</strong> Energy Performance Operational Rating
+                    DEC: Energy Performance Operational Rating
                   </ContentsNav.Item>
                   <ContentsNav.Item href="#dec-co2-emissions">
-                    <strong>DEC:</strong> Total CO2 Emissions
+                    DEC: Total CO2 Emissions
                   </ContentsNav.Item>
                   <ContentsNav.Item href="#dec-previous-ratings">
-                    <strong>DEC:</strong> Previous Operational Ratings
+                    DEC: Previous Operational Ratings
                   </ContentsNav.Item>
                   <ContentsNav.Item href="#dec-technical-information">
-                    <strong>DEC:</strong> Technical Information
+                    DEC: Technical Information
                   </ContentsNav.Item>
                   <ContentsNav.Item href="#dec-administrative-information">
-                    <strong>DEC:</strong> Administrative Information
+                    DEC: Administrative Information
                   </ContentsNav.Item>
                 </>
               )}
@@ -193,19 +193,19 @@ export default async function CombinedDecarCertificatePage({
               {hasAr && (
                 <>
                   <ContentsNav.Item href="#ar-overview">
-                    <strong>AR:</strong> Advisory Report
+                    AR: Advisory Report
                   </ContentsNav.Item>
                   <ContentsNav.Item href="#ar-background">
-                    <strong>AR:</strong> Background
+                    AR: Background
                   </ContentsNav.Item>
                   <ContentsNav.Item href="#ar-recommendations">
-                    <strong>AR:</strong> Recommendations
+                    AR: Recommendations
                   </ContentsNav.Item>
                   <ContentsNav.Item href="#ar-next-steps">
-                    <strong>AR:</strong> Next steps
+                    AR: Next steps
                   </ContentsNav.Item>
                   <ContentsNav.Item href="#ar-glossary">
-                    <strong>AR:</strong> Glossary
+                    AR: Glossary
                   </ContentsNav.Item>
                 </>
               )}
