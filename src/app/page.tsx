@@ -17,7 +17,7 @@ const hubLinks: HubLink[] = [
     href: "/display-energy-certificate-and-advisory-report",
     title: "Display Energy Certificate (DEC) and Advisory Report (AR)",
     description:
-      "Existing or historical energy certificate or advisory report for public buildings.",
+      "Existing or historical energy certificate or advisory report for non-domestic buildings.",
   },
   {
     href: "/action-plan",
@@ -50,10 +50,6 @@ export default function HomePage() {
       </p>
 
       <section aria-labelledby="services-heading">
-        <h2 id="services-heading" className="ds_h3">
-          Services
-        </h2>
-
         <ul className="ds_no-bullets">
           {hubLinks.map(({ href, title, description }) => (
             <li key={href} className="ds_!_margin-bottom--2">
@@ -79,12 +75,13 @@ export default function HomePage() {
         <p>
           If information does not appear for the address you are looking for
           following a postcode search, then the property or building may not
-          have an EPC, DEC, AR or Action Plan.
+          have a certificate.
         </p>
 
         <p>
-          If a document is not found using a specific Report Reference Number
-          (RRN), then this may mean this has been cancelled or withdrawn.
+          If a document is not found when searching using the Report Reference
+          Number, this may mean that it has been cancelled or withdrawn. Please
+          contact us if you require further information.
         </p>
       </section>
 
@@ -94,9 +91,9 @@ export default function HomePage() {
         </h2>
 
         <p>
-          Our public facing website does not display any information relating to
-          Green Deal. If you require information relating to this, please
-          contact our team for assistance.
+          Our public facing website does not display Green Deal Advice Reports
+          or Green Deal Improvement Packages. If you require information
+          relating to this, please contact our team for assistance.
         </p>
 
         <p>

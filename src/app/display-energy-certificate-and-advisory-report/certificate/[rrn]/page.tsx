@@ -12,6 +12,8 @@ import DecCertificate from "@/app/components/certificate/decar/DecCertificate";
 import ArCertificate from "@/app/components/certificate/decar/ArCertificate";
 import DownloadButton from "@/app/components/DownloadButton";
 
+import { formatIsoDateLong, isExpiredDate } from "@/app/utils/date";
+
 type SummaryResponse = ApiEnvelope<DecarSummary>;
 
 function getViewMode(summary: DecarSummary): "dec" | "ar" {
@@ -93,6 +95,11 @@ export default async function DecarCertificatePage({
 
   const downloadFileName = mode === "dec" ? `DEC-${rrn}.pdf` : `AR-${rrn}.pdf`;
 
+  const isExpired = data ? isExpiredDate(data.dateOfExpiry) : false;
+
+  const expiredMessageLabel =
+    mode === "ar" ? "This Advisory Report" : "This DEC";
+
   return (
     <div className="ds_wrapper">
       <div className="ds_page-header no-print">
@@ -109,6 +116,15 @@ export default async function DecarCertificatePage({
               />
             </div>
           </div>
+        )}
+
+        {data?.dateOfExpiry && isExpired && (
+          <p className="attention-message ds_question__error-message ds_mt-1">
+            {expiredMessageLabel} expired on{" "}
+            {formatIsoDateLong(data.dateOfExpiry)} and is available for
+            information only. A new certificate will be required for any
+            official purposes.
+          </p>
         )}
       </div>
 
