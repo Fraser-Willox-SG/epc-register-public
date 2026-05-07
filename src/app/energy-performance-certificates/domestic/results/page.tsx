@@ -25,7 +25,10 @@ export default async function DomesticResultsPage({
         <p className="ds_error-message">Postcode is required.</p>
 
         <p className="ds_mt-4">
-          <Link href="/domestic" className="ds_link">
+          <Link
+            href="/energy-performance-certificates/domestic"
+            className="ds_link"
+          >
             Back to search
           </Link>
         </p>
@@ -71,7 +74,10 @@ export default async function DomesticResultsPage({
         <>
           <p className="ds_error-message">{error}</p>
           <p className="ds_mt-4">
-            <Link href="/domestic" className="ds_link">
+            <Link
+              href="/energy-performance-certificates/domestic"
+              className="ds_link"
+            >
               Back to search
             </Link>
           </p>
@@ -82,7 +88,10 @@ export default async function DomesticResultsPage({
             <p>No results found for {postcode.toUpperCase()}.</p>
           </div>
           <p className="ds_mt-4">
-            <Link href="/domestic" className="ds_link">
+            <Link
+              href="/energy-performance-certificates/domestic"
+              className="ds_link"
+            >
               Back to search
             </Link>
           </p>
@@ -93,9 +102,9 @@ export default async function DomesticResultsPage({
           rows={rows}
           page={page}
           pageSize={7}
-          resultsPath="/domestic/results"
+          resultsPath="/energy-performance-certificates/domestic/results"
           certificateHref={(rrn) =>
-            `/domestic/certificate/${encodeURIComponent(rrn)}`
+            `/energy-performance-certificates/domestic/certificate/${encodeURIComponent(rrn)}`
           }
           ratingVariant="energy"
         />

@@ -10,6 +10,9 @@ import { isDecAr } from "@/types/decar";
 
 import DecCertificate from "@/app/components/certificate/decar/DecCertificate";
 import ArCertificate from "@/app/components/certificate/decar/ArCertificate";
+import DownloadButton from "@/app/components/DownloadButton";
+
+import { formatIsoDateLong, isExpiredDate } from "@/app/utils/date";
 
 type SummaryResponse = ApiEnvelope<DecarSummary>;
 
@@ -90,6 +93,13 @@ export default async function DecarCertificatePage({
   const pageTitle =
     mode === "ar" ? "Advisory Report" : "Display Energy Certificate";
 
+  const downloadFileName = mode === "dec" ? `DEC-${rrn}.pdf` : `AR-${rrn}.pdf`;
+
+  const isExpired = data ? isExpiredDate(data.dateOfExpiry) : false;
+
+  const expiredMessageLabel =
+    mode === "ar" ? "This Advisory Report" : "This DEC";
+
   return (
     <div className="ds_wrapper">
       <div className="ds_page-header no-print">
@@ -97,8 +107,24 @@ export default async function DecarCertificatePage({
         {data && (
           <div className="sgds-header-row">
             <p className="ds_lede ds_!_margin-0">{addressSummary}</p>
-            <PrintButton className="ds_button no-print" />
+
+            <div className="ds_button-group ds_!_margin--0 no-print">
+              <PrintButton className="ds_button ds_button--secondary" />
+              <DownloadButton
+                className="ds_button"
+                filename={downloadFileName}
+              />
+            </div>
           </div>
+        )}
+
+        {data?.dateOfExpiry && isExpired && (
+          <p className="attention-message ds_question__error-message ds_mt-1">
+            {expiredMessageLabel} expired on{" "}
+            {formatIsoDateLong(data.dateOfExpiry)} and is available for
+            information only. A new certificate will be required for any
+            official purposes.
+          </p>
         )}
       </div>
 
@@ -127,39 +153,27 @@ export default async function DecarCertificatePage({
                 ariaLabel="Display Energy Certificate navigation"
               >
                 <ContentsNav.Item href="#dec-overview">
-                  <span aria-hidden="true">
-                    <strong>DEC:</strong>{" "}
-                  </span>
+                  <span aria-hidden="true">DEC: </span>
                   Display Energy Certificate
                 </ContentsNav.Item>
                 <ContentsNav.Item href="#dec-operational-rating">
-                  <span aria-hidden="true">
-                    <strong>DEC:</strong>{" "}
-                  </span>
+                  <span aria-hidden="true">DEC: </span>
                   Energy Performance Operational Rating
                 </ContentsNav.Item>
                 <ContentsNav.Item href="#dec-co2-emissions">
-                  <span aria-hidden="true">
-                    <strong>DEC:</strong>{" "}
-                  </span>
+                  <span aria-hidden="true">DEC: </span>
                   Total CO2 Emissions
                 </ContentsNav.Item>
                 <ContentsNav.Item href="#dec-previous-ratings">
-                  <span aria-hidden="true">
-                    <strong>DEC:</strong>{" "}
-                  </span>
+                  <span aria-hidden="true">DEC: </span>
                   Previous Operational Ratings
                 </ContentsNav.Item>
                 <ContentsNav.Item href="#dec-technical-information">
-                  <span aria-hidden="true">
-                    <strong>DEC:</strong>{" "}
-                  </span>
+                  <span aria-hidden="true">DEC: </span>
                   Technical Information
                 </ContentsNav.Item>
                 <ContentsNav.Item href="#dec-administrative-information">
-                  <span aria-hidden="true">
-                    <strong>DEC:</strong>{" "}
-                  </span>
+                  <span aria-hidden="true">DEC: </span>
                   Administrative Information
                 </ContentsNav.Item>
               </ContentsNav>
@@ -171,33 +185,23 @@ export default async function DecarCertificatePage({
                 ariaLabel="Advisory Report navigation"
               >
                 <ContentsNav.Item href="#ar-overview">
-                  <span aria-hidden="true">
-                    <strong>AR:</strong>{" "}
-                  </span>
+                  <span aria-hidden="true">AR: </span>
                   Advisory Report
                 </ContentsNav.Item>
                 <ContentsNav.Item href="#ar-background">
-                  <span aria-hidden="true">
-                    <strong>AR:</strong>{" "}
-                  </span>
+                  <span aria-hidden="true">AR: </span>
                   Background
                 </ContentsNav.Item>
                 <ContentsNav.Item href="#ar-recommendations">
-                  <span aria-hidden="true">
-                    <strong>AR:</strong>{" "}
-                  </span>
+                  <span aria-hidden="true">AR: </span>
                   Recommendations
                 </ContentsNav.Item>
                 <ContentsNav.Item href="#ar-next-steps">
-                  <span aria-hidden="true">
-                    <strong>AR:</strong>{" "}
-                  </span>
+                  <span aria-hidden="true">AR: </span>
                   Next steps
                 </ContentsNav.Item>
                 <ContentsNav.Item href="#ar-glossary">
-                  <span aria-hidden="true">
-                    <strong>AR:</strong>{" "}
-                  </span>
+                  <span aria-hidden="true">AR: </span>
                   Glossary
                 </ContentsNav.Item>
               </ContentsNav>
@@ -208,17 +212,19 @@ export default async function DecarCertificatePage({
             className="ds_layout__content"
             style={{ border: "1px solid grey" }}
           >
-            {!isDecAr(data) && (
-              <section id="dec-overview">
-                <DecCertificate data={data} />
-              </section>
-            )}
+            <div id="certificate-content">
+              {!isDecAr(data) && (
+                <section id="dec-overview">
+                  <DecCertificate data={data} />
+                </section>
+              )}
 
-            {isDecAr(data) && (
-              <section id="ar-overview">
-                <ArCertificate data={data} />
-              </section>
-            )}
+              {isDecAr(data) && (
+                <section id="ar-overview">
+                  <ArCertificate data={data} />
+                </section>
+              )}
+            </div>
           </main>
         </div>
       ) : null}

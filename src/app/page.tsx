@@ -1,87 +1,110 @@
-"use client";
+import Link from "next/link";
 
-import { useState, FormEvent, ChangeEvent } from "react";
-import { useRouter } from "next/navigation";
+type HubLink = {
+  href: string;
+  title: string;
+  description: string;
+};
 
-import Button from "@scottish-government/designsystem-react/dist/components/Button/Button";
-import Question from "@scottish-government/designsystem-react/dist/components/Question/Question";
-import RadioGroup from "@scottish-government/designsystem-react/dist/components/RadioButton/RadioGroup";
-import RadioButton from "@scottish-government/designsystem-react/dist/components/RadioButton/RadioButton";
+const hubLinks: HubLink[] = [
+  {
+    href: "/energy-performance-certificates",
+    title: "Energy Performance Certificate (EPC)",
+    description:
+      "Existing or historical energy certificate for domestic and non-domestic properties.",
+  },
+  {
+    href: "/display-energy-certificate-and-advisory-report",
+    title: "Display Energy Certificate (DEC) and Advisory Report (AR)",
+    description:
+      "Existing or historical energy certificate or advisory report for non-domestic buildings.",
+  },
+  {
+    href: "/action-plan",
+    title: "Action Plans",
+    description:
+      "Existing or historical energy improvement plans for large commercial buildings.",
+  },
+  {
+    href: "/data-extracts",
+    title: "Data Extracts",
+    description: "Open data about domestic and non-domestic EPCs.",
+  },
+  {
+    href: "/find-advisor",
+    title: "Find an assessor or advisor",
+    description:
+      "If a property needs a new or updated EPC, then here you can find an assessor or advisor to help you.",
+  },
+];
 
-type PropertyType = "domestic" | "non-domestic";
-
-export default function EPCPage() {
-  const router = useRouter();
-  const groupName = "property-type";
-
-  // Default to "domestic"
-  const [selection, setSelection] = useState<PropertyType>("domestic");
-
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.id === "domestic-property-radio") {
-      setSelection("domestic");
-    }
-    if (e.target.id === "non-domestic-property-radio") {
-      setSelection("non-domestic");
-    }
-  };
-
-  const onSubmit = (e: FormEvent) => {
-    e.preventDefault();
-
-    if (selection === "domestic") {
-      router.push("/domestic");
-    } else {
-      router.push("/non-domestic");
-    }
-  };
-
+export default function HomePage() {
   return (
-    <div className="ds_wrapper">
-      <div className="ds_page-header">
-        <h1>Energy Performance Certificate (EPC)</h1>
-      </div>
+    <main className="ds_wrapper">
+      <header className="ds_page-header">
+        <h1>Scottish EPC Register</h1>
+      </header>
 
-      {/* <h2 className="ds_h3">Property type</h2>
       <p>
-        A domestic property like a house or flat, or a non-domestic property for
-        example commercial, industrial or public building.
-      </p> */}
+        You can use this Scottish EPC Register website to find the following:
+      </p>
 
-      <p>Search to find and view an EPC using either the:</p>
-      <ul>
-        <li>postcode</li>
-        <li>
-          Report Reference Number (a 20 digit number at the top right corner of
-          the certificate)
-        </li>
-      </ul>
+      <section aria-labelledby="services-heading">
+        <ul className="ds_no-bullets">
+          {hubLinks.map(({ href, title, description }) => (
+            <li key={href} className="ds_!_margin-bottom--2">
+              <h3 className="ds_h4 ds_!_margin-bottom--0">
+                <Link href={href} className="ds_link">
+                  {title}
+                </Link>
+              </h3>
+              <p className="ds_!_margin-bottom--0">{description}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
 
-      <form onSubmit={onSubmit} noValidate>
-        <Question
-          legend="What type of property is the certificate for?"
-          tagName="fieldset"
-        >
-          <RadioGroup name={groupName} onChange={onChange}>
-            <RadioButton
-              id="domestic-property-radio"
-              name={groupName}
-              label="Domestic property"
-              hintText="A house or flat"
-              checked={selection === "domestic"}
-            />
-            <RadioButton
-              id="non-domestic-property-radio"
-              name={groupName}
-              label="Non-domestic property"
-              hintText="A commercial, industrial or public building"
-              checked={selection === "non-domestic"}
-            />
-          </RadioGroup>
-        </Question>
+      <section
+        aria-labelledby="guidance-heading"
+        className="ds_!_margin-top--6"
+      >
+        <h2 id="guidance-heading" className="ds_h3">
+          Useful guidance
+        </h2>
 
-        <Button type="submit">Continue</Button>
-      </form>
-    </div>
+        <p>
+          If information does not appear for the address you are looking for
+          following a postcode search, then the property or building may not
+          have a certificate.
+        </p>
+
+        <p>
+          If a document is not found when searching using the Report Reference
+          Number, this may mean that it has been cancelled or withdrawn. Please
+          contact us if you require further information.
+        </p>
+      </section>
+
+      <section aria-labelledby="contact-heading" className="ds_!_margin-top--6">
+        <h2 id="contact-heading" className="ds_h3">
+          Contact us
+        </h2>
+
+        <p>
+          Our public facing website does not display Green Deal Advice Reports
+          or Green Deal Improvement Packages. If you require information
+          relating to this, please contact our team for assistance.
+        </p>
+
+        <p>
+          If you need help using this website, or what you expect to see does
+          not appear then you can e-mail our team at{" "}
+          <a href="mailto:epcenquiries@gov.scot" className="ds_link">
+            epcenquiries@gov.scot
+          </a>
+          .
+        </p>
+      </section>
+    </main>
   );
 }

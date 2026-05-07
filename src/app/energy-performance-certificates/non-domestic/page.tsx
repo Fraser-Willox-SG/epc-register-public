@@ -54,7 +54,9 @@ export default function NonDomesticSearchPage() {
         return;
       }
 
-      router.push(`/non-domestic/results?postcode=${encodeURIComponent(pc)}`);
+      router.push(
+        `/energy-performance-certificates/non-domestic/results?postcode=${encodeURIComponent(pc)}`,
+      );
       return;
     }
 
@@ -66,7 +68,9 @@ export default function NonDomesticSearchPage() {
     }
 
     const id = normalizeRRN(rrn);
-    router.push(`/non-domestic/certificate/${encodeURIComponent(id)}`);
+    router.push(
+      `/energy-performance-certificates/non-domestic/certificate/${encodeURIComponent(id)}`,
+    );
   };
 
   return (

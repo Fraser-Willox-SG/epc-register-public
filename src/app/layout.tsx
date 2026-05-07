@@ -7,6 +7,7 @@ import AppFooter from "./components/AppFooter";
 
 import "./globals.css";
 import "./globals-print.css";
+import "./globals-download.css";
 import "./epc-old.css";
 
 const geistSans = Geist({
@@ -32,9 +33,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
+
         <div className="ds_page">
           <AppHeader />
-          <div className="ds_page__middle">{children}</div>
+
+          <main id="main-content" className="ds_page__middle">
+            {children}
+          </main>
+
           <div className="ds_page__bottom">
             <AppFooter />
           </div>

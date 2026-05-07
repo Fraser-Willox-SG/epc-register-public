@@ -16,10 +16,13 @@ import ContentsNavDomHem from "@/app/components/certificate/epc-hem/ContentsNavD
 import ContentsNavNonDomRdSap from "@/app/components/certificate/epc-cepc/ContentsNavNonDomRdSap";
 import CepcEpcDocument from "@/app/components/certificate/epc-cepc/CepcEpcDocument";
 import { EpcNonDomCepcDocument } from "@/types/epc-non-dom-cepc";
+import DownloadButton from "@/app/components/DownloadButton";
 
 // Legacy Imports
 // import LegacyEpcDocument from "@/app/components/certificate/epc-legacy/LegacyEpcDocument";
 // import ContentsNavDomLegacy from "@/app/components/certificate/epc-legacy/ContentsNavDomLegacy";
+
+import { formatIsoDateLong, isExpiredDate } from "@/app/utils/date";
 
 type Summary = { data: SgNonDomesticCepcCertificateSummary };
 
@@ -98,6 +101,8 @@ export default async function NonDomesticCertificatePage({
         .join(", ")
     : "";
 
+  const isExpired = data ? isExpiredDate(data.dateOfExpiry) : false;
+
   return (
     <div className="ds_wrapper">
       <div className="ds_page-header no-print">
@@ -106,8 +111,21 @@ export default async function NonDomesticCertificatePage({
         {data && (
           <div className="sgds-header-row">
             <p className="ds_lede ds_!_margin-0">{addressSummary}</p>
-            <PrintButton className="ds_button no-print" />
+            <div className="ds_button-group ds_!_margin--0 no-print">
+              <PrintButton className="ds_button ds_button--secondary" />
+              <DownloadButton
+                className="ds_button"
+                filename={`Non-Domestic-EPC-${rrn}.pdf`}
+              />
+            </div>
           </div>
+        )}
+        {data?.dateOfExpiry && isExpired && (
+          <p className="attention-message ds_question__error-message ds_mt-1">
+            This EPC expired on {formatIsoDateLong(data.dateOfExpiry)} and is
+            available for information only. A new certificate will be required
+            for any official purposes.
+          </p>
         )}
       </div>
 
@@ -116,7 +134,10 @@ export default async function NonDomesticCertificatePage({
           <p className="ds_error-message">{error}</p>
           {detail && <pre className="ds_inset-text">{detail}</pre>}
           <p className="ds_mt-4">
-            <Link href="/non-domestic" className="ds_link">
+            <Link
+              href="/energy-performance-certificates/non-domestic"
+              className="ds_link"
+            >
               Back to search
             </Link>
           </p>

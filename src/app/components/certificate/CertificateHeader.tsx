@@ -1,5 +1,6 @@
 import React from "react";
-import { formatIsoDateLong } from "@/app/utils/date";
+import { formatIsoDateLong, isExpiredDate } from "@/app/utils/date";
+import ScottishGovernmentLogo from "@/app/components/certificate/ScottishGovernmentLogo";
 
 type Props = {
   addressLine1: string | undefined;
@@ -32,6 +33,8 @@ export default function CertificateHeader({
     currentBand && currentBand.trim().length > 0
       ? currentBand.trim().toUpperCase()
       : "—";
+
+  const isExpired = isExpiredDate(dateOfExpiry);
 
   return (
     <div className="print-no-break print-page-break">
@@ -67,13 +70,7 @@ export default function CertificateHeader({
 
           <div>
             {" "}
-            <img
-              src="/logo.svg"
-              alt="Scottish Government logo"
-              width={160}
-              height={100}
-              style={{ display: "block" }}
-            />
+            <ScottishGovernmentLogo />
           </div>
 
           {/* I have kept the Energy Rating code so we can change back quickly after User Research, April 2026 */}
@@ -105,7 +102,9 @@ export default function CertificateHeader({
         className="row-2col"
         style={{ textAlign: "center", color: "white", gap: "1px" }}
       >
-        <div className="cert-section bg-dark-blue">
+        <div
+          className={`cert-section ${isExpired ? "bg-dark-red" : "bg-dark-blue"}`}
+        >
           <p>
             <strong>
               {dateOfExpiry && new Date(dateOfExpiry) < new Date()

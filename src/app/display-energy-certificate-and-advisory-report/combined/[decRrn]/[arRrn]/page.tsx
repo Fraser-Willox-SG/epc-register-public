@@ -9,6 +9,9 @@ import { isDec, isDecAr } from "@/types/decar";
 
 import DecCertificate from "@/app/components/certificate/decar/DecCertificate";
 import ArCertificate from "@/app/components/certificate/decar/ArCertificate";
+import DownloadButton from "@/app/components/DownloadButton";
+
+import { formatIsoDateLong, isExpiredDate } from "@/app/utils/date";
 
 type SummaryResponse = ApiEnvelope<DecarSummary>;
 
@@ -86,6 +89,12 @@ export default async function CombinedDecarCertificatePage({
   const hasAnyError = !!(decError || arError);
   const bothMissing = !hasDec && !hasAr;
 
+  const isDecExpired = decSummary
+    ? isExpiredDate(decSummary.dateOfExpiry)
+    : false;
+
+  const isArExpired = arSummary ? isExpiredDate(arSummary.dateOfExpiry) : false;
+
   return (
     <div className="ds_wrapper">
       <div className="ds_page-header no-print">
@@ -93,8 +102,32 @@ export default async function CombinedDecarCertificatePage({
         {addressSource && (
           <div className="sgds-header-row">
             <p className="ds_lede ds_!_margin-0">{addressSummary}</p>
-            <PrintButton className="ds_button no-print" />
+
+            <div className="ds_button-group ds_!_margin--0 no-print">
+              <PrintButton className="ds_button ds_button--secondary" />
+              <DownloadButton
+                className="ds_button"
+                filename={`DEC-and-AR-${decRrn}-${arRrn}.pdf`}
+              />
+            </div>
           </div>
+        )}
+
+        {decSummary?.dateOfExpiry && isDecExpired && (
+          <p className="attention-message ds_question__error-message ds_mt-1">
+            This DEC expired on {formatIsoDateLong(decSummary.dateOfExpiry)} and
+            is available for information only. A new certificate will be
+            required for any official purposes.
+          </p>
+        )}
+
+        {arSummary?.dateOfExpiry && isArExpired && (
+          <p className="attention-message ds_question__error-message ds_mt-1">
+            This Advisory Report expired on{" "}
+            {formatIsoDateLong(arSummary.dateOfExpiry)}
+            and is available for information only. A new report will be required
+            for any official purposes.
+          </p>
         )}
       </div>
 
@@ -137,22 +170,22 @@ export default async function CombinedDecarCertificatePage({
               {hasDec && (
                 <>
                   <ContentsNav.Item href="#dec-overview">
-                    <strong>DEC:</strong> Display Energy Certificate
+                    DEC: Display Energy Certificate
                   </ContentsNav.Item>
                   <ContentsNav.Item href="#dec-operational-rating">
-                    <strong>DEC:</strong> Energy Performance Operational Rating
+                    DEC: Energy Performance Operational Rating
                   </ContentsNav.Item>
                   <ContentsNav.Item href="#dec-co2-emissions">
-                    <strong>DEC:</strong> Total CO2 Emissions
+                    DEC: Total CO2 Emissions
                   </ContentsNav.Item>
                   <ContentsNav.Item href="#dec-previous-ratings">
-                    <strong>DEC:</strong> Previous Operational Ratings
+                    DEC: Previous Operational Ratings
                   </ContentsNav.Item>
                   <ContentsNav.Item href="#dec-technical-information">
-                    <strong>DEC:</strong> Technical Information
+                    DEC: Technical Information
                   </ContentsNav.Item>
                   <ContentsNav.Item href="#dec-administrative-information">
-                    <strong>DEC:</strong> Administrative Information
+                    DEC: Administrative Information
                   </ContentsNav.Item>
                 </>
               )}
@@ -160,19 +193,19 @@ export default async function CombinedDecarCertificatePage({
               {hasAr && (
                 <>
                   <ContentsNav.Item href="#ar-overview">
-                    <strong>AR:</strong> Advisory Report
+                    AR: Advisory Report
                   </ContentsNav.Item>
                   <ContentsNav.Item href="#ar-background">
-                    <strong>AR:</strong> Background
+                    AR: Background
                   </ContentsNav.Item>
                   <ContentsNav.Item href="#ar-recommendations">
-                    <strong>AR:</strong> Recommendations
+                    AR: Recommendations
                   </ContentsNav.Item>
                   <ContentsNav.Item href="#ar-next-steps">
-                    <strong>AR:</strong> Next steps
+                    AR: Next steps
                   </ContentsNav.Item>
                   <ContentsNav.Item href="#ar-glossary">
-                    <strong>AR:</strong> Glossary
+                    AR: Glossary
                   </ContentsNav.Item>
                 </>
               )}
@@ -183,26 +216,28 @@ export default async function CombinedDecarCertificatePage({
             className="ds_layout__content"
             style={{ border: "1px solid grey" }}
           >
-            {decSummary && (
-              <section id="dec-overview">
-                <DecCertificate data={decSummary} />
-              </section>
-            )}
+            <div id="certificate-content">
+              {decSummary && (
+                <section id="dec-overview">
+                  <DecCertificate data={decSummary} />
+                </section>
+              )}
 
-            {arSummary && (
-              <section id="ar-overview">
-                <ArCertificate data={arSummary} />
-              </section>
-            )}
+              {arSummary && (
+                <section id="ar-overview">
+                  <ArCertificate data={arSummary} />
+                </section>
+              )}
 
-            {hasAnyError && (
-              <div className="ds_inset-text ds_mt-4">
-                <p className="ds_small ds_!-margin-bottom-0">
-                  Some related documents could not be loaded. You may still
-                  print the certificates shown above.
-                </p>
-              </div>
-            )}
+              {hasAnyError && (
+                <div className="ds_inset-text ds_mt-4">
+                  <p className="ds_small ds_!-margin-bottom-0">
+                    Some related documents could not be loaded. You may still
+                    print the certificates shown above.
+                  </p>
+                </div>
+              )}
+            </div>
           </main>
         </div>
       )}
