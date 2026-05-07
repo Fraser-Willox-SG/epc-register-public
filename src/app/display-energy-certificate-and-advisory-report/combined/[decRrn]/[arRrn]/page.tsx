@@ -11,6 +11,8 @@ import DecCertificate from "@/app/components/certificate/decar/DecCertificate";
 import ArCertificate from "@/app/components/certificate/decar/ArCertificate";
 import DownloadButton from "@/app/components/DownloadButton";
 
+import { formatIsoDateLong, isExpiredDate } from "@/app/utils/date";
+
 type SummaryResponse = ApiEnvelope<DecarSummary>;
 
 // Small helper to fetch & parse a single summary
@@ -87,6 +89,12 @@ export default async function CombinedDecarCertificatePage({
   const hasAnyError = !!(decError || arError);
   const bothMissing = !hasDec && !hasAr;
 
+  const isDecExpired = decSummary
+    ? isExpiredDate(decSummary.dateOfExpiry)
+    : false;
+
+  const isArExpired = arSummary ? isExpiredDate(arSummary.dateOfExpiry) : false;
+
   return (
     <div className="ds_wrapper">
       <div className="ds_page-header no-print">
@@ -103,6 +111,23 @@ export default async function CombinedDecarCertificatePage({
               />
             </div>
           </div>
+        )}
+
+        {decSummary?.dateOfExpiry && isDecExpired && (
+          <p className="attention-message ds_question__error-message ds_mt-1">
+            This DEC expired on {formatIsoDateLong(decSummary.dateOfExpiry)} and
+            is available for information only. A new certificate will be
+            required for any official purposes.
+          </p>
+        )}
+
+        {arSummary?.dateOfExpiry && isArExpired && (
+          <p className="attention-message ds_question__error-message ds_mt-1">
+            This Advisory Report expired on{" "}
+            {formatIsoDateLong(arSummary.dateOfExpiry)}
+            and is available for information only. A new report will be required
+            for any official purposes.
+          </p>
         )}
       </div>
 

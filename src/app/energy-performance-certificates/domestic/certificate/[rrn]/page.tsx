@@ -22,6 +22,8 @@ import ContentsNavDomHem from "@/app/components/certificate/epc-hem/ContentsNavD
 // import LegacyEpcDocument from "@/app/components/certificate/epc-legacy/LegacyEpcDocument";
 // import ContentsNavDomLegacy from "@/app/components/certificate/epc-legacy/ContentsNavDomLegacy";
 
+import { formatIsoDateLong, isExpiredDate } from "@/app/utils/date";
+
 type Summary = { data: DomesticCertificateData };
 
 // ---- page
@@ -97,6 +99,8 @@ export default async function DomesticCertificatePage({
         .join(", ")
     : "";
 
+  const isExpired = data ? isExpiredDate(data.dateOfExpiry) : false;
+
   return (
     <div className="ds_wrapper">
       <div className="ds_page-header no-print">
@@ -114,6 +118,13 @@ export default async function DomesticCertificatePage({
               />
             </div>
           </div>
+        )}
+        {data?.dateOfExpiry && isExpired && (
+          <p className="attention-message ds_question__error-message ds_mt-1">
+            This EPC expired on {formatIsoDateLong(data.dateOfExpiry)} and is
+            available for information only. A new certificate will be required
+            for any official purposes.
+          </p>
         )}
       </div>
 

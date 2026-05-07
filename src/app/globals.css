@@ -148,6 +148,11 @@ body {
   color: white;
 }
 
+.bg-dark-red {
+  background: #d32205;
+  color: white;
+}
+
 .bg-grey {
   background: #ececec;
 }
@@ -162,6 +167,11 @@ body {
 
 .border-b-grey {
   border-bottom: 1px solid #b3b3b3;
+}
+
+.attention-message {
+  border: 0.25rem solid #d32205;
+  padding-left: 1.25rem;
 }
 
 .content-center {
@@ -257,6 +267,7 @@ td.table-cell-center {
   grid-template-columns: 1fr auto;
   align-items: center;
   gap: 0.75rem;
+  margin-bottom: 1rem;
 }
 
 /* Text + value/badge layout */

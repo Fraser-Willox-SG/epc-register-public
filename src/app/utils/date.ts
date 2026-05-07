@@ -57,3 +57,18 @@ export function formatIsoDateLong(iso: string) {
     year: "numeric",
   });
 }
+
+export function isExpiredDate(dateOfExpiry?: string | null): boolean {
+  if (!dateOfExpiry) return false;
+
+  const expiry = new Date(dateOfExpiry);
+
+  if (isNaN(expiry.getTime())) return false;
+
+  const now = new Date();
+
+  // Treat certificate as valid until end of expiry day
+  expiry.setHours(23, 59, 59, 999);
+
+  return expiry < now;
+}
