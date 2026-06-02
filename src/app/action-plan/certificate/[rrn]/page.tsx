@@ -11,6 +11,11 @@ import type {
 
 import ActionPlanDocument from "@/app/components/certificate/action-plan/ActionPlanDocument";
 import DownloadButton from "@/app/components/DownloadButton";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Action Plan Certificate",
+};
 
 export default async function DomesticCertificatePage({
   params,

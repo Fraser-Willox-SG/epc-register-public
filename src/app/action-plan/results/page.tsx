@@ -2,6 +2,11 @@ import Link from "next/link";
 import type { ActionPlanRow } from "@/app/components/ApResultsTable";
 import { selfUrl } from "@/app/utils/self-url";
 import ApResultsTable from "@/app/components/ApResultsTable";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Action Plan Postcode Results",
+};
 
 type SearchParams = { postcode?: string; page?: string };
 

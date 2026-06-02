@@ -3,6 +3,11 @@ import EpcResultsTable, {
   AssessmentRow,
 } from "@/app/components/EpcResultsTable";
 import { selfUrl } from "@/app/utils/self-url";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Non-Domestic Postcode Search",
+};
 
 type SearchParams = { postcode?: string; page?: string };
 

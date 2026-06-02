@@ -111,6 +111,16 @@ body {
   column-gap: 16px;
 }
 
+/* Header padding reduction when Breadcrumbs are used */
+.app_breadcrumbs + .ds_wrapper .ds_page-header {
+  margin-top: 0rem;
+}
+
+/* Fix breadcrumb chevron border rendering inconsistency in production build */
+.app_breadcrumbs .ds_breadcrumbs__item:not(:first-child)::before {
+  border-width: 0 0 0.08333325em 0.08333325em;
+}
+
 @media (max-width: 520px) {
   .text-badge {
     grid-template-columns: 1fr;

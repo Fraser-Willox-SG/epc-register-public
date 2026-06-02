@@ -12,6 +12,11 @@ import ArCertificate from "@/app/components/certificate/decar/ArCertificate";
 import DownloadButton from "@/app/components/DownloadButton";
 
 import { formatIsoDateLong, isExpiredDate } from "@/app/utils/date";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Display Energy Certificate and Advisory Report Combined Certificate",
+};
 
 type SummaryResponse = ApiEnvelope<DecarSummary>;
 

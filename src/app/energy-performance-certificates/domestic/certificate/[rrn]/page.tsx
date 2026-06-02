@@ -23,6 +23,11 @@ import ContentsNavDomHem from "@/app/components/certificate/epc-hem/ContentsNavD
 // import ContentsNavDomLegacy from "@/app/components/certificate/epc-legacy/ContentsNavDomLegacy";
 
 import { formatIsoDateLong, isExpiredDate } from "@/app/utils/date";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Domestic EPC Certificate",
+};
 
 type Summary = { data: DomesticCertificateData };
 
