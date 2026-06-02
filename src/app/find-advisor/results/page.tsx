@@ -3,6 +3,11 @@ import AssessorResultsTable from "@/app/components/AssessorResultsTable";
 import { selfUrl } from "@/app/utils/self-url";
 
 import type { UKGResponse, Assessor, AdvisorType } from "@/types/find-assessor";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Find Assessor or Advisor Results",
+};
 
 type SearchParams = {
   postcode?: string;

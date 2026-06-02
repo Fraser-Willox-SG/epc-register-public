@@ -3,6 +3,11 @@ import { selfUrl } from "@/app/utils/self-url";
 import DecarResultsTable, {
   AssessmentRow,
 } from "@/app/components/DecarResultsTable";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Display Energy Certificate And Advisory Report Results",
+};
 
 type SearchParams = { postcode?: string; page?: string };
 

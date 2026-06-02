@@ -1,4 +1,10 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+
+// Full title required as base page.tsx is a special case, and doesn't use metadata from layout.tsx
+export const metadata: Metadata = {
+  title: "Home - Energy Certificates",
+};
 
 type HubLink = {
   href: string;
@@ -98,10 +104,12 @@ export default function HomePage() {
 
         <p>
           If you need help using this website, or what you expect to see does
-          not appear then you can e-mail our team at{" "}
-          <a href="mailto:epcenquiries@gov.scot" className="ds_link">
-            epcenquiries@gov.scot
-          </a>
+          not appear then you can{" "}
+          <strong>
+            <a href="mailto:epcenquiries@gov.scot" className="ds_link">
+              e-mail our team
+            </a>
+          </strong>
           .
         </p>
       </section>

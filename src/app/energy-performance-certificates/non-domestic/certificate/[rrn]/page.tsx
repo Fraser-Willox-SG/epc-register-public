@@ -23,6 +23,11 @@ import DownloadButton from "@/app/components/DownloadButton";
 // import ContentsNavDomLegacy from "@/app/components/certificate/epc-legacy/ContentsNavDomLegacy";
 
 import { formatIsoDateLong, isExpiredDate } from "@/app/utils/date";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Non-Domestic EPC Certificate",
+};
 
 type Summary = { data: SgNonDomesticCepcCertificateSummary };
 
