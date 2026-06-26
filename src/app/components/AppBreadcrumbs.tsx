@@ -128,7 +128,7 @@ export default function AppBreadcrumbs() {
   }
 
   return (
-    <div className="ds_wrapper app_breadcrumbs">
+    <div className="ds_wrapper app_breadcrumbs no-print">
       <nav aria-label="Breadcrumb">
         <ol className="ds_breadcrumbs">
           {crumbs.map(({ label, href }) => (

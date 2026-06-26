@@ -2,7 +2,7 @@ import PhaseBanner from "@scottish-government/designsystem-react/dist/components
 
 export default function AppPhaseBanner() {
   return (
-    <PhaseBanner phaseName="Beta">
+    <PhaseBanner phaseName="Beta" className="no-print">
       This is a new service. Please{" "}
       <a href="mailto:epcenquiries@gov.scot" className="ds_link">
         e-mail our team
