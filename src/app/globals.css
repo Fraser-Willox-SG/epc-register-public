@@ -17,7 +17,7 @@
 html,
 body {
   max-width: 100vw;
-  overflow-x: hidden;
+  overflow-x: clip; /* fix for Document Navigation sticky */
 }
 
 body {
@@ -330,10 +330,25 @@ td.table-cell-center {
 ////////////////////////////////////////////////
 */
 
+.ds_layout--search-results-with-sidebar {
+  align-items: flex-start;
+}
+
 .ds_layout--search-results-with-sidebar .ds_layout__sidebar {
   z-index: 10;
-  position: fixed;
-  @media (max-width: 991px) {
+  position: sticky;
+  top: 1rem;
+
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+@media (max-width: 991px) {
+  .ds_layout--search-results-with-sidebar .ds_layout__sidebar {
     position: relative;
+    top: auto;
+    max-height: none;
+    overflow-y: visible;
   }
 }
