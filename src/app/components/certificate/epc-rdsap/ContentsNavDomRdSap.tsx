@@ -8,9 +8,9 @@ export default function ContentsNavDomRdSap() {
         Energy Performance Certificate
       </ContentsNav.Item>
 
-      <ContentsNav.Item href="#performance-features-and-context">
+      <ContentsNav.Item href="#summary-of-the-energy-performance">
         <span aria-hidden="true">Report: </span>
-        Features and context
+        Summary of the energy performance related features of this home
       </ContentsNav.Item>
 
       <ContentsNav.Item href="#costs-and-recommendations">
