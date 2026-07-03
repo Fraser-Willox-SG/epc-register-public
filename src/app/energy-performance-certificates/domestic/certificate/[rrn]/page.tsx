@@ -120,6 +120,7 @@ export default async function DomesticCertificatePage({
               <DownloadButton
                 className="ds_button"
                 filename={`Domestic-EPC-${rrn}.pdf`}
+                pdfUrl={`/api/sg/assessments/${encodeURIComponent(rrn)}/domestic-pdf-preview`}
               />
             </div>
           </div>

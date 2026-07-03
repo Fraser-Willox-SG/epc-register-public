@@ -104,6 +104,9 @@ export default async function DomesticCertificatePage({
             <DownloadButton
               className="ds_button"
               filename={`Action-Plan-${rrn}.pdf`}
+              pdfUrl={`/api/sg/assessments/${encodeURIComponent(
+                rrn,
+              )}/action-plan-pdf-preview`}
             />
           </div>
         </div>

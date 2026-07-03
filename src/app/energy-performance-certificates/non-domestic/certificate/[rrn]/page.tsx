@@ -121,6 +121,9 @@ export default async function NonDomesticCertificatePage({
               <DownloadButton
                 className="ds_button"
                 filename={`Non-Domestic-EPC-${rrn}.pdf`}
+                pdfUrl={`/api/sg/assessments/${encodeURIComponent(
+                  rrn,
+                )}/non-domestic-pdf-preview`}
               />
             </div>
           </div>

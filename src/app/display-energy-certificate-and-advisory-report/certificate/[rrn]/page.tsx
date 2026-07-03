@@ -118,6 +118,11 @@ export default async function DecarCertificatePage({
               <DownloadButton
                 className="ds_button"
                 filename={downloadFileName}
+                pdfUrl={
+                  mode === "dec"
+                    ? `/api/sg/assessments/${encodeURIComponent(rrn)}/dec-pdf-preview`
+                    : `/api/sg/assessments/${encodeURIComponent(rrn)}/advisory-report-pdf-preview`
+                }
               />
             </div>
           </div>
