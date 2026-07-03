@@ -28,7 +28,11 @@ COPY --from=build /app/.next/standalone ./
 COPY --from=build /app/.next/static ./.next/static
 COPY --from=build /app/public ./public
 
-# Install Chromium and the required Linux dependencies inside the runtime image
-RUN npx --yes -p playwright@1.61.1 playwright install --with-deps chromium
+# Needed so Playwright is available at runtime
+COPY --from=deps /app/node_modules ./node_modules
+
+# Install Chromium and Linux dependencies in the runtime image
+RUN ./node_modules/.bin/playwright install --with-deps chromium
+
 EXPOSE 3000
 CMD ["node", "server.js"]
