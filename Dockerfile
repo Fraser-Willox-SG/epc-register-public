@@ -29,7 +29,6 @@ COPY --from=build /app/.next/static ./.next/static
 COPY --from=build /app/public ./public
 
 # Install Chromium and the required Linux dependencies inside the runtime image
-RUN npx --yes playwright@1.61.1 install --with-deps chromium
-
+RUN npx --yes -p playwright@1.61.1 playwright install --with-deps chromium
 EXPOSE 3000
 CMD ["node", "server.js"]
