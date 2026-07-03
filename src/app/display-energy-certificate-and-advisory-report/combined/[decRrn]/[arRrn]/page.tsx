@@ -113,6 +113,9 @@ export default async function CombinedDecarCertificatePage({
               <DownloadButton
                 className="ds_button"
                 filename={`DEC-and-AR-${decRrn}-${arRrn}.pdf`}
+                pdfUrl={`/api/sg/assessments/combined/${encodeURIComponent(
+                  decRrn,
+                )}/${encodeURIComponent(arRrn)}/pdf-preview`}
               />
             </div>
           </div>

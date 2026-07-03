@@ -1,88 +1,59 @@
 "use client";
 
+import { useState } from "react";
 import Button from "@scottish-government/designsystem-react/dist/components//Button/Button";
 
 export default function DownloadButton({
   className = "",
   filename = "certificate.pdf",
+  pdfUrl,
 }: {
   className?: string;
   filename?: string;
+  pdfUrl: string;
 }) {
+  const [isDownloading, setIsDownloading] = useState(false);
+
   const handleDownload = async () => {
-    const element = document.getElementById("certificate-content");
+    if (isDownloading) return;
 
-    if (!element) {
-      console.error("Certificate content not found");
-      return;
+    setIsDownloading(true);
+
+    try {
+      const res = await fetch(pdfUrl, { cache: "no-store" });
+
+      if (!res.ok) {
+        console.error("PDF download failed", res.status);
+        return;
+      }
+
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+
+      link.remove();
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("PDF download failed", error);
+    } finally {
+      setIsDownloading(false);
     }
-
-    const [{ jsPDF }, html2canvasModule] = await Promise.all([
-      import("jspdf"),
-      import("html2canvas"),
-    ]);
-
-    const html2canvas = html2canvasModule.default;
-
-    const canvas = await html2canvas(element, {
-      scale: 1.5,
-      useCORS: true,
-      backgroundColor: "#ffffff",
-      logging: false,
-    });
-
-    const imgData = canvas.toDataURL("image/jpeg", 0.72);
-
-    const pdf = new jsPDF({
-      orientation: "portrait",
-      unit: "mm",
-      format: "a4",
-      compress: true,
-    });
-
-    const pageWidth = pdf.internal.pageSize.getWidth();
-    const pageHeight = pdf.internal.pageSize.getHeight();
-
-    const imgWidth = pageWidth;
-    const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-    let heightLeft = imgHeight;
-    let position = 0;
-
-    pdf.addImage(
-      imgData,
-      "JPEG",
-      0,
-      position,
-      imgWidth,
-      imgHeight,
-      undefined,
-      "FAST",
-    );
-    heightLeft -= pageHeight;
-
-    while (heightLeft > 0) {
-      position -= pageHeight;
-      pdf.addPage();
-      pdf.addImage(
-        imgData,
-        "JPEG",
-        0,
-        position,
-        imgWidth,
-        imgHeight,
-        undefined,
-        "FAST",
-      );
-      heightLeft -= pageHeight;
-    }
-
-    pdf.save(filename);
   };
 
   return (
-    <Button type="button" className={className} onClick={handleDownload}>
-      Download
+    <Button
+      type="button"
+      className={className}
+      onClick={handleDownload}
+      disabled={isDownloading}
+      aria-busy={isDownloading}
+    >
+      {isDownloading ? "Preparing PDF…" : "Download"}
     </Button>
   );
 }
