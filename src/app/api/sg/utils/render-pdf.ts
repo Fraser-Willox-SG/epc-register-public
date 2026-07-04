@@ -5,6 +5,11 @@ export function normaliseInternalUrl(url: URL): string {
     url.hostname = "localhost";
   }
 
+  if (url.hostname === "localhost") {
+    url.protocol = "http:";
+    url.port = "3000";
+  }
+
   return url.toString();
 }
 
@@ -18,6 +23,11 @@ export async function renderPdfFromUrl(url: string): Promise<Buffer> {
         height: 1448,
       },
       deviceScaleFactor: 1,
+    });
+
+    console.log("[PDF] Launching Playwright", {
+      url,
+      nodeEnv: process.env.NODE_ENV,
     });
 
     await page.goto(url, {
