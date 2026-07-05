@@ -1,4 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
+import {
+  normaliseInternalUrl,
+  renderPdfFromUrl,
+} from "@/app/api/sg/utils/render-pdf";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -10,30 +14,16 @@ export async function GET(
   const { rrn } = await ctx.params;
 
   try {
-    const base64Url = new URL(
-      `/api/sg/assessments/${encodeURIComponent(rrn)}/domestic-pdf-base64`,
+    const pageUrl = new URL(
+      `/energy-performance-certificates/domestic/certificate/${encodeURIComponent(
+        rrn,
+      )}`,
       req.url,
     );
 
-    const base64Response = await fetch(base64Url, {
-      cache: "no-store",
-    });
+    const pdfBuffer = await renderPdfFromUrl(normaliseInternalUrl(pageUrl));
 
-    const base64Pdf = await base64Response.text();
-
-    if (!base64Response.ok) {
-      return new NextResponse(base64Pdf, {
-        status: base64Response.status,
-        headers: {
-          "Content-Type": "text/plain",
-          "Cache-Control": "no-store",
-        },
-      });
-    }
-
-    const pdfBuffer = Buffer.from(base64Pdf.trim(), "base64");
-
-    return new NextResponse(pdfBuffer, {
+    return new NextResponse(new Uint8Array(pdfBuffer), {
       status: 200,
       headers: {
         "Content-Type": "application/pdf",
