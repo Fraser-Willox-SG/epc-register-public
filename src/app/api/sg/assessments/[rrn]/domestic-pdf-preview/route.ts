@@ -9,37 +9,47 @@ export async function GET(
 ) {
   const { rrn } = await ctx.params;
 
-  const base64Url = new URL(
-    `/api/sg/assessments/${encodeURIComponent(rrn)}/domestic-pdf-base64`,
-    req.url,
-  );
+  try {
+    const base64Url = new URL(
+      `/api/sg/assessments/${encodeURIComponent(rrn)}/domestic-pdf-base64`,
+      req.url,
+    );
 
-  const base64Response = await fetch(base64Url, {
-    cache: "no-store",
-  });
+    const base64Response = await fetch(base64Url, {
+      cache: "no-store",
+    });
 
-  if (!base64Response.ok) {
-    const errorText = await base64Response.text();
+    const base64Pdf = await base64Response.text();
 
-    return new NextResponse(errorText, {
-      status: base64Response.status,
+    if (!base64Response.ok) {
+      return new NextResponse(base64Pdf, {
+        status: base64Response.status,
+        headers: {
+          "Content-Type": "text/plain",
+          "Cache-Control": "no-store",
+        },
+      });
+    }
+
+    const pdfBuffer = Buffer.from(base64Pdf.trim(), "base64");
+
+    return new NextResponse(pdfBuffer, {
+      status: 200,
       headers: {
-        "Content-Type":
-          base64Response.headers.get("Content-Type") ?? "text/plain",
+        "Content-Type": "application/pdf",
+        "Content-Length": pdfBuffer.length.toString(),
+        "Content-Disposition": `inline; filename="Domestic-EPC-${rrn}.pdf"`,
+        "Cache-Control": "no-store",
       },
     });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+
+    console.error("[SG][domestic-pdf-preview] route failure", {
+      rrn,
+      message,
+    });
+
+    return NextResponse.json({ error: message }, { status: 500 });
   }
-
-  const base64Pdf = await base64Response.text();
-  const pdfBuffer = Buffer.from(base64Pdf, "base64");
-
-  return new NextResponse(pdfBuffer, {
-    status: 200,
-    headers: {
-      "Content-Type": "application/pdf",
-      "Content-Length": pdfBuffer.length.toString(),
-      "Content-Disposition": `inline; filename="Domestic-EPC-${rrn}.pdf"`,
-      "Cache-Control": "no-store",
-    },
-  });
 }
