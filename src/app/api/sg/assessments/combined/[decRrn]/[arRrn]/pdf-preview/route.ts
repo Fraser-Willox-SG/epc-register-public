@@ -1,5 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 
+import {
+  normaliseInternalUrl,
+  renderPdfFromUrl,
+} from "@/app/api/sg/utils/render-pdf";
+
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
@@ -9,38 +14,34 @@ export async function GET(
 ) {
   const { decRrn, arRrn } = await ctx.params;
 
-  const base64Url = new URL(
-    `/api/sg/assessments/combined/${encodeURIComponent(
-      decRrn,
-    )}/${encodeURIComponent(arRrn)}/pdf-base64`,
-    req.url,
-  );
+  try {
+    const pageUrl = new URL(
+      `/display-energy-certificate-and-advisory-report/combined/${encodeURIComponent(
+        decRrn,
+      )}/${encodeURIComponent(arRrn)}`,
+      req.url,
+    );
 
-  const res = await fetch(base64Url, {
-    cache: "no-store",
-  });
+    const pdfBuffer = await renderPdfFromUrl(normaliseInternalUrl(pageUrl));
 
-  if (!res.ok) {
-    const errorText = await res.text();
-
-    return new NextResponse(errorText, {
-      status: res.status,
+    return new NextResponse(new Uint8Array(pdfBuffer), {
+      status: 200,
       headers: {
-        "Content-Type": res.headers.get("Content-Type") ?? "text/plain",
+        "Content-Type": "application/pdf",
+        "Content-Length": pdfBuffer.length.toString(),
+        "Content-Disposition": `inline; filename="DEC-and-AR-${decRrn}-${arRrn}.pdf"`,
+        "Cache-Control": "no-store",
       },
     });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+
+    console.error("[SG][combined-pdf-preview] route failure", {
+      decRrn,
+      arRrn,
+      message,
+    });
+
+    return NextResponse.json({ error: message }, { status: 500 });
   }
-
-  const base64Pdf = await res.text();
-  const pdfBuffer = Buffer.from(base64Pdf, "base64");
-
-  return new NextResponse(pdfBuffer, {
-    status: 200,
-    headers: {
-      "Content-Type": "application/pdf",
-      "Content-Length": pdfBuffer.length.toString(),
-      "Content-Disposition": `inline; filename="DEC-and-AR-${decRrn}-${arRrn}.pdf"`,
-      "Cache-Control": "no-store",
-    },
-  });
 }

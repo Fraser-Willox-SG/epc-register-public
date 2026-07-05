@@ -1,5 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 
+import {
+  normaliseInternalUrl,
+  renderPdfFromUrl,
+} from "@/app/api/sg/utils/render-pdf";
+
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
@@ -9,37 +14,33 @@ export async function GET(
 ) {
   const { rrn } = await ctx.params;
 
-  const base64Url = new URL(
-    `/api/sg/assessments/${encodeURIComponent(rrn)}/non-domestic-pdf-base64`,
-    req.url,
-  );
+  try {
+    const pageUrl = new URL(
+      `/energy-performance-certificates/non-domestic/certificate/${encodeURIComponent(
+        rrn,
+      )}`,
+      req.url,
+    );
 
-  const base64Response = await fetch(base64Url, {
-    cache: "no-store",
-  });
+    const pdfBuffer = await renderPdfFromUrl(normaliseInternalUrl(pageUrl));
 
-  if (!base64Response.ok) {
-    const errorText = await base64Response.text();
-
-    return new NextResponse(errorText, {
-      status: base64Response.status,
+    return new NextResponse(new Uint8Array(pdfBuffer), {
+      status: 200,
       headers: {
-        "Content-Type":
-          base64Response.headers.get("Content-Type") ?? "text/plain",
+        "Content-Type": "application/pdf",
+        "Content-Length": pdfBuffer.length.toString(),
+        "Content-Disposition": `inline; filename="Non-Domestic-EPC-${rrn}.pdf"`,
+        "Cache-Control": "no-store",
       },
     });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+
+    console.error("[SG][non-domestic-pdf-preview] route failure", {
+      rrn,
+      message,
+    });
+
+    return NextResponse.json({ error: message }, { status: 500 });
   }
-
-  const base64Pdf = await base64Response.text();
-  const pdfBuffer = Buffer.from(base64Pdf, "base64");
-
-  return new NextResponse(pdfBuffer, {
-    status: 200,
-    headers: {
-      "Content-Type": "application/pdf",
-      "Content-Length": pdfBuffer.length.toString(),
-      "Content-Disposition": `inline; filename="Non-Domestic-EPC-${rrn}.pdf"`,
-      "Cache-Control": "no-store",
-    },
-  });
 }
