@@ -1,12 +1,14 @@
 import ActionPlanHeader from "@/app/components/certificate/action-plan/ActionPlanHeader";
 import MissingData from "@/app/components/MissingData";
 import { formatIsoDateLong } from "@/app/utils/date";
-import type { SgActionPlanCertificateSummary } from "@/types/action-plan";
+import type {
+  SgActionPlanCertificateSummary,
+  SgActionPlanImprovementMeasure,
+} from "@/types/action-plan";
 import Link from "next/link";
 
 const PLACEHOLDER = "—";
 
-// Small, local helpers (keep page resilient)
 function isBlank(value: unknown): boolean {
   return value == null || (typeof value === "string" && value.trim() === "");
 }
@@ -19,6 +21,22 @@ function ynToYesNo(value: unknown): "Yes" | "No" | "—" {
   if (value === "Y" || value === true) return "Yes";
   if (value === "N" || value === false) return "No";
   return "—";
+}
+
+function getMeasureDescription(m: SgActionPlanImprovementMeasure) {
+  return (
+    m.measureDescriptionShort?.trim() ||
+    m.measureDescriptionLong?.trim() ||
+    "Not available"
+  );
+}
+
+function getAlternativeDescription(m: SgActionPlanImprovementMeasure) {
+  const description = getMeasureDescription(m);
+
+  return m.measureType === "Prescriptive"
+    ? `Prescribed: ${description}`
+    : description;
 }
 
 export default function ActionPlanDocument({
@@ -59,6 +77,9 @@ export default function ActionPlanDocument({
   const targetEmissionSavings = data.targetEmissionSavings;
   const targetEnergySavings = data.targetEnergySavings;
 
+  const totalEmissionSavings = data.totalEmissionSavings;
+  const totalEnergySavings = data.totalEnergySavings;
+
   const acceptPrescriptive = ynToYesNo(data.acceptPrescriptiveImprovements);
 
   const decDisplayed = ynToYesNo(data.dec);
@@ -92,13 +113,7 @@ export default function ActionPlanDocument({
           />
         </div>
 
-        <section
-          className="cert-section print-no-break"
-          aria-labelledby="action-plan-details"
-        >
-          {/* <h2 id="action-plan-details" className="ds_h3">
-          Action plan details
-        </h2> */}
+        <section className="cert-section print-no-break">
           <dl className="summary-list">
             <div className="row-2col border-b-grey">
               <dt>
@@ -123,7 +138,7 @@ export default function ActionPlanDocument({
               <dd>
                 {epcRrn ? (
                   <Link
-                    href={`/domestic/certificate/` + epcRrn}
+                    href={`/energy-performance-certificates/domestic/certificate/${epcRrn}`}
                     className="ds_link"
                   >
                     {epcRrn}
@@ -136,19 +151,15 @@ export default function ActionPlanDocument({
           </dl>
         </section>
 
-        {/* Parties involved */}
         <section
           className="cert-section print-no-break bg-blue"
-          aria-labelledby="parties"
+          aria-labelledby="parties-involved"
         >
           <h2 id="parties-involved" className="ds_h3">
             Parties involved in production of the action plan
           </h2>
 
           <table className="ds_table">
-            {/* <caption className="ds_visually-hidden">
-            Parties involved in production of the action plan
-          </caption> */}
             <thead>
               <tr>
                 <th scope="col">Party</th>
@@ -190,18 +201,16 @@ export default function ActionPlanDocument({
           </table>
         </section>
 
-        {/* Improvement type */}
         <section
           className="cert-section print-no-break"
           id="improvement-type"
-          aria-labelledby="improvement-type"
+          aria-labelledby="improvement-type-heading"
         >
-          <h2 className="ds_h3">Improvement type</h2>
+          <h2 id="improvement-type-heading" className="ds_h3">
+            Improvement type
+          </h2>
 
           <table className="ds_table">
-            {/* <caption className="ds_visually-hidden">
-            Parties involved in production of the action plan
-          </caption> */}
             <thead>
               <tr>
                 <th scope="col">Description</th>
@@ -221,13 +230,14 @@ export default function ActionPlanDocument({
           </table>
         </section>
 
-        {/* Prescriptive improvement measures */}
         <section
           className="cert-section print-no-break bg-blue"
           id="prescriptive-measures"
-          aria-labelledby="prescriptive-measures"
+          aria-labelledby="prescriptive-measures-heading"
         >
-          <h2 className="ds_h3">Prescriptive improvement measures</h2>
+          <h2 id="prescriptive-measures-heading" className="ds_h3">
+            Prescriptive improvement measures
+          </h2>
 
           {prescriptiveMeasures.length === 0 ? (
             <p className="ds_hint-text">No prescriptive measures available.</p>
@@ -245,12 +255,7 @@ export default function ActionPlanDocument({
               </thead>
               <tbody>
                 {prescriptiveMeasures.map((m, idx) => {
-                  const description =
-                    (typeof m.measureDescriptionShort === "string" &&
-                      m.measureDescriptionShort.trim()) ||
-                    (typeof m.measureDescriptionLong === "string" &&
-                      m.measureDescriptionLong.trim()) ||
-                    "Not available";
+                  const description = getMeasureDescription(m);
 
                   return (
                     <tr key={`${description}-${idx}`}>
@@ -275,7 +280,7 @@ export default function ActionPlanDocument({
             </thead>
             <tbody>
               <tr>
-                <td>Target emission savings (kgCO₂/m²·year)</td>
+                <td>Target emission savings (kgCO₂/m².year)</td>
                 <td>
                   {targetEmissionSavings != null ? (
                     targetEmissionSavings
@@ -284,9 +289,8 @@ export default function ActionPlanDocument({
                   )}
                 </td>
               </tr>
-
               <tr>
-                <td>Target energy savings (kWh/m²·year)</td>
+                <td>Target energy savings (kWh/m².year)</td>
                 <td>
                   {targetEnergySavings != null ? (
                     targetEnergySavings
@@ -295,12 +299,10 @@ export default function ActionPlanDocument({
                   )}
                 </td>
               </tr>
-
               <tr>
                 <td>Accept prescriptive improvements</td>
-                <td>{acceptPrescriptive ?? "Not available"}</td>
+                <td>{acceptPrescriptive}</td>
               </tr>
-
               <tr>
                 <td>If no, go to alternative improvements</td>
                 <td>
@@ -315,53 +317,82 @@ export default function ActionPlanDocument({
           </table>
         </section>
 
-        {/* Alternative improvements (only if present) */}
         {alternativeMeasures.length > 0 && (
           <section
             className="cert-section print-no-break"
             id="alternative-measures"
-            aria-labelledby="alternative-measures"
+            aria-labelledby="alternative-measures-heading"
           >
-            <h2 className="ds_h3">Alternative improvements</h2>
+            <h2 id="alternative-measures-heading" className="ds_h3">
+              Alternative improvements
+            </h2>
 
             <table className="ds_table">
               <caption className="ds_visually-hidden">
-                Alternative improvements and whether each measure is valid
+                Alternative improvement measures
               </caption>
               <thead>
                 <tr>
                   <th scope="col">Description</th>
-                  <th scope="col">Valid</th>
                 </tr>
               </thead>
               <tbody>
                 {alternativeMeasures.map((m, idx) => {
-                  const description =
-                    (typeof m.measureDescriptionShort === "string" &&
-                      m.measureDescriptionShort.trim()) ||
-                    (typeof m.measureDescriptionLong === "string" &&
-                      m.measureDescriptionLong.trim()) ||
-                    "Not available";
+                  const description = getAlternativeDescription(m);
 
                   return (
                     <tr key={`${description}-${idx}`}>
                       <td>{description}</td>
-                      <td>{ynToYesNo(m.measureValid)}</td>
                     </tr>
                   );
                 })}
               </tbody>
             </table>
+
+            <table className="ds_table">
+              <caption className="ds_visually-hidden">
+                Alternative improvement savings
+              </caption>
+              <thead>
+                <tr>
+                  <th scope="col">Item</th>
+                  <th scope="col">Result</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Total emission savings (kgCO₂/m².year)</td>
+                  <td>
+                    {totalEmissionSavings != null ? (
+                      totalEmissionSavings
+                    ) : (
+                      <MissingData />
+                    )}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Total energy savings (kWh/m².year)</td>
+                  <td>
+                    {totalEnergySavings != null ? (
+                      totalEnergySavings
+                    ) : (
+                      <MissingData />
+                    )}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </section>
         )}
 
-        {/* Operational rating system */}
         <section
           className="cert-section print-no-break"
           id="operational-rating-system"
-          aria-labelledby="operational-rating-system"
+          aria-labelledby="operational-rating-system-heading"
         >
-          <h2 className="ds_h3">Operational rating system</h2>
+          <h2 id="operational-rating-system-heading" className="ds_h3">
+            Operational rating system
+          </h2>
 
           <table className="ds_table">
             <caption className="ds_visually-hidden">
@@ -378,20 +409,20 @@ export default function ActionPlanDocument({
                 <td>
                   Display Energy Certificate lodged and displayed in building
                 </td>
-                <td>{decDisplayed ?? <MissingData />}</td>
+                <td>{decDisplayed}</td>
               </tr>
             </tbody>
           </table>
-          <p>
+
+          {/* <p>
             Refer to the Display Energy Certificate to view operational rating
             and CO₂ emissions over the previous 3 years.
-          </p>
+          </p> */}
         </section>
 
-        {/* Completion */}
         <section
           className="cert-section print-no-break bg-blue"
-          aria-labelledby="completion"
+          aria-labelledby="completion-of-improvements"
         >
           <h2 id="completion-of-improvements" className="ds_h3">
             Completion of improvements (prescriptive or alternative)
@@ -420,7 +451,11 @@ export default function ActionPlanDocument({
               </tr>
               <tr>
                 <td>Actual completion date</td>
-                <td>{actualCompletionDate ?? PLACEHOLDER}</td>
+                <td>
+                  {actualCompletionDate
+                    ? formatIsoDateLong(actualCompletionDate)
+                    : PLACEHOLDER}
+                </td>
               </tr>
             </tbody>
           </table>
