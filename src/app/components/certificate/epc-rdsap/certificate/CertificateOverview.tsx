@@ -220,7 +220,7 @@ export default function CertificateOverview({
         <ul>
           <li>
             see your{" "}
-            <a href="#performance-features-and-context">
+            <a href="#summary-of-the-energy-performance">
               recommendations report
             </a>{" "}
             for more information.

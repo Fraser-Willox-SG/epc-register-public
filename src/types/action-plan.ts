@@ -39,6 +39,9 @@ export type SgActionPlanCertificateSummary = {
   targetEmissionSavings: number; // as per payload (e.g. 1.98)
   targetEnergySavings: number; // as per payload (e.g. 11.42)
 
+  totalEmissionSavings?: number | null;
+  totalEnergySavings?: number | null;
+
   acceptPrescriptiveImprovements: SgYesNo;
 
   prescriptiveImprovements: SgActionPlanImprovementMeasure[];
@@ -93,6 +96,6 @@ export type SgActionPlanPropertyType = {
 export type SgActionPlanImprovementMeasure = {
   measureDescriptionShort: string;
   measureDescriptionLong: string | null;
-  measureValid: SgYesNo;
-  measureType: string | null;
+  measureValid: SgYesNo | null;
+  measureType: "Prescriptive" | "Alternative" | string | null;
 };

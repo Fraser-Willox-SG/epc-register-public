@@ -89,11 +89,11 @@ export default function PerformanceFeaturesAndContext({
 
   return (
     <section
-      id="performance-features-and-context"
-      aria-labelledby="performance-features-and-context-title"
+      id="summary-of-the-energy-performance"
+      aria-labelledby="summary-of-the-energy-performance-title"
     >
       <div className="cert-section print-page-break">
-        <h2 id="performance-features-and-context-title">
+        <h2 id="summary-of-the-energy-performance-title">
           Recommendations Report
         </h2>
 
