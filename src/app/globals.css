@@ -163,6 +163,11 @@ body {
   color: white;
 }
 
+.bg-dark-green {
+  background: #1a7032;
+  color: white;
+}
+
 .bg-grey {
   background: #ececec;
 }
@@ -173,6 +178,14 @@ body {
 
 .mb-0 {
   margin-bottom: 0px;
+}
+
+.display-block {
+  display: block;
+}
+
+.text-right {
+  text-align: right;
 }
 
 .border-b-grey {

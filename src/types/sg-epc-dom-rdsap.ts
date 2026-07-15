@@ -1,3 +1,5 @@
+import type { SgGreenDealCertificateFields } from "./sg-epc-green-deal";
+
 export type SgEpcBandLetter =
   | "a"
   | "b"
@@ -35,7 +37,7 @@ export type SgRecommendedImprovement = {
   greenDealCategoryCode?: string;
 };
 
-export type SgDomesticRdSapEpcCertificateSummary = {
+export interface SgDomesticRdSapEpcCertificateSummary extends SgGreenDealCertificateFields {
   typeOfAssessment: "RdSAP" | string;
   assessmentId: string;
   dateOfExpiry: string;
@@ -96,7 +98,7 @@ export type SgDomesticRdSapEpcCertificateSummary = {
   relatedAssessments: Array<Record<string, unknown>>;
   supersededBy: string | null;
   countryName: string;
-};
+}
 
 export type SgDomesticEpcAddress = {
   addressLine1: string;

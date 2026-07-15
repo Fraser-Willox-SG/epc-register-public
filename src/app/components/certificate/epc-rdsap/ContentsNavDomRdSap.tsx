@@ -1,6 +1,10 @@
 import ContentsNav from "@scottish-government/designsystem-react/dist/components/ContentsNav/ContentsNav";
 
-export default function ContentsNavDomRdSap() {
+type Props = {
+  showGreenDeal?: boolean;
+};
+
+export default function ContentsNavDomRdSap({ showGreenDeal = false }: Props) {
   return (
     <ContentsNav title="Document navigation" ariaLabel="Document navigation">
       <ContentsNav.Item href="#overview">
@@ -27,6 +31,10 @@ export default function ContentsNavDomRdSap() {
         <span aria-hidden="true">Report: </span>
         About this document
       </ContentsNav.Item>
+
+      {showGreenDeal && (
+        <ContentsNav.Item href="#green-deal">Green Deal Plan</ContentsNav.Item>
+      )}
     </ContentsNav>
   );
 }
