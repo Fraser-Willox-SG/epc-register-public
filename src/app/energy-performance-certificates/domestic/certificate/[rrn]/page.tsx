@@ -4,23 +4,16 @@ import { selfUrl } from "@/app/utils/self-url";
 import PrintButton from "@/app/components/PrintButton";
 import DownloadButton from "@/app/components/DownloadButton";
 
-import type { DomesticCertificateData } from "@/types/sg-epc-dom";
-import { isSapCertificate, isRdSapCertificate } from "@/types/sg-epc-dom";
-
-import type { SgDomesticRdSapEpcCertificateSummary } from "@/types/sg-epc-dom-rdsap";
-import type { SgDomesticSapEpcCertificateSummary } from "@/types/sg-epc-dom-sap";
+import {
+  hasGreenDealPlan,
+  isSapCertificate,
+  isRdSapCertificate,
+  type DomesticCertificateData,
+} from "@/types/sg-epc-dom";
 
 // Domestic RdSAP / SAP imports
 import RdSapEpcDocument from "@/app/components/certificate/epc-rdsap/RdSapEpcDocument";
 import ContentsNavDomRdSap from "@/app/components/certificate/epc-rdsap/ContentsNavDomRdSap";
-
-// HEM imports
-import HemEpcDocument from "@/app/components/certificate/epc-hem/HemEpcDocument";
-import ContentsNavDomHem from "@/app/components/certificate/epc-hem/ContentsNavDomHem";
-
-// Legacy imports
-// import LegacyEpcDocument from "@/app/components/certificate/epc-legacy/LegacyEpcDocument";
-// import ContentsNavDomLegacy from "@/app/components/certificate/epc-legacy/ContentsNavDomLegacy";
 
 import { formatIsoDateLong, isExpiredDate } from "@/app/utils/date";
 import { Metadata } from "next";
@@ -151,7 +144,7 @@ export default async function DomesticCertificatePage({
             aria-label="Document navigation"
           >
             {(isRdSapCertificate(data) || isSapCertificate(data)) && (
-              <ContentsNavDomRdSap />
+              <ContentsNavDomRdSap showGreenDeal={hasGreenDealPlan(data)} />
             )}
             {/* <ContentsNavDomHem />
             <ContentsNavDomLegacy /> */}

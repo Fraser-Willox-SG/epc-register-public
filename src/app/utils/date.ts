@@ -46,15 +46,22 @@ export function formatDecDate(rawDate?: string | null): string {
 
   return `${day}${suffix} ${month} ${year}`;
 }
+export function formatIsoDateLong(value: string): string {
+  const datePart = value.trim().slice(0, 10);
 
-export function formatIsoDateLong(iso: string) {
-  const [y, m, d] = iso.split("-").map(Number);
-  if (!y || !m || !d) return iso; // fallback
-  const date = new Date(Date.UTC(y, m - 1, d)); // avoid TZ shifts
+  const [year, month, day] = datePart.split("-").map(Number);
+
+  if (!year || !month || !day) {
+    return value;
+  }
+
+  const date = new Date(Date.UTC(year, month - 1, day));
+
   return date.toLocaleDateString("en-GB", {
     day: "numeric",
     month: "long",
     year: "numeric",
+    timeZone: "UTC",
   });
 }
 
@@ -71,4 +78,11 @@ export function isExpiredDate(dateOfExpiry?: string | null): boolean {
   expiry.setHours(23, 59, 59, 999);
 
   return expiry < now;
+}
+
+export function addDays(isoDate: string, days: number): string {
+  const date = new Date(isoDate);
+  date.setDate(date.getDate() + days);
+
+  return date.toISOString().split("T")[0];
 }

@@ -39,8 +39,8 @@ export default function CepcAboutThisReport({ data }: Props) {
           certificate has been produced under the Energy Performance of
           Buildings (Scotland) Regulations 2008 from data lodged to the Scottish
           EPC register. You can verify the validity of this document by visiting{" "}
-          <a href="https://www.scottishepcregister.org.uk">
-            www.scottishepcregister.org.uk
+          <a href="https://energycertificate.service.gov.scot/">
+            energycertificate.service.gov.scot
           </a>{" "}
           and entering the Report Reference Number (RRN) printed at the top of
           this page.
@@ -147,8 +147,8 @@ export default function CepcAboutThisReport({ data }: Props) {
         <p>
           Once lodged by your EPC assessor, this Energy Performance Certificate
           and Recommendations Report are available to view online at{" "}
-          <a href="https://www.scottishepcregister.org.uk">
-            www.scottishepcregister.org.uk
+          <a href="https://energycertificate.service.gov.scot/">
+            energycertificate.service.gov.scot
           </a>
           , with the facility to search for any single record by entering the
           property address. This gives everyone access to any current, valid EPC
