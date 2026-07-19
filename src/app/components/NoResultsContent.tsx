@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 type NoResultsContentProps = {
   searchValue: string;
 };
@@ -19,11 +17,8 @@ export function NoResultsContent({ searchValue }: NoResultsContentProps) {
       </ul>
 
       <p>
-        If you need to get a new certificate, please use this{" "}
-        <Link href="/find-advisor" className="ds_link">
-          ‘Find an assessor’
-        </Link>{" "}
-        link to find an assessor or advisor to help you.
+        If you need to get a new certificate, please use the ‘Find an assessor’
+        tab at the top of the page to find an assessor or advisor to help you.
       </p>
 
       <p>
