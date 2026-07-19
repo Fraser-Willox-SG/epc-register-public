@@ -3,6 +3,7 @@ import type { ActionPlanRow } from "@/app/components/ApResultsTable";
 import { selfUrl } from "@/app/utils/self-url";
 import ApResultsTable from "@/app/components/ApResultsTable";
 import { Metadata } from "next";
+import { NoPostcodeResults } from "@/app/components/NoPostcodeResults";
 
 export const metadata: Metadata = {
   title: "Action Plan Postcode Results",
@@ -84,16 +85,7 @@ export default async function ActionPlanResultsPage({
           </p>
         </>
       ) : rows.length === 0 ? (
-        <>
-          <div className="ds_inset-text">
-            <p>No results found for {postcode.toUpperCase()}.</p>
-          </div>
-          <p className="ds_mt-4">
-            <Link href="/action-plan" className="ds_link">
-              Back to search
-            </Link>
-          </p>
-        </>
+        <NoPostcodeResults postcode={postcode} backHref="/action-plan" />
       ) : (
         <ApResultsTable
           postcode={postcode}

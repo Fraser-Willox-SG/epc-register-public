@@ -124,7 +124,11 @@ export default function AssessorResultsTable({
       </p>
 
       <table className="ds_table">
-        <caption>List of assessors or advisors</caption>
+        <caption>
+          List of assessors or advisors. Some assessors can do multiple types of
+          assessments. The search results show all the types of assessment each
+          assessor can do.
+        </caption>
         <thead>
           <tr>
             <th scope="col">Name</th>

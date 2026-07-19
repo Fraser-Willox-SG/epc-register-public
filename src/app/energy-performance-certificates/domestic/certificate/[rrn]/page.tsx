@@ -3,6 +3,7 @@ import Link from "next/link";
 import { selfUrl } from "@/app/utils/self-url";
 import PrintButton from "@/app/components/PrintButton";
 import DownloadButton from "@/app/components/DownloadButton";
+import { NoCertificateResults } from "@/app/components/NoCertificateResults";
 
 import {
   hasGreenDealPlan,
@@ -22,9 +23,10 @@ export const metadata: Metadata = {
   title: "Domestic EPC Certificate",
 };
 
-type Summary = { data: DomesticCertificateData };
+type Summary = {
+  data?: DomesticCertificateData | null;
+};
 
-// ---- page
 export default async function DomesticCertificatePage({
   params,
 }: {
@@ -39,34 +41,43 @@ export default async function DomesticCertificatePage({
   let data: DomesticCertificateData | null = null;
   let error: string | null = null;
   let detail: string | null = null;
+  let certificateNotFound = false;
 
   try {
     const res = await fetch(apiUrl, { cache: "no-store" });
     const bodyText = await res.text();
 
     if (!res.ok) {
-      error = `We couldn’t retrieve the certificate for ${rrn}.`;
-      if (process.env.NODE_ENV !== "production") {
-        detail = `Status ${res.status} — ${bodyText.slice(0, 300)}`;
+      if (res.status === 404) {
+        certificateNotFound = true;
+      } else {
+        error = `We couldn’t retrieve the certificate for ${rrn}.`;
+
+        if (process.env.NODE_ENV !== "production") {
+          detail = `Status ${res.status} — ${bodyText.slice(0, 300)}`;
+        }
+
+        console.error("[SSR] certificate fetch failed", {
+          url: apiUrl,
+          status: res.status,
+          snippet: bodyText.slice(0, 300),
+        });
       }
-      console.error("[SSR] certificate fetch failed", {
-        url: apiUrl,
-        status: res.status,
-        snippet: bodyText.slice(0, 300),
-      });
     } else {
       try {
         const json = JSON.parse(bodyText) as Summary;
         data = json.data ?? null;
 
         if (!data) {
-          error = "Certificate not found.";
+          certificateNotFound = true;
         }
       } catch (parseErr) {
         error = "Bad JSON from API route.";
+
         if (process.env.NODE_ENV !== "production") {
           detail = (parseErr as Error).message;
         }
+
         console.error("[SSR] JSON parse error", {
           url: apiUrl,
           body: bodyText.slice(0, 300),
@@ -75,12 +86,14 @@ export default async function DomesticCertificatePage({
     }
   } catch (e) {
     error = "There was a problem contacting the service.";
+
     if (process.env.NODE_ENV !== "production") {
-      detail = (e as Error).message;
+      detail = e instanceof Error ? e.message : String(e);
     }
+
     console.error("[SSR] certificate fetch failed", {
       url: apiUrl,
-      err: (e as Error).message,
+      err: e instanceof Error ? e.message : String(e),
     });
   }
 
@@ -110,14 +123,18 @@ export default async function DomesticCertificatePage({
 
             <div className="ds_button-group ds_!_margin--0 no-print">
               <PrintButton className="ds_button ds_button--secondary" />
+
               <DownloadButton
                 className="ds_button"
                 filename={`Domestic-EPC-${rrn}.pdf`}
-                pdfUrl={`/api/sg/assessments/${encodeURIComponent(rrn)}/domestic-pdf-preview`}
+                pdfUrl={`/api/sg/assessments/${encodeURIComponent(
+                  rrn,
+                )}/domestic-pdf-preview`}
               />
             </div>
           </div>
         )}
+
         {data?.dateOfExpiry && isExpired && (
           <p className="attention-message ds_question__error-message ds_mt-1">
             This EPC expired on {formatIsoDateLong(data.dateOfExpiry)} and is
@@ -127,12 +144,22 @@ export default async function DomesticCertificatePage({
         )}
       </div>
 
-      {error ? (
+      {certificateNotFound ? (
+        <NoCertificateResults
+          rrn={rrn}
+          backHref="/energy-performance-certificates/domestic"
+        />
+      ) : error ? (
         <>
           <p className="ds_error-message">{error}</p>
+
           {detail && <pre className="ds_inset-text">{detail}</pre>}
+
           <p className="ds_mt-4">
-            <Link href="/domestic" className="ds_link">
+            <Link
+              href="/energy-performance-certificates/domestic"
+              className="ds_link"
+            >
               Back to search
             </Link>
           </p>
@@ -146,6 +173,7 @@ export default async function DomesticCertificatePage({
             {(isRdSapCertificate(data) || isSapCertificate(data)) && (
               <ContentsNavDomRdSap showGreenDeal={hasGreenDealPlan(data)} />
             )}
+
             {/* <ContentsNavDomHem />
             <ContentsNavDomLegacy /> */}
           </aside>

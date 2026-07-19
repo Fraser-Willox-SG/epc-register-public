@@ -15,15 +15,15 @@ type HubLink = {
 const hubLinks: HubLink[] = [
   {
     href: "/energy-performance-certificates",
-    title: "Energy Performance Certificate (EPC)",
+    title: "Energy Performance Certificates (EPCs)",
     description:
-      "Existing or historical energy certificate for domestic and non-domestic properties.",
+      "Existing or historical energy certificates for domestic and non-domestic properties.",
   },
   {
     href: "/display-energy-certificate-and-advisory-report",
-    title: "Display Energy Certificate (DEC) and Advisory Report (AR)",
+    title: "Display Energy Certificates (DECs) and Advisory Reports (ARs)",
     description:
-      "Existing or historical energy certificate or advisory report for non-domestic buildings.",
+      "Existing or historical energy certificates and advisory reports for non-domestic buildings.",
   },
   {
     href: "/action-plan",
@@ -38,7 +38,7 @@ const hubLinks: HubLink[] = [
   },
   {
     href: "/find-advisor",
-    title: "Find an assessor or advisor",
+    title: "Assessors and advisors",
     description:
       "If a property needs a new or updated EPC, then here you can find an assessor or advisor to help you.",
   },
@@ -51,9 +51,7 @@ export default function HomePage() {
         <h1>Scottish EPC Register</h1>
       </header>
 
-      <p>
-        You can use this Scottish EPC Register website to find the following:
-      </p>
+      <p>Use this site to find the following information.</p>
 
       <section aria-labelledby="services-heading">
         <ul className="ds_no-bullets">

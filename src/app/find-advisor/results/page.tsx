@@ -180,7 +180,9 @@ export default async function FindAdvisorResultsPage({
       ) : rows.length === 0 ? (
         <>
           <div className="ds_inset-text">
-            <p>No results found for {postcode}.</p>
+            <p>
+              No results found for <strong>{postcode.toUpperCase()}</strong>.
+            </p>
           </div>
           <p className="ds_mt-4">
             <Link href="/find-advisor" className="ds_link">

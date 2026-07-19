@@ -90,7 +90,7 @@ export default function FindAdvisorPage() {
               <Checkbox
                 id="section63"
                 label="Section 63 Advisor"
-                hintText="To help you comply with the requirements of section 63 of The Climate Change(Scotland) Act 2009"
+                hintText="To help you comply with the requirements of Section 63 of The Climate Change (Scotland) Act 2009"
                 checked={types.section63}
                 onChange={() => onCheckboxChange("section63")}
               />

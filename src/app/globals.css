@@ -176,6 +176,11 @@ body {
   background: #ffffff;
 }
 
+.mt-0 {
+  /* override SGDS CSS with important */
+  margin-top: 0px !important;
+}
+
 .mb-0 {
   margin-bottom: 0px;
 }

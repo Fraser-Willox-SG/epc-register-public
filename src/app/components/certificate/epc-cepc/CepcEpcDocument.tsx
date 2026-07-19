@@ -50,6 +50,7 @@ export default function CepcEpcDocument({
             dateOfExpiry={dateOfExpiry}
             currentBand={currentBand}
             printTitle="Energy Performance Certificate"
+            buildingType="non-domestic"
           />
         </div>
 

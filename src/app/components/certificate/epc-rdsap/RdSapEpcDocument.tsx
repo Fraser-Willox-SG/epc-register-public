@@ -45,6 +45,7 @@ export default function RdSapEpcDocument({
           dateOfExpiry={dateOfExpiry}
           currentBand={currentBand}
           printTitle="Energy Performance Certificate"
+          buildingType="domestic"
         />
       </div>
 
