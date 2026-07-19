@@ -1,23 +1,23 @@
 import Link from "next/link";
+import { Metadata } from "next";
+
+import ContentsNav from "@scottish-government/designsystem-react/dist/components/ContentsNav/ContentsNav";
 
 import { selfUrl } from "@/app/utils/self-url";
-import ContentsNav from "@scottish-government/designsystem-react/dist/components/ContentsNav/ContentsNav";
-import PrintButton from "@/app/components/PrintButton";
 
-import type {
-  SgActionPlanCertificateSummary,
-  SgActionPlanResponse,
-} from "@/types/action-plan";
+import PrintButton from "@/app/components/PrintButton";
+import DownloadButton from "@/app/components/DownloadButton";
+import { NoCertificateResults } from "@/app/components/NoCertificateResults";
+
+import type { SgActionPlanResponse } from "@/types/action-plan";
 
 import ActionPlanDocument from "@/app/components/certificate/action-plan/ActionPlanDocument";
-import DownloadButton from "@/app/components/DownloadButton";
-import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Action Plan Certificate",
 };
 
-export default async function DomesticCertificatePage({
+export default async function ActionPlanCertificatePage({
   params,
 }: {
   params: Promise<{ rrn: string }>;
@@ -31,34 +31,45 @@ export default async function DomesticCertificatePage({
   let data: SgActionPlanResponse["data"] | null = null;
   let error: string | null = null;
   let detail: string | null = null;
+  let certificateNotFound = false;
 
   try {
     const res = await fetch(apiUrl, { cache: "no-store" });
-
     const bodyText = await res.text();
+
     if (!res.ok) {
-      error = `We couldn’t retrieve the certificate for ${rrn}.`;
-      if (process.env.NODE_ENV !== "production") {
-        detail = `Status ${res.status} — ${bodyText.slice(0, 300)}`;
+      if (res.status === 404) {
+        certificateNotFound = true;
+      } else {
+        error = `We couldn’t retrieve the certificate for ${rrn}.`;
+
+        if (process.env.NODE_ENV !== "production") {
+          detail = `Status ${res.status} — ${bodyText.slice(0, 300)}`;
+        }
+
+        console.error("[SSR] Action Plan certificate fetch failed", {
+          url: apiUrl,
+          status: res.status,
+          snippet: bodyText.slice(0, 300),
+        });
       }
-      console.error("[SSR] certificate fetch failed", {
-        url: apiUrl,
-        status: res.status,
-        snippet: bodyText.slice(0, 300),
-      });
     } else {
       try {
         const json = JSON.parse(bodyText) as SgActionPlanResponse;
         data = json.data ?? null;
+
         if (!data) {
-          error = "Certificate not found.";
+          certificateNotFound = true;
         }
       } catch (parseErr) {
         error = "Bad JSON from API route.";
+
         if (process.env.NODE_ENV !== "production") {
-          detail = (parseErr as Error).message;
+          detail =
+            parseErr instanceof Error ? parseErr.message : String(parseErr);
         }
-        console.error("[SSR] JSON parse error", {
+
+        console.error("[SSR] Action Plan JSON parse error", {
           url: apiUrl,
           body: bodyText.slice(0, 300),
         });
@@ -66,12 +77,14 @@ export default async function DomesticCertificatePage({
     }
   } catch (e) {
     error = "There was a problem contacting the service.";
+
     if (process.env.NODE_ENV !== "production") {
-      detail = (e as Error).message;
+      detail = e instanceof Error ? e.message : String(e);
     }
-    console.error("[SSR] certificate fetch failed", {
+
+    console.error("[SSR] Action Plan certificate fetch failed", {
       url: apiUrl,
-      err: (e as Error).message,
+      err: e instanceof Error ? e.message : String(e),
     });
   }
 
@@ -96,26 +109,34 @@ export default async function DomesticCertificatePage({
     <div className="ds_wrapper">
       <div className="ds_page-header no-print">
         <h1>Action Plan</h1>
-        <div className="sgds-header-row">
-          <p className="ds_lede ds_!_margin-0">{addressSummary}</p>
 
-          <div className="ds_button-group ds_!_margin--0 no-print">
-            <PrintButton className="ds_button ds_button--secondary" />
-            <DownloadButton
-              className="ds_button"
-              filename={`Action-Plan-${rrn}.pdf`}
-              pdfUrl={`/api/sg/assessments/${encodeURIComponent(
-                rrn,
-              )}/action-plan-pdf-preview`}
-            />
+        {data && (
+          <div className="sgds-header-row">
+            <p className="ds_lede ds_!_margin-0">{addressSummary}</p>
+
+            <div className="ds_button-group ds_!_margin--0 no-print">
+              <PrintButton className="ds_button ds_button--secondary" />
+
+              <DownloadButton
+                className="ds_button"
+                filename={`Action-Plan-${rrn}.pdf`}
+                pdfUrl={`/api/sg/assessments/${encodeURIComponent(
+                  rrn,
+                )}/action-plan-pdf-preview`}
+              />
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
-      {error ? (
+      {certificateNotFound ? (
+        <NoCertificateResults rrn={rrn} backHref="/action-plan" />
+      ) : error ? (
         <>
           <p className="ds_error-message">{error}</p>
+
           {detail && <pre className="ds_inset-text">{detail}</pre>}
+
           <p className="ds_mt-4">
             <Link href="/action-plan" className="ds_link">
               Back to search
@@ -133,12 +154,15 @@ export default async function DomesticCertificatePage({
               ariaLabel="Document navigation"
             >
               <ContentsNav.Item href="#overview">Action Plan</ContentsNav.Item>
+
               <ContentsNav.Item href="#parties-involved">
                 Parties involved
               </ContentsNav.Item>
+
               <ContentsNav.Item href="#improvement-type">
                 Improvement type
               </ContentsNav.Item>
+
               <ContentsNav.Item href="#prescriptive-measures">
                 Prescriptive improvement measures
               </ContentsNav.Item>
@@ -152,6 +176,7 @@ export default async function DomesticCertificatePage({
               <ContentsNav.Item href="#operational-rating-system">
                 Operational rating system
               </ContentsNav.Item>
+
               <ContentsNav.Item href="#completion-of-improvements">
                 Completion of improvements
               </ContentsNav.Item>

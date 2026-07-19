@@ -71,7 +71,6 @@ export default function DecCertificate({ data }: Props) {
         rrn={rrn}
         dateOfExpiry={dateOfExpiry}
         currentBand={currentBand}
-        isEpc={false}
         printTitle="Display Energy Certificate"
       />
 

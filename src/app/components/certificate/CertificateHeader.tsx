@@ -2,6 +2,8 @@ import React from "react";
 import { formatIsoDateLong, isExpiredDate } from "@/app/utils/date";
 import ScottishGovernmentLogo from "@/app/components/certificate/ScottishGovernmentLogo";
 
+type EpcBuildingType = "domestic" | "non-domestic";
+
 type Props = {
   addressLine1: string | undefined;
   addressLine2: string | undefined;
@@ -12,7 +14,7 @@ type Props = {
   dateOfExpiry?: string | undefined;
   rrn: string;
   currentBand?: string | null;
-  isEpc?: boolean;
+  buildingType?: EpcBuildingType;
   printTitle?: string | undefined;
 };
 
@@ -26,7 +28,7 @@ export default function CertificateHeader({
   dateOfExpiry,
   currentBand,
   rrn,
-  isEpc = true,
+  buildingType,
   printTitle,
 }: Props) {
   const bandLabel =
@@ -36,30 +38,28 @@ export default function CertificateHeader({
 
   const isExpired = isExpiredDate(dateOfExpiry);
 
+  const buildingTypeLabel =
+    buildingType === "domestic"
+      ? "Domestic building"
+      : buildingType === "non-domestic"
+        ? "Non-domestic building"
+        : undefined;
+
   return (
     <div className="print-no-break print-page-break">
-      <div className=" bg-dark-blue">
-        {/* <div className="print-only">
-          <div
-            className="cert-section flex-between "
-            style={{
-              marginBottom: "2px",
-            }}
-          >
-            <h2 className="mb-0">{printTitle}</h2>
-            <img
-              src="/logo.svg"
-              alt="Scottish Government logo"
-              width={80}
-              height={50}
-              style={{ display: "block" }}
-            />
-          </div>
-        </div> */}
-
+      <div className="bg-dark-blue">
         <div className="flex-between cert-section">
           <div>
-            <h2>{printTitle}</h2>
+            <h2 className={buildingTypeLabel ? "mb-0" : undefined}>
+              {printTitle}
+            </h2>
+
+            {buildingTypeLabel && (
+              <h3 className={buildingTypeLabel ? "mt-0" : undefined}>
+                {buildingTypeLabel}
+              </h3>
+            )}
+
             <p className="mb-0">{addressLine1}</p>
             <p className="mb-0">{addressLine2}</p>
             <p className="mb-0">{addressLine3}</p>
@@ -69,32 +69,8 @@ export default function CertificateHeader({
           </div>
 
           <div>
-            {" "}
             <ScottishGovernmentLogo />
           </div>
-
-          {/* I have kept the Energy Rating code so we can change back quickly after User Research, April 2026 */}
-          {/* <div
-            className="cert-section"
-            style={{
-              border: "2px solid white",
-              color: "white",
-              textAlign: "center",
-            }}
-          >
-            <p className="mb-0">
-              {isEpc ? "Energy Rating" : "Operational Rating"}
-            </p>
-            <span
-              style={{
-                fontSize: "6rem",
-                fontWeight: "bold",
-                lineHeight: "6rem",
-              }}
-            >
-              {bandLabel}
-            </span>
-          </div> */}
         </div>
       </div>
 
@@ -103,7 +79,9 @@ export default function CertificateHeader({
         style={{ textAlign: "center", color: "white", gap: "1px" }}
       >
         <div
-          className={`cert-section ${isExpired ? "bg-dark-red" : "bg-dark-blue"}`}
+          className={`cert-section ${
+            isExpired ? "bg-dark-red" : "bg-dark-blue"
+          }`}
         >
           <p>
             <strong>
@@ -112,8 +90,10 @@ export default function CertificateHeader({
                 : "Valid until"}
             </strong>
           </p>
+
           {dateOfExpiry ? formatIsoDateLong(dateOfExpiry) : "—"}
         </div>
+
         <div className="cert-section bg-dark-blue">
           <p>
             <strong>Certificate number</strong>

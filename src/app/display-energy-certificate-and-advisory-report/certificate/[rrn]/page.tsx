@@ -4,13 +4,14 @@ import { selfUrl } from "@/app/utils/self-url";
 import ContentsNav from "@scottish-government/designsystem-react/dist/components/ContentsNav/ContentsNav";
 
 import PrintButton from "@/app/components/PrintButton";
+import DownloadButton from "@/app/components/DownloadButton";
+import { NoCertificateResults } from "@/app/components/NoCertificateResults";
 
 import type { ApiEnvelope, DecarSummary } from "@/types/decar";
 import { isDecAr } from "@/types/decar";
 
 import DecCertificate from "@/app/components/certificate/decar/DecCertificate";
 import ArCertificate from "@/app/components/certificate/decar/ArCertificate";
-import DownloadButton from "@/app/components/DownloadButton";
 
 import { formatIsoDateLong, isExpiredDate } from "@/app/utils/date";
 import { Metadata } from "next";
@@ -39,31 +40,44 @@ export default async function DecarCertificatePage({
   let data: DecarSummary | null = null;
   let error: string | null = null;
   let detail: string | null = null;
+  let certificateNotFound = false;
 
   try {
     const res = await fetch(apiUrl, { cache: "no-store" });
     const bodyText = await res.text();
 
     if (!res.ok) {
-      error = `We couldn’t retrieve the certificate for ${rrn}.`;
-      if (process.env.NODE_ENV !== "production") {
-        detail = `Status ${res.status} — ${bodyText.slice(0, 300)}`;
+      if (res.status === 404) {
+        certificateNotFound = true;
+      } else {
+        error = `We couldn’t retrieve the certificate for ${rrn}.`;
+
+        if (process.env.NODE_ENV !== "production") {
+          detail = `Status ${res.status} — ${bodyText.slice(0, 300)}`;
+        }
+
+        console.error("[SSR] DEC/AR certificate fetch failed", {
+          url: apiUrl,
+          status: res.status,
+          snippet: bodyText.slice(0, 300),
+        });
       }
-      console.error("[SSR] DEC/AR certificate fetch failed", {
-        url: apiUrl,
-        status: res.status,
-        snippet: bodyText.slice(0, 300),
-      });
     } else {
       try {
         const json = JSON.parse(bodyText) as SummaryResponse;
         data = json.data ?? null;
-        if (!data) error = "Certificate not found.";
+
+        if (!data) {
+          certificateNotFound = true;
+        }
       } catch (parseErr) {
         error = "Bad JSON from API route.";
+
         if (process.env.NODE_ENV !== "production") {
-          detail = (parseErr as Error).message;
+          detail =
+            parseErr instanceof Error ? parseErr.message : String(parseErr);
         }
+
         console.error("[SSR] DEC/AR JSON parse error", {
           url: apiUrl,
           body: bodyText.slice(0, 300),
@@ -72,12 +86,14 @@ export default async function DecarCertificatePage({
     }
   } catch (e) {
     error = "There was a problem contacting the service.";
+
     if (process.env.NODE_ENV !== "production") {
-      detail = (e as Error).message;
+      detail = e instanceof Error ? e.message : String(e);
     }
+
     console.error("[SSR] DEC/AR certificate fetch failed", {
       url: apiUrl,
-      err: (e as Error).message,
+      err: e instanceof Error ? e.message : String(e),
     });
   }
 
@@ -95,6 +111,7 @@ export default async function DecarCertificatePage({
     : "";
 
   const mode = data ? getViewMode(data) : "dec";
+
   const pageTitle =
     mode === "ar" ? "Advisory Report" : "Display Energy Certificate";
 
@@ -109,19 +126,25 @@ export default async function DecarCertificatePage({
     <div className="ds_wrapper">
       <div className="ds_page-header no-print">
         <h1>{pageTitle}</h1>
+
         {data && (
           <div className="sgds-header-row">
             <p className="ds_lede ds_!_margin-0">{addressSummary}</p>
 
             <div className="ds_button-group ds_!_margin--0 no-print">
               <PrintButton className="ds_button ds_button--secondary" />
+
               <DownloadButton
                 className="ds_button"
                 filename={downloadFileName}
                 pdfUrl={
                   mode === "dec"
-                    ? `/api/sg/assessments/${encodeURIComponent(rrn)}/dec-pdf-preview`
-                    : `/api/sg/assessments/${encodeURIComponent(rrn)}/advisory-report-pdf-preview`
+                    ? `/api/sg/assessments/${encodeURIComponent(
+                        rrn,
+                      )}/dec-pdf-preview`
+                    : `/api/sg/assessments/${encodeURIComponent(
+                        rrn,
+                      )}/advisory-report-pdf-preview`
                 }
               />
             </div>
@@ -138,10 +161,17 @@ export default async function DecarCertificatePage({
         )}
       </div>
 
-      {error ? (
+      {certificateNotFound ? (
+        <NoCertificateResults
+          rrn={rrn}
+          backHref="/display-energy-certificate-and-advisory-report"
+        />
+      ) : error ? (
         <>
           <p className="ds_error-message">{error}</p>
+
           {detail && <pre className="ds_inset-text">{detail}</pre>}
+
           <p className="ds_mt-4">
             <Link
               href="/display-energy-certificate-and-advisory-report"
@@ -166,22 +196,27 @@ export default async function DecarCertificatePage({
                   <span aria-hidden="true">DEC: </span>
                   Display Energy Certificate
                 </ContentsNav.Item>
+
                 <ContentsNav.Item href="#dec-operational-rating">
                   <span aria-hidden="true">DEC: </span>
                   Energy Performance Operational Rating
                 </ContentsNav.Item>
+
                 <ContentsNav.Item href="#dec-co2-emissions">
                   <span aria-hidden="true">DEC: </span>
                   Total CO2 Emissions
                 </ContentsNav.Item>
+
                 <ContentsNav.Item href="#dec-previous-ratings">
                   <span aria-hidden="true">DEC: </span>
                   Previous Operational Ratings
                 </ContentsNav.Item>
+
                 <ContentsNav.Item href="#dec-technical-information">
                   <span aria-hidden="true">DEC: </span>
                   Technical Information
                 </ContentsNav.Item>
+
                 <ContentsNav.Item href="#dec-administrative-information">
                   <span aria-hidden="true">DEC: </span>
                   Administrative Information
@@ -198,18 +233,22 @@ export default async function DecarCertificatePage({
                   <span aria-hidden="true">AR: </span>
                   Advisory Report
                 </ContentsNav.Item>
+
                 <ContentsNav.Item href="#ar-background">
                   <span aria-hidden="true">AR: </span>
                   Background
                 </ContentsNav.Item>
+
                 <ContentsNav.Item href="#ar-recommendations">
                   <span aria-hidden="true">AR: </span>
                   Recommendations
                 </ContentsNav.Item>
+
                 <ContentsNav.Item href="#ar-next-steps">
                   <span aria-hidden="true">AR: </span>
                   Next steps
                 </ContentsNav.Item>
+
                 <ContentsNav.Item href="#ar-glossary">
                   <span aria-hidden="true">AR: </span>
                   Glossary

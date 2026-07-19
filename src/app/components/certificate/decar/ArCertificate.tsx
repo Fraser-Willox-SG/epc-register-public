@@ -47,7 +47,6 @@ export default function ArCertificate({ data }: Props) {
         rrn={rrn}
         dateOfExpiry={dateOfExpiry}
         currentBand={currentBand}
-        isEpc={false}
         printTitle="Advisory Report"
       />
 

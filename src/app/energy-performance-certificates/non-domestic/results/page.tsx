@@ -4,6 +4,7 @@ import EpcResultsTable, {
 } from "@/app/components/EpcResultsTable";
 import { selfUrl } from "@/app/utils/self-url";
 import { Metadata } from "next";
+import { NoPostcodeResults } from "@/app/components/NoPostcodeResults";
 
 export const metadata: Metadata = {
   title: "Non-Domestic Postcode Search",
@@ -88,19 +89,10 @@ export default async function DomesticResultsPage({
           </p>
         </>
       ) : rows.length === 0 ? (
-        <>
-          <div className="ds_inset-text">
-            <p>No results found for {postcode.toUpperCase()}.</p>
-          </div>
-          <p className="ds_mt-4">
-            <Link
-              href="/energy-performance-certificates/non-domestic"
-              className="ds_link"
-            >
-              Back to search
-            </Link>
-          </p>
-        </>
+        <NoPostcodeResults
+          postcode={postcode}
+          backHref="/energy-performance-certificates/non-domestic"
+        />
       ) : (
         <EpcResultsTable
           postcode={postcode}

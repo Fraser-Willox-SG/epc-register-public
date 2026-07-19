@@ -4,6 +4,7 @@ import DecarResultsTable, {
   AssessmentRow,
 } from "@/app/components/DecarResultsTable";
 import { Metadata } from "next";
+import { NoPostcodeResults } from "@/app/components/NoPostcodeResults";
 
 export const metadata: Metadata = {
   title: "Display Energy Certificate And Advisory Report Results",
@@ -85,19 +86,10 @@ export default async function AdvisoryReportsResultsPage({
           </p>
         </>
       ) : rows.length === 0 ? (
-        <>
-          <div className="ds_inset-text">
-            <p>No results found for {postcode.toUpperCase()}.</p>
-          </div>
-          <p className="ds_mt-4">
-            <Link
-              href="/display-energy-certificate-and-advisory-report"
-              className="ds_link"
-            >
-              Back to search
-            </Link>
-          </p>
-        </>
+        <NoPostcodeResults
+          postcode={postcode}
+          backHref="/display-energy-certificate-and-advisory-report"
+        />
       ) : (
         <DecarResultsTable
           postcode={postcode}
