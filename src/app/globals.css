@@ -227,6 +227,20 @@ td.table-cell-center {
   margin: 24px auto 24px auto;
 }
 
+.assessor-types {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.assessor-types > li {
+  white-space: nowrap;
+}
+
+.assessor-types > li + li {
+  margin-top: 0.25rem;
+}
+
 /* Mobile / tablet default: 100% width, centred */
 .dec-co2-container {
   width: 100%;
