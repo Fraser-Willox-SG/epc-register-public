@@ -4,7 +4,7 @@ type Props = {
   showGreenDeal?: boolean;
 };
 
-export default function ContentsNavDomRdSap({ showGreenDeal = false }: Props) {
+export default function ContentsNavDomestic({ showGreenDeal = false }: Props) {
   return (
     <ContentsNav title="Document navigation" ariaLabel="Document navigation">
       <ContentsNav.Item href="#overview">
