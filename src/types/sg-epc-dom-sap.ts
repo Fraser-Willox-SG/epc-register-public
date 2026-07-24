@@ -39,10 +39,12 @@ export type SgSapRecommendedImprovement = {
 
 export interface SgDomesticSapEpcCertificateSummary extends SgGreenDealCertificateFields {
   typeOfAssessment: "SAP" | string;
+  schemaType: string;
+
   assessmentId: string;
-  dateOfExpiry: string; // YYYY-MM-DD
-  dateOfAssessment: string; // YYYY-MM-DD
-  dateOfRegistration: string; // YYYY-MM-DD
+  dateOfExpiry: string;
+  dateOfAssessment: string;
+  dateOfRegistration: string;
 
   address: SgDomesticSapEpcAddress;
 
@@ -56,7 +58,7 @@ export interface SgDomesticSapEpcCertificateSummary extends SgGreenDealCertifica
 
   dwellingType: string;
 
-  estimatedEnergyCost: string; // numeric string e.g. "917.00"
+  estimatedEnergyCost: string;
 
   heatDemand: SgSapHeatDemand;
 
@@ -70,7 +72,7 @@ export interface SgDomesticSapEpcCertificateSummary extends SgGreenDealCertifica
   potentialCarbonEmission: number | null;
   potentialEnergyEfficiencyBand: SgEpcBandLetter;
   potentialEnergyEfficiencyRating: number;
-  potentialEnergySaving: string; // numeric string e.g. "0.00"
+  potentialEnergySaving: string;
 
   propertySummary: SgSapPropertySummaryItem[];
 
@@ -117,13 +119,16 @@ export type SgDomesticSapEpcAddress = {
 export type SgSapAssessor = {
   schemeAssessorId: string;
   companyName: string;
+
   contactDetails: {
     email: string;
     address: string;
     telephoneNumber: string;
   };
+
   firstName: string;
   lastName: string;
+
   registeredBy: {
     name: string;
     schemeId: number;

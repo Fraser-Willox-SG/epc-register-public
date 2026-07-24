@@ -39,6 +39,8 @@ export type SgRecommendedImprovement = {
 
 export interface SgDomesticRdSapEpcCertificateSummary extends SgGreenDealCertificateFields {
   typeOfAssessment: "RdSAP" | string;
+  schemaType: string;
+
   assessmentId: string;
   dateOfExpiry: string;
   dateOfAssessment: string;
@@ -71,6 +73,7 @@ export interface SgDomesticRdSapEpcCertificateSummary extends SgGreenDealCertifi
   potentialEnergySaving: string;
 
   propertySummary: SgPropertySummaryItem[];
+
   recommendedImprovements: SgRecommendedImprovement[];
 
   lzcEnergySources: number[] | null;
@@ -96,7 +99,9 @@ export interface SgDomesticRdSapEpcCertificateSummary extends SgGreenDealCertifi
   optOut: boolean;
 
   relatedAssessments: Array<Record<string, unknown>>;
+
   supersededBy: string | null;
+
   countryName: string;
 }
 
@@ -112,6 +117,7 @@ export type SgDomesticEpcAddress = {
 export type SgAssessor = {
   schemeAssessorId: string;
   companyName: string;
+
   contactDetails: {
     address: string;
     email: string;
@@ -135,6 +141,6 @@ export type SgHeatDemand = {
 export type SgPropertySummaryItem = {
   energyEfficiencyRating: number;
   environmentalEfficiencyRating: number;
-  name: string; // e.g. "walls", "roof", "air_tightness"
+  name: string;
   description: string;
 };
