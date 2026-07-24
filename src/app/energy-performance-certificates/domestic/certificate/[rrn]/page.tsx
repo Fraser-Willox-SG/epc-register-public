@@ -13,8 +13,8 @@ import {
 } from "@/types/sg-epc-dom";
 
 // Domestic RdSAP / SAP imports
-import RdSapEpcDocument from "@/app/components/certificate/epc-rdsap/RdSapEpcDocument";
-import ContentsNavDomRdSap from "@/app/components/certificate/epc-rdsap/ContentsNavDomRdSap";
+import DomesticEpcDocument from "@/app/components/certificate/epc-domestic/DomesticEpcDocument";
+import ContentsNavDomestic from "@/app/components/certificate/epc-domestic/ContentsNavDomestic";
 
 import { formatIsoDateLong, isExpiredDate } from "@/app/utils/date";
 import { Metadata } from "next";
@@ -171,7 +171,7 @@ export default async function DomesticCertificatePage({
             aria-label="Document navigation"
           >
             {(isRdSapCertificate(data) || isSapCertificate(data)) && (
-              <ContentsNavDomRdSap showGreenDeal={hasGreenDealPlan(data)} />
+              <ContentsNavDomestic showGreenDeal={hasGreenDealPlan(data)} />
             )}
 
             {/* <ContentsNavDomHem />
@@ -183,7 +183,7 @@ export default async function DomesticCertificatePage({
             style={{ border: "1px solid grey" }}
           >
             {(isRdSapCertificate(data) || isSapCertificate(data)) && (
-              <RdSapEpcDocument data={data} />
+              <DomesticEpcDocument data={data} />
             )}
 
             {/* <HemEpcDocument data={data} /> */}

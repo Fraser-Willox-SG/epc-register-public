@@ -11,7 +11,7 @@ import MeasuresAdviceAndHeatDemand from "./certificate/MeasuresAdviceAndHeatDema
 import AboutThisDocument from "./certificate/AboutThisDocument";
 import GreenDealDocument from "./GreenDealDocument";
 
-export default function RdSapEpcDocument({
+export default function DomesticEpcDocument({
   data,
 }: {
   data: DomesticCertificateData;
