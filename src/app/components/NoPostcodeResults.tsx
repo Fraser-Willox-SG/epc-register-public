@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { NoResultsContent } from "./NoResultsContent";
+import { NoPostcodeResultsContent } from "./NoPostcodeResultsContent";
 
 type NoPostcodeResultsProps = {
   postcode: string;
@@ -12,7 +12,7 @@ export function NoPostcodeResults({
 }: NoPostcodeResultsProps) {
   return (
     <>
-      <NoResultsContent searchValue={postcode} />
+      <NoPostcodeResultsContent postcode={postcode} />
 
       <p className="ds_mt-4">
         <Link href={backHref} className="ds_link">

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { NoResultsContent } from "./NoResultsContent";
+import { NoCertificateResultsContent } from "./NoCertificateResultsContent";
 
 type NoCertificateResultsProps = {
   rrn: string;
@@ -12,7 +12,7 @@ export function NoCertificateResults({
 }: NoCertificateResultsProps) {
   return (
     <>
-      <NoResultsContent searchValue={rrn} />
+      <NoCertificateResultsContent rrn={rrn} />
 
       <p className="ds_mt-4">
         <Link href={backHref} className="ds_link">
