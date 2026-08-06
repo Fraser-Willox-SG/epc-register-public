@@ -193,6 +193,10 @@ body {
   text-align: right;
 }
 
+.border-t-grey {
+  border-top: 1px solid #b3b3b3;
+}
+
 .border-b-grey {
   border-bottom: 1px solid #b3b3b3;
 }

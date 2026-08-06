@@ -24,7 +24,7 @@ export function NoCertificateResultsContent({
         </Link>{" "}
         section. Or{" "}
         <a href="mailto:epcenquiries@gov.scot" className="ds_link">
-          contact us
+          email our team
         </a>{" "}
         if you need more help.
       </p>

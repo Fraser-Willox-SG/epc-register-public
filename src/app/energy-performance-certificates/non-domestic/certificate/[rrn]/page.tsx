@@ -112,6 +112,8 @@ export default async function NonDomesticCertificatePage({
 
   const isExpired = data ? isExpiredDate(data.dateOfExpiry) : false;
 
+  console.log("Non domestic epc =", data);
+
   return (
     <div className="ds_wrapper">
       <div className="ds_page-header no-print">

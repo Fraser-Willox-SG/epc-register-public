@@ -6,6 +6,7 @@ import CepcRecommendationsIntroduction from "./recommendations/CepcRecommendatio
 import CepcRecommendationsTables from "./recommendations/CepcRecommendationsTables";
 import CepcPaybackAndSavingsExplained from "./recommendations/CepcPaybackAndSavingsExplained";
 import CepcAboutThisReport from "./recommendations/CepcAboutThisReport";
+import PreviousCertificatesForThisProperty from "../PreviousCertificatesForThisProperty";
 
 export default function CepcEpcDocument({
   data,
@@ -36,37 +37,40 @@ export default function CepcEpcDocument({
       data.otherPaybackRecommendations.length > 0);
 
   return (
-    <>
-      <div id="certificate-content">
-        <div id="overview">
-          <Header
-            addressLine1={addressLine1}
-            addressLine2={addressLine2}
-            addressLine3={addressLine3}
-            addressLine4={addressLine4 ?? undefined}
-            postcode={postcode}
-            town={town}
-            rrn={rrn}
-            dateOfExpiry={dateOfExpiry}
-            currentBand={currentBand}
-            printTitle="Energy Performance Certificate"
-            buildingType="non-domestic"
-          />
-        </div>
-
-        {/* Non Domestic - Commercial EPC */}
-        <CepcCertificateSummary data={data} />
-
-        {/* Non Domestic - Recommendations Report */}
-        {hasRecommendations && (
-          <>
-            <CepcRecommendationsIntroduction data={data} />
-            <CepcRecommendationsTables data={data} />
-            <CepcPaybackAndSavingsExplained data={data} />
-            <CepcAboutThisReport data={data} />
-          </>
-        )}
+    <div id="certificate-content">
+      <div id="overview">
+        <Header
+          addressLine1={addressLine1}
+          addressLine2={addressLine2}
+          addressLine3={addressLine3}
+          addressLine4={addressLine4 ?? undefined}
+          postcode={postcode}
+          town={town}
+          rrn={rrn}
+          dateOfExpiry={dateOfExpiry}
+          currentBand={currentBand}
+          printTitle="Energy Performance Certificate"
+          buildingType="non-domestic"
+        />
       </div>
-    </>
+
+      {/* Non Domestic - Commercial EPC */}
+      <CepcCertificateSummary data={data} />
+
+      {/* Non Domestic - Recommendations Report */}
+      {hasRecommendations && (
+        <>
+          <CepcRecommendationsIntroduction data={data} />
+          <CepcRecommendationsTables data={data} />
+          <CepcPaybackAndSavingsExplained data={data} />
+          <CepcAboutThisReport data={data} />
+        </>
+      )}
+
+      <PreviousCertificatesForThisProperty
+        assessments={data.relatedAssessments ?? []}
+        certificateType="non-domestic"
+      />
+    </div>
   );
 }

@@ -171,7 +171,7 @@ export default function ApResultsTable({
   return (
     <>
       <p>
-        Choose an address to view the Action Plan:{" "}
+        Choose an address below to view the Action Plan:{" "}
         <strong>{postcode.toUpperCase()}</strong>
         {total > 0 && (
           <>
