@@ -9,6 +9,7 @@ import PerformanceFeaturesAndContext from "./certificate/PerformanceFeaturesAndC
 import CostsAndRecommendationsTable from "./certificate/CostsAndRecommendationsTable";
 import MeasuresAdviceAndHeatDemand from "./certificate/MeasuresAdviceAndHeatDemand";
 import AboutThisDocument from "./certificate/AboutThisDocument";
+import PreviousCertificatesForThisProperty from "../PreviousCertificatesForThisProperty";
 import GreenDealDocument from "./GreenDealDocument";
 
 export default function DomesticEpcDocument({
@@ -54,6 +55,10 @@ export default function DomesticEpcDocument({
       <CostsAndRecommendationsTable data={data} />
       <MeasuresAdviceAndHeatDemand data={data} />
       <AboutThisDocument data={data} />
+      <PreviousCertificatesForThisProperty
+        assessments={data.relatedAssessments ?? []}
+        certificateType="domestic"
+      />
 
       {hasGreenDealPlan(data) && (
         <GreenDealDocument

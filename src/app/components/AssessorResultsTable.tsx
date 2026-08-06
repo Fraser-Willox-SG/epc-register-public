@@ -175,9 +175,9 @@ export default function AssessorResultsTable({
 
       <table className="ds_table">
         <caption>
-          List of assessors or advisors. Some assessors can carry out more than
-          one type of assessment. Results show each assessor&apos;s active
-          Scottish qualifications.
+          List of assessors or advisors. Some assessors can do multiple types of
+          assessments. The search results show all the types of assessment each
+          assessor can do.
         </caption>
 
         <thead>

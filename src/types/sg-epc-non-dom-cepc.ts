@@ -1,3 +1,5 @@
+import type { SgRelatedAssessment } from "./sg-related-assessment";
+
 export type SgApiEnvelope<TData> = {
   data: TData;
   meta: Record<string, unknown>;
@@ -104,7 +106,7 @@ export type SgNonDomesticCepcCertificateSummary = {
 
   addressId: string;
   optOut: boolean;
-  relatedAssessments: unknown[];
+  relatedAssessments: SgRelatedAssessment[];
   supersededBy: string | null;
   countryName: string;
 };

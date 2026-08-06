@@ -1,4 +1,5 @@
 import type { SgGreenDealCertificateFields } from "./sg-epc-green-deal";
+import type { SgRelatedAssessment } from "./sg-related-assessment";
 
 export type SgEpcBandLetter =
   | "a"
@@ -98,7 +99,7 @@ export interface SgDomesticRdSapEpcCertificateSummary extends SgGreenDealCertifi
   addressId: string;
   optOut: boolean;
 
-  relatedAssessments: Array<Record<string, unknown>>;
+  relatedAssessments: SgRelatedAssessment[];
 
   supersededBy: string | null;
 
