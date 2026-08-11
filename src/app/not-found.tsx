@@ -3,26 +3,23 @@ import Link from "next/link";
 export default function GlobalNotFound() {
   return (
     <div className="ds_wrapper">
-      <div className="ds_inset-text">
-        <h1 className="ds_h1">Page not found</h1>
+      <h1 className="ds_h1">404 - Not Found</h1>
 
-        <p className="ds_lede">
-          The page you’re looking for does not exist or may have been moved.
-        </p>
+      <p className="ds_lede">
+        Sorry, but the page you were trying to view does not exist.
+      </p>
 
-        <p>
-          Check the web address is correct, or return to the service and try
-          again.
-        </p>
+      <p>This could be the result of either:</p>
 
-        <ul className="ds_list ds_list--bullet ds_mt-3">
-          <li>
-            <Link href="/" className="ds_link">
-              Go to home page
-            </Link>
-          </li>
-        </ul>
-      </div>
+      <ul>
+        <li>a mistyped address</li>
+        <li>an out of date link</li>
+      </ul>
+      <p className="ds_mt-4">
+        <Link href="/" className="ds_link">
+          Back to home page
+        </Link>
+      </p>
     </div>
   );
 }

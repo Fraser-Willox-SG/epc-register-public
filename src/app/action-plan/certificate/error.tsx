@@ -2,7 +2,7 @@
 
 import ServiceError from "@/app/components/ServiceError";
 
-export default function RootError({
+export default function ActionPlanCertificateError({
   error,
 }: {
   error: Error & { digest?: string };
@@ -11,12 +11,12 @@ export default function RootError({
 
   return (
     <ServiceError
-      title="We can’t display this page right now"
-      message="There’s a problem loading this page. Try again later."
+      title="We can’t display this Action Plan certificate right now"
+      message="There’s a problem loading the certificate details. Please try again later."
       reference={error.digest}
       detail={showDetail ? error.message : undefined}
-      backLinkHref="/"
-      backLinkText="Back to home page"
+      backLinkHref="/action-plan"
+      backLinkText="Back to Action Plan search"
     />
   );
 }
