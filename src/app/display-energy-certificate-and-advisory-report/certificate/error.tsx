@@ -2,7 +2,7 @@
 
 import ServiceError from "@/app/components/ServiceError";
 
-export default function RootError({
+export default function DecOrArCertificateError({
   error,
 }: {
   error: Error & { digest?: string };
@@ -11,12 +11,12 @@ export default function RootError({
 
   return (
     <ServiceError
-      title="We can’t display this page right now"
-      message="There’s a problem loading this page. Try again later."
+      title="We can’t display this certificate right now"
+      message="There’s a problem loading the certificate details. Please try again later."
       reference={error.digest}
       detail={showDetail ? error.message : undefined}
-      backLinkHref="/"
-      backLinkText="Back to home page"
+      backLinkHref="/display-energy-certificate-and-advisory-report"
+      backLinkText="Back to search"
     />
   );
 }

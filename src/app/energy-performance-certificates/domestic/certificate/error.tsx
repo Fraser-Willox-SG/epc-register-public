@@ -2,7 +2,7 @@
 
 import ServiceError from "@/app/components/ServiceError";
 
-export default function DomesticError({
+export default function DomesticCertificateError({
   error,
 }: {
   error: Error & { digest?: string };
@@ -11,8 +11,8 @@ export default function DomesticError({
 
   return (
     <ServiceError
-      title="We can’t display this domestic page right now"
-      message="There’s a problem loading the details. Please try again later."
+      title="We can’t display this domestic certificate right now"
+      message="There’s a problem loading the certificate details. Please try again later."
       reference={error.digest}
       detail={showDetail ? error.message : undefined}
       backLinkHref="/energy-performance-certificates/domestic"

@@ -2,7 +2,7 @@
 
 import ServiceError from "@/app/components/ServiceError";
 
-export default function RootError({
+export default function DecArError({
   error,
 }: {
   error: Error & { digest?: string };
@@ -12,7 +12,7 @@ export default function RootError({
   return (
     <ServiceError
       title="We can’t display this page right now"
-      message="There’s a problem loading this page. Try again later."
+      message="There’s a problem loading the details. Please try again later."
       reference={error.digest}
       detail={showDetail ? error.message : undefined}
       backLinkHref="/"

@@ -3,12 +3,12 @@ import Link from "next/link";
 type Props = {
   title?: string;
   message?: string;
-  /** Optional reference / digest / correlation id for support/debug */
+
+  /** Optional reference / digest for future support/debug functionality */
   reference?: string;
-  /** Optional secondary detail (dev only, or if you choose) */
+
+  /** Optional secondary detail for development */
   detail?: string;
-  /** Callback for Next.js error boundary reset() */
-  onRetry?: () => void;
 
   backLinkHref?: string;
   backLinkText?: string;
@@ -16,43 +16,32 @@ type Props = {
 
 export default function ServiceError({
   title = "We can’t display this page right now",
-  message = "There’s a problem loading the information. Please try again later.",
-  reference,
+  message = "There’s a problem loading this page. Try again later.",
   detail,
-  onRetry,
   backLinkHref = "/",
-  backLinkText = "Back to start",
+  backLinkText = "Back to home page",
 }: Props) {
   return (
-    <div className="ds_inset-text" role="alert" aria-live="polite">
+    <div className="ds_wrapper">
       <h1 className="ds_h1">{title}</h1>
+
       <p className="ds_lede">{message}</p>
 
-      {reference ? (
-        <p className="text-small">
-          <strong>Reference:</strong> {reference}
-        </p>
-      ) : null}
+      {detail ? <pre style={{ whiteSpace: "pre-wrap" }}>{detail}</pre> : null}
 
-      {detail ? (
-        <pre className="ds_inset-text" style={{ whiteSpace: "pre-wrap" }}>
-          {detail}
-        </pre>
-      ) : null}
+      <p>
+        If you continue to have problems,{" "}
+        <a href="mailto:epcenquiries@gov.scot" className="ds_link">
+          email our team
+        </a>
+        .
+      </p>
 
-      <div className="ds_mt-4 flex-between">
-        {onRetry ? (
-          <button type="button" className="ds_button" onClick={onRetry}>
-            Try again
-          </button>
-        ) : (
-          <span />
-        )}
-
+      <p className="ds_mt-4">
         <Link className="ds_link" href={backLinkHref}>
           {backLinkText}
         </Link>
-      </div>
+      </p>
     </div>
   );
 }
