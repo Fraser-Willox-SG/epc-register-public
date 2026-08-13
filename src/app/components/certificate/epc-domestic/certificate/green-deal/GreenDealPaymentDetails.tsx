@@ -6,7 +6,6 @@ import { formatCurrency } from "@/app/utils/number";
 
 type GreenDealPaymentDetailsProps = {
   plan: SgGreenDealPlan;
-  sectionNumber: number;
 };
 
 function formatInterest(plan: SgGreenDealPlan): string | null {
@@ -27,7 +26,6 @@ function formatInterest(plan: SgGreenDealPlan): string | null {
 
 export default function GreenDealPaymentDetails({
   plan,
-  sectionNumber,
 }: GreenDealPaymentDetailsProps) {
   const currentCharge = plan.charges.at(-1);
 

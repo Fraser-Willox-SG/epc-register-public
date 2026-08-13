@@ -30,9 +30,9 @@ export default function GreenDealPlan({
 
       <GreenDealIntroduction plan={plan} />
 
-      <GreenDealPaymentDetails plan={plan} sectionNumber={sectionNumber} />
+      <GreenDealPaymentDetails plan={plan} />
 
-      <GreenDealProviderDetails plan={plan} sectionNumber={sectionNumber} />
+      <GreenDealProviderDetails plan={plan} />
 
       <GreenDealMeasuresAndSavings plan={plan} planNumber={sectionNumber} />
 

@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -85,12 +86,12 @@ export default function AppHeader() {
         siteTitle="Energy Certificates"
         linkComponent={BrandLink}
       >
-        <img
+        <Image
           alt="The Scottish Government"
           src="/scottish-government.svg"
           width={300}
           height={58}
-          loading="lazy"
+          priority
         />
       </SiteHeader.Brand>
 

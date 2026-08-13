@@ -8,7 +8,6 @@ import {
   COLORS_CO2,
   LANE,
   LANE_CO2,
-  isBand,
 } from "@/app/utils/epc";
 
 type Props = {

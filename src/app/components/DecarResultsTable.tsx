@@ -1,5 +1,4 @@
 import Link from "next/link";
-import RatingBadge from "./certificate/RatingBadge";
 
 export type AssessmentRow = {
   assessmentId: string; // RRN
@@ -96,15 +95,6 @@ function groupByProperty(rows: AssessmentRow[]): Grouped[] {
   return Array.from(map.values()).sort((a, b) =>
     a.address.localeCompare(b.address),
   );
-}
-
-function getDisplayRating(group: Grouped) {
-  const source = group.dec ?? group.ar;
-
-  return {
-    band: source?.currentEnergyEfficiencyBand?.toUpperCase(),
-    score: source?.currentEnergyEfficiencyRating,
-  };
 }
 
 function isGroupExpired(group: Grouped) {
@@ -264,9 +254,6 @@ export default function DecarResultsTable({
         <thead>
           <tr>
             <th scope="col">Property Address</th>
-            {/* <th scope="col" className="table-cell-center">
-              Energy Rating
-            </th> */}
             <th scope="col" className="table-cell-center">
               View DEC
             </th>
@@ -283,7 +270,6 @@ export default function DecarResultsTable({
             const decRrn = g.dec?.assessmentId;
             const arRrn = g.ar?.assessmentId;
             const expired = isGroupExpired(g);
-            const rating = getDisplayRating(g);
 
             const combinedHref =
               decRrn && arRrn
@@ -303,16 +289,6 @@ export default function DecarResultsTable({
                     <div className="ds_hint-text">Expired certificate</div>
                   )}
                 </td>
-
-                {/* <td className="table-cell-center">
-                  <div className="content-center">
-                    <RatingBadge
-                      variant="environment"
-                      band={rating.band}
-                      score={rating.score}
-                    />
-                  </div>
-                </td> */}
 
                 <td className="table-cell-center">
                   {decRrn ? (
