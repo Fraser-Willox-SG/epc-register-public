@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { formatAddress } from "@/lib/format";
 import { formatIsoDateLong } from "../utils/date";
-import RatingBadge from "./certificate/RatingBadge";
 
 export type AssessmentRow = {
   assessmentId: string;
@@ -47,7 +46,6 @@ export default function EpcResultsTable({
   pageSize = 5,
   resultsPath,
   certificateHref,
-  ratingVariant,
 }: Props) {
   const total = rows.length;
   const totalPages = Math.max(1, Math.ceil(total / pageSize));
@@ -189,9 +187,6 @@ export default function EpcResultsTable({
         <thead>
           <tr>
             <th scope="col">Property address</th>
-            {/* <th scope="col" className="table-cell-center">
-              Energy rating
-            </th> */}
             <th scope="col" className="table-cell-center">
               Valid Until
             </th>
@@ -226,16 +221,6 @@ export default function EpcResultsTable({
                     <div className="ds_hint-text">Expired certificate</div>
                   )}
                 </td>
-                {/* <td className="table-cell-center">
-                  <div className="content-center">
-                    <RatingBadge
-                      variant={ratingVariant}
-                      band={r.currentEnergyEfficiencyBand?.toUpperCase()}
-                      score={r.currentEnergyEfficiencyRating}
-                      aria-hidden="true"
-                    />
-                  </div>
-                </td> */}
                 <td className="table-cell-center">
                   {r.dateOfExpiry ? formatIsoDateLong(r.dateOfExpiry) : "—"}
                 </td>

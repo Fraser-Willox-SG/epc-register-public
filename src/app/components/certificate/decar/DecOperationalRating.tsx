@@ -1,5 +1,5 @@
 import React from "react";
-import { Band, COLORS, bandTextColor } from "@/app/utils/epc";
+import { Band, COLORS } from "@/app/utils/epc";
 
 type Props = {
   rating: number; // e.g. 96

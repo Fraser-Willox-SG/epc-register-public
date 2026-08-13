@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
+import Image from "next/image";
 
 import SiteFooter from "@scottish-government/designsystem-react/dist/components/SiteFooter/SiteFooter";
 
@@ -45,7 +45,7 @@ export default function AppFooter() {
       </SiteFooter.Links>
 
       <SiteFooter.License>
-        <img
+        <Image
           alt="Open Government Licence"
           src="/ogl.svg"
           width={41}
@@ -65,12 +65,11 @@ export default function AppFooter() {
         href="https://www.gov.scot/"
         title="The Scottish Government"
       >
-        <img
+        <Image
           alt="gov.scot"
           src="/scottish-government--min.svg"
           width={300}
           height={55}
-          loading="lazy"
         />
       </SiteFooter.Org>
     </SiteFooter>

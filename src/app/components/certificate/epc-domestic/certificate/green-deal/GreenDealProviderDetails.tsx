@@ -5,12 +5,10 @@ import { formatIsoDateLong, addDays } from "@/app/utils/date";
 
 type GreenDealProviderDetailsProps = {
   plan: SgGreenDealPlan;
-  sectionNumber: number;
 };
 
 export default function GreenDealProviderDetails({
   plan,
-  sectionNumber,
 }: GreenDealProviderDetailsProps) {
   const provider = plan.providerDetails;
 

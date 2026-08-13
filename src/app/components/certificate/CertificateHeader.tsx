@@ -26,16 +26,10 @@ export default function CertificateHeader({
   town,
   postcode,
   dateOfExpiry,
-  currentBand,
   rrn,
   buildingType,
   printTitle,
 }: Props) {
-  const bandLabel =
-    currentBand && currentBand.trim().length > 0
-      ? currentBand.trim().toUpperCase()
-      : "—";
-
   const isExpired = isExpiredDate(dateOfExpiry);
 
   const buildingTypeLabel =
